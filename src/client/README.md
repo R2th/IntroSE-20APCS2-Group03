@@ -28,7 +28,7 @@ Now you can start the project by running `npm start`
 
 ### PLEASE CHECKOUT IN ANOTHER BRANCH AND BRANCH NAME WILL HAVE THE FORMAT
 
-`{YOUR NAME}_{ID (if have)}_{SHORTEN_TASK_NAME}`
+- `{YOUR NAME}_{ID (if have)}_{SHORTEN_TASK_NAME}`
 
 ### END OF WORKING, 
 
