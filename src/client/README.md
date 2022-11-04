@@ -16,14 +16,20 @@ You should run `npm i` to install all the modules needed
 You need run `npm run postinstall` to link all module alias of the src directory
 Now you can start the project by running `npm start`
 
-### IF HAVE ANYTHING PROBLEM, PLEASE CONTACT AS SOON AS POSSIBLE
+### IF HAVE ANYTHING PROBLEM, 
 
-### BEFORE YOUR WORKING TASK, PLEASE DO NOT EDIT IN "main" branch!!!
+- PLEASE CONTACT AS SOON AS POSSIBLE
+
+### BEFORE YOUR WORKING TASK, 
+
+- PLEASE DO NOT EDIT IN "main" branch!!!
 
 ### PLEASE CHECKOUT IN ANOTHER BRANCH AND BRANCH NAME WILL HAVE THE FORMAT
 
 `{YOUR NAME}_{ID (if have)}_{SHORTEN_TASK_NAME}`
 
-### END OF WORKING, PLEASE PUSH THE BRANCH AND PULL REQUEST IF NEEDED (contact me to accept your request)
+### END OF WORKING, 
+
+- PLEASE PUSH THE BRANCH AND PULL REQUEST IF NEEDED (contact me to accept your request)
 
 ################################
