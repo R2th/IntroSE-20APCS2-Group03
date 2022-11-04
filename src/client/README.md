@@ -5,6 +5,7 @@
 ## FIRST
 
 Try to run `git pull` to pull the latest version in the repository
+
 or run `git pull origin main` to pull the latest version for the branch 'main'
 
 ## IF HAVE ANYTHING TO UPDATE
@@ -14,6 +15,7 @@ You should run `npm i` to install all the modules needed
 ## THEN
 
 You need run `npm run postinstall` to link all module alias of the src directory
+
 Now you can start the project by running `npm start`
 
 ### IF HAVE ANYTHING PROBLEM, 
@@ -22,7 +24,7 @@ Now you can start the project by running `npm start`
 
 ### BEFORE YOUR WORKING TASK, 
 
-- PLEASE DO NOT EDIT IN "main" branch!!!
+- PLEASE DO NOT EDIT IN `main` branch!!!
 
 ### PLEASE CHECKOUT IN ANOTHER BRANCH AND BRANCH NAME WILL HAVE THE FORMAT
 
