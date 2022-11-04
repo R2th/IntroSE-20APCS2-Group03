@@ -20,13 +20,13 @@ Now you can start the project by running `npm start`
 
 ### IF HAVE ANYTHING PROBLEM, 
 
-- <span style="color:red">PLEASE</span> CONTACT AS SOON AS POSSIBLE
+- <span style="color:red">*PLEASE*</span> CONTACT AS SOON AS POSSIBLE
 
 ### BEFORE YOUR WORKING TASK, 
 
-- <span style="color:red">PLEASE</span> DO NOT EDIT IN `main` branch!!!
+- <span style="color:red">*PLEASE*</span> DO NOT EDIT IN `main` branch!!!
 
-### PLEASE CHECKOUT IN ANOTHER BRANCH AND BRANCH NAME WILL HAVE THE FORMAT
+- <span style="color:red">*PLEASE*</span> CHECKOUT IN ANOTHER BRANCH AND BRANCH NAME WILL HAVE THE FORMAT
 
 - `{YOUR NAME}_{ID (if have)}_{SHORTEN_TASK_NAME}`
 
