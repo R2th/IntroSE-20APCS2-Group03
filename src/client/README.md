@@ -20,11 +20,11 @@ Now you can start the project by running `npm start`
 
 ### IF HAVE ANYTHING PROBLEM, 
 
-- PLEASE CONTACT AS SOON AS POSSIBLE
+- <span style="color:red">PLEASE</span> CONTACT AS SOON AS POSSIBLE
 
 ### BEFORE YOUR WORKING TASK, 
 
-- PLEASE DO NOT EDIT IN `main` branch!!!
+- <span style="color:red">PLEASE</span> DO NOT EDIT IN `main` branch!!!
 
 ### PLEASE CHECKOUT IN ANOTHER BRANCH AND BRANCH NAME WILL HAVE THE FORMAT
 
@@ -32,6 +32,6 @@ Now you can start the project by running `npm start`
 
 ### END OF WORKING, 
 
-- PLEASE PUSH THE BRANCH AND PULL REQUEST IF NEEDED (contact me to accept your request)
+- <span style="color:red">PLEASE</span> PUSH THE BRANCH AND PULL REQUEST IF NEEDED (contact me to accept your request)
 
 ################################
