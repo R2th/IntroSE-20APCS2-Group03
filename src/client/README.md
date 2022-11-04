@@ -20,15 +20,17 @@ Now you can start the project by running `npm start`
 
 ### IF HAVE ANYTHING PROBLEM, 
 
-- <span style="color:red">*PLEASE*</span> CONTACT AS SOON AS POSSIBLE
+- <span style="color:red">*PLEASE*</span> contact me (`R2th`) as soon as possible
 
 ### BEFORE YOUR WORKING TASK, 
 
-- <span style="color:red">*PLEASE*</span> DO NOT EDIT IN `main` branch!!!
+- <span style="color:red">*PLEASE*</span> DO NOT EDIT in `main` branch!!!
 
-- <span style="color:red">*PLEASE*</span> CHECKOUT IN ANOTHER BRANCH AND BRANCH NAME WILL HAVE THE FORMAT
+- <span style="color:red">*PLEASE*</span> checkout in ANOTHER branch and `{branch_name}` will have format
 
 - `{YOUR NAME}_{ID (if have)}_{SHORTEN_TASK_NAME}`
+
+-- You could try `git checkout -b {branch_name}` to create and switch to that branch
 
 ### END OF WORKING, 
 
