@@ -28,7 +28,7 @@ Now you can start the project by running `npm start`
 
 - PLEASE checkout in ANOTHER branch and `{branch_name}` will have format
 
-- `{YOUR NAME}_{ID (if have)}_{SHORTEN_TASK_NAME}`
+  - `{YOUR NAME}_{ID (if have)}_{SHORTEN_TASK_NAME}`
 
   - You could try `git checkout -b {branch_name}` to create and switch to that branch
 
