@@ -20,6 +20,7 @@ db.sequelize = sequelize;
 
 db.user = require('../models/user.model')(sequelize, DataTypes);
 db.role = require('../models/role.model')(sequelize, DataTypes);
+db.story = require('../models/story.model')(sequelize, DataTypes);
 
 db.role.belongsToMany(db.user, {
   through: "users_roles",
@@ -33,7 +34,11 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 })
 
-db.ROLES = ['user', 'admin']
+db.story.belongsTo(db.user, {
+  targetKey: 'id',
+  foreignKey: 'author_id' 
+})
 
+db.ROLES = ['user', 'admin']
 
 module.exports = db;
