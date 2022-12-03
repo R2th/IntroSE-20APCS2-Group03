@@ -1,39 +1,39 @@
 const { DataTypes } = require("sequelize");
-const { connection } = require("./database");
+const { sequelize } = require("./database");
 const dotEnv = require("dotenv");
 const chalk = require("chalk");
+const bcrypt = require("bcryptjs");
 
 dotEnv.config();
 
-connection
+sequelize
   .authenticate()
   .then(() =>
     console.log(chalk.green(`[DATABASE] "${process.env.PG_DB}" is connected`))
   )
   .catch((err) => console.log(err));
 
-const User = connection.define(
-  "users",
-  {
-    role: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    socket_id: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-  },
-  {
-    // freezeTableName: true,
-  }
-);
+const db = {};
 
-module.exports = {
-  User,
-};
+db.DataTypes = DataTypes;
+db.sequelize = sequelize;
+
+db.user = require('../models/user.model')(sequelize, DataTypes);
+db.role = require('../models/role.model')(sequelize, DataTypes);
+
+db.role.belongsToMany(db.user, {
+  through: "users_roles",
+  foreignKey: "roleId",
+  otherKey: "userId"
+})
+
+db.user.belongsToMany(db.role, {
+  through: "users_roles",
+  foreignKey: "userId",
+  otherKey: "roleId"
+})
+
+db.ROLES = ['user', 'admin']
+
+
+module.exports = db;

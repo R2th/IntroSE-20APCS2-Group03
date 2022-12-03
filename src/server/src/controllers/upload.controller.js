@@ -13,10 +13,15 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 2000000 //2MB 
+  }
+});
 
 const uploadImage = async (req, res) => {
-  await Score.update(
+  await Score.update( 
     { image: req.file.filename },
     {
       where: {

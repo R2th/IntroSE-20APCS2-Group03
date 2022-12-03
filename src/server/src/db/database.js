@@ -19,7 +19,7 @@ dotEnv.config();
 //   // console.log(res);
 // });
 
-module.exports.connection = new Sequelize(
+module.exports.sequelize = new Sequelize(
   process.env.PG_DB,
   process.env.PG_USERNAME,
   process.env.PG_PASSWORD,

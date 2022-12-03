@@ -41,6 +41,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(require("./routes/admin/content.route"));
 
+app.use(require("./routes/default/auth.route"));
+
+app.use(require("./routes/user/user.route"))
+
+
 // Configure a middleware for 404s and the error handler
 // app.use((req, res, next) => {
 //   res.status(404);
