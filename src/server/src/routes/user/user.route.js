@@ -12,25 +12,19 @@ router.get("/user/:username/", (req, res) =>{
 
 })
 
+//Get avatar of a specific user by their id
+router.get("user/:username/avatar", userController.getAvatar);
+
 //Upload avatar
 router.post(
-    "/user/me/avatar", 
+    "/user/:username/avatar",
+    verifyToken,
     uploadController.upload.single("image"),
-    uploadController.uploadImage);
+    userController.uploadAvatar);
 
 //Delete avatar
-router.delete("/user/me/avatar", (req, res) =>{})
+router.delete("/user/:username/avatar", (req, res) =>{})
 
-
-//Get avatar for a user by their id
-router.get("user/:id/avatar", async (req, res) =>{
-    try{
-        
-    }
-    catch(err){
-        res.status(404).send()
-    }
-})
 
 //Test accesss public resource without login
 router.get("/user/test/all", userController.publicAccess);

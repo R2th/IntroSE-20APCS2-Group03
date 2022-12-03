@@ -1,38 +1,58 @@
-const db = require('../db/index')
-const User = db.user
+const fs = require('fs');
+const db = require('../db/index');
+const User = db.user;
 
 const publicAccess = (req, res) =>{
     res.status(200).send("This is public content.");
 }
 
 const userPanel = (req, res) =>{
-    res.status(200).send("This is user's panel");
+    res.status(200).send({
+        message: "This is user's panel",
+        userId: req.userId
+    });
 }
 
 const adminPanel = (req, res) =>{
-    res.status(200).send("This is admin's panel");
+    res.status(200).send({
+        message: "This is admin's panel",
+    });
 }
 
-const getUserAvatar = async(req, res) =>{
-    try{
-        const user = User.findByPk(req.params.id);
+const uploadAvatar = async (req, res) => {
+    await User.update( 
+      { avatar: req.file.filename },
+      {
+        where: {
+          username: req.params.username,
+        },
+      }
+    );
+    res.send("file uploaded successfully");
+};
 
-        if(!user || !user.avatar){
-            throw new Error()
+const getAvatar = async (req, res) =>{
+    const user = await User.findOne({
+        where:{
+            username: req.params.username
         }
-
-        res.set('Content-Type', 'image/jpg')
-        res.send(user.avatar)
+    });
+    if(!user || !user.avatar){
+        throw new Error("Avatar not found!");
     }
-    catch(err){
-        res.status(404).send()
+    else{
+        const filePath = 'upload/' + user.avatar;
+        res.sendFile(filePath);
     }
 }
+
 
 
 
 module.exports = {
     publicAccess,
     userPanel,
-    adminPanel
+    adminPanel,
+    uploadAvatar,
+    getAvatar
 }
