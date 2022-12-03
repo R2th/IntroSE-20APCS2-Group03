@@ -13,7 +13,6 @@
     "moment": "^2.29.4",
     "node-sass": "^7.0.3",
     "npm-watch": "^0.11.0",
-    "pagedown": "^1.1.0",
     "postinstall": "^0.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -26,7 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "NODE_ENV=production react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postinstall": "link-module-alias",

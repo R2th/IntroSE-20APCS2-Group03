@@ -56,9 +56,10 @@ const Home = () => {
               </div>
               <div className="hoz-line"></div>
             </div>
-            {contents.slice(10).map((content) => (
-              <Card content={content} key={content.id} />
-            ))}
+            {contents &&
+              contents
+                .slice(10)
+                .map((content) => <Card content={content} key={content.id} />)}
             <div className="section">
               <div className="section_title">
                 <h1>Member only</h1>
@@ -70,9 +71,10 @@ const Home = () => {
               </div>
               <div className="hoz-line"></div>
             </div>
-            {contents.slice(10, 20).map((content) => (
-              <Card content={content} key={content.id} />
-            ))}
+            {contents &&
+              contents
+                .slice(-10)
+                .map((content) => <Card content={content} key={content.id} />)}
             <div className="section">
               <div className="section_title">
                 <h1>For you</h1>
