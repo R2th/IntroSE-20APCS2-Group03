@@ -1,6 +1,7 @@
 .card-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   gap: 10px;
   background: linear-gradient(white, white) padding-box,
     linear-gradient(to bottom, #3b82f6, #d946ef) border-box;
@@ -11,11 +12,11 @@
   width: 1000px;
   min-height: 180px;
   margin: 20px;
-  &:hover {
-    transition: all ease-in 0.3s;
-    transform: scale(1.05);
-    margin: 30px;
-  }
+  // &:hover {
+  //   transition: all ease-in 0.3s;
+  //   transform: scale(1.05);
+  //   margin: 30px;
+  // }
   .card-fullWidth {
     padding: 20px;
 
@@ -57,7 +58,7 @@
         .contents_short {
           color: #464646;
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
           font-size: 14px;
@@ -73,11 +74,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    // background: linear-gradient(to right, #3b82f6, #d946ef);
+    padding: 10px;
     img {
       height: 100%;
       width: 200px;
-      object-fit: none;
+      object-fit: scale-down;
       object-position: center center;
+      background: linear-gradient(white, white) padding-box,
+        linear-gradient(to bottom, #3b82f6, #d946ef) border-box;
+      border-radius: 10px;
+      border: 10px solid transparent;
     }
   }
 }
