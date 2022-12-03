@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) =>{
-    const Story = sequelize.define("story",{
+    const Draft = sequelize.define("draft",{
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -40,5 +40,5 @@ module.exports = (sequelize, DataTypes) =>{
       // freezeTableName: true,
       // timestamps: true,
     });
-  return Story;
+  return Draft;
 }

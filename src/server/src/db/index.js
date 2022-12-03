@@ -21,6 +21,9 @@ db.sequelize = sequelize;
 db.user = require('../models/user.model')(sequelize, DataTypes);
 db.role = require('../models/role.model')(sequelize, DataTypes);
 db.story = require('../models/story.model')(sequelize, DataTypes);
+db.draft = require('../models/draft.model')(sequelize, DataTypes);
+db.reaction = require('../models/reaction.model')(sequelize, DataTypes);
+db.comment = require('../models/comment.model')(sequelize, DataTypes);
 
 db.role.belongsToMany(db.user, {
   through: "users_roles",
@@ -37,6 +40,31 @@ db.user.belongsToMany(db.role, {
 db.story.belongsTo(db.user, {
   targetKey: 'id',
   foreignKey: 'author_id' 
+})
+
+db.draft.belongsTo(db.user, {
+  targetKey: 'id',
+  foreignKey: 'author_id' 
+})
+
+db.reaction.belongsTo(db.user, {
+  targetKey: 'id',
+  foreignKey: 'user_id' 
+})
+
+db.reaction.belongsTo(db.story, {
+  targetKey: 'id',
+  foreignKey: 'story_id'
+})
+
+db.comment.belongsTo(db.user, {
+  targetKey: 'id',
+  foreignKey: 'user_id' 
+})
+
+db.comment.belongsTo(db.story, {
+  targetKey: 'id',
+  foreignKey: 'story_id'
 })
 
 db.ROLES = ['user', 'admin']
