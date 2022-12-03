@@ -1,0 +1,1322 @@
+{
+  "data": [
+    {
+      "id": 65711,
+      "title": "Blog#54: Design Patterns: Chain of Responsibility Pattern trong TypeScript 😊 (Series: Bón hành TypeScript - PHẦN 4)",
+      "slug": "gwd43B0rVX9",
+      "url": "https://viblo.asia/p/blog54-design-patterns-chain-of-responsibility-pattern-trong-typescript-series-bon-hanh-typescript-phan-4-gwd43B0rVX9",
+      "user_id": 74229,
+      "moderation": null,
+      "transliterated": "blog54-design-patterns-chain-of-responsibility-pattern-trong-typescript-series-bon-hanh-typescript-phan-4",
+      "contents_short": "\n\nMình là TUẤN hiện đang là một Full-stack Web Developer tại Tokyo 😊.\nNếu bạn thấy Blog này hay xin hãy cho mình một like và đăng ký để ủng hộ mình nhé 😉.\n\nCách sử dụng Chain of Responsibility bằng TypeScript để giải quyết các vấn đề thực tế trong các project web.\n\nChào mừng bạn đến với loạt bài Design Patterns trong TypeScript, loạt bài này mình sẽ giới thiệu một số Design Patterns hữu ích tro...",
+      "contents": "![image.png](https://images.viblo.asia/1958d061-17b7-4a0e-915d-a36d09466071.png)\n\nMình là TUẤN hiện đang là một Full-stack Web Developer tại Tokyo 😊.\nNếu bạn thấy Blog này hay xin hãy cho mình một like và đăng ký để ủng hộ mình nhé 😉.\n\n**Cách sử dụng Chain of Responsibility bằng TypeScript để giải quyết các vấn đề thực tế trong các project web.**\n\nChào mừng bạn đến với loạt bài **Design Patterns trong TypeScript**, loạt bài này mình sẽ giới thiệu một số Design Patterns hữu ích trong phát triển web bằng TypeScript.\n\nCác **Design Patterns** rất quan trọng đối với các web developer và chúng ta có thể code tốt hơn bằng cách thành thạo chúng. Trong bài viết này, mình sẽ sử dụng **TypeScript** để giới thiệu **Chain of Responsibility**.\n\nCác Design Patterns rất quan trọng đối với các Dev web và chúng ta có thể good code hơn bằng cách thành thạo chúng. Trong bài viết này, mình sẽ sử dụng **TypeScript** để giới thiệu **Chain of Responsibility** .\n\nChain of Responsibility\n----\n\n**Chain of Responsibility** là một cách để tránh ghép nối giữa `sender` và `receiver` của các request bằng cách cho nhiều đối tượng xử lý request. Trong Chain of Responsibility, nhiều đối tượng được kết nối bằng một tham chiếu từ mỗi đối tượng đến đối tượng tiếp theo của nó để tạo thành một chuỗi (next,next,next...). Các request được truyền dọc theo chuỗi cho đến khi một trong các đối tượng trong chuỗi quyết định xử lý request.\n\n![image.png](https://images.viblo.asia/3d2f43d8-1321-4c0f-9ebc-48c53b46a1ce.png)\n\nCác vị trí khác nhau trong công ty có trách nhiệm và quyền hạn khác nhau. Lấy ví dụ về quy trình nghỉ của một công ty, khi xin nghỉ chỉ cần được sự đồng ý của tổ trưởng, không cần phải chuyển cho cấp trên và giám đốc. Nếu một liên kết trong **Chain of Responsibility** không thể xử lý request hiện tại, nếu có liên kết tiếp theo, request sẽ được chuyển tiếp đến liên kết tiếp theo để xử lý.\n\nTrong quá trình phát triển phần mềm, đối với **Chain of Responsibility**, một kịch bản ứng dụng phổ biến là **middleware**. Chúng ta hãy xem cách sử dụng **Chain of Responsibility** để xử lý các request.\n\nĐể hiểu rõ hơn về đoạn code sau, trước tiên chúng ta hãy xem sơ đồ UML tương ứng:\n\n![image.png](https://images.viblo.asia/a30c54c5-8447-4b76-8837-5a04534b53eb.png)\n\nTrong hình trên, chúng ta xác định một Interface `Handler`. Hai hàm sau đây được định nghĩa trong Interface này:\n\n*   **use(h: Handler): Handler** => Dùng để đăng ký handler (middleware)\n*   **get(url: string, callback: (data: any) => void): void** => Đăng ký get request handler\n\n**Handler interface**\n\n```javascript\ninterface Handler {\n  use(h: Handler): Handler;\n  get(url: string, callback: (data: any) => void): void;\n}\n```\n\nSau đó, chúng ta định nghĩa một abstract Class `AbstractHandler`, gói gọn logic xử lý của **Chain of Responsibility**. Tức là kết hợp các trình xử lý khác nhau để tạo thành một chuỗi tham chiếu.\n\n**AbstractHandler abstract class**\n\n```javascript\nabstract class AbstractHandler implements Handler {\n  next!: Handler;\n  use(h: Handler) {\n    this.next = h;\n    return this.next;\n  }\n  get(url: string, callback: (data: any) => void) {\n    if (this.next) {\n      return this.next.get(url, callback);\n    }\n  }\n}\n```\n\nDựa trên abstract Class `AbstractHandler`, chúng ta định nghĩa `AuthMiddleware` và `LoggerMidddleware` tương ứng. `AuthMiddleware` middleware được sử dụng để xử lý authentication user và `LoggerMidddleware` middleware được sử dụng để ghi log cho từng request.\n\n**AuthMiddleware class**\n\n```javascript\nclass AuthMiddleware extends AbstractHandler {\n  isAuthenticated: boolean;\n  constructor(username: string, password: string) {\n    super();\n    this.isAuthenticated = false;\n    if (username === \"bytefer\" && password === \"666\") {\n      this.isAuthenticated = true;\n    }\n  }\n  get(url: string, callback: (data: any) => void) {\n    if (this.isAuthenticated) {\n      return super.get(url, callback);\n    } else {\n      throw new Error(\"Not Authorized\");\n    }\n  }\n}\n```\n\n**LoggerMiddleware class**\n\n```javascript\nclass LoggerMiddleware extends AbstractHandler {\n  get(url: string, callback: (data: any) => void) {\n    console.log(`Request url is: ${url}`);\n    return super.get(url, callback);\n  }\n}\n```\n\nVới middleware `AuthMiddleware` và `LoggerMidddleware`, hãy định nghĩa một `Route class` để đăng ký các middleware này.\n\n**Route class**\n\n```javascript\nclass Route extends AbstractHandler {\n  urlDataMap: { [key: string]: any };\n  constructor() {\n    super();\n    this.urlDataMap = {\n      \"/api/todos\": [\n        { title: \"Learn Design Pattern\" },\n      ],\n      \"/api/random\": () => Math.random(),\n    };\n  }\n get(url: string, callback: (data: any) => void) {\n    super.get(url, callback);\n  if (this.urlDataMap.hasOwnProperty(url)) {\n      const value = this.urlDataMap[url];\n      const result = typeof value === \"function\" ? value() : value;\n      callback(result);\n    }\n  }\n}\n```\n\nSau khi định nghĩa `Route` Route class, chúng ta có thể sử dụng nó và đăng ký các middleware theo cách sau:\n\n```javascript\nconst route = new Route();\nroute.use(new AuthMiddleware(\"bytefer\", \"666\"))\n .use(new LoggerMiddleware());\nroute.get(\"/api/todos\", (data) => {\n  console.log(JSON.stringify({ data }, null, 2));\n});\nroute.get(\"/api/random\", (data) => {\n  console.log(data);\n});\n```\n\n![image.png](https://images.viblo.asia/741b7268-5ff8-4491-b540-de4af0856d99.png)\n\nKhi bạn chạy thành công đoạn code trên, output tương ứng được hiển thị trong hình sau:\n\n![image.png](https://images.viblo.asia/3bf89619-0f33-40f2-bb3e-ffdb3933fb63.png)\n\nCác tình huống sử dụng của **Chain of Responsibility**:\n\n*   Muốn gửi request tới một trong nhiều đối tượng mà không chỉ định rõ ràng đối tượng nhận request.\n*   Có nhiều đối tượng có thể xử lý một request và đối tượng nào xử lý request được xác định tự động trong thời gian chạy và Client chỉ cần gửi request đến Chain mà thôi.\n\nRoundup\n----\nNhư mọi khi, mình hy vọng bạn thích bài viết này và học thêm được điều gì đó mới.\n\nCảm ơn và hẹn gặp lại các bạn trong những bài viết tiếp theo! 😍\n\nNếu bạn thấy Blog này hay xin hãy cho mình một like và đăng ký để ủng hộ mình nhé. Thank you.😉\n\nRef\n----\n*https://tuan200tokyo.blogspot.com/2022/11/blog54-design-patterns-chain-of.html",
+      "published_at": "2022-12-03T01:56:59.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T02:15:08.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 4,
+      "points": 0,
+      "views_count": 2,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "vi",
+      "is_video": false,
+      "thumbnail_url": "https://images.viblo.asia/1958d061-17b7-4a0e-915d-a36d09466071.png",
+      "user": {
+        "data": {
+          "id": 74229,
+          "url": "https://viblo.asia/u/Clarence161095",
+          "avatar": "82afa6c9-073b-419a-aceb-ae889b85c554.jpg",
+          "name": "NGUYỄN ANH TUẤN",
+          "username": "Clarence161095",
+          "followers_count": 129,
+          "reputation": 1981,
+          "posts_count": 54,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "design-patterns",
+            "name": "Design Patterns",
+            "primary": false,
+            "image": "https://placehold.jp/16/16a085/ffffff/80x80.jpg?text=Design+Patterns&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "chain-of-responsibility-pattern",
+            "name": "Chain of Responsibility Pattern",
+            "primary": false,
+            "image": "https://placehold.jp/16/d35400/ffffff/80x80.jpg?text=Chain+of+Responsibility+Pattern&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "typescript",
+            "name": "TypeScript",
+            "primary": false,
+            "image": "https://placehold.jp/16/16a085/ffffff/80x80.jpg?text=TypeScript&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "javascript",
+            "name": "JavaScript",
+            "primary": false,
+            "image": "https://placehold.jp/16/16a085/ffffff/80x80.jpg?text=JavaScript&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65689,
+      "title": "Tổng quan về Kotlin Multiplatform Mobile (KMM)",
+      "slug": "5pPLkGRyLRZ",
+      "url": "https://viblo.asia/p/tong-quan-ve-kotlin-multiplatform-mobile-kmm-5pPLkGRyLRZ",
+      "user_id": 105100,
+      "moderation": null,
+      "transliterated": "tong-quan-ve-kotlin-multiplatform-mobile-kmm",
+      "contents_short": "1. Kotlin Multiplatform Mobile (KMM) là gì?\nTrong bài viết này, chúng ta sẽ tìm hiểu Kotlin Multiplatform Mobile là gì và có thể sử dụng nó như thế nào trong dự án của mình. Chúng ta sẽ xem cách thiết lập (set-up) môi trường và chuẩn bị cho việc tạo một ứng dụng di động đa nền tảng (cross-platform mobile application) đầu tiên của mình với KMM! <br>\nVậy KMM là gì? KMM là viết tắt của Kotlin Mult...",
+      "contents": "# 1. Kotlin Multiplatform Mobile (KMM) là gì?\nTrong bài viết này, chúng ta sẽ tìm hiểu **Kotlin Multiplatform Mobile** là gì và có thể sử dụng nó như thế nào trong dự án của mình. Chúng ta sẽ xem cách thiết lập (set-up) môi trường và chuẩn bị cho việc tạo một ứng dụng di động đa nền tảng (cross-platform mobile application) đầu tiên của mình với KMM! <br>\nVậy KMM là gì? KMM là viết tắt của Kotlin Multiplatform Mobile. Đây là một SDK để phát triển di động trên cả iOS lẫn Android. Nó sử dụng các khả năng đa nền tảng của Kotlin, bao gồm các công cụ (tools) và tính năng (features) khác nhau được thiết kế để cải thiện trải nghiệm xây dựng các *mobile cross-platform applications* (Hình 1). \n\n![](https://images.viblo.asia/1be87b9c-2237-4f44-981b-6563c2ed51d0.png)\n<div align=\"center\">Hình 1: Tổng quan về Kotlin Multiplatform Mobile</div>\n<br>\nMình sẽ nói về tất cả các công cụ này trong các bài viết sắp tới! Dù bạn đang có dự định bắt đầu làm một project hay có một codebase đã được viết từ trước, bạn có thể tích hợp KMM một cách liền mạch. Shared code (ở trong 1 project KMM thì có 3 thư mục quan trọng là androidApp, iosApp và shared), được viết bằng Kotlin, được biên dịch thành JVM bytecode với Kotlin / JVM (giống như phát triển Android thông thường) và các tệp nhị phân native (native binaries) cho iOS với Kotlin / Native, vì vậy bạn có thể sử dụng các mô-đun KMM của mình giống như bất kỳ thư viện di động thông thường nào khác. (Hình 2)\n\n![](https://images.viblo.asia/31ab95ba-3502-4753-aaee-8fbfcecf5189.png)\n<div align=\"center\" >\n    Hình 2: cơ chế vận hành Module KMM\n</div>\n<br>\n  \nĐiều đó cũng có nghĩa là KMM sẽ không áp đặt bất kỳ hạn chế nào đối với cách bạn phát triển giao diện người dùng của ứng dụng. Bạn có thể tự do sử dụng bất kỳ phong cách và khuôn khổ nào bạn muốn, bạn thích làm gì thì làm, bao gồm cả những kiểu hiện đại nhất, chẳng hạn như Jetpack Compose cho Android hoặc SwiftUl cho iOS.  <br>\nMình tin rằng vẻ đẹp thật sự của KMM nằm ở tính linh hoạt của nó. KMM cho phép bạn chia sẻ những gì bạn muốn chia sẻ! Nó được thiết kế để giúp các nhà phát triển tái sử dụng (reuse) business logic của họ giữa các nền tảng di động (mobile platforms), chỉ viết code dành riêng cho từng nền tảng khi cần thiết, như triển khai native Ul hoặc khi làm việc với các API dành riêng cho nền tảng (platform-specific APIs).\n\n![](https://images.viblo.asia/76fcc09e-b77b-4db0-b20b-dd2b0a9d2c98.png)\n<div align=\"center\" >\n    Hình 3: Native code và Shared code\n</div>\n\n# 2. Sử dụng Kotlin Multiplatform\nKhả năng sử dụng sức mạnh của từng nền tảng mà không cần bất kỳ chi phí nào trong khi vẫn giữ logic trừu tượng cho phép bạn sử dụng KMM theo bất kỳ cách nào bạn muốn. Bạn có thể quyết định chỉ chia sẻ các lớp dữ liệu (Hình 4 - Data/Core), sử dụng các thư viện phổ biến như Ktor hoặc SQLDelight.\n\n![Presentation.png](https://images.viblo.asia/9dee9037-154f-4d41-8967-c739b54351b0.png)\n<div align=\"center\" >\n    Hình 4: Cấu trúc một Project KMM - KMM Module lúc này chỉ có Data/Core\n</div>\n<br>\nCó thể bạn đã xây dựng được một ứng dụng di động từ trước, trong trường hợp đó bạn có thể sử dụng KMM khi cần triển khai một số thuật toán xử lý dữ liệu mới. Logic này có thể dễ dàng tích hợp vào các dự án hiện có, đảm bảo hành vi giống hệt nhau trên cả hai nền tảng. (Hình 5 - Business / Domain)\n\n![Presentation.png](https://images.viblo.asia/8f4724b9-49c8-49d5-8328-576025738cc4.png)\n<div align=\"center\" >\n    Hình 5: Cấu trúc một Project KMM - KMM Module lúc này có thêm Business / Domain\n</div>\n<br>\nNếu các ứng dụng iOS và Android của bạn đủ giống nhau, bạn có thể sử dụng KMM để chia sẻ logic trình bày (Hình 6 - Presentation), cho phép bạn sử dụng một trình bày, mô hình chế độ xem hoặc bộ điều khiển chế độ xem hoặc thậm chí logic điều hướng. Trong các bài viết tiếp theo, chúng ta sẽ xem xét các dự án và chiến lược chia sẻ khác nhau. \n\n![Presentation.png](https://images.viblo.asia/a7834699-13a4-4639-a99f-046156e00956.png)\n<div align=\"center\" >\n    Hình 6: Cấu trúc một Project KMM - KMM Module lúc này có thêm Presentation - ở Native chỉ hiện thị UI,các Module khác đã có thể làm việc trực tiếp tại KMM Module mà không cần đụng đến Native.\n</div>\n\n# 3. Cần có gì để Xây dựng KMM Project (Prerequisites)\nKhái niệm vậy đủ rồi. Hãy nói về những gì chúng ta cần để bắt đầu với KMM. Mình hy vọng bạn sẽ hào hứng khi đọc bài viết này - nó thực sự không nhiều và ta có thể thực hiện hầu hết các thiết lập chỉ trong vài phút. Phát triển mobile cross-platform applications yêu cầu cần có Xcode để build Ứng dụng iOS. Điều này có nghĩa là bạn sẽ cần MacBook với hệ điều hành MacOS để phát triển các ứng dụng iOS với KMM, trong khi bạn vẫn có thể chạy phần chỉ dành cho Android trên máy Windows hoặc Linux. Bạn cũng sẽ cần Android Studio để code bằng ngôn ngữ lập trình Kotlin cho cả ứng dụng Android và *cross-platform module*. Ngoài ra, bạn sẽ cần Gradle để build tất cả mấy cái ở trên. \n\n\nTất cả các dự án Kotlin Multiplatform đều được tạo bằng plugin **Kotlin Multiplatform Gradle**. Và cuối cùng, để sử dụng Gradle, bạn sẽ cần cài đặt *Java Development Kit (jdk)* trên máy của mình.\n\nTóm lại, các công cụ cần có gồm:\n* Android Studio: để tạo multiplatform applications và run app trên máy ảo hoặc máy thật.\n* XCode (chỉ chạy trên Macbook)\n* Gradle\n* Kotlin Multiplatform Mobile plugin\n* JDK\n* Kotlin plugin: Check nó tương tự như KMM Plugin, vào **Plugins | Installed.** Check Kotlin version ở **Tools | Kotlin | Configure Kotlin Plugin Updates.**\n\nInstall JDK theo hướng dẫn: https://www.geeksforgeeks.org/download-and-install-java-development-kit-jdk-on-windows-mac-and-linux/\n\nTải Xcode trên appStore MacOS để tải version mới nhất hoặc tải Xcode theo version https://xcodereleases.com/\n\nTải Android Studio ngay trên https://developer.android.com/android-studio/download\n\nTất tần tật tài liệu về KMM tại: https://kotlinlang.org/docs/multiplatform-mobile-getting-started.html\n# 4. Kotlin for Android Studio\nĐầu tiên bạn nên cài đặt Plugin Kotlin Multiplatform Mobile cho Android Studio. \n\nCác bước cài đặt như sau:\n\n1) Chạy App **Android Studio**\n\n2) Chọn **File -> Settings** (**Preferences** đối với Máy MacOS )\n\n3) Plugins \n4) Ở Marketplace -> Search **Kotlin Multiplatform Mobile** -> Nhấn **Install** (Hình 7)\n\n![Screenshot 2022-12-02 at 20.41.20.png](https://images.viblo.asia/de9bb89b-e042-4dc9-a639-736f434bc447.png)\n\n<div align=\"center\" >\n    Hình 7: Cài đặt Plugin Kotlin Multiplatform Mobile cho Android Studio\n</div>\n<br>\nPlugin này cung cấp tích hợp với trình mô phỏng iOS và thiết bị iOS trong Android Studio. Bạn sẽ có thể chạy và gỡ lỗi ứng dụng và thử nghiệm của mình trên iOS từ Android Studio mà không cần phải chuyển đổi IDE trong khi làm việc trên phần shared part của code. Plugin cũng cung cấp các trình hướng dẫn tiện dụng để tạo các KMM project mới hoặc thêm mô-đun vào các dự án Android hiện có. Với trình hướng dẫn “new project”, bạn có thể tạo một cross-platform mobile application sẵn sàng để chạy chỉ trong vài cú nhấp chuột!\n\nVậy là môi trường của chúng ta đã được thiết lập, 2 hình 8 và 9 là hình ảnh project sử dụng KMM của mình.\nCác bạn có thể tham khảo source code ở đây: https://github.com/misterbo271/mpvKmmApp\n\n![Screenshot 2022-12-02 at 19.25.50.png](https://images.viblo.asia/29dac05f-8b5c-450d-922a-e406248c408c.png)\n<div align=\"center\" >\n    Hình 8: Chạy iOS Simulator ngay trên Android Studio mà không cần XCode\n</div>\n<br>\n\n![Screenshot 2022-12-02 at 19.28.27.png](https://images.viblo.asia/5dd440d2-03f8-4827-b568-9f4033923a0e.png)\n<div align=\"center\" >\n    Hình 9: Kotlin Multiplatform Mobile Project\n</div>\n<br>\n\nCảm ơn bạn đã đọc bài viết, chờ đón những nội dung về Kotlin, KMM trong các bài viết tiếp theo nhé.\n\n# Preferences\n* Get started with Kotlin Multiplatform Mobile, *Last modified: 21 October 2022*, url: https://kotlinlang.org/docs/multiplatform-mobile-getting-started.html\n* FAQ - What is Kotlin Multiplatform Mobile?, *Last modified: 04 November 2022*, url: https://kotlinlang.org/docs/multiplatform-mobile-faq.html",
+      "published_at": "2022-12-02T13:52:48.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T02:22:02.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 9,
+      "points": 1,
+      "views_count": 18,
+      "clips_count": 1,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "vi",
+      "is_video": false,
+      "thumbnail_url": "https://images.viblo.asia/1be87b9c-2237-4f44-981b-6563c2ed51d0.png",
+      "user": {
+        "data": {
+          "id": 105100,
+          "url": "https://viblo.asia/u/mienpv",
+          "avatar": "ca64ebde-2d89-4f14-8a41-92429c2c507f.jpg",
+          "name": "Miên PV",
+          "username": "mienpv",
+          "followers_count": 0,
+          "reputation": 7,
+          "posts_count": 1,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "android",
+            "name": "Android",
+            "primary": false,
+            "image": "https://placehold.jp/16/8e44ad/ffffff/80x80.jpg?text=Android&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "android-kotlin",
+            "name": "android kotlin",
+            "primary": false,
+            "image": "https://placehold.jp/16/2980b9/ffffff/80x80.jpg?text=android+kotlin&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "android-va-ios",
+            "name": "android và ios",
+            "primary": false,
+            "image": "https://placehold.jp/16/f39c12/ffffff/80x80.jpg?text=android+và+ios&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "androidios",
+            "name": "AndroidiOS",
+            "primary": false,
+            "image": "https://placehold.jp/16/c0392b/ffffff/80x80.jpg?text=AndroidiOS&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "multiplatform",
+            "name": "MultiPlatform",
+            "primary": false,
+            "image": "https://placehold.jp/16/8e44ad/ffffff/80x80.jpg?text=MultiPlatform&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65760,
+      "title": "[K8S basic] Kubernetes Secrets",
+      "slug": "zOQJwYrdVMP",
+      "url": "https://viblo.asia/p/k8s-basic-kubernetes-secrets-zOQJwYrdVMP",
+      "user_id": 78826,
+      "moderation": null,
+      "transliterated": "k8s-basic-kubernetes-secrets",
+      "contents_short": "Secret là gì\nGiới thiệu về Secret\nSecret tương tự với configmap, là một tài nguyên mức namespace trên k8s dùng để lưu trữ các dữ liệu dạng key-value. Điểm khác biệt lớn nhất giữa secret và configmap đó là secret sinh ra để lưu những thông tin nhạy cảm (sensitive data) như username, password, token... và các thông tin này sẽ được mã hóa bằng base64 khi lưu vào hệ thống.\n\nVề cách sử dụng thì gần ...",
+      "contents": "# Secret là gì\n## Giới thiệu về Secret\nSecret tương tự với configmap, là một tài nguyên mức namespace trên k8s dùng để lưu trữ các dữ liệu dạng key-value. Điểm khác biệt lớn nhất giữa secret và configmap đó là secret sinh ra để lưu những thông tin nhạy cảm (sensitive data) như username, password, token... và các thông tin này sẽ được mã hóa bằng base64 khi lưu vào hệ thống.\n\nVề cách sử dụng thì gần như không có khác biệt gì so với configmap, chúng ta sẽ vẫn có một số cách sử dụng cơ bản như:\n- Tạo biến môi trường từ key của secret\n- Sử dụng secret như một volume chứa các file (ví dụ các file certificate, key..)\n\n![image.png](https://images.viblo.asia/c6d86210-ebf3-4f2c-96d1-57718a71cfd6.png)\n\n## Cấu trúc file manifest của Secret\nMột đối tượng secret có dạng như sau:\n```\napiVersion: v1\nkind: Secret\nmetadata:\n  name: my-secret\ntype: Opaque\nstringData:\n  EMAIL: \"viettq@gmail.com\"\n  PASSWORD: \"Try2HackM3H3H3\"\n  secret.txt: |\n    My supersecret\n```\nCơ bản thì cấu trúc này khá giống với configmap, nhưng nó có thêm một tham số \"type\". \n\n**Secret có nhiều loại khác nhau cho các mục đích sử dụng khác nhau:**\n![image.png](https://images.viblo.asia/4c8286af-9bf9-476c-8cfa-4375616d4000.png)\n\nThông thường thì chúng ta sẽ làm việc thường xuyên nhất với loại secret là Opaque. Trong bài này chúng ta sẽ tìm hiểu cách tạo và sử dụng loại secret này.\n\n\n# Các usecase sử dụng secret\n## Các cách tạo secret\nCó một số cách phổ biến dùng để tạo secret từ câu lệnh như sau:\n- Tạo từng giá trị key/value cụ thể\n- Tạo từ file\n- Tạo từ folder\n- Tạo từ file và lưu vào khóa mới\n- Tạo từ file env (file env chứa các thông tin dạng key:value tương tự với configmap)\n\n![image.png](https://images.viblo.asia/79204994-ab36-4ac2-9f32-0882feacf9be.png)\n\n### Tổng hợp lệnh tạo secret\n**Tạo secret từ giá trị cụ thể**:\n```\nkubectl -n [namespace] create secret generic [secret-name] --from-literal [key1=value1] --from-literal [key2=value2] --from-literal [keyN=valueN]\n```\n**Tạo secret từ file** ***filename***:\n```\nkubectl -n [namespace] create secret generic [secret-name] --from-file [filename]\n```\n\n**Tạo secret từ thư mục** ***config-dir***:\n```\nkubectl -n [namespace] create secret generic [secret-name] --from-file [secret-dir]\n```\n**Tạo secret từ file biến môi trường có tên** ***env-file***:\n```\nkubectl -n [namespace] create secret generic [secret-name] --from-env-file [env-file]\n```\n**Kiểm tra nội dung của secret vừa tạo**:\n```\nkubectl -n [namespace] get secret [secret-name] -oyaml\n```\n\n### Tạo secret bằng cách gán giá trị từng key-value cụ thể (from-literal)\n**Ví dụ:**\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo create secret generic sec-from-literal --from-literal USER=viettq --from-literal PASSWORD=\"VeryHard2H@ck\"\nsecret/sec-from-literal created\n```\n**Kiểm tra kết quả tạo secret:**\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo get secrets sec-from-literal -oyaml\n```\n```\napiVersion: v1\ndata:\n  PASSWORD: VmVyeUhhcmQySEBjaw==\n  USER: dmlldHRx\nkind: Secret\nmetadata:\n  name: sec-from-literal\n  namespace: secret-demo  \ntype: Opaque\n```\n**Các bạn sẽ thấy giá trị của 2 key USER và PASSWORD đã bị mã hóa. Để xem nội dung ta phải giải mã bằng base64:**\n```\n[sysadmin@vtq-cicd secret]$ echo \"VmVyeUhhcmQySEBjaw==\" |base64 -d\nVeryHard2H@ck\n```\n\n### Tạo secret từ file (sử dụng nội dung file)\nTạo một file có nội dung như sau:\n```\ncat <<EOF>> secret-file.conf\n> USER=\"viettq\"\n> PASS=\"ABC_123456\"\n> EOF\n```\nTạo secret từ file có tên `secret-file.conf` với keyword là `--from-file=file-name`:\n```\nkubectl -n secret-demo create secret generic sec-from-file --from-file=secret-file.conf\n```\nKết quả:\n```\nkubectl -n secret-demo get secret sec-from-file -oyaml\n```\n\n```\napiVersion: v1\ndata:\n  secret-file.conf: VVNFUj0idmlldHRxIgpQQVNTPSJBQkNfMTIzNDU2Igo=\nkind: Secret\nmetadata:  \n  name: sec-from-file\n  namespace: secret-demo  \ntype: Opaque\n```\nKết quả ta đã tạo một secret có **key** có tên là tên file, **value** là nội dung file. Nội dung file đã được mã hóa dạng base64.\n\n### Tạo secret từ một thư mục chứa các file \nCách tạo này cũng thường dùng khi ta cần gán cả một thư mục chứa các file vào secret và sau này sẽ được mount vào Pod để sử dụng dưới dạng file và volumes. Ta thường gặp với case là thư mục chứ file cert (.crt) và key (.key).\n\nTạo thư mục và các file config mẫu trong đó có nội dung như sau:\n```\n[sysadmin@vtq-cicd]$ mkdir secret-dir\n[sysadmin@vtq-cicd]$ cd secret-dir\n[sysadmin@vtq-cicd secret-dir]$ ll\ntotal 8\n-rw-rw-r-- 1 sysadmin sysadmin 26 Nov 28 21:39 login-policy.conf\n-rw-rw-r-- 1 sysadmin sysadmin 55 Nov 28 21:37 password-policy.conf\n[sysadmin@vtq-cicd secret-dir]$ cat login-policy.conf\nlock_after=5\nlock_time=60\n[sysadmin@vtq-cicd secret-dir]$ cat password-policy.conf\npassword_length=8\nexpire_day=30\nspecial_character=true\n```\n\nNhư vậy ở thư mục `secret-dir` đang có 2 file config có tên `login-policy.conf` và `password-policy.conf`.\nTa sẽ tạo secret từ thư mục trên để lưu cả 2 file config này vào secret:\n```\n[sysadmin@vtq-cicd ]$ ls -lrt\ndrwxrwxr-x 2 sysadmin sysadmin  59 Nov 28 21:39 secret-dir\n[sysadmin@vtq-cicd ]$ kubectl -n secret-demo create secret generic sec-from-dir --from-file=secret-dir\n```\nKết quả:\n```\nkubectl -n secret-demo get secret sec-from-dir -oyaml\n```\n```\napiVersion: v1\ndata:\n  login-policy.conf: bG9ja19hZnRlcj01CmxvY2tfdGltZT02MAo=\n  password-policy.conf: cGFzc3dvcmRfbGVuZ3RoPTgKZXhwaXJlX2RheT0zMApzcGVjaWFsX2NoYXJhY3Rlcj10cnVlCg==\nkind: Secret\nmetadata: \n  name: sec-from-dir\n  namespace: secret-demo  \ntype: Opaque\n \n```\nNhư vậy secret được tạo ra với 2 key là tên của 2 file trong thư mục mà chúng ta tạo config. Value của các key đó chính là nội dung của file.\n\n### Tạo secret từ file biến môi trường\nSử dụng trong trường hợp ta đã có file biến môi trường có nội dung dạng key=value và muốn tạo ra secret với các key/value tương ứng với file môi trường.\n\nTạo file biến môi trường mẫu:\n```\n[sysadmin@vtq-cicd secret]$ cat sec-env.conf\nUSER=viettq\nPASS=Abc_123456\n```\nThực hiện lệnh tạo secret với tham số `--from-env-file=`\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo create secret generic sec-from-env-file --from-env-file=sec-env.conf\nsecret/sec-from-env-file created\n```\nKiểm tra kết quả:\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo get secrets sec-from-env-file -oyaml\n```\n```\napiVersion: v1\ndata:\n  PASS: QWJjXzEyMzQ1Ng==\n  USER: dmlldHRx\nkind: Secret\nmetadata:\n  name: sec-from-env-file\n  namespace: secret-demo  \ntype: Opaque\n```\n\nNhư vậy một biến môi trường tương ứng sẽ là một key-value trong secret. Nó khác với việc tạo secret từ file thông thường thì tên file là key, nội dung file là value\n\n### Tạo secret từ một file vào một key xác định\nTrong trường hợp ta muốn tạo secret từ nội dung một file tên là A, nhưng ta không muốn tên của key trong secret là tên của file A mà là một tên gì đó gợi nhớ hơn, thì ta sẽ thực hiện theo cách này.\n\nTạo file mẫu:\n```\n[sysadmin@vtq-cicd secret]$ cat secret-file.conf\nUSER=\"viettq\"\nPASS=\"ABC_123456\"\n```\nSau đó ta sẽ tạo một secret có key là **my-secret-key** và value là nội dung file trên:\n```\nkubectl -n secret-demo create secret generic sec-from-file-to-key --from-file=my-secret-key=secret-file.conf\nsecret/sec-from-file-to-key created\n```\nKết quả:\n\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo get secret sec-from-file-to-key -oyaml\n```\n```\napiVersion: v1\ndata:\n  my-secret-key: VVNFUj0idmlldHRxIgpQQVNTPSJBQkNfMTIzNDU2Igo=\nkind: Secret\nmetadata:\n  name: sec-from-file-to-key\n  namespace: secret-demo\ntype: Opaque\n```\nCác bạn có thể thấy, nếu tạo secret từ file thông thường thì tên key sẽ là tên của file. Còn dùng cách này tao có thể set tên key theo ý muốn.\n\n## Sử dụng secret trong Pod\n### Sử dụng key-value cụ thể trong secret thành biến môi trường trong Pod\nTạo file manifest `sec-as-env.yaml` có nội dung như sau:\n```\napiVersion: v1\nkind: Pod\nmetadata:\n  name: sec-as-env\nspec:\n  containers:\n  - name: env-print-demo\n    image: busybox\n    env:\n    - name: USER\n      valueFrom:\n        secretKeyRef:\n          name: sec-from-literal\n          key: USER\n    - name: PASSWORD\n      valueFrom:\n        secretKeyRef:\n          name: sec-from-literal\n          key: PASSWORD    \n    command: [\"sh\",\"-c\",\"echo user=$(USER) password=$(PASSWORD);sleep 365d\"]\n```\nTạo pod vào hệ thống:\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo apply -f sec-as-env.yaml\npod/sec-as-env created\n```\nKiểm tra biến môi trường bên trong Pod đã nhận đúng value từ secret hay chưa:\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo exec -it sec-as-env -- env |egrep \"USER|PASS\"\nUSER=viettq\nPASSWORD=VeryHard2H@ck\n```\nNhư vậy trong Pod đã có 2 biến môi trường là USER và PASSWORD lấy giá trị từ giá trị của key trong secret.\n\n### Sử dụng tất cả key-value trong secret thành biến môi trường trong Pod\nSử dụng khi ta muốn mapping toàn bộ các key-value của một secret vào thành biến môi trường trong Pod luôn. Thay vì ta phải ánh xạ từng key trong secret và thành một biến môi trường mới trong Pod.\n\nTa sẽ sử dụng tất cả các key-value của secret `sec-from-literal` thành các biến môi trường trong Pod bằng cách khai báo file manifest `pod-map-sec.yaml` như sau:\n```\napiVersion: v1\nkind: Pod\nmetadata:\n  name: pod-map-sec\nspec:\n  containers:\n    - name: pod-map-sec\n      image: busybox\n      command: [\"sh\",\"-c\",\"echo user=$(USER) password=$(PASSWORD);sleep 365d\"]\n      envFrom:        \n        - secretRef:\n            name: sec-from-literal\n  restartPolicy: Never\n```\nTạo Pod:\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo apply -f pod-map-sec.yaml\npod/pod-map-sec created\n```\nKiểm tra kết quả các biến môi trường trong Pod:\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo exec -it  pod-map-sec -- env |egrep \"USER|PASS\"\nPASSWORD=VeryHard2H@ck\nUSER=viettq\n```\nNhư vậy toàn bộ các key-value của secret được dùng thành biến môi trường trong Pod. \n\n### Mount secret dưới dạng volume trong Pod để sử dụng nội dung file  trong secret\nBên trên ta đã tạo một secret như vậy có tên **sec-from-dir**\n```\n[sysadmin@vtq-cicd secret]$ k -n secret-demo get secret sec-from-dir -oyaml\n```\n```\napiVersion: v1\ndata:\n  login-policy.conf: bG9ja19hZnRlcj01CmxvY2tfdGltZT02MAo=\n  password-policy.conf: cGFzc3dvcmRfbGVuZ3RoPTgKZXhwaXJlX2RheT0zMApzcGVjaWFsX2NoYXJhY3Rlcj10cnVlCg==\nkind: Secret\nmetadata:  \n  name: sec-from-dir\n  namespace: secret-demo  \ntype: Opaque\n```\nTạo Pod sử dụng secret **sec-from-dir** và mount vào thành volume trong Pod. Khai báo file manifest `pod-sec-dir.yaml` cho Pod như sau:\n```\napiVersion: v1\nkind: Pod\nmetadata:\n  name: pod-sec-dir\nspec:\n  containers:\n  - name: env-print-demo\n    image: busybox\n    command: [\"sh\",\"-c\",\"sleep 365d\"]    \n    volumeMounts:\n    - name: secret-volume\n      mountPath: \"/app/config\"\n      readOnly: true\n  volumes:\n      - name: secret-volume\n        secret:\n          name: sec-from-dir\n          items:\n          - key: \"login-policy.conf\"\n            path: \"login-policy.conf\"\n          - key: \"password-policy.conf\"\n            path: \"password-policy.conf\"  \n```\nVới cách khai báo Pod như trên, ta đã mount được nội dung file **login-policy.conf** vào đường dẫn **/app/config/login-policy.conf** trong container của Pod.\n\nTương tự mount nội dung file **password-policy.conf** vào đường dẫn **/app/config/password-policy.conf** trong container của Pod.\n\nTạo Pod từ file manifest trên:\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo apply -f pod-sec-dir.yaml\npod/pod-sec-dir created\n```\n\n**Kiểm tra trong Pod xem đã mount được nội dung file trong secret vào Pod hay chưa:**\n```\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo exec -it  pod-sec-dir -- ls -lrt /app/config\ntotal 0\nlrwxrwxrwx    1 root     root            27 Dec  2 11:16 password-policy.conf -> ..data/password-policy.conf\nlrwxrwxrwx    1 root     root            24 Dec  2 11:16 login-policy.conf -> ..data/login-policy.conf\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo exec -it  pod-sec-dir -- cat /app/config/password-policy.conf\npassword_length=8\nexpire_day=30\nspecial_character=true\n[sysadmin@vtq-cicd secret]$ kubectl -n secret-demo exec -it  pod-sec-dir -- cat /app/config/login-policy.conf\nlock_after=5\nlock_time=60\n```\nNhư vậy ta đã mount được nội dung file config vào trong Pod bằng cách sử dụng secret.\n\nTrong thực tế triển khai ứng dụng thì configmap và secret là không thể thiếu. Qua bài này hy vọng các bạn sẽ có cái nhìn rõ hơn về secret và các cách sử dụng của secret từ đó sẽ áp dụng được vào công việc của mình nếu có.",
+      "published_at": "2022-12-02T11:33:00.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T01:55:02.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 7,
+      "points": 0,
+      "views_count": 17,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "vi",
+      "is_video": false,
+      "thumbnail_url": "https://images.viblo.asia/c6d86210-ebf3-4f2c-96d1-57718a71cfd6.png",
+      "user": {
+        "data": {
+          "id": 78826,
+          "url": "https://viblo.asia/u/rockman88v",
+          "avatar": "3a181c0a-3ec1-4368-80c3-47ad6b64922a.jpeg",
+          "name": "Trịnh Quốc Việt",
+          "username": "rockman88v",
+          "followers_count": 477,
+          "reputation": 14601,
+          "posts_count": 38,
+          "banned_at": null,
+          "level_partner": "gold",
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "contentcreator",
+            "name": "ContentCreator",
+            "primary": false,
+            "image": "https://placehold.jp/16/2980b9/ffffff/80x80.jpg?text=ContentCreator&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "kubernetes",
+            "name": "Kubernetes",
+            "primary": false,
+            "image": "https://placehold.jp/16/2980b9/ffffff/80x80.jpg?text=Kubernetes&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "viettq",
+            "name": "viettq",
+            "primary": false,
+            "image": "https://placehold.jp/16/d35400/ffffff/80x80.jpg?text=viettq&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "secret",
+            "name": "Secret",
+            "primary": false,
+            "image": "https://placehold.jp/16/27ae60/ffffff/80x80.jpg?text=Secret&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65736,
+      "title": "[RASA 3] - Bài 2: Nhúng Chatbot Rasa vào website UI",
+      "slug": "EbNVQZnW4vR",
+      "url": "https://viblo.asia/p/rasa-3-bai-2-nhung-chatbot-rasa-vao-website-ui-EbNVQZnW4vR",
+      "user_id": 103686,
+      "moderation": null,
+      "transliterated": "rasa-3-bai-2-nhung-chatbot-rasa-vao-website-ui",
+      "contents_short": "Bài trước mình đã thực hành làm quen với Rasa 3 và dạy chatbot chào hỏi cơ bản.\nTuy nhiên chatbot mà dùng giao diện command line thì nhìn cũng hơi chán nên mình sẽ nhúng Chatbot rasa vào giao diện website.\n\nVì mục đích bài này chỉ là có một giao diện chat thay thế command line cho đẹp thôi nên mình sẽ làm theo cách đơn giản và nhanh nhất có thể, không đi sâu vào các config, nếu muốn hiểu sâu hơ...",
+      "contents": "Bài trước mình đã thực hành [làm quen với Rasa 3 và dạy chatbot chào hỏi cơ bản](https://viblo.asia/p/rasa-3-bai-1-lam-quen-rasa-3-tao-chatbot-chao-hoi-don-gian-Ny0VG9ZYJPA).\nTuy nhiên chatbot mà dùng giao diện command line thì nhìn cũng hơi chán nên mình sẽ nhúng Chatbot rasa vào giao diện website.\n\nVì mục đích bài này chỉ là có một giao diện chat thay thế command line cho đẹp thôi nên mình sẽ làm theo cách đơn giản và nhanh nhất có thể, không đi sâu vào các config, nếu muốn hiểu sâu hơn bạn có thể xem thêm ở [trang tài liệu của Rasa](https://rasa.com/docs/rasa/connectors/your-own-website) nhé.\n\n# Build Websocket Rasa\n**Bước 1**: Trong file credentials.yml thêm đoạn code sau:\n```\nsocketio:\n  user_message_evt: user_uttered\n  bot_message_evt: bot_uttered\n  session_persistence: true\n```\nRasa có hỗ trợ Authentication cho quá trình truyền nội dung chat nữa nhưng ở bài này mình chưa muốn đi sâu, bạn có thể xem thêm ở trang chính của Rasa mình để link đưới phần \"Tài liệu tham khảo\".\n\n**Bước 2**: Run Rasa server dùng lệnh sau:\n```\nrasa run --cors \"*\"\n```\nMặc định Rasa sẽ start server trên http://0.0.0.0:5005\n\n# Nhúng Rasa \nChèn đoạn code sau vào website của bạn:\n```\n<div id=\"rasa-chat-widget\" data-websocket-url=\"http://localhost:5005\"></div>\n<script src=\"https://unpkg.com/@rasahq/rasa-chat\" type=\"application/javascript\"></script>\n```\nThuộc tính **data-websocket-url** điền url Websocket Rasa đã build.\n\nLý do mình dùng \"http://localhost:5005\" chứ không phải \"http://0.0.0.0:5005\" là do khi chạy ở máy mình bị báo lỗi \"Connection refused\" nên mình phải map host. Nếu bạn dùng \"http://0.0.0.0:5005\" không lỗi thì cứ dùng nhé.\n\nThông tin map host của mình như sau:\n```\n0.0.0.0 localhost\n```\n\nNếu bạn chưa build sẵn một website thì cũng không sao, chỉ cần tạo một file html có nội dung như sau:\n```\n<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Rasa ChatBot UI</title>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">\n</head>\n  <body>\n    <h1>Rasa ChatBot UI</h1>\n    <div id=\"rasa-chat-widget\" data-websocket-url=\"http://localhost:5005/\"></div>\n    <script src=\"https://unpkg.com/@rasahq/rasa-chat\" type=\"application/javascript\"></script>\n\n  </body>\n</html>\n```\nMở file html vừa tạo lên bằng trình duyệt bất kỳ và test chat các câu chào hỏi mình đã huấn luyện cho bot ở bài trước và xem phản hồi.\n\nKết quả sẽ như hình sau:\n\n![image.png](https://images.viblo.asia/c9426fcf-33ee-4e8f-91ae-a9264c950599.png)\n\nNgoài website Rasa còn hỗ trợ tích hợp chatbot lên nhiều kênh khác như: Facebook Messenger, Telegram,... mình sẽ cùng tìm hiểu sau nhé.\n\n# Tài liệu tham khảo\nhttps://rasa.com/docs/rasa/connectors/your-own-website",
+      "published_at": "2022-12-02T11:31:22.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T01:26:01.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 2,
+      "points": 0,
+      "views_count": 9,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "vi",
+      "is_video": false,
+      "thumbnail_url": "https://images.viblo.asia/c9426fcf-33ee-4e8f-91ae-a9264c950599.png",
+      "user": {
+        "data": {
+          "id": 103686,
+          "url": "https://viblo.asia/u/itkiwi",
+          "avatar": "1af90d0c-0709-4cfb-8496-5cb2d59ce3e2.jpg",
+          "name": "Tuyên Võ",
+          "username": "itkiwi",
+          "followers_count": 0,
+          "reputation": 4,
+          "posts_count": 2,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "chatbot",
+            "name": "ChatBot",
+            "primary": false,
+            "image": "https://placehold.jp/16/16a085/ffffff/80x80.jpg?text=ChatBot&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "rasa",
+            "name": "Rasa",
+            "primary": false,
+            "image": "https://placehold.jp/16/c0392b/ffffff/80x80.jpg?text=Rasa&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "rasa3",
+            "name": "Rasa3",
+            "primary": false,
+            "image": "https://placehold.jp/16/f39c12/ffffff/80x80.jpg?text=Rasa3&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "rasa-frontend",
+            "name": "rasa frontend",
+            "primary": false,
+            "image": "https://placehold.jp/16/8e44ad/ffffff/80x80.jpg?text=rasa+frontend&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "rasa-socket",
+            "name": "Rasa socket",
+            "primary": false,
+            "image": "https://placehold.jp/16/2980b9/ffffff/80x80.jpg?text=Rasa+socket&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65759,
+      "title": "Why Mp3juice is Best Music Downloader?",
+      "slug": "EoW4obQrVml",
+      "url": "https://viblo.asia/p/why-mp3juice-is-best-music-downloader-EoW4obQrVml",
+      "user_id": 105578,
+      "moderation": null,
+      "transliterated": "why-mp3juice-is-best-music-downloader",
+      "contents_short": "Mp3juice is a music file downloader tool using any user can download unlimited youtube videos into mp3 music format for free. You can access mp3juice from different devices and browsers. Mp3juices is also called a search engine because you can search different queries on the website and you get answers similar to your query very quickly. To use and access mp3 juice on mobile or pc devices you n...",
+      "contents": "[Mp3juice](https://www-mp3juices.com/id2/) is a music file downloader tool using any user can download unlimited youtube videos into mp3 music format for free. You can access mp3juice from different devices and browsers. Mp3juices is also called a search engine because you can search different queries on the website and you get answers similar to your query very quickly. To use and access mp3 juice on mobile or pc devices you need an internet connection. Download music from differnet genres easily and listen offline when you want. No need to register and paid money to use mp3juice for free mp3 downloads. \n\n## Features of Free Mp3juice\nThere are a number of different features to use mp3juice and the reason behind it mp3juice is best music downloader because of its features. \n### No Disturbing Ads\nWhen you use the mp3juice tool on any device at that time you have to not show any ads to download mp3 files from youtube videos. \n### Fast Speed to Download Music Files\nWhen you click on the download button in mp3juice then it will take around 2 to 5 seconds to complete the download audio file. \n### Different Language Supported\nAvailability of [mp3 juice](https://www.mp3juices.click/) in different languages like Indonesian, English, French, Spanish, and Italian so users can access it from their native language. \n### No Need to Create an Account\nIf you use different tools before mp3juice to convert youtube videos into mp3 format then you native you need to register first then you can use it but in mp3juice you do not need to register to access and use the tool. \n## How to Download MP3 File using Mp3juice?\n1. Open [https://www.mp3juices.link/](https://www.mp3juices.link/) website on the browser\n1. Then search music query using the in-built search option\n1. Get the result list\n1. Select the result and click on the download button\n1. Wait a few seconds to complete the download process\n1. After downloading listen to it",
+      "published_at": "2022-12-02T10:28:48.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T01:43:02.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 1,
+      "points": -1,
+      "views_count": 9,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 105578,
+          "url": "https://viblo.asia/u/Mp3juice",
+          "avatar": "65e6367e-3055-441a-ae4b-6cd068b137dd.png",
+          "name": "JohnDean",
+          "username": "Mp3juice",
+          "followers_count": 0,
+          "reputation": 0,
+          "posts_count": 1,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "mp3juice",
+            "name": "mp3juice",
+            "primary": false,
+            "image": "https://placehold.jp/16/2980b9/ffffff/80x80.jpg?text=mp3juice&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "mp3-juice",
+            "name": "mp3 juice",
+            "primary": false,
+            "image": "https://placehold.jp/16/16a085/ffffff/80x80.jpg?text=mp3+juice&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "mp3juices",
+            "name": "mp3juices",
+            "primary": false,
+            "image": "https://placehold.jp/16/8e44ad/ffffff/80x80.jpg?text=mp3juices&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 63993,
+      "title": "Chạy cronjob trong Docker container với Python",
+      "slug": "0gdJzjp3Jz5",
+      "url": "https://viblo.asia/p/chay-cronjob-trong-docker-container-voi-python-0gdJzjp3Jz5",
+      "user_id": 45120,
+      "moderation": null,
+      "transliterated": "chay-cronjob-trong-docker-container-voi-python",
+      "contents_short": "Trong quá trình phát triển, sẽ không thiếu những lúc mà chúng ta cần chạy định kỳ một vài script hoặc chạy một tác vụ nào đó vào thời gian nhất định. Những lúc như vậy thì Cron là một công cụ vô cùng hữu hiệu.\n\nCron cũng rất dễ sử dụng. Tuy nhiên khi đóng gói cronjob vào Docker thì mình đã gặp một vài khó khăn và phải thử qua mấy solution mới làm nó chạy được. Do vậy mình viết bài này để ghi ch...",
+      "contents": "Trong quá trình phát triển, sẽ không thiếu những lúc mà chúng ta cần chạy định kỳ một vài script hoặc chạy một tác vụ nào đó vào thời gian nhất định. Những lúc như vậy thì Cron là một công cụ vô cùng hữu hiệu. \n\nCron cũng rất dễ sử dụng. Tuy nhiên khi đóng gói cronjob vào Docker thì mình đã gặp một vài khó khăn và phải thử qua mấy solution mới làm nó chạy được. Do vậy mình viết bài này để ghi chú lại cách dễ thực hiện nhất, tiện sử dụng về sau, cũng như hy vọng có thể giúp được cho những bạn đang hoang mang giống mình :) \n\n# Cron là gì?\n**Cron** là một công cụ **lập lịch công việc dựa trên thời gian** trong các hệ điều hành tương tự Unix. Cron cho phép người dùng Linux và Unix chạy các command hoặc script vào một ngày giờ nhất định cũng như lên lịch để chạy các lệnh một cách định kỳ. \n\n**Crontab** là danh sách các lệnh mà bạn muốn chạy theo lịch trình và cũng là tên của lệnh được sử dụng để quản lý danh sách đó. \n\n**python-crontab** là module Python cho phép chúng ta đọc/ viết các file crontab, cũng như truy cập cron của hệ thống một cách tự động và đơn giản bằng cách sử dụng API trực tiếp. Nó cũng cho phép chạy một crontab như một tiến trình nền nếu cài đặt thêm croniter. Nhờ thế mà mình tránh được việc phải thêm các command bằng tay để config cron của container khi viết Dockerfile, nói chung là khá tiện, gọn và không phải nhớ nhiều 😂 \n\n(Nếu build Docker từ base image là python-alpine thì sẽ có sẵn cron nhưng nếu base image là python thì phải tự cài đặt và setting vài thứ)\n\n# Chạy cronjob với Python trong Docker container\n\nMình bắt đầu với một task python cần chạy định kỳ, ví dụ in ra chữ \"hello!\"\n\n**hello.py**\n```\nimport datetime\nprint(datetime.datetime.now(), \"------ hello!\")\n```\n\nCác package cần thiết:\n\n**requirements.txt**\n```\ncroniter \npython-crontab\n```\n\nFile crontab định nghĩa công việc, ở đây là chạy file hello.py mỗi phút một lần. \n\n**crontab.tab**\n```\n* * * * * python /full/path/to/hello.py >> /full/path/to/cron.log\n\n```\n**cron_run.py**\n```\nfrom datetime import datetime\nfrom crontab import CronTab\ntab = CronTab(tabfile='crontab.tab')\nfor result in tab.run_scheduler():\n    print(datetime.now().strftime(\"%d/%m/%Y %H:%M:%S\"))\n```\n**Dockerfile**\n```\nFROM python:3.8\n# \nWORKDIR /cronjob\n\n# \nCOPY . /cronjob\n\n# \nRUN pip install --no-cache-dir --upgrade -r requirements.txt \n\n#\nCMD [\"python\", \"cron_run.py\"]\n```\n**cron.log**\n```\n2022-09-26 06:00:32.478099 ------ hello!\n2022-09-26 06:01:32.754784 ------ hello!\n2022-09-26 06:02:33.057975 ------ hello!\n2022-09-26 06:03:33.360725 ------ hello!\n2022-09-26 06:04:33.781451 ------ hello!\n2022-09-26 06:05:34.107770 ------ hello!\n2022-09-26 06:06:34.381700 ------ hello!\n2022-09-26 06:07:34.702155 ------ hello!\n2022-09-26 06:08:34.997329 ------ hello!\n2022-09-26 06:09:35.275052 ------ hello!\n2022-09-26 06:10:35.669773 ------ hello!\n```\n# Notes\n- Các bạn có thể tham khảo thêm các cú pháp của crontab một cách trưc quan tại [đây](https://crontab.guru/) \n- Các cronjob được schedule theo local time zone của hệ thống => cần chú ý điểm này khi làm việc với các hệ thống cho user nước ngoài\n- Mỗi cronjob sẽ chạy trong một shell sessions biệt lập nên nếu muốn xem output của nó thì cần in ra file. \n- **NÊN** sử dụng đường dẫn tuyệt đối cho các script và output file\n\nReferences: \n\nhttps://www.geeksforgeeks.org/how-to-schedule-python-scripts-as-cron-jobs-with-crontab/?ref=rp\n\nhttps://www.geeksforgeeks.org/create-multiple-jobs-using-python-crontab/\n\nhttps://nschdr.medium.com/running-scheduled-python-tasks-in-a-docker-container-bf9ea2e8a66c\n\nhttps://stackoverflow.com/questions/37458287/how-to-run-a-cron-job-inside-a-docker-container",
+      "published_at": "2022-12-02T09:56:09.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T02:04:01.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 3,
+      "points": 2,
+      "views_count": 23,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "vi",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 45120,
+          "url": "https://viblo.asia/u/hoang.thu.thao",
+          "avatar": "f80ed89c-393c-43c4-bbde-f5db845ed676.jpg",
+          "name": "Thao Hoang Thu",
+          "username": "hoang.thu.thao",
+          "followers_count": 24,
+          "reputation": 825,
+          "posts_count": 15,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "cronjob",
+            "name": "CronJob",
+            "primary": false,
+            "image": "https://placehold.jp/16/2980b9/ffffff/80x80.jpg?text=CronJob&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "docker",
+            "name": "Docker",
+            "primary": false,
+            "image": "https://placehold.jp/16/16a085/ffffff/80x80.jpg?text=Docker&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "python",
+            "name": "Python",
+            "primary": false,
+            "image": "https://placehold.jp/16/d35400/ffffff/80x80.jpg?text=Python&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65708,
+      "title": "Blog#53: Design Patterns: Builder Pattern trong TypeScript 😊 (Series: Bón hành TypeScript - PHẦN 3)",
+      "slug": "W13VM2P54Y7",
+      "url": "https://viblo.asia/p/blog53-design-patterns-builder-pattern-trong-typescript-series-bon-hanh-typescript-phan-3-W13VM2P54Y7",
+      "user_id": 74229,
+      "moderation": null,
+      "transliterated": "blog53-design-patterns-builder-pattern-trong-typescript-series-bon-hanh-typescript-phan-3",
+      "contents_short": "\n\nMình là TUẤN hiện đang là một Full-stack Web Developer tại Tokyo 😊.\nNếu bạn thấy Blog này hay xin hãy cho mình một like và đăng ký để ủng hộ mình nhé 😉.\n\nCách sử dụng Builder Pattern bằng TypeScript để giải quyết các vấn đề thực tế trong các project web. Làm chủ Builder Pattern sẽ giúp bạn dễ dàng xử lý việc tạo các đối tượng.\n\nChào mừng bạn đến với loạt bài Design Patterns trong TypeScript, ...",
+      "contents": "![image.png](https://images.viblo.asia/a5f5bdaf-1a64-4014-84e0-4c50f55ed5c0.png)\n\nMình là TUẤN hiện đang là một Full-stack Web Developer tại Tokyo 😊.\nNếu bạn thấy Blog này hay xin hãy cho mình một like và đăng ký để ủng hộ mình nhé 😉.\n\n**Cách sử dụng Builder Pattern bằng TypeScript để giải quyết các vấn đề thực tế trong các project web. Làm chủ Builder Pattern sẽ giúp bạn dễ dàng xử lý việc tạo các đối tượng.**\n\nChào mừng bạn đến với loạt bài **Design Patterns trong TypeScript**, loạt bài này mình sẽ giới thiệu một số Design Patterns hữu ích trong phát triển web bằng TypeScript.\n\nCác **Design Patterns** rất quan trọng đối với các web developer và chúng ta có thể code tốt hơn bằng cách thành thạo chúng. Trong bài viết này, mình sẽ sử dụng **TypeScript** để giới thiệu **Builder Pattern**.\n\nBuilder Pattern\n----\n\n**Builder Pattern** phân tách một đối tượng phức tạp thành các phần tương đối đơn giản, sau đó tạo chúng một cách riêng biệt theo các nhu cầu khác nhau và cuối cùng là xây dựng đối tượng phức tạp.\n\nVậy làm thế nào để hiểu rõ hơn về vai trò của **Builder Pattern**? Hãy thử lấy một ví dụ:\n\n```javascript\nclass User {\n  constructor(\n    public username: string,\n    public sex: string,\n    public age: number,\n    public photo: string,\n    public email: string\n  ) {}\n}\n```\n\nTrong đoạn code trên, chúng ta đã sử dụng cú pháp **Class** để định nghĩa một lớp `User`, với `Class` này, chúng ta có thể tạo một instance của lớp `User`:\n\n```javascript\nconst bytefer = new User(\n  \"Bytefer\",\n  \"male\",\n  30,\n  \"https://***.com/**\",\n  \"bytefer@gmail.com\"\n);\n```\n\nĐối với đoạn code trên, mặc dù chúng ta có thể tạo thành công một `instance` của lớp `User`. Nhưng trong quá trình tạo các `instance`, **chúng ta cần chú ý đến kiểu và thứ tự của các tham số constructor của lớp `User`**. Đồng thời, chúng ta cũng cần truyền đủ tham số cùng một lúc để xây dựng một instance của lớp `User`.\n\nĐể giải quyết vấn đề trên, một giải pháp là sử dụng **Design Patterns**. Chìa khóa của **Patterns** này là phân tách một đối tượng phức tạp thành các phần tương đối đơn giản, sau đó tạo chúng riêng biệt theo các nhu cầu khác nhau và cuối cùng là xây dựng đối tượng phức tạp.\n\nSau khi hiểu các thông tin chính ở trên, hãy định nghĩa một lớp `UserBuilder`:\n\n```javascript\nclass UserBuilder {\n  public username!: string;\n  public sex!: string;\n  public age!: number;\n  public photo!: string;\n  public email!: string;\n\n  setUserName(name: string) {\n    this.username = name;\n    return this;\n  }\n\n  setSex(sex: string) {\n    this.sex = sex;\n    return this;\n  }\n\n  setAge(age: number) {\n    this.age = age;\n    return this;\n  }\n\n  setPhoto(photo: string) {\n    this.photo = photo;\n    return this;\n  }\n\n  setEmail(email: string) {\n    this.email = email;\n    return this;\n  }\n\n  build() {\n    return new User(this.username, this.sex, this.age, this.photo, this.email);\n  }\n}\n```\n\nTrong lớp `UserBuilder`, chúng ta định nghĩa một số hàm `setXXX` và một hàm `build`. Phương thức `setXXX` được sử dụng để đặt value cho một Properties của `UserBuilder` instance và hàm `build` được sử dụng để thực hiện thao tác tạo một instance của lớp `User`.\n\nVới lớp `UserBuilder`, chúng ta có thể tạo một instance của lớp `User` theo cách sau:\n\n```javascript\nconst bytefer = new UserBuilder()\n  .setAge(30)\n  .setSex(\"male\")\n  .setEmail(\"bytefer@gmail.com\")\n  .setPhoto(\"https://***.com/**\")\n  .setUserName(\"Bytefer\")\n  .build();\n```\n\nHÔ HÔ nhìn quen quen nhỉ chắc ae cũng đã thấy cách tạo Object này ở đâu đó rồi đúng ko.\n\nTiếp theo, mình sẽ sử dụng hình bên dưới để hiển thị các cách khác nhau để tạo một instance của class `User`:\n\n![image.png](https://images.viblo.asia/a05729b9-39c2-4d07-80b8-3933a4b084e0.png)\n\nSau khi đọc ví dụ trên, bạn sẽ thấy rằng **Builder Pattern** không hề phức tạp đúng ko. Trong một project TypeScript thực tế, chúng ta có thể sử dụng thư viện [**Builder Pattern**](https://github.com/Vincent-Pang/builder-pattern) để áp dụng Builder Pattern một cách hiệu quả. Có sẵn hết rồi dùng thôi tuy nhiên vẫn câu nói cũng dùng mà hiểu thì vẫn sướng hơn dùng mà ko hiểu. Phải bón hành cho tụi này luôn chứ....\n\n**Sử dụng cơ bản**\n\n```javascript\ninterface UserInfo {\n  id: number;\n  userName: string;\n  email: string;\n}\nconst userInfo = Builder<UserInfo>()\n                   .id(28)\n                   .userName('bytefer')\n                   .email('bytefer@gmail.com')\n                   .build();\n```\n\n**Cách sử dụng với các đối tượng mẫu (template objects)**\n\n```javascript\nconst defaultUserInfo: UserInfo = {\n  id: 1,\n  userName: 'bytefer',\n  email: 'bytefer@gmail.com'\n};\nconst modifiedUserInfo = Builder(defaultUserInfo)\n                          .id(28)\n                          .build();\n```\n\n**Cách sử dụng với class object**\n\n```javascript\nclass UserInfo {\n  id!: number;\n  userName!: string;\n  email!: string;\n}\nconst userInfo = Builder(UserInfo) \n                   .id(28)\n                   .userName('bytefer')\n                   .email('bytefer@gmail.com')\n                   .build();\n```\n\nSau khi đọc ba ví dụ sử dụng ở trên, bạn thấy đó thư viện [Builder Pattern](https://github.com/Vincent-Pang/builder-pattern) khá mạnh mẽ. Trên thực tế, thư viện được implement dựa trên [**ES6 Proxy API**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy). Nếu bạn quan tâm thì có thể đọc [source code](https://github.com/Vincent-Pang/builder-pattern/blob/master/src/Builder.ts) của nó.\n\nTrong trường hợp truy vấn dữ liệu, chúng ta thường thấy **Builder Pattern**. Ví dụ: để xây dựng các điều kiện truy vấn `sql` hoặc `elaticsearch`. \nỞ đây chúng ta lấy thư viện [**bodybuilder**](https://bodybuilder.js.org/) làm ví dụ để xem cách sử dụng cơ bản của nó:\n\n```javascript\nbodybuilder()\n  .query('match', 'message', 'this is a test')\n  .filter('term', 'user', 'kimchy')\n  .filter('term', 'user', 'herald')\n  .orFilter('term', 'user', 'johnny')\n  .notFilter('term', 'user', 'cassie')\n  .aggregation('terms', 'user')\n  .build()\n```\n\nMột số trường hợp sử dụng của Builder Pattern:\n\n*   Khi một lớp có nhiều hơn 4 tham số constructor và một số tham số này là tùy chọn, hãy cân nhắc sử dụng Builder Pattern (Hoặc một pattern nào đó trong bộ Constructor pattern mình sẽ giới thiệu trong các bài viết sau).\n\nRoundup\n----\nNhư mọi khi, mình hy vọng bạn thích bài viết này và học thêm được điều gì đó mới.\n\nCảm ơn và hẹn gặp lại các bạn trong những bài viết tiếp theo! 😍\n\nNếu bạn thấy Blog này hay xin hãy cho mình một like và đăng ký để ủng hộ mình nhé. Thank you.😉\n\nRef\n----\n* https://tuan200tokyo.blogspot.com/2022/11/blog53-design-patterns-builder-pattern.html",
+      "published_at": "2022-12-02T00:21:28.000000Z",
+      "is_published": true,
+      "is_shared": true,
+      "updated_at": "2022-12-03T01:21:01.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 5,
+      "points": 1,
+      "views_count": 92,
+      "clips_count": 0,
+      "comments_count": 1,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "vi",
+      "is_video": false,
+      "thumbnail_url": "https://images.viblo.asia/a5f5bdaf-1a64-4014-84e0-4c50f55ed5c0.png",
+      "user": {
+        "data": {
+          "id": 74229,
+          "url": "https://viblo.asia/u/Clarence161095",
+          "avatar": "82afa6c9-073b-419a-aceb-ae889b85c554.jpg",
+          "name": "NGUYỄN ANH TUẤN",
+          "username": "Clarence161095",
+          "followers_count": 129,
+          "reputation": 1981,
+          "posts_count": 54,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "builder-pattern",
+            "name": "builder pattern",
+            "primary": false,
+            "image": "https://placehold.jp/16/c0392b/ffffff/80x80.jpg?text=builder+pattern&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "design-patterns",
+            "name": "Design Patterns",
+            "primary": false,
+            "image": "https://placehold.jp/16/d35400/ffffff/80x80.jpg?text=Design+Patterns&css=%7B%22padding%22%3A%223px%22%7D"
+          },
+          {
+            "slug": "typescript",
+            "name": "TypeScript",
+            "primary": false,
+            "image": "https://placehold.jp/16/f39c12/ffffff/80x80.jpg?text=TypeScript&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": [
+          {
+            "id": 58086,
+            "url": "https://viblo.asia/u/vinhtieng",
+            "avatar": "77c8dd4d-4335-45e2-80b9-2fca5943f901.jpg",
+            "name": "Nguyễn Vinh Tiếng",
+            "username": "vinhtieng",
+            "followers_count": 0,
+            "reputation": 0,
+            "posts_count": 0,
+            "banned_at": null,
+            "level_partner": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 65751,
+      "title": "Amazon API Gateway HTTP API to AWS Simple Queue Service (SQS) to Lambda",
+      "slug": "vlZL9NKvVQK",
+      "url": "https://viblo.asia/p/amazon-api-gateway-http-api-to-aws-simple-queue-service-sqs-to-lambda-vlZL9NKvVQK",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-http-api-to-aws-simple-queue-service-sqs-to-lambda",
+      "contents_short": "This pattern creates an Amazon API Gateway HTTP API with a  route that send message to a SQS queue. The  Amazon API Gateway HTTP API has basic CORS configured. Upon receiving message, SQS will trigger a Lambda function to process the message. The function will only  the message only. The function written in Python.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessla...",
+      "contents": "This pattern creates an Amazon API Gateway HTTP API with a ```send``` route that send message to a SQS queue. The  Amazon API Gateway HTTP API has basic CORS configured. Upon receiving message, SQS will trigger a Lambda function to process the message. The function will only ```print``` the message only. The function written in Python.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-http-sqs-lambda-cdk\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/latest/guide/cli.html) (AWS CDK) installed\n* [Python 3.8+](https://www.python.org/downloads/) Installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ``` \n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n1. Change directory to the pattern directory:\n    ```\n    cd apigw-http-api-sqs-lambda-cdk\n    ```\n1. Create virtualenv\n    ```\n    python3 -m venv .venv\n    ```\n1. Activate your virtualenv.\n    ```\n    source .venv/bin/activate\n    ```\n1. Once the virtualenv is activated, you can install the required dependencies.\n    ```\n    pip install -r requirements.txt\n    ```\n1. At this point you can now synthesize the CloudFormation template for this code.\n    ```\n    cdk synth\n    ```\n\n    ## Useful CDK commands\n\n    * `cdk ls`          list all stacks in the app\n    * `cdk synth`       emits the synthesized CloudFormation template\n    * `cdk deploy`      deploy this stack to your default AWS account/region\n    * `cdk diff`        compare deployed stack with current state\n    * `cdk docs`        open CDK documentation\n\n1. Deploy CDK stack\n    ```\n    cdk deploy\n    ```\n\n\n## How it works\n\nThe API Gateway handles the incoming API requests and send the ```$request.body.MessageBody``` as a message to SQS queue. A Lambda function will be trigger upon the message arraived.\n\n## Testing\n\n### Running following cURL command to agaist the HTTP API Endpoint\n```\ncurl -XPOST https://${HTTP_API_ENDPOOINT}/send -d'{\"MessageBody\":\"hello\"}'\n```\n### Expected result\n```\n<?xml version=\"1.0\"?><SendMessageResponse xmlns=\"http://queue.amazonaws.com/doc/2012-11-05/\">\n    <SendMessageResult>\n        <MessageId>xxxxxx</MessageId>\n        <MD5OfMessageBody>xxxxxx</MD5OfMessageBody>\n    </SendMessageResult>\n    <ResponseMetadata>\n        <RequestId>xxxx</RequestId>\n    </ResponseMetadata>\n</SendMessageResponse>\n```\n# Cleanup\n\n```\ncdk destroy\n```\n\n----",
+      "published_at": "2022-12-01T17:15:32.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T01:00:05.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 1,
+      "points": 1,
+      "views_count": 42,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/27ae60/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65750,
+      "title": "AWS API Gateway HTTP API to AWS Lambda to RDS Proxy",
+      "slug": "2oKLn21aLQO",
+      "url": "https://viblo.asia/p/aws-api-gateway-http-api-to-aws-lambda-to-rds-proxy-2oKLn21aLQO",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "aws-api-gateway-http-api-to-aws-lambda-to-rds-proxy",
+      "contents_short": "This pattern sets up API Gateway HTTP API using AWS Lambda function as an integration which talks to RDS Aurora(Postgres) via RDS Proxy\nwith IAM Authentication enabled. The Lambda function will only be using short-lived credentials to authenticate through RDS proxy via IAM authentication using the popular JavaScript ORM sequelize.\n\nLearn more about this pattern at Serverless Land Patterns: http...",
+      "contents": "This pattern sets up API Gateway HTTP API using AWS Lambda function as an integration which talks to RDS Aurora(Postgres) via RDS Proxy\nwith IAM Authentication enabled. The Lambda function will only be using short-lived credentials to authenticate through RDS proxy via IAM authentication using the popular JavaScript ORM [sequelize](https://sequelize.org).\n\nLearn more about this pattern at Serverless Land Patterns: [https://serverlessland.com/patterns/apigw-http-api-lambda-rds-proxy-cdk](https://serverlessland.com/patterns/apigw-http-api-lambda-rds-proxy-cdk)\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [AWS CDK Installed](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_install)\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ``` bash\n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n2. Change directory to the pattern directory:\n    ```bash\n    cd apigw-http-api-lambda-rds-proxy-cdk/src\n    ```\n3. Install dependencies:\n    ```bash\n    npm install\n    ```\n4. Deploy the application. This will take some time to provision the database.\n    ```bash\n    cdk deploy\n    ```\n\n## How it works\n\nThis pattern sets up API Gateway HTTP API using AWS Lambda function as an integration which talks to RDS Aurora(Postgres) via RDS Proxy with IAM Authentication enabled. The Lambda function will only be using short-lived credentials to authenticate through RDS proxy via IAM authentication using the popular JavaScript ORM [sequelize](https://sequelize.org).\n\nRDS Proxy has to exist in the same VPC as your database and it cannot be public. Security groups are configured to [only allow communication from the lambda functions to RDS proxy](./src/lib/rds-proxy-sequelize-stack.ts#L55), and [from the RDS proxy to the Aurora database](./src/lib/rds-proxy-sequelize-stack.ts#L61).\n\n[The lambda functions are granted the ability to connect to the RDS proxy using the provided username](./src/lib/rds-proxy-sequelize-stack.ts#L137). \n\nWhile the lambda authenticates to your proxy using IAM authentication, RDS proxy still connects to your database using native database authentication. Therefore, a new set of RDS credentials are created in secrets manager which allow RDS proxy to connect to the database. See [the connecting to a database through RDS Proxy documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy-setup.html#rds-proxy-iam-setup) for more information.\n\nRDS proxy supports connecting to your database with multiple database users. This means that different usernames with limited privileges *inside your database* could be configured for different lambda functions if necessary.\n\nThe [`beforeConnect` lifecycle hook](./src/lambda/sequelize.ts#L26) provided by sequelize is used to generate a current, short-lived access token.\n\n![](https://images.viblo.asia/be9f2b8c-afb9-437a-8a04-a563383e7f72.png)\n\n\n## Testing\n\nOnce `cdk deploy` has completed, you will receive 2 URL outputs similar to:\n\n```bash\nOutputs:\nRdsProxySequelizeStack.populateEndpointUrl = https://aabbccddee.execute-api.us-west-2.amazonaws.com/populate\nRdsProxySequelizeStack.stadiumsEndpointUrl = https://aabbccddee.execute-api.us-west-2.amazonaws.com/\n\nStack ARN:\narn:aws:cloudformation:us-west-2:001122334455:stack/RdsProxySequelizeStack/11111111-1111-1111-1111-111111111111\n```\n\nIf you did not retain these URLs, they are also available in the Outputs tab of the CloudFormation stack inside the AWS console.\n\nFirst, we will create and populate a simple `Stadium` table in our new database by sending a `POST` request to the `/populate` endpoint URL:\n\n```bash\ncurl -request POST https://aabbccddee.execute-api.us-west-2.amazonaws.com/populate\n{\"message\":\"Stadium table and data successfully created.\"}\n```\n\nNow that we have data stored inside of our database, we can retrieve it to verify that it has been persisted using the stadiums endpoint URL:\n\n```bash\ncurl -request GET https://aabbccddee.execute-api.us-west-2.amazonaws.com/\n[{\"id\":1,\"name\":\"Los Angeles Memorial Coliseum\",\"capacity\":93607,\"location\":\"Los Angeles, California\",\"surface\":\"Natural grass\",\"roof\":\"Open\",\"team\":\"Los Angeles Rams\",\"yearOpened\":\"1923\",\"createdAt\":\"2021-12-01T20:58:08.906Z\",\"updatedAt\":\"2021-12-01T20:58:08.906Z\"},{\"id\":2,\"name\":\"MetLife Stadium\",\"capacity\":82500,\"location\":\"East Rutherford, New Jersey\",\"surface\":\"UBU Speed Ser...\n...\n...\n}]\n```\n\n## Cleanup\n \n1. Delete the stack\n    ```bash\n    cdk destroy\n    ```\n----",
+      "published_at": "2022-12-01T17:12:54.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T01:54:01.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 2,
+      "points": 1,
+      "views_count": 22,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": "https://images.viblo.asia/be9f2b8c-afb9-437a-8a04-a563383e7f72.png",
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/f39c12/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65749,
+      "title": "Amazon API Gateway to AWS Fargate",
+      "slug": "0gdJzjzAJz5",
+      "url": "https://viblo.asia/p/amazon-api-gateway-to-aws-fargate-0gdJzjzAJz5",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-to-aws-fargate",
+      "contents_short": "This project contains a sample AWS Cloud Development Kit (AWS CDK) template for deploying an AWS Fargate service running on an Amazon Elastic Container Service (ECS) cluster with a private Application Load Balancer in-front. The Application Load Balanced Fargate Service is integrated with Amazon API Gateway HTTP API to expose the endpoint. This template uses a custom image without having to pre...",
+      "contents": "This project contains a sample AWS Cloud Development Kit (AWS CDK) template for deploying an AWS Fargate service running on an Amazon Elastic Container Service (ECS) cluster with a private Application Load Balancer in-front. The Application Load Balanced Fargate Service is integrated with Amazon API Gateway HTTP API to expose the endpoint. This template uses a custom image without having to pre-push the image to Amazon Elastic Container Registry (ECR) or another container library. This makes use of the in-built `ecs.ContainerImage.fromAsset` method. The custom image has a base route `/` to output a message.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-fargate-cdk.\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\nWarning: As of this writing, there are known issues with the images built on Apple's M1 chip, which is based on the ARM architecture. You might encounter the following error log on ECS `standard_init_linux.go:228: exec user process caused: exec format error fargate`. More details can be found at [Stackoverflow 'exec user process caused: exec format error' in AWS Fargate Service](https://stackoverflow.com/questions/67361936/exec-user-process-caused-exec-format-error-in-aws-fargate-service)\n\n## Requirements\n\n- [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n- [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n- [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/cli.html) installed and configured\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n   ```bash\n   git clone https://github.com/aws-samples/serverless-patterns\n   ```\n2. Change directory to the pattern directory:\n   ```bash\n   cd serverless-patterns/apigw-fargate-cdk/cdk\n   ```\n3. Install dependencies:\n   ```bash\n   npm install\n   ```\n4. From the command line, configure AWS CDK:\n   ```bash\n   cdk bootstrap ACCOUNT-NUMBER/REGION # e.g.\n   cdk bootstrap 1111111111/us-east-1\n   cdk bootstrap --profile test 1111111111/us-east-1\n   ```\n5. Ensure that the bucket name is unique in [cdk-stack.ts](./cdk/lib/cdk-stack.ts)\n6. From the command line, use AWS CDK to deploy the AWS resources for the pattern as specified in the `lib/cdk-stack.ts` file:\n   ```bash\n   cdk deploy\n   ```\n7. Note the outputs from the CDK deployment process. This contains the apigw endpoint that is used to make the GET request\n\n## How it works\n\n- The image is constructed directly from sources on disk when `cdk deploy` is executed\n- The image is automatically pushed to Amazon ECR\n- The VPC and subnets are created\n- The ECS cluster is created\n- The Task Definitions are created\n- The API Gateway Integration, Route, and VPC Link are created\n- The Fargate Service is created\n\n## Testing\n\nRetrieve the API Gateway URL from the `cdk deploy` output. Example of the output is:\n\n```\nCdkStack.APIGatewayUrl = https://abcd123efg.execute-api.ap-southeast-2.amazonaws.com/\n```\n\nFor reference:\n\n<img src=\"./docs/01-cdk-deploy-output.png\" alt=\"cdk-deploy-output\" width=\"90%\"/>\n\nThe API Gateway allows a GET request to `/`. To call it, run the following:\n\n```bash\ncurl --location --request GET '<REPLACE WITH API GATEWAY URL>'\n# Example\ncurl --location --request GET 'https://abcd123efg.execute-api.ap-southeast-2.amazonaws.com/'\n```\n\nRunning the request above should produce the following output:\n\n<img src=\"./docs/02-example-request.png\" alt=\"example-request\" width=\"90%\"/>\n\n## Cleanup\n\n1. Delete the stack\n   ```bash\n   cdk destroy\n   ```\n2. Navigate to ECR in the AWS console and delete the container images created\n\n## Documentation and useful references\n\n- [GitHub issue where one of the contributors provided an example with a pre-built image and any type of request](https://github.com/aws/aws-cdk/issues/8066)\n- [CDK documentation for ApplicationLoadBalancedFargateService](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-ecs-patterns.ApplicationLoadBalancedFargateService.html)\n- [CDK documentation for APIGatewayv2 CfnIntegration](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-apigatewayv2.CfnIntegration.html)\n- [CDK documentation for APIGatewayv2 CfnRoute](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-apigatewayv2.CfnRoute.html)\n- [CDK documentation for APIGatewayv2 HttpApi](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-apigatewayv2.HttpApi.html)\n- [CDK documentation for CDK Core CfnResource](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_core.CfnResource.html)\n\n---",
+      "published_at": "2022-12-01T17:11:40.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T01:59:01.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 2,
+      "points": 0,
+      "views_count": 7,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/2980b9/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65748,
+      "title": "Amazon API Gateway Custom Resource Policy",
+      "slug": "obA46PE0LKv",
+      "url": "https://viblo.asia/p/amazon-api-gateway-custom-resource-policy-obA46PE0LKv",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-custom-resource-policy",
+      "contents_short": "This pattern creates an API Gateway REST endpoint with a custom resource policy. The resource policy limits access to the endpoint to within a certain date range.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-custom-resource-policy\n\nImportant: this application uses various AWS services and there are costs associated with these services aft...",
+      "contents": "This pattern creates an API Gateway REST endpoint with a custom resource policy. The resource policy limits access to the endpoint to within a certain date range.\n\nLearn more about this pattern at Serverless Land Patterns: [https://serverlessland.com/patterns/apigw-custom-resource-policy](https://serverlessland.com/patterns/apigw-custom-resource-policy)\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) (AWS SAM) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ``` \n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n1. Change directory to the pattern directory:\n    ```\n    apigw-custom-resource-policy\n    ```\n1. From the command line, use AWS SAM to deploy the AWS resources for the pattern as specified in the template.yml file:\n    ```\n    sam deploy --guided\n    ```\n1. During the prompts:\n    * Enter a stack name\n    * Enter the desired AWS Region\n    * Allow SAM CLI to create IAM roles with the required permissions.\n\n    Once you have run `sam deploy --guided` mode once and saved arguments to a configuration file (samconfig.toml), you can use `sam deploy` in future to use these defaults.\n\n1. Note the outputs from the SAM deployment process. These contain the resource names and/or ARNs which are used for testing.\n\n## How it works\n\nThis endpoint will only accept requests between certain dates. The dates can be changed in the SAM template.\n\n## Testing\n\nIn the template.yaml file, set the desired start and end dates. Then hit the endpoint in the deployment outputs. If the date of the current request falls within the range, API Gateway will invoke the Lambda function and return the response. If it is outside the desired range, API Gateway will not invoke the Lambda function and immediately respond with an authorization error.\n\n## Cleanup\n \n1. Delete the stack\n    ```bash\n    sam delete --stack-name STACK_NAME\n    ```\n1. Confirm the stack has been deleted\n    ```bash\n    aws cloudformation list-stacks --query \"StackSummaries[?contains(StackName,'STACK_NAME')].StackStatus\"\n    ```\n----",
+      "published_at": "2022-12-01T17:10:05.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-02T15:00:10.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 1,
+      "points": 1,
+      "views_count": 7,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/8e44ad/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65747,
+      "title": "Amazon API Gateway REST API Regional Custom Domain Name",
+      "slug": "5OXLAXmxJGr",
+      "url": "https://viblo.asia/p/amazon-api-gateway-rest-api-regional-custom-domain-name-5OXLAXmxJGr",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-rest-api-regional-custom-domain-name",
+      "contents_short": "The SAM template deploys an Amazon API Gateway Regional Custom Domain Name.\n\nThe Regional Custom Domain Name is mapped to a Stage in an existing API Gateway. Additionally, a Route53 A record is created to map the Regional Custom Domain Name (i.e. example.com) to the Target Domain Name created by API Gateway (i.e. d-abcde12345.execute-api.ap-southeast-2.amazonaws.com).\n\nAs prerequisites for this...",
+      "contents": "The SAM template deploys an Amazon API Gateway Regional Custom Domain Name.\n\nThe Regional Custom Domain Name is mapped to a Stage in an existing API Gateway. Additionally, a Route53 A record is created to map the Regional Custom Domain Name (i.e. example.com) to the Target Domain Name created by API Gateway (i.e. d-abcde12345.execute-api.ap-southeast-2.amazonaws.com).\n\nAs prerequisites for this pattern, you must have:\n\n* A valid certificate in ACM (Amazon Certificate Manager) that covers the namespace of the domain you would like to use (i.e. *.mydomain.com).\n* A public Hosted Zone in Route 53 with the domain name you would like to use (i.e. mydomain.com).\n* An API Gateway API (REST, HTTP or Websockets) and a deployed Stage within this API.\n\nNote: when deploying this pattern, *CAPABILITY_IAM* is required.\n\nLearn more about this pattern at Serverless Land Patterns: [https://serverlessland.com/patterns/apigw-custom-domain-regional](https://serverlessland.com/patterns/apigw-custom-domain-regional)\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) (AWS SAM) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ``` \n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n2. Change directory to the pattern directory:\n    ```\n    cd apigw-custom-domain-regional\n    ```\n3. From the command line, use AWS SAM to deploy the AWS resources for the pattern as specified in the template.yml file:\n    ```\n    sam deploy -g\n    ```\n1. During the prompts:\n    * Enter a stack name\n    * Select the desired AWS Region\n    * Enter your Custom Domain Name (i.e. test.mydomain.com) for the DomainName parameter.\n    * You must have a ACM Certificate that covers your Custom Domain namespace (i.e. *.mydomain.com). Enter the ARN for this certificate.\n    * You must have a public Hosted Zone in Route 53 with your Domain Name (i.e. mydomain.com). Enter the Hosted Zone Id for this Hosted Zone.\n    * Enter the API Id in API Gateway that you would like to map to your Custom Domain Name.\n    * Enter the name of the stage within your API Gateway that you would like to map to your Custom Domain Name.\n    * Allow SAM to create roles with the required permissions if needed.\n\n    Once you have run guided mode once, you can use `sam deploy` in future to use these defaults.\n\n1. Note the outputs from the SAM deployment process. These contain the resource names and/or ARNs which are used for testing.\n\n## Testing\n\nThe stack will output the **Regional Custom Domain endpoint**. You can use *curl* to send a HTTP request to the Regional Custom Domain endpoint to test the correct mapping to your API.\n   \n```\ncurl https://{DomainName}\n```\n\n## Cleanup\n \n1. Delete the stack\n    ```bash\n    sam delete\n    ```\n1. Confirm the stack has been deleted\n    ```bash\n    aws cloudformation list-stacks --query \"StackSummaries[?contains(StackName,'STACK_NAME')].StackStatus\"\n    ```\n----",
+      "published_at": "2022-12-01T17:09:01.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T00:33:01.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 2,
+      "points": 1,
+      "views_count": 11,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/27ae60/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65746,
+      "title": "Amazon API Gateway REST API Edge Custom Domain Name",
+      "slug": "MkNLrZW7LgA",
+      "url": "https://viblo.asia/p/amazon-api-gateway-rest-api-edge-custom-domain-name-MkNLrZW7LgA",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-rest-api-edge-custom-domain-name",
+      "contents_short": "The SAM template deploys an Amazon API Gateway Edge Custom Domain Name.\n\nThe Edge Custom Domain Name is mapped to a Stage in an existing API Gateway. Additionally, a Route53 A record is created to map the Edge Custom Domain Name (i.e. example.com) to the Target Domain Name created by API Gateway (i.e. d-abcde12345.execute-api.ap-southeast-2.amazonaws.com).\n\nAs prerequisites for this pattern, yo...",
+      "contents": "The SAM template deploys an Amazon API Gateway Edge Custom Domain Name.\n\nThe Edge Custom Domain Name is mapped to a Stage in an existing API Gateway. Additionally, a Route53 A record is created to map the Edge Custom Domain Name (i.e. example.com) to the Target Domain Name created by API Gateway (i.e. d-abcde12345.execute-api.ap-southeast-2.amazonaws.com).\n\nAs prerequisites for this pattern, you must have:\n\n* A valid certificate in ACM (Amazon Certificate Manager) in the us-east-1 Region that covers the namespace of the domain you would like to use (i.e. *.mydomain.com).\n* A public Hosted Zone in Route 53 with the domain name you would like to use (i.e. mydomain.com).\n* An API Gateway API (REST, HTTP or Websockets) and a deployed Stage within this API.\n\nNote: when deploying this pattern, *CAPABILITY_IAM* is required.\n\nLearn more about this pattern at Serverless Land Patterns: [https://serverlessland.com/patterns/apigw-custom-domain-edge](https://serverlessland.com/patterns/apigw-custom-domain-edge)\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) (AWS SAM) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ``` \n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n2. Change directory to the pattern directory:\n    ```\n    cd apigw-custom-domain-edge\n    ```\n3. From the command line, use AWS SAM to deploy the AWS resources for the pattern as specified in the template.yml file:\n    ```\n    sam deploy -g\n    ```\n1. During the prompts:\n    * Enter a stack name\n    * Select the desired AWS Region\n    * Enter your Custom Domain Name (i.e. test.mydomain.com) for the DomainName parameter.\n    * You must have a ACM Certificate in the us-east-1 Region that covers your Custom Domain namespace (i.e. *.mydomain.com). Enter the ARN for this certificate.\n    * You must have a public Hosted Zone in Route 53 with your Domain Name (i.e. mydomain.com). Enter the Hosted Zone Id for this Hosted Zone.\n    * Enter the API Id in API Gateway that you would like to map to your Custom Domain Name.\n    * Enter the name of the stage within your API Gateway that you would like to map to your Custom Domain Name.\n    * Allow SAM to create roles with the required permissions if needed.\n\n    Once you have run guided mode once, you can use `sam deploy` in future to use these defaults.\n\n1. Note the outputs from the SAM deployment process. These contain the resource names and/or ARNs which are used for testing.\n\n## Testing\n\nThe stack will output the **Edge Custom Domain endpoint**. You can use *curl* to send a HTTP request to the Edge Custom Domain endpoint to test the correct mapping to your API.\n   \n```\ncurl https://{DomainName}\n```\n\n## Cleanup\n \n1. Delete the stack\n    ```bash\n    sam delete\n    ```\n1. Confirm the stack has been deleted\n    ```bash\n    aws cloudformation list-stacks --query \"StackSummaries[?contains(StackName,'STACK_NAME')].StackStatus\"\n    ```\n----",
+      "published_at": "2022-12-01T17:08:00.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-02T08:20:23.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 2,
+      "points": 0,
+      "views_count": 5,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/f39c12/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65745,
+      "title": "Amazon API Gateway to Amazon CloudWatch",
+      "slug": "5pPLkGm6LRZ",
+      "url": "https://viblo.asia/p/amazon-api-gateway-to-amazon-cloudwatch-5pPLkGm6LRZ",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-to-amazon-cloudwatch",
+      "contents_short": "This pattern creates an Amazon API Gateway with access logging to Amazon CloudWatch configured.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-cloudwatch\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the AWS Pricing page for details. You are r...",
+      "contents": "This pattern creates an Amazon API Gateway with access logging to Amazon CloudWatch configured. \n\nLearn more about this pattern at Serverless Land Patterns: [https://serverlessland.com/patterns/apigw-cloudwatch](https://serverlessland.com/patterns/apigw-cloudwatch)\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) (AWS SAM) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ``` \n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n1. Change directory to the pattern directory:\n    ```\n    cd apigw-cloudwatch\n    ```\n1. From the command line, use AWS SAM to deploy the AWS resources for the pattern as specified in the template.yml file:\n    ```\n    sam deploy --guided\n    ```\n1. During the prompts:\n    * Enter a stack name\n    * Enter the desired AWS Region\n    * Allow SAM CLI to create IAM roles with the required permissions.\n\n    Once you have run `sam deploy --guided` mode once and saved arguments to a configuration file (samconfig.toml), you can use `sam deploy` in future to use these defaults.\n\n1. Note the outputs from the SAM deployment process. These contain the resource names and/or ARNs which are used for testing.\n\n## How it works\n\nThe application will only accept requests from countries that are in the country code array for the WAF rule.\n\n## Testing\n\nDeploy the application and then go to the oputput URL. Refresh the screen multiple times. Then go to Amazon CloudWatch and check the log group that is created. The name will be in the outputs. You will see something like:\n\n```\n{\n    \"requestId\": \"d14676c9-a4a3-46e0-9168-87ed1a429eb3\",\n    \"waf-error\": \"-\",\n    \"waf-status\": \"-\",\n    \"waf-latency\": \"-\",\n    \"waf-response\": \"-\",\n    \"authenticate-error\": \"-\",\n    \"authenticate-status\": \"-\",\n    \"authenticate-latency\": \"-\",\n    \"authorize-error\": \"-\",\n    \"authorize-status\": \"-\",\n    \"authorize-latency\": \"-\",\n    \"integration-error\": \"-\",\n    \"integration-status\": \"200\",\n    \"integration-latency\": \"15\",\n    \"integration-requestId\": \"55c51049-49c2-42f6-bb23-48e9595094da\",\n    \"integration-integrationStatus\": \"200\",\n    \"response-latency\": \"17\",\n    \"status\": \"200\"\n}\n```\nYou can add authorization and a WAF to see the other data filled in.\n## Cleanup\n \n1. Delete the stack\n    ```bash\n    sam delete --stack-name STACK_NAME\n    ```\n1. Confirm the stack has been deleted\n    ```bash\n    aws cloudformation list-stacks --query \"StackSummaries[?contains(StackName,'STACK_NAME')].StackStatus\"\n    ```\n----",
+      "published_at": "2022-12-01T17:06:42.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-02T09:25:22.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 1,
+      "points": 0,
+      "views_count": 5,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": []
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65744,
+      "title": "Amazon API Gateway REST API with a Client Certificate",
+      "slug": "aNj4vXkoL6r",
+      "url": "https://viblo.asia/p/amazon-api-gateway-rest-api-with-a-client-certificate-aNj4vXkoL6r",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-rest-api-with-a-client-certificate",
+      "contents_short": "The SAM template deploys an Amazon API Gateway REST API endpoint that uses a Client Certificate that will be used to call your integration endpoints in the 'Prod' Stage.\n\nNote: when deploying this pattern, CAPABILITY_IAM is required.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-client-certificate\n\nImportant: this application uses various ...",
+      "contents": "The SAM template deploys an Amazon API Gateway REST API endpoint that uses a Client Certificate that will be used to call your integration endpoints in the 'Prod' Stage.\n\nNote: when deploying this pattern, *CAPABILITY_IAM* is required.\n\nLearn more about this pattern at Serverless Land Patterns: [https://serverlessland.com/patterns/apigw-client-certificate](https://serverlessland.com/patterns/apigw-client-certificate)\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) (AWS SAM) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ``` \n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n2. Change directory to the pattern directory:\n    ```\n    cd apigw-client-certificate\n    ```\n3. From the command line, use AWS SAM to deploy the AWS resources for the pattern as specified in the template.yml file:\n    ```\n    sam deploy -g\n    ```\n1. During the prompts:\n    * Enter a stack name\n    * Select the desired AWS Region\n    * Allow SAM to create roles with the required permissions if needed.\n\n    Once you have run guided mode once, you can use `sam deploy` in future to use these defaults.\n\n1. Note the outputs from the SAM deployment process. These contain the resource names and/or ARNs which are used for testing.\n\n## Testing\n\nThe stack will output the **api endpoint**. Please check the instructions at https://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-client-side-ssl-authentication.html#certificate-validation to configure a backend HTTPS server to verify the client certificate.\n   \n\n## Cleanup\n \n1. Delete the stack\n    ```bash\n    sam delete\n    ```\n1. Confirm the stack has been deleted\n    ```bash\n    aws cloudformation list-stacks --query \"StackSummaries[?contains(StackName,'STACK_NAME')].StackStatus\"\n    ```\n----",
+      "published_at": "2022-12-01T17:05:38.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-02T10:39:02.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 1,
+      "points": 0,
+      "views_count": 8,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/8e44ad/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65743,
+      "title": "Amazon API Gateway Canary Deployment",
+      "slug": "7ymJXK2R4kq",
+      "url": "https://viblo.asia/p/amazon-api-gateway-canary-deployment-7ymJXK2R4kq",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-canary-deployment",
+      "contents_short": "This pattern creates an Amazon API Gateway RESTful API, an AWS Lambda function, and then creates an APIGW Canary Deployment using the AWS Cloud Development Kit (AWS CDK) in Python.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-canary-deployment-cdk.\n\nImportant: this application uses various AWS services and there are costs associated with ...",
+      "contents": "This pattern creates an Amazon [API Gateway RESTful API](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-rest-api.html), an AWS [Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html), and then creates an [APIGW Canary Deployment](https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html) using the AWS Cloud Development Kit (AWS CDK) in Python.\n\nLearn more about this pattern at Serverless Land Patterns: [https://serverlessland.com/patterns/apigw-canary-deployment-cdk](https://serverlessland.com/patterns/apigw-canary-deployment-cdk).\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [AWS CDK Toolkit](https://docs.aws.amazon.com/cdk/latest/guide/cli.html) installed and configured\n* [Python 3.9+](https://www.python.org/downloads/) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ```\n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n2. Change directory to the pattern directory:\n    ```\n    cd serverless-patterns/apigw-canary-deployment-cdk\n    ```\n3. Create a virtual environment for Python\n    ```\n    python3 -m venv .venv\n    ```\n4. Activate the virtual environment\n    ```\n    source .venv/bin/activate\n    ```\n    For a Windows platform, activate the virtualenv like this:\n    ```\n    .venv\\Scripts\\activate.bat\n    ```\n5. Install the Python required dependencies:\n    ```\n    pip install -r requirements.txt\n    ```\n6. From the command line, use AWS CDK to deploy the AWS resources for the serverless application as specified in the app.py file:\n    ```\n    cdk deploy MyServerlessApplicationStack\n    ```\n7. Note the outputs from the CDK deployment process. These contain the API Gateway ID which is used for testing.\n8. Once the serverless application stack is successfully deployed, you will need to [deploy new Lambda code](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-package.html). This can be accomplished by performing the following on the Lambda page in the AWS console:\n\n    1. On the left panel, click functions.\n    2. Click on the ```MyServerlessApplicationStac-MyFunction*``` function.\n    3. Under the code tab, edit the Hello World code under the EDIT ME comment.\n    4. Under the file menu in the code editor, click save.\n    5. In the code editor, click the deploy button. This deploys the code to the [$LATEST version](https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html).\n\n9. From the command line, use AWS CDK to deploy the AWS resources for the canary deployment as specified in the app.py file:\n    ```\n    cdk deploy CanaryDeploymentStack\n    ```\n\n## How it works\n\nThe API Gateway Canary Deployment will route 50% of the traffic to the new function version created using the updated code.\n\n## Testing\n\nFrom the command line, run the following command to send an HTTP `GET` request to APIs endpoint. Note that you must edit the {MyServerlessApplicationStack.ApigwId} and {Region} placeholder with the ID of the deployed API and Region that it is deployed in. This is provided in the MyServerlessApplicationStack deployment outputs.\n\n```\ncurl -H \"Origin: https://www.example.com\" \"https://{MyServerlessApplicationStack.ApigwId}.execute-api.{Region}.amazonaws.com/prod\"\n```\n\nSince the canary deployment is set at 50% traffic, when you run the above command more than once you should see the old version's and new version's output at a rate of about 50/50.\n\nThe `-H \"Origin: https://www.example.com\"` is the third party domain making the request, which you can substitute for other domains.\n\n## Cleanup\n\n1. Delete the Canary Deployment stack\n    ```\n    cdk destroy CanaryDeploymentStack\n    ```\n2. Delete the Serverless application stack\n   ```\n   cdk destroy MyServerlessApplicationStack\n   ```\n----",
+      "published_at": "2022-12-01T17:04:32.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-02T03:00:27.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 2,
+      "points": 0,
+      "views_count": 8,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/8e44ad/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65742,
+      "title": "Amazon API Gateway integration with WAF",
+      "slug": "n1j4l3aDVwl",
+      "url": "https://viblo.asia/p/amazon-api-gateway-integration-with-waf-n1j4l3aDVwl",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-integration-with-waf",
+      "contents_short": "This pattern in CDK offers a example to generate an Amazon API Gateway with a greedy proxy (\"{proxy+}\") and \"ANY\" method from the specified path, meaning it will accept by default any method and any path. The VPC Lambda function provided in JavaScript only returns the path.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-waf-cdk\n\nImportant: ...",
+      "contents": "This pattern in CDK offers a example to generate an Amazon API Gateway with a greedy proxy (\"{proxy+}\") and \"ANY\" method from the specified path, meaning it will accept by default any method and any path. The VPC Lambda function provided in JavaScript only returns the path.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-waf-cdk\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [Node and NPM](https://nodejs.org/en/download/) installed\n* [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/latest/guide/cli.html) (AWS CDK) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ```bash\n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n2. Change directory to the pattern directory its source code folder:\n    ```bash\n      cd apig-waf/src\n    ```\n3. From the command line, use npm to install the development dependencies:\n    ```bash\n      npm install\n    ```\n4. To deploy from the command line use the following:\n    ```bash\n      npx cdk bootstrap aws://accountnumber/region\n      npx cdk deploy --app 'ts-node .' --all\n    ```\n\n## Testing\n\n\n  *  Locate WAFAPIGatewayApi.ApiUrl from output printed by cdk, this is the api endpoint to be invoked\n    In a browser\n\n    ```https://<api_id>.execute-api.<region>.amazonaws.com/prod```\n\n    You should see: ```Success path: \"/\"```\n\n\n\n## Cleanup\n \n1. From the command line, use the following in the source folder\n    ```bash\n    npx cdk destroy --app 'ts-node .' --all\n    ```\n2. Confirm the removal and wait for the resource deletion to complete.",
+      "published_at": "2022-12-01T17:03:23.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-02T07:59:03.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 1,
+      "points": 0,
+      "views_count": 7,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/d35400/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65741,
+      "title": "Integration of Amplify Frontend, Cognito, API Gateway, Lambda",
+      "slug": "GAWVpoqYL05",
+      "url": "https://viblo.asia/p/integration-of-amplify-frontend-cognito-api-gateway-lambda-GAWVpoqYL05",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "integration-of-amplify-frontend-cognito-api-gateway-lambda",
+      "contents_short": "This pattern explains how to deploy a SAM application that includes an AWS Amplify Frontend, Cognito, API Gateway and Lambda Function and set environmental variables to be used by Amplify and the Lambda function.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/amplify-apigw-lambda.\n\nImportant: this application uses various AWS services and there a...",
+      "contents": "This pattern explains how to deploy a SAM application that includes an AWS Amplify Frontend, Cognito, API Gateway and Lambda Function and set environmental variables to be used by Amplify and the Lambda function.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/amplify-apigw-lambda.\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) (AWS SAM) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ``` \n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n1. Change directory to the pattern directory:\n    ```\n    cd _patterns-model\n    ```\n1. From the command line, use AWS SAM to deploy the AWS resources for the pattern as specified in the template.yml file:\n    ```\n    sam deploy --guided\n    ```\n1. During the prompts:\n    * Enter a stack name\n    * Enter the desired AWS Region\n    * Enter the Frontend Repository URL that will be hosted by AWS Amplify Frontend\n    * Enter the OauthToken for you git provider\n    * Allow SAM CLI to create IAM roles with the required permissions.\n\n    Once you have run `sam deploy --guided` mode once and saved arguments to a configuration file (samconfig.toml), you can use `sam deploy` in future to use these defaults.\n\n1. Note the outputs from the SAM deployment process. These contain the resource names and/or ARNs which are used for testing.\n\n## How it works\n\nThis template deploys a full-stack application where Amplify frontend application and Lambda Function will have as environmental variables Cognito Region, Cognito User Pool ID and Cognito User Pool Client ID allowing developer to quickly develop an application with Authentication on front and backend. Template set cognito as authorizer for API Gateway, requiring the frontend app to pass json web token (JWT) to call API\n\n## Testing\n\nOn AWS amplify Service, click on the app name (same of SAM stack name), click environment varaibles. You should be able to see 4 environmental variables created by the template.\n\nOn AWS Lambda Service, click Applications, click the application name (same of SAM stack name), click on Resource called myFunction, click configuration, click Environment variables. You should be able to see 4 environmental variables created by the template.\nExecute the lambda function and check the logs. You will see a result like:\nCognito Region:  us-east-1\nCognito User Pool Id:  us-east-1_aYtONfZZZ\nCognito User Pool Client ID:  1h2rrpldfqg8lhbgej2o5s2ZZZ\n\n## Cleanup\n \n1. Delete the stack\n    ```bash\n    aws cloudformation delete-stack --stack-name STACK_NAME\n    ```\n1. Confirm the stack has been deleted\n    ```bash\n    aws cloudformation list-stacks --query \"StackSummaries[?contains(StackName,'STACK_NAME')].StackStatus\"\n    ```\n----",
+      "published_at": "2022-12-01T17:02:22.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-02T15:00:10.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 2,
+      "points": 1,
+      "views_count": 6,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/27ae60/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65740,
+      "title": "Application Load balancer with AWS Lambda as target with CDK",
+      "slug": "r1QLxPApLAw",
+      "url": "https://viblo.asia/p/application-load-balancer-with-aws-lambda-as-target-with-cdk-r1QLxPApLAw",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "application-load-balancer-with-aws-lambda-as-target-with-cdk",
+      "contents_short": "This pattern demonstrates how to create an Application Load Balancer with AWS Lambda as target. Implemented in CDK.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/alb-lambda-cdk\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the AWS Pricing page for ...",
+      "contents": "This pattern demonstrates how to create an Application Load Balancer with AWS Lambda as target. Implemented in CDK.\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/alb-lambda-cdk\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n* [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n* [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n* [Node and NPM](https://nodejs.org/en/download/) installed\n* [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/latest/guide/cli.html) (AWS CDK) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n    ``` \n    git clone https://github.com/aws-samples/serverless-patterns\n    ```\n1. Change directory to the pattern directory:\n    ```\n    cd alb-lambda-cdk\n    ```\n2. Run below command to install required dependancies:\n    ```\n    npm install\n    ```\n4. From the command line, run:\n    ```\n    cdk deploy --all\n    ```\n\n## Testing\n\n1. In the stack output, you can see `ALBUrl` and when access the url, you can get the response from Lambda.\n\n** Please note: Application Load Balancer's default settings for health check are 5 consecutive health check successes with 35 seconds interval. So, it will take couple of minutes for the target to be healthy.\n\n## Cleanup\n \n1. To delete the stack, run:\n    ```bash\n    cdk destroy --all\n    ```",
+      "published_at": "2022-12-01T17:00:50.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-03T01:54:02.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 1,
+      "points": 1,
+      "views_count": 6,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/8e44ad/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    },
+    {
+      "id": 65739,
+      "title": "Amazon API Gateway HTTP API to Amazon EventBridge",
+      "slug": "bXP4WPyoJ7G",
+      "url": "https://viblo.asia/p/amazon-api-gateway-http-api-to-amazon-eventbridge-bXP4WPyoJ7G",
+      "user_id": 51762,
+      "moderation": null,
+      "transliterated": "amazon-api-gateway-http-api-to-amazon-eventbridge",
+      "contents_short": "This pattern creates an HTTP API endpoint that directly integrates with Amazon EventBridge\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-http-api-eventbridge-python\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the AWS Pricing page for detail...",
+      "contents": "This pattern creates an HTTP API endpoint that directly integrates with Amazon EventBridge\n\nLearn more about this pattern at Serverless Land Patterns: https://serverlessland.com/patterns/apigw-http-api-eventbridge-python\n\nImportant: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.\n\n## Requirements\n\n- [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in. The IAM user that you use must have sufficient permissions to make necessary AWS service calls and manage AWS resources.\n- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed and configured\n- [Git Installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)\n- [AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) (AWS SAM) installed\n\n## Deployment Instructions\n\n1. Create a new directory, navigate to that directory in a terminal and clone the GitHub repository:\n   ```\n   git clone https://github.com/aws-samples/serverless-patterns\n   ```\n2. Change directory to the pattern directory:\n   ```\n   cd serverless-patterns/apigw-http-api-eventbridge-python\n   ```\n3. Create a virtual environment for Python:\n   ```\n   python3 -m venv .venv\n   ```\n4. Activate the virtual environment\n   ```\n   source .venv/bin/activate\n   ```\n   For a Windows platform, activate the virtualenv like this:\n   ```\n   .venv\\Scripts\\activate.bat\n   ```\n5. Install the Python required dependencies:\n   ```\n   pip install -r requirements.txt\n   ```\n6. Review the CloudFormation template the cdk generates for you stack using the following AWS CDK CLI command:\n   ```\n   cdk synth\n   ```\n7. From the command line, use AWS CDK to deploy the AWS resources for the serverless application as specified in the app.py file:\n   ```\n   cdk deploy\n   ```\n8. Note the outputs from the CDK deployment process. These contain the API Gateway ID which is used for testing.\n\n## How it works\n\nThis pattern creates an Amazon API gateway HTTP API endpoint. The endpoint uses service integrations to directly connect to Amazon EventBridge.\n\n## Testing\n\nTo test the endpoint first send data using the following command. Be sure to update the endpoint with endpoint of your stack.\n\n```\n   curl --location --request POST '<your api endpoint>' --header 'Content-Type: application/json' \\\n--data-raw '{\n    \"Detail\":{\n        \"message\": \"This is my test\"\n    }\n}'\n```\n\nIf everything works as expected EventBridge will return the result of sending the message operation and APIGateway will proxy the payload to the client application. The payload should looks like something like the following payload:\n\n```\n{\n    \"Entries\": [\n        {\n            \"EventId\": \"{UNIQUE_UUID}\"\n        }\n    ],\n    \"FailedEntryCount\": 0 // <- This indicates that the message was successfully sent\n}\n```\n\n## Cleanup\n\nRun the given command to delete the resources that were created. It might take some time for the CloudFormation stack to get deleted.\n\n```\ncdk destroy\n```",
+      "published_at": "2022-12-01T16:59:30.000000Z",
+      "is_published": true,
+      "is_shared": false,
+      "updated_at": "2022-12-02T19:00:05.000000Z",
+      "translation_source": null,
+      "trend_at": null,
+      "promoted_at": null,
+      "reading_time": 1,
+      "points": 1,
+      "views_count": 14,
+      "clips_count": 0,
+      "comments_count": 0,
+      "rated_value": null,
+      "promoted": false,
+      "trending": false,
+      "is_draft": false,
+      "is_public": true,
+      "locale_code": "en",
+      "is_video": false,
+      "thumbnail_url": null,
+      "user": {
+        "data": {
+          "id": 51762,
+          "url": "https://viblo.asia/u/Dragon2k",
+          "avatar": "6f641ead-e915-4f19-b199-e799ca7bf22b.png",
+          "name": "AWS Community Builder",
+          "username": "Dragon2k",
+          "followers_count": 4,
+          "reputation": 150,
+          "posts_count": 32,
+          "banned_at": null,
+          "level_partner": null,
+          "following": false
+        }
+      },
+      "tags": {
+        "data": [
+          {
+            "slug": "amazon-web-services-aws",
+            "name": "Amazon Web Services (AWS)",
+            "primary": false,
+            "image": "https://placehold.jp/16/2980b9/ffffff/80x80.jpg?text=Amazon+Web+Services+AWS&css=%7B%22padding%22%3A%223px%22%7D"
+          }
+        ]
+      },
+      "commentators": {
+        "data": []
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "total": 34557,
+      "count": 20,
+      "per_page": 20,
+      "current_page": 1,
+      "total_pages": 1728,
+      "links": {
+        "next": "http://viblo.asia/posts/newest?page=2"
+      }
+    }
+  }
+}

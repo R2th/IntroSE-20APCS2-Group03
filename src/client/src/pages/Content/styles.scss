@@ -1,0 +1,18 @@
+.post-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  .go-back {
+    cursor: pointer;
+  }
+  .content-container {
+    max-width: 760px;
+    margin-left: 15px;
+    margin-right: 15px;
+    min-width: 700px;
+    zero-md {
+      font-size: 18px !important;
+      line-height: 1.75 !important;
+    }
+  }
+}
