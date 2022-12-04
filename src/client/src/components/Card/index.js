@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import React from "react";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import { fullPathImage, thumbnail_url } from "utils/helpers";
 
 import "./style.scss";
 import "./medium.style.scss";
@@ -9,24 +9,6 @@ import "./small_hoz.style.scss";
 import "./small_verc.style.scss";
 
 const Card = ({ content, type = "fullWidth" }) => {
-  const fullPathImage = (user) => {
-    if (user && user.data.avatar)
-      return `https://images.viblo.asia/avatar/${user.data.avatar}`;
-    else return "https://viblo.asia/images/mm.png";
-  };
-
-  const thumbnail_url = () => {
-    if (!content.slug)
-      return "https://miro.medium.com/fit/c/112/112/1*vZJLfVrLT4u_VY1zmAr1_A.png";
-    if (content.thumbnail_url) {
-      return content.thumbnail_url;
-    }
-    if (content.tags.data.length > 0) {
-      return content.tags.data[0].image;
-    }
-    return fullPathImage(content.user);
-  };
-
   const navigate = useNavigate();
 
   switch (type) {
@@ -87,7 +69,7 @@ const Card = ({ content, type = "fullWidth" }) => {
                 </div>
               </div>
               <div className="thumbnail">
-                <img alt="thumbnail" src={thumbnail_url()} />
+                <img alt="thumbnail" src={thumbnail_url(content)} />
               </div>
             </>
           )}
@@ -100,7 +82,7 @@ const Card = ({ content, type = "fullWidth" }) => {
           onClick={() => navigate(`content/${content.slug}`)}
         >
           <div className="thumbnail medium">
-            <img alt="thumbnail" src={thumbnail_url()} />
+            <img alt="thumbnail" src={thumbnail_url(content)} />
           </div>
           {content && (
             <>
@@ -151,7 +133,7 @@ const Card = ({ content, type = "fullWidth" }) => {
           onClick={() => navigate(`content/${content.slug}`)}
         >
           <div className="thumbnail small-verc">
-            <img alt="thumbnail" src={thumbnail_url()} />
+            <img alt="thumbnail" src={thumbnail_url(content)} />
           </div>
           {content && (
             <>
@@ -189,7 +171,7 @@ const Card = ({ content, type = "fullWidth" }) => {
           onClick={() => navigate(`content/${content.slug}`)}
         >
           <div className="thumbnail small-hoz">
-            <img alt="thumbnail" src={thumbnail_url()} />
+            <img alt="thumbnail" src={thumbnail_url(content)} />
           </div>
           {content && (
             <>

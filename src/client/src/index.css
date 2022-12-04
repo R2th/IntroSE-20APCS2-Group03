@@ -6,6 +6,24 @@ html {
   box-sizing: border-box;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(27, 27, 27, 0);
+  --maxWidth: 1600px;
+  --gap: 3rem;
+  scrollbar-color: #666 #201c29;
+  color: #fff;
+  overflow-x: hidden;
+  --featured-img: linear-gradient(180deg, #fff, #fff);
+  --bg-blend-mode: overlay;
+  background-size: 120% 2000px, 100% auto;
+  background-color: #fff;
+  background-position: top 58px center;
+  background-repeat: no-repeat;
+  background-image: radial-gradient(
+      50% 50% at top center,
+      rgb(59, 130, 246, 0.1),
+      #fff
+    ),
+    var(--featured-img);
+  background-size: 120% 2000px, 100% 2000px;
 }
 *,
 *:before,
