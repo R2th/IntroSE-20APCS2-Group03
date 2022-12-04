@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { bypassCORSUrl } from "../../utils/helpers";
+import axios from "axios";
+import { fullPathAPI } from "utils/helpers";
+import { API_STATUS_SUCCESS } from "utils/const";
 
 import "./style.scss";
 
@@ -14,13 +16,12 @@ const Sidebar = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(bypassCORSUrl("https://viblo.asia/api/questions"))
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setQuestions(data.data);
-        })
-        .catch((err) => console.error(err));
+      const { data, status } = await axios(fullPathAPI("/api/questions"));
+      if (status === API_STATUS_SUCCESS) {
+        setQuestions(data.questions.data);
+      } else {
+        console.error(status);
+      }
     };
     fetchData();
   }, []);

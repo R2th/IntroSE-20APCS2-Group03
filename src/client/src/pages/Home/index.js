@@ -15,21 +15,20 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(fullPathAPI("/posts/newest"))
-        .then((res) => res.json())
-        .then((data) => {
-          setContents(data.data);
-        })
-        .catch((err) => setContents(err));
+      const { data, status } = await axios(fullPathAPI("/posts/newest"));
+      if (status === API_STATUS_SUCCESS) {
+        setContents(data.data);
+      } else {
+        console.error(status);
+      }
     };
 
     const fetchDataTrending = async () => {
       const { data, status } = await axios(fullPathAPI("/trending?limit=10"));
       if (status === API_STATUS_SUCCESS) {
-        console.log(data.data);
         setTrending(data.data);
       } else {
-        console.log(status);
+        console.error(status);
       }
     };
 
