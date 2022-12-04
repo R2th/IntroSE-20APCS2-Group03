@@ -30,6 +30,7 @@ exports.signup = async (req, res) =>{
                 user.setRoles(roles)
                 .then(() => res.status(200).send({
                     message: "User register successfully!",
+                    username: req.body.username
                 }))
             })
         }
@@ -37,6 +38,7 @@ exports.signup = async (req, res) =>{
             user.setRoles([1])
             .then(() => res.status(200).send({
                 message: "User register successfully!",
+                username: req.body.username
             }))
         }
     })
