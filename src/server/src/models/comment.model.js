@@ -1,32 +1,35 @@
-module.exports = (sequelize, DataTypes) =>{
-    const Comment = sequelize.define("comment",{
+module.exports = (sequelize, DataTypes) => {
+  const Comment = sequelize.define(
+    "comment",
+    {
       comment_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
       },
       user_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       story_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       content: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
-      createdAt:{
-        type: DataTypes.DATE
+      createdAt: {
+        type: DataTypes.DATE,
       },
-      updatedAt:{
-        type: DataTypes.DATE
-      }
+      updatedAt: {
+        type: DataTypes.DATE,
+      },
     },
     {
       // freezeTableName: true,
       // timestamps: true,
-    });
-  
-  return Reaction;
-  }
+    }
+  );
+
+  return Comment;
+};

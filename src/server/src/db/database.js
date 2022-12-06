@@ -27,6 +27,7 @@ module.exports.sequelize = new Sequelize(
     host: process.env.PG_HOST,
     port: process.env.PG_PORT,
     dialect: "postgres",
-    logging: (msg) => console.log(chalk.yellow(msg), "\n"),
+    // logging: (msg) => console.log(chalk.yellow(msg), "\n"),
+    logging: false,
   }
 );
