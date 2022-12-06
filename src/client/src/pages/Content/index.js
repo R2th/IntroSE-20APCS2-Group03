@@ -1,18 +1,19 @@
-import axios from "axios";
-import Sidebar from "components/Sidebar";
 import * as React from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
-import { API_STATUS_SUCCESS } from "utils/const";
-import { fullPathAPI, thumbnail_url } from "../../utils/helpers";
+import { useFetch } from "../../hooks/useFetch";
+import { thumbnail_url } from "../../utils/helpers";
 import "./styles.scss";
 
 const Content = () => {
   const { id_content } = useParams();
   const navigate = useNavigate();
 
-  const [post, setPost] = React.useState({});
-  const [series, setSeries] = React.useState({});
+  const { data, error } = useFetch(`/posts/${id_content}`, {}, (data) => {
+    return data.post.data;
+  });
+
+  const post = data;
 
   React.useEffect(() => {
     var html = document.querySelector("html");
@@ -20,20 +21,6 @@ const Content = () => {
     html.style.setProperty("--bg-blend-mode", "multiply");
     html.style.setProperty("background-size", "120% 2000px, 100% auto");
   }, [post]);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const { data, status } = await axios(fullPathAPI(`/posts/${id_content}`));
-      if (status === API_STATUS_SUCCESS) {
-        setPost(data.post.data);
-        setSeries(data.series.data);
-      } else {
-        console.error(status);
-      }
-    };
-    fetchData();
-    //eslint-disable-next-line
-  }, []);
 
   return (
     <div className="container">
@@ -66,7 +53,7 @@ const Content = () => {
             </div>
           )}
         </div>
-        <Sidebar />
+        {/* <Sidebar /> */}
       </div>
     </div>
   );

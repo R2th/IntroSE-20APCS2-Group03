@@ -1,40 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Card from "components/Card";
 import NavBar from "components/NavBar";
 import Sidebar from "components/Sidebar";
-
-import { fullPathAPI } from "utils/helpers";
-import { INIT_DATA_CONTENT, API_STATUS_SUCCESS } from "utils/const";
+import { INIT_DATA_CONTENT } from "utils/const";
 
 import "./style.scss";
-import axios from "axios";
+import { useFetch } from "../../hooks/useFetch";
 
 const Home = () => {
-  const [contents, setContents] = useState(INIT_DATA_CONTENT);
-  const [trending, setTrending] = useState(INIT_DATA_CONTENT);
+  const fetchContent = useFetch("/posts/newest", INIT_DATA_CONTENT);
+  const fetchTrending = useFetch("/trending?limit=10", INIT_DATA_CONTENT);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, status } = await axios(fullPathAPI("/posts/newest"));
-      if (status === API_STATUS_SUCCESS) {
-        setContents(data.data);
-      } else {
-        console.error(status);
-      }
-    };
-
-    const fetchDataTrending = async () => {
-      const { data, status } = await axios(fullPathAPI("/trending?limit=10"));
-      if (status === API_STATUS_SUCCESS) {
-        setTrending(data.data);
-      } else {
-        console.error(status);
-      }
-    };
-
-    fetchDataTrending();
-    fetchData();
-  }, []);
+  const contents = fetchContent.data;
+  const trending = fetchTrending.data;
 
   return (
     <div className="homepage">

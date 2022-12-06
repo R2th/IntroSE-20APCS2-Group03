@@ -1,30 +1,13 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { fullPathAPI } from "utils/helpers";
-import { API_STATUS_SUCCESS } from "utils/const";
+import React from "react";
+import { INIT_DATA_CONTENT } from "utils/const";
 
 import "./style.scss";
+import { useFetch } from "../../hooks/useFetch";
 
 const Sidebar = () => {
-  const [questions, setQuestions] = useState([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-  ]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, status } = await axios(fullPathAPI("/api/questions"));
-      if (status === API_STATUS_SUCCESS) {
-        setQuestions(data.questions.data);
-      } else {
-        console.error(status);
-      }
-    };
-    fetchData();
-  }, []);
+  const { data } = useFetch("/api/questions", INIT_DATA_CONTENT, (data) => {
+    return data.questions.data;
+  });
 
   return (
     <div className="sticky-sidebar">
@@ -34,7 +17,7 @@ const Sidebar = () => {
         </a>
         <hr className="section-title__filler" />
       </div>
-      {questions.map((question) => (
+      {data.map((question) => (
         <div key={question.id}>
           {question && (
             <div className="item">

@@ -2,13 +2,26 @@ import { API_ENDPOINT } from "./const";
 
 export const bypassCORSUrl = (url) => {
   if (process.env.NODE_ENV === "production") {
-    return "https://cors-anywhere.herokuapp.com/" + url;
+    return buildPath("https://cors-anywhere.herokuapp.com/", url);
   }
-  return "http://localhost:8080/" + url;
+  return buildPath("http://localhost:8080/", url);
+};
+
+const buildPath = (...args) => {
+  return args
+    .map((part, i) => {
+      if (i === 0) {
+        return part.trim().replace(/[\/]*$/g, "");
+      } else {
+        return part.trim().replace(/(^[\/]*|[\/]*$)/g, "");
+      }
+    })
+    .filter((x) => x.length)
+    .join("/");
 };
 
 export const fullPathAPI = (path) => {
-  return bypassCORSUrl(API_ENDPOINT + path);
+  return bypassCORSUrl(buildPath(API_ENDPOINT, path));
 };
 
 export const fullPathImage = (user) => {
