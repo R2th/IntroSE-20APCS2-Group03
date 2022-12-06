@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import NotFoundPageError from "./pages/NotFoundPage";
+import useToken from "./hooks/useAuth";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  const { token, setToken } = useToken();
+
+  console.log(token);
+
+  if (!token) {
+    return <Login setToken={setToken} />;
+  }
+
   return <RouterProvider router={router} />;
 };
 

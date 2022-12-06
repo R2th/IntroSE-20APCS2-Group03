@@ -7,12 +7,14 @@ export const bypassCORSUrl = (url) => {
   return buildPath("http://localhost:8080/", url);
 };
 
-const buildPath = (...args) => {
+export const buildPath = (...args) => {
   return args
     .map((part, i) => {
       if (i === 0) {
+        //eslint-disable-next-line
         return part.trim().replace(/[\/]*$/g, "");
       } else {
+        //eslint-disable-next-line
         return part.trim().replace(/(^[\/]*|[\/]*$)/g, "");
       }
     })

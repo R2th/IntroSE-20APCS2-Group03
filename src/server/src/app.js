@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyparser = require("body-parser");
 // const formidable = require("express-formidable");
 const app = express();
 
@@ -37,14 +38,13 @@ app.use(
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyparser.urlencoded({ extended: false }));
 
 app.use(require("./routes/admin/content.route"));
 
 app.use(require("./routes/default/auth.route"));
 
-app.use(require("./routes/user/user.route"))
-
+app.use(require("./routes/user/user.route"));
 
 // Configure a middleware for 404s and the error handler
 // app.use((req, res, next) => {
