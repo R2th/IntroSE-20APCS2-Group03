@@ -10,6 +10,23 @@
   filter: drop-shadow(0px 0px 1px #17328e);
   .art {
     background-color: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    div {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      p {
+        font-family: "Open Sans";
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 200%;
+        color: #ffffff;
+        margin: 0;
+        margin-top: -60px;
+      }
+    }
   }
   .paper {
     background-color: #ffffff;

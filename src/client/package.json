@@ -62,6 +62,7 @@
     "contexts": "src/contexts",
     "pages": "src/pages",
     "service": "src/service",
-    "hooks": "src/hooks"
+    "hooks": "src/hooks",
+    "assets": "src/assets"
   }
 }

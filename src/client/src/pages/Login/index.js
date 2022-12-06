@@ -2,9 +2,11 @@ import * as React from "react";
 import { loginUser } from "../../hooks/useAuth";
 import "./style.scss";
 
+import Astronaut from "assets/astronaut.svg";
+
 const Login = ({ setToken }) => {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = React.useState("handoikhongdoithu");
+  const [password, setPassword] = React.useState("user12345");
 
   const onChangeMail = (e) => {
     setUsername(e.target.value);
@@ -38,7 +40,12 @@ const Login = ({ setToken }) => {
 
   return (
     <div className="form">
-      <div className="art"></div>
+      <div className="art">
+        <div>
+          <img src={Astronaut} alt="astronaut" />
+          <p>Welcome to BytesGo</p>
+        </div>
+      </div>
       <div className="paper">
         <p>Welcome</p>
         <div className="frame_mail_pass">
