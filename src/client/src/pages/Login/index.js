@@ -68,7 +68,7 @@ const Login = ({ setToken }) => {
               className="input-field"
             />
           </div>
-          <p>Forget password?</p>
+          <p>Forgot password?</p>
         </div>
         <div className="login_options">
           <div className="login_button" onClick={onLogin}>

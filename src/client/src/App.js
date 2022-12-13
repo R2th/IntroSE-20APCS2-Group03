@@ -34,13 +34,13 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  const { token, setToken } = useToken();
+  // const { token, setToken } = useToken();
 
-  console.log(token);
+  // console.log(token);
 
-  if (!token) {
-    return <Login setToken={setToken} />;
-  }
+  // if (!token) {
+  //   return <Signup setToken={setToken} />;
+  // }
 
   return <RouterProvider router={router} />;
 };
