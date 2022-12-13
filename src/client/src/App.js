@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Content from "./pages/Content";
@@ -7,13 +7,16 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import NotFoundPageError from "./pages/NotFoundPage";
-import useToken from "./hooks/useAuth";
+import { AuthProvider } from "./contexts/Auth/authContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-const router = createBrowserRouter([
+const ROUTER = [
   {
     path: "/",
+    index: true,
     element: <Home />,
     errorElement: <NotFoundPageError />,
+    isNeedProtected: true,
   },
   {
     path: "/content/:id_content",
@@ -30,19 +33,33 @@ const router = createBrowserRouter([
   {
     path: "/profile/:id_user",
     element: <Profile />,
+    isNeedProtected: true,
   },
-]);
+];
 
 const App = () => {
-  // const { token, setToken } = useToken();
+  return (
+    <Router>
+      <AuthProvider>
+        <Routes>
+          {ROUTER.map((router) => {
+            if (router.isNeedProtected) {
+              console.log("???");
+              return (
+                <Route
+                  key={router.path}
+                  path={router.path}
+                  element={<ProtectedRoute>{router.element}</ProtectedRoute>}
+                />
+              );
+            }
 
-  // console.log(token);
-
-  // if (!token) {
-  //   return <Signup setToken={setToken} />;
-  // }
-
-  return <RouterProvider router={router} />;
+            return <Route key={router.path} {...router} />;
+          })}
+        </Routes>
+      </AuthProvider>
+    </Router>
+  );
 };
 
 export default App;

@@ -1,18 +1,19 @@
 import * as React from "react";
 import { SignupUser } from "../../hooks/useAuth";
-import "./style.scss";
+import styles from "./styles.module.scss";
 
 import Astronaut from "assets/astronaut.svg";
+import classNames from "classnames";
 
 const Signup = ({ setToken }) => {
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [confirmpassword, setConfirmPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
   const [day, setDay] = React.useState();
   const [month, setMonth] = React.useState();
   const [year, setYear] = React.useState();
-  const [formErrors, setFormerrors] = React.useState({});
+  const [formErrors, setFormErrors] = React.useState({});
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
   };
@@ -93,17 +94,17 @@ const Signup = ({ setToken }) => {
     } else if (password.length < 8)
       err.password = "Password must be at least 8 characters";
 
-    if (!confirmpassword) {
-      err.confirmpassword = "Please enter confirm password";
-    } else if (password !== confirmpassword) {
-      err.confirmpassword = "Your password must be the same";
+    if (!confirmPassword) {
+      err.confirmPassword = "Please enter confirm password";
+    } else if (password !== confirmPassword) {
+      err.confirmPassword = "Your password must be the same";
     }
 
     return err;
   };
 
   const onSignUp = async () => {
-    setFormerrors(validate());
+    setFormErrors(validate());
 
     const { token } = await SignupUser({
       username,
@@ -122,93 +123,105 @@ const Signup = ({ setToken }) => {
   }, [formErrors]);
 
   return (
-    <div className="form">
-      <div className="art">
+    <div className={styles.form}>
+      <div className={styles.art}>
         <div>
           <img src={Astronaut} alt="astronaut" />
           <p>Welcome to BytesGo</p>
         </div>
       </div>
-      <div className="paper">
+      <div className={styles.paper}>
         <p>Welcome</p>
-        <div className="frame_mail_pass">
+        <div className={styles.frame_mail_pass}>
           <div>
-            <i className="fa fa-user-circle icon" aria-hidden="true"></i>
-            <input
-              value={username}
-              onChange={onChangeUsername}
-              placeholder="Username"
-              className="input-field"
-            />
-            <p>{formErrors.username}</p>
+            <div>
+              <i className="fa fa-user-circle icon" aria-hidden="true"></i>
+              <input
+                value={username}
+                onChange={onChangeUsername}
+                placeholder="Username"
+                className={styles.inputField}
+              />
+            </div>
+            <p className={styles.validationText}>{formErrors.username}</p>
           </div>
           <div>
-            <i className="fa fa-envelope-o icon" aria-hidden="true"></i>
-            <input
-              value={email}
-              onChange={onChangeMail}
-              placeholder="Email"
-              className="input-field"
-            />
-            <p>{formErrors.email}</p>
+            <div>
+              <i className="fa fa-envelope-o icon" aria-hidden="true"></i>
+              <input
+                value={email}
+                onChange={onChangeMail}
+                placeholder="Email"
+                className={styles.inputField}
+              />
+            </div>
+            <p className={styles.validationText}>{formErrors.email}</p>
           </div>
           <div>
-            <i className="fa fa-lock icon" aria-hidden="true"></i>
-            <input
-              value={password}
-              type="password"
-              onChange={onChangePassword}
-              placeholder="Password"
-              className="input-field"
-            />
-            <p>{formErrors.password}</p>
+            <div>
+              <i className="fa fa-lock icon" aria-hidden="true"></i>
+              <input
+                value={password}
+                type="password"
+                onChange={onChangePassword}
+                placeholder="Password"
+                className={styles.inputField}
+              />
+            </div>
+            <p className={styles.validationText}>{formErrors.password}</p>
           </div>
           <div>
-            <i className="fa fa-lock icon" aria-hidden="true"></i>
-            <input
-              value={confirmpassword}
-              type="password"
-              onChange={onChangeConfirmPassword}
-              placeholder="Confirm Password"
-              className="input-field"
-            />
-            <p>{formErrors.confirmpassword}</p>
+            <div>
+              <i className="fa fa-lock icon" aria-hidden="true"></i>
+              <input
+                value={confirmPassword}
+                type="password"
+                onChange={onChangeConfirmPassword}
+                placeholder="Confirm Password"
+                className={styles.inputField}
+              />
+            </div>
+            <p className={styles.validationText}>
+              {formErrors.confirmPassword}
+            </p>
           </div>
           <div>
-            <div>Date of Birth</div>
-            <span>
-              <select
-                aria-label="day"
-                className="bd_day select"
-                value={day}
-                onChange={onChangeDay}
-              >
-                {generateDay()}
-              </select>
-              <select
-                aria-label="month"
-                className="bd_month select"
-                value={month}
-                onChange={onChangeMonth}
-              >
-                {generateMonth()}
-              </select>
-              <select
-                aria-label="year"
-                className="bd_year select"
-                value={year}
-                onChange={onChangeYear}
-              >
-                {generateYear()}
-              </select>
-            </span>
+            <div>
+              <div>Date of Birth</div>
+              <span>
+                <select
+                  aria-label="day"
+                  className={classNames(styles.bd_day, styles.select)}
+                  value={day}
+                  onChange={onChangeDay}
+                >
+                  {generateDay()}
+                </select>
+                <select
+                  aria-label="month"
+                  className={classNames(styles.bd_month, styles.select)}
+                  value={month}
+                  onChange={onChangeMonth}
+                >
+                  {generateMonth()}
+                </select>
+                <select
+                  aria-label="year"
+                  className={classNames(styles.bd_year, styles.select)}
+                  value={year}
+                  onChange={onChangeYear}
+                >
+                  {generateYear()}
+                </select>
+              </span>
+            </div>
           </div>
         </div>
-        <div className="login_options">
-          <div className="login_button" onClick={onSignUp}>
+        <div className={styles.login_options}>
+          <div className={styles.login_button} onClick={onSignUp}>
             SIGN UP
           </div>
-          <div className="separate_other">
+          <div className={styles.separate_other}>
             <div
               style={{
                 width: 30,
@@ -220,27 +233,27 @@ const Signup = ({ setToken }) => {
                 zIndex: 2,
               }}
             >
-              Or
+              <span>Or</span>
             </div>
-            <div className="hoz_line"></div>
+            <div className={styles.hoz_line}></div>
           </div>
-          <div className="group-btn">
-            <div className="Oauth2-btn">
+          <div className={styles.groupBtn}>
+            <div className={styles.oAuth2Btn}>
               <i className="fa fa-google"></i>
               <p>Google</p>
             </div>
-            <div className="Oauth2-btn">
+            <div className={styles.oAuth2Btn}>
               <i className="fa fa-gitlab"></i>
               <p>Gitlab</p>
             </div>
-            <div className="Oauth2-btn">
+            <div className={styles.oAuth2Btn}>
               <i className="fa fa-facebook"></i>
               <p>Facebook</p>
             </div>
           </div>
-          <div className="BottomText">
-            Already have account?{" "}
-            <a className="BottomLink" href="/login">
+          <div className={styles.BottomText}>
+            <span>Already have account?</span>
+            <a className={styles.BottomLink} href="/login">
               Log in
             </a>
           </div>
