@@ -2,7 +2,7 @@
   margin: 0 auto;
   padding: 0 3rem;
 
-  .articles-and-sidebar {
+  .articlesAndSidebar {
     display: grid;
     // grid-template-columns: minmax(0, 1fr) 300px;
     gap: var(--gap);
@@ -14,17 +14,17 @@
       border-radius: 8px;
     }
 
-    .post-center {
+    .postCenter {
       display: flex;
       justify-content: center;
       align-self: start;
       margin-top: 100px;
-      .go-back {
+      .goBack {
         cursor: pointer;
         margin-right: 15px;
       }
 
-      .content-container {
+      .contentContainer {
         max-width: 1000px;
         padding-right: 2rem;
         border-right: 1px solid rgba(230, 230, 230, 1);

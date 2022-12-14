@@ -3,13 +3,13 @@ import * as React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { thumbnail_url } from "../../utils/helpers";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 const Content = () => {
   const { id_content } = useParams();
   const navigate = useNavigate();
 
-  const { data, error } = useFetch(`/posts/${id_content}`, {}, (data) => {
+  const { data } = useFetch(`/posts/${id_content}`, {}, (data) => {
     return data.post.data;
   });
 
@@ -23,11 +23,11 @@ const Content = () => {
   }, [post]);
 
   return (
-    <div className="container">
-      <div className="articles-and-sidebar">
-        <div className="post-center">
+    <div className={styles.container}>
+      <div className={styles.articlesAndSidebar}>
+        <div className={styles.postCenter}>
           <div
-            className="go-back"
+            className={styles.goBack}
             onClick={() => {
               navigate(-1);
             }}
@@ -36,8 +36,8 @@ const Content = () => {
           </div>
 
           {post && (
-            <div className="content-container">
-              <div className="header"></div>
+            <div className={styles.contentContainer}>
+              <div className={styles.header} />
               <h1>{post.title}</h1>
               <zero-md>
                 <script type="text/markdown">
