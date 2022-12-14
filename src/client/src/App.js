@@ -20,19 +20,23 @@ const ROUTER = [
   },
   {
     path: "/content/:id_content",
+    errorElement: <NotFoundPageError />,
     element: <Content />,
   },
   {
     path: "/login",
+    errorElement: <NotFoundPageError />,
     element: <Login />,
   },
   {
     path: "/signup",
+    errorElement: <NotFoundPageError />,
     element: <Signup />,
   },
   {
     path: "/profile/:id_user",
     element: <Profile />,
+    errorElement: <NotFoundPageError />,
     isNeedProtected: true,
   },
 ];

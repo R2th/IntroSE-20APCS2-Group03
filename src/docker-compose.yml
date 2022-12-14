@@ -1,0 +1,38 @@
+version: "3"
+services:
+  postgres:
+    build: db
+    image: bytesgo/bytesgo-db
+    env_file: ./.env
+    environment:
+      - POSTGRES_PASSWORD = $PG_PASSWORD
+      - POSTGRES_USER = $PG_USERNAME
+    networks:
+      - backend
+  backend:
+    depends_on:
+      - postgres
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "2022:2022"
+    networks:
+      - backend
+      - frontend
+  frontend:
+    depends_on:
+      - backend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    networks:
+      - frontend
+volumes:
+  db:
+networks:
+  backend:
+  frontend:
