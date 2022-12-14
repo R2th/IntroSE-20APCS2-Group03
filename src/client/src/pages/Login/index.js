@@ -12,6 +12,17 @@ const Login = () => {
 
   const { token, handleLogin } = React.useContext(AuthContext);
 
+  React.useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+    //eslint-disable-next-line
+  }, []);
+
+  if (token) {
+    return null;
+  }
+
   const onChangeMail = (e) => {
     setUsername(e.target.value);
   };
