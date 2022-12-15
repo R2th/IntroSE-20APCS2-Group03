@@ -1,5 +1,8 @@
-version: '3'
+version: "3"
 services:
   db:
     build: db
-    image: bytesgo/bytesgo-db
+    env_file: ./.env
+    environment:
+      - POSTGRES_PASSWORD=$PG_PASSWORD
+    image: database
