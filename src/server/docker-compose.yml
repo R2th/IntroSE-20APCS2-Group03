@@ -11,7 +11,7 @@ services:
       - "$PG_PORT:$PG_PORT"
   service:
     build:
-      context: ./service
+      context: .
       dockerfile: Dockerfile.dev
     volumes:
       - /app/node_modules
