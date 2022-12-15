@@ -1,15 +1,15 @@
 version: "3"
 services:
   db:
-    build: db
+    build: ./db
     env_file: ./.env
     environment:
-      - POSTGRES_PASSWORD=$PG_PASSWORD
-      - POSTGRES_USERNAME=$PG_USERNAME
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USERNAME=postgres
     image: database
-    ports:
-      - "$PG_PORT:$PG_PORT"
   service:
+    depends_on:
+      - db
     build:
       context: ./
       dockerfile: Dockerfile
@@ -17,3 +17,4 @@ services:
       - /app/node_modules
     ports:
       - "2022:2022"
+      - "9229:9229"
