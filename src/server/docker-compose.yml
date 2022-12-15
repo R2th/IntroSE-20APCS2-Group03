@@ -5,4 +5,15 @@ services:
     env_file: ./.env
     environment:
       - POSTGRES_PASSWORD=$PG_PASSWORD
+      - POSTGRES_USERNAME=$PG_USERNAME
     image: database
+    ports:
+      - "$PG_PORT:$PG_PORT"
+  service:
+    build:
+      context: ./service
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+    ports:
+      - "3000:3000"
