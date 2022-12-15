@@ -11,9 +11,9 @@ services:
       - "$PG_PORT:$PG_PORT"
   service:
     build:
-      context: .
-      dockerfile: Dockerfile.dev
+      context: ./
+      dockerfile: Dockerfile
     volumes:
       - /app/node_modules
     ports:
-      - "3000:3000"
+      - "2022:2022"
