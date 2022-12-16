@@ -1,7 +1,7 @@
-const app = require("./src/app.js");
+const app = require("./src/app");
 const http = require("http").Server(app);
 
-const logger = require("./src/utils/logger.js");
+const logger = require("./src/utils/logger");
 
 const port = process.env.PORT || 2022;
 const DEFAULT_PORT = 3000;
@@ -9,8 +9,9 @@ const HOST = "localhost";
 
 const db = require("./src/db/index");
 const Role = db.role;
-db.sequelize
-  .sync({ force: true })
+
+if(process.env.RUN_MODE === 'dev'){
+  db.sequelize.sync({ force: true })
   .then(() => {
     console.log("Sync database");
     initiate();
@@ -18,6 +19,10 @@ db.sequelize
   .catch((err) => {
     console.log(err);
   });
+}
+else if(process.env.RUN_MODE === 'prod'){
+  db.sequelize.sync();
+}
 
 const initiate = async () => {
   await Role.create({
@@ -26,9 +31,9 @@ const initiate = async () => {
   });
   await Role.create({
     id: 2,
-    roleName: "admin",
+    roleName: "admin"
   });
-};
+}
 
 http.listen(port, () => {
   const { 2: mode } = process.argv;
