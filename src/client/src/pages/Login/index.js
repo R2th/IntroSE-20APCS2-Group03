@@ -76,7 +76,9 @@ const Login = () => {
                 className={styles.inputField}
               />
             </div>
-            <p>Forgot password?</p>
+            <p>
+              <a href="/forgot_password">Forgot password?</a>
+            </p>
           </div>
           <div className={styles.login_options}>
             <div className={styles.login_button} onClick={onLogin}>

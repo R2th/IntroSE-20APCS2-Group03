@@ -9,6 +9,8 @@ import Profile from "./pages/Profile";
 import NotFoundPageError from "./pages/NotFoundPage";
 import { AuthProvider } from "./contexts/Auth/authContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ForgotPassword from "./components/ForgotPassword";
+import FP_SendMessage from "./components/FP_SendMessage";
 
 const ROUTER = [
   {
@@ -29,6 +31,14 @@ const ROUTER = [
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/forgot_password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/send_messages",
+    element: <FP_SendMessage />,
   },
   {
     path: "/profile/:id_user",
