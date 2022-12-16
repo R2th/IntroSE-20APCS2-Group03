@@ -4,24 +4,20 @@ const { Score } = require("../db/index");
 const storage = multer.diskStorage({
   destination: "upload/",
   filename: function (req, file, cb) {
-    if (req.params.candidate) {
-      cb(null, file.originalname);
-    } else {
-      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-      cb(null, file.fieldname + "-" + uniqueSuffix);
-    }
+    console.log(file);
+    cb(null, file.originalname + ".md");
   },
 });
 
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 2000000 //2MB 
-  }
+    fileSize: 2000000, //2MB
+  },
 });
 
 const uploadImage = async (req, res) => {
-  await Score.update( 
+  await Score.update(
     { image: req.file.filename },
     {
       where: {

@@ -1,0 +1,1 @@
+Presented by **Mr. Nguyen Van Chung**, Founder & Team Leader at Agiletech, at Vietnam Mobile Day 2018

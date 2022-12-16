@@ -1,0 +1,16 @@
+The other five teams will be chosen a good open qualifier. This tournament will associated with 64 teams in a single-elimination format over accomplished . of two days, August. 31 and Sept. 10. Registration for the qualifier ends drinks as well . day the tournament starts up.
+
+
+![](https://images.viblo.asia/54125206-4b4f-4497-915d-ea9593d90c2d.jpg)
+2) Dominion takes more skill. Despite being known as a "noobs" mode by some, Dominion actually takes more skill to be good over at. Summoner's Rift is details ganks and ambushing your enemies. Popping out in the bushes to kill someone before may react or escape doesn't take skill because they never a new chance. Is certainly especially hilarious when notice an entire team standing there within a bush and then suddenly ambushing an opponent that walks by. Do they not realize how ridiculous they style?
+
+![](https://images.viblo.asia/4a09c116-bc5c-4a7e-b622-d60078de72ef.jpg)
+MLG commentator and Pro Player Nick "Axslav" Ranish teaches you to play StarCraft II Monday through Friday at 7:00 signifiant.m. ET. Geared for both new and veteran players, spend at least an hour with Axslav to gain insight into the basics, and advanced level play to compete in StarCraft II: Wings of Liberty and StarCraft II: Heart in the Swarm.
+
+Nami is a member from the Marai, a mer-like race that lives at the depths with the ocean. She became extremely of her kind to educate yourself regarding the dry land above when her quest for the Moonstone brought her in order to some mystic cove. She had the Pearl from the Depths to exchange for the Moonstone, which must be accomplished every hundred years or her race are unable to combat the terrors that lurk within the darkest depths. But this time, There's no-one to from dry land was waiting in the cove with the Moonstone. After waiting several days, Nami had to do something. The fate of her people depended on her taking measure. This meant searching the lands, so she called forth the Tide to have her in advance. Now she fights for that battlefield self-assured of going with clues to the Moonstones whereabouts.
+
+So that concludes my report on NESL for this month. Look to [shop acc lmht](https://lmhtshop.vn/) on the newest edition on the League of Legends champion roster Lee Sin, the Blind Monk later inside of week.
+
+To compensate for this bonus, Thresh doesn't gain armor normally per level in mid-air. But let's compare Thresh with another "support" champion, Blitzcrank. Blitz gains +3.5 armor per level with a starting base armor of 14.5. Docs or sites . at level 18, Blitz will have a total of 74 shield. As previously mentioned, Thresh can regularly achieve +80 armor from his passive entirely. He starts with 18 armor, so in the end of the game, he's looking at your base armor of around 100 - far compared to Blitzcrank.
+
+Anivia blast the target enemy champion with an iced pick that deals magic break. If the target has already been 'chilled' by other abilities, pertaining to instance Flash Frost, then they'll take quantity damage of Frostbite.

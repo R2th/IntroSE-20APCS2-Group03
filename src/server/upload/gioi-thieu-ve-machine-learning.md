@@ -1,0 +1,38 @@
+# Giới thiệu
+Machine learning là một lĩnh vực của trí tuệ nhân tạo (AI). Mục tiêu của machine learning nói chung là hiểu cấu trúc dữ liệu và điều chỉnh dữ liệu đó thành các model mà mọi người có thể hiểu và sử dụng.
+
+Mặc dù machine learning là một lĩnh vực trong khoa học máy tính, nó khác với các phương pháp tính toán truyền thống. Trong tính toán truyền thống, các thuật toán là tập hợp các hướng dẫn được lập trình rõ ràng được sử dụng bởi các máy tính để tính toán hoặc giải quyết vấn đề. Thay vào đó, thuật toán machine learning cho phép máy tính đào tạo dữ liệu đầu vào và sử dụng phân tích thống kê để đưa ra các giá trị nằm trong một phạm vi cụ thể. Do đó, machine learning tạo điều kiện cho các máy tính xây dựng model từ dữ liệu mẫu để tự động hóa các quy trình ra quyết định dựa trên dữ liệu đầu vào. 
+
+Bất kỳ người dùng công nghệ ngày nay đã được hưởng lợi từ machine learning. Công nghệ nhận dạng khuôn mặt cho phép các nền tảng truyền thông xã hội giúp người dùng gắn thẻ và chia sẻ ảnh của bạn bè. Công nghệ nhận dạng ký tự quang học (OCR) chuyển đổi hình ảnh của văn bản thành loại có thể di chuyển. Các công cụ đề xuất, được hỗ trợ bởi machine learning, đề xuất những bộ phim hoặc chương trình truyền hình nào để xem tiếp theo dựa trên sở thích của người dùng. Xe tự lái dựa vào machine learning để điều hướng có thể sớm có sẵn cho người tiêu dùng.
+
+Học máy là một lĩnh vực liên tục phát triển. Bởi vì điều này, có một số cân nhắc cần lưu ý khi bạn làm việc với các phương pháp machine learning hoặc phân tích tác động của các quá trình machine learning.
+
+Trong hướng dẫn này, chúng ta sẽ tìm hiểu các phương pháp machine learning phổ biến về học tập có giám sát và không giám sát, và các phương pháp tiếp cận thuật toán phổ biến trong machine learning, bao gồm thuật toán k-nearest neighbor, decision tree learning và deep learning. Chúng ta sẽ khám phá ngôn ngữ lập trình nào được sử dụng nhiều nhất trong machine learning, cung cấp cho bạn một số tích cực và tiêu cực của từng ngôn ngữ. Ngoài ra, chúng ta sẽ thảo luận về các thành kiến được duy trì bằng các thuật toán machine learning và xem xét những gì có thể ghi nhớ để ngăn chặn các sai lệch này khi xây dựng thuật toán.
+# Các phương pháp machine learning
+Trong machine learning, các nhiệm vụ thường được phân loại thành các loại lớn. Các danh mục này dựa trên cách học được tiếp nhận hoặc cách phản hồi về việc học được cung cấp cho hệ thống được phát triển.
+
+Hai trong số các phương pháp machine learning được áp dụng rộng rãi nhất là học có giám sát, đào tạo các thuật toán dựa trên dữ liệu đầu vào và đầu ra được gắn nhãn bởi con người và học tập không giám sát cung cấp thuật toán không có dữ liệu được gắn nhãn để cho phép nó tìm thấy cấu trúc trong đầu vào của nó. Hãy cùng khám phá những phương pháp này chi tiết hơn.
+## Supervised Learning
+Trong học tập có giám sát, máy tính được cung cấp các ví dụ đầu vào được gắn nhãn với đầu ra mong muốn của chúng. Mục đích của phương pháp này là để thuật toán có thể học được dạy học bằng cách so sánh kết quả đầu ra thực tế của nó với các kết quả đầu ra đã được dạy để tìm lỗi và sửa đổi mô hình cho phù hợp. Do đó, việc học được giám sát sử dụng các mẫu để dự đoán giá trị nhãn trên dữ liệu không được gắn nhãn bổ sung.
+
+Ví dụ, với việc học có giám sát, một thuật toán có thể được cung cấp dữ liệu với hình ảnh của cá mập được dán nhãn là `fish` và hình ảnh của đại dương được dán nhãn là `water`. Bằng cách được đào tạo về dữ liệu này, thuật toán học có giám sát sẽ có thể sau đó xác định hình ảnh cá mập không nhãn là `fish` và hình ảnh đại dương không nhãn là  `water`
+
+Một trường hợp sử dụng phổ biến của việc học có giám sát là sử dụng dữ liệu lịch sử để dự đoán các sự kiện có thể xảy ra trong tương lai. Nó có thể sử dụng thông tin thị trường chứng khoán lịch sử để dự đoán những biến động sắp tới hoặc được sử dụng để lọc email spam. Trong học tập có giám sát, hình ảnh được gắn thẻ của chó có thể được sử dụng làm dữ liệu đầu vào để phân loại ảnh không được đánh dấu của chó.
+## Unsupervised Learning
+Trong học tập không giám sát, dữ liệu không được gắn nhãn, vì vậy thuật toán học được để lại điểm chung giữa các dữ liệu đầu vào. Vì dữ liệu không được gắn nhãn phong phú hơn dữ liệu được dán nhãn, các phương pháp machine learning tạo điều kiện cho việc học tập không giám sát đặc biệt có giá trị.
+
+Mục tiêu của việc học tập không giám sát có thể đơn giản như khám phá các mẫu ẩn trong tập dữ liệu, nhưng nó cũng có thể có mục tiêu học tập tính năng, cho phép máy tính tự động khám phá các biểu diễn cần thiết để phân loại dữ liệu thô.
+
+Học tập không giám sát thường được sử dụng cho dữ liệu giao dịch. Bạn có thể có một bộ dữ liệu lớn về khách hàng và giao dịch mua hàng của họ, nhưng là một con người, bạn có thể sẽ không thể hiểu được những thuộc tính tương tự nào có thể được rút ra từ hồ sơ khách hàng và loại mua hàng của họ. Với dữ liệu này được đưa vào một thuật toán học tập không giám sát, có thể xác định rằng phụ nữ ở độ tuổi nhất định mua xà phòng không mùi có khả năng mang thai, và do đó, một chiến dịch tiếp thị liên quan đến sản phẩm dành cho bà bầu và em bé có thể được nhắm mục tiêu theo đối tượng này để tăng số lượng mua hàng của họ.
+
+Không cần nói câu trả lời đúng, các phương pháp học tập không giám sát có thể xem xét dữ liệu phức tạp mở rộng hơn và dường như không liên quan để tổ chức nó theo những cách có ý nghĩa. Học tập không giám sát thường được sử dụng để phát hiện sự bất thường bao gồm cả việc mua thẻ tín dụng lừa đảo và các hệ thống đề xuất khuyến nghị nên mua sản phẩm nào tiếp theo. Trong học tập không giám sát, hình ảnh của những con chó không được giám sát có thể được sử dụng làm dữ liệu đầu vào cho thuật toán để tìm sự giống nhau và phân loại ảnh chó với nhau.
+# Phương pháp tiếp cận
+Machine learning có liên quan chặt chẽ với thống kê tính toán, do đó, có kiến thức nền tảng về thống kê rất hữu ích để hiểu và tận dụng các thuật toán machine learning.
+
+Đối với những người có thể chưa nghiên cứu thống kê, xác định tương quan và hồi quy có thể hữu ích đầu tiên, vì chúng là các kỹ thuật thường được sử dụng để nghiên cứu mối quan hệ giữa các biến định lượng. **Correlation** là thước đo liên kết giữa hai biến không được chỉ định là phụ thuộc hay độc lập. **Regression** ở mức cơ bản được sử dụng để kiểm tra mối quan hệ giữa một biến phụ thuộc và một biến độc lập. Bởi vì thống kê hồi quy có thể được sử dụng để dự đoán biến phụ thuộc khi biết biến độc lập, hồi quy cho phép khả năng dự đoán.
+
+Phương pháp tiếp cận học máy liên tục được phát triển. Một số phương pháp phổ biến đang được sử dụng trong machine learning: **k-nearest neighbor**, **Decision Tree Learning**, **Deep Learning**. Mình sẽ đi sâu vào từng phương pháp trong những bàì tiếp theo.
+# Ngôn ngữ lập trình
+Khi chọn một ngôn ngữ để chuyên về machine learning, bạn cần xem xét các nhu cầu việc làm hiện tại cũng như các thư viện có sẵn bằng các ngôn ngữ khác nhau có thể được sử dụng cho machine learning. Python là ngôn ngữ lập trình được tìm kiếm nhiều nhất trong lĩnh vực machine learning chuyên nghiệp. Theo sau đó là R, Java, C++.
+# Kết luận
+Bài viết này chỉ giới thiệu tổng quan về về machine learning, machine learning là gì. Còn rất nhiều khái niệm, các ứng dụng thực tiễn, các thuật toán chưa được nhắc tới trong bài viết này. ở những phần tiếp theo mình sẽ đi sâu hơn vào những thuật toán phổ biến và ứng dụng của nó. Bởi vì machine learning là một lĩnh vực liên tục được đổi mới, điều quan trọng là phải nhớ rằng các thuật toán, phương pháp sẽ tiếp tục thay đổi, bạn có thể tự khám phá và tìm hiểu về chúng.

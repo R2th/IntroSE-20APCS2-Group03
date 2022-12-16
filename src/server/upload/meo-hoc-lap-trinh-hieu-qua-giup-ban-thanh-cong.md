@@ -1,0 +1,19 @@
+![](https://images.viblo.asia/624e1eab-8ef9-4779-afd1-4ea24064a712.jpg)
+Lập trình là việc tạo ra ứng dụng, công việc bạn tạo ra trên máy tính hoặc thiết bị nhằm phục vụ cho cuộc sống hiện đại, xã hội của công nghệ, giúp cho cuộc sống tiện nghi hơn. Để học lập trình thuận lợi mang đến sự thành công, trong bài viết này chúng tôi chia sẻ mẹo học lập trình giúp bạn giải quyết chúng một cách dễ dàng hơn.
+# Biết hòa nhập, cải thiện kỹ năng tìm kiếm
+Có những thứ bạn không thể làm một mình, bạn cần đến những người bạn xung quanh, vì bạn không đủ sức để giải quyết tất cả mọi thứ. Vì vậy bạn cần tìm kiếm và kết bạn với nhiều coder khác, tham gia những buổi gặp gỡ, diễn đàn, chatroom…
+Tất cả những phần mềm ứng dụng đều là của mã nguồn mở, điều này cho thấy thời đại của mã nguồn mở đã đến, do là mã nguồn mở nên chắc chắn cộng đồng của nó sẽ đông đảo, vì vậy chẳng có lý do gì để bạn ngồi tự mày mò, giải quyết tất cả mọi thứ được.
+Điều quan trọng nhất của những người làm code là khả năng tìm kiếm thông tin trên Google. Nếu đã là kỹ năng chỉ có một cách học duy nhất dành cho bạn đó là rèn luyện. Công nghệ phần mềm tồn tại từ rất lâu, vì thế có nhiều người gặp phải những vấn đề đề mà họ gặp phải lúc này, có nhiều trường hợp phải nhờ đến cộng đồng mạng để giải quyết và kết quả là vấn đề đó đã thành công. Bạn có thể tìm kiếm những cách giải quyết trên mạng, bạn có thể tham gia vào các cộng đồng để được tư vấn giải quyết một cách tốt nhất.
+# Học lập trình nên tập trung vào một ngôn ngữ
+Người học lập trình sẽ thấy được rất nhiều ngôn ngữ khác nhau, và công cụ cũng nhiều, không biết phải bắt đầu từ đâu. Tuy chúng tương tự nhau, vì thế khi bắt đầu học bạn nên tập trung vào một ngôn ngữ nhất định điều bạn cần phải có được đó chính là tư duy lập trình, nếu có được tư duy lập trình bạn có thể học được nhiều ngôn ngữ khác nhau.
+Nếu bạn không hiểu được những gì về ứng dụng lập trình bạn sẽ chẳng làm được gì. Khi gặp phải trường hợp khó bạn hãy chia nhỏ chúng ra giúp bạn dễ dàng thực hiện từng bước một, bạn có thể dùng mã giả trước khi viết code.
+# Kiên trì thực hiện, giành thời gian nghỉ ngơi đúng lúc
+Cho dù là bất kì nghề nào, khi làm nhiều bạn sẽ thấy mệt mỏi, bạn cần có thời gian nghỉ ngơi để tư duy phát triển. Nếu mệt mỏi bạn vẫn cố làm không mang lại hiệu quả cao.
+Khi đã có lòng đam mê không gì có thể ngăn cản bạn. Lập trình cũng giống như một bài toán cần phải kiên trì tìm hiểu, đó là những thử thách để bạn có được thành công. Đây là những thử thách có lợi, những gì bạn nhận lại sẽ không nhỏ chút nào.
+Những phần mềm thường xuyên được cập nhập những phiên bản mới, có nhiều ngôn ngữ lập trình hơn, có nhiều ứng dụng mới được mở ra vì vậy bạn cần phải thường xuyên cập nhập những điều mới nhất để bắt kịp xu hướng hiện đại. Bạn học thông qua nhiều phương tiện khác nhau có thể là sách báo, tạp chí, diễn đàn…áp dụng những kiến thức đó vào thực tế, bạn tìm tòi học hỏi tất cả đều không thừa.
+Hãy thường xuyên cập nhập cho mình những kiến thức mới, tìm hiểu xu hướng phát triển của công nghệ trên thế giới, những công nghệ mới có thể ảnh hưởng đến nghề nghiệp của bạn, vì vậy cần phải có chọn lọc, để cập nhập những điều cần thiết nhất cho mình.
+Qua bài viết này chúng tôi đã chia sẻ những kinh nghiệm học lập trình, hy vọng điều đó có thể giúp ích cho bạn.
+# Tham gia các khóa học online
+Nếu bạn không có thời gian đến các trung tập để học thì giải pháp tốt nhất đó chính là tự học ở nhà. Bạn có thể tham khảo các bài viết hay tutorial được chia sẻ bởi nhiều tác giả. Ví dụ như bạn thích tìm hiểu về React Native thì có thể tham khảo series về [React Native trainning cho người mới](https://vntalking.com/series/react-native-training-for-beginner). Còn nếu bạn yêu thích Android thì có thể đọc bài viết chuyên sâu về lập trình như: [Hướng dẫn toàn tập Fragment trong Android](https://vntalking.com/series/fragment-trong-android)
+
+Mình hi vọng bài chia sẻ sẽ có ích cho các bạn.

@@ -1,0 +1,3 @@
+http://slides.com/hungnh/multi-rows-insert/fullscreen#/
+
+Note: hiện tại Viblo đã hỗ trợ nhúng slide được lưu trữ ở một số dịch vụ như Slideshare và Google Slides, tuy nhiên vẫn chưa có markdown syntax tương ứng dành cho slides.com. Trong thời gian chờ đợi mình move slide này từ slides.com sang slideshare chẳng hạn, hoặc mình sẽ đề xuất Viblo team phát triển thêm cú pháp markdown dành cho dịch vụ này, mong các bạn sẽ ủng hộ bài viết chỉ có mỗi một đường link của mình. :D

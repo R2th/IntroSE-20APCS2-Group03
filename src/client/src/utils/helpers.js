@@ -7,6 +7,17 @@ export const bypassCORSUrl = (url) => {
   return buildPath("http://localhost:8080/", url);
 };
 
+export const exportFile = (data, filename) => {
+  const element = document.createElement("a");
+  const file = new Blob([data], {
+    type: "text/plain",
+  });
+  element.href = URL.createObjectURL(file);
+  element.download = filename;
+  document.body.appendChild(element); // Required for this to work in FireFox
+  element.click();
+};
+
 export const buildPath = (...args) => {
   return args
     .map((part, i) => {

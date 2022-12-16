@@ -1,0 +1,3 @@
+Được nhìn nhận là một nền tảng mới mang tính đột phá, Blockchain không chỉ được sử dụng cho các giao dịch tài chính, mà còn có khả năng thay đổi cách mạng công nghiệp 4.0. Tuy vậy, đến nay Blockchain vẫn còn là khái niệm khá mới mẻ tại thị trường Việt Nam.
+
+Bài thuyết trình trên đây của anh **Trần Đức Thắng**, tại sự kiện OpenDev workshop [From Zero to Dapp PROgrammer](https://viblo.asia/announcements/su-tro-lai-cua-opendev-voi-workshop-from-zero-to-dapp-programmer-OeVKBya05kW) gần đây sẽ đưa đến cho các bạn các kiến thức cơ bản về Blockchain, cũng như những đặc tính riêng biệt của nó, những điều khiến Blockchain được kỳ vọng là sẽ thay đổi cuộc sống của chúng ta trong tương lai.

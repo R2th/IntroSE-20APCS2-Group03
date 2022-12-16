@@ -1,0 +1,1 @@
+Presented by Mr **Pham Duy Hung** - Technical Leader @Umbala, CTO @Umbala Network, at [State of Chain 2018](https://stateofchain.io)

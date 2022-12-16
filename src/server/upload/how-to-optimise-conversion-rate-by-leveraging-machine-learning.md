@@ -1,0 +1,1 @@
+Presented by **Mr. Steve Hoang**, Partner Success Director, at Vietnam Mobile Day 2018

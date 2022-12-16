@@ -1,0 +1,5 @@
+Looking for a high quality affordable refurbished server? Look no further. Enterasource is a provider of new, used, & refurbished Dell PowerEdge & HP ProLiant servers. Each server purchased through Enterasource is configured to order and extensively tested in a production environment to ensure that our products meet our customers' demands. We also back our servers with a 2 Year Next Business Day Replacement Warranty. This means you can shop with confidence, knowing that Enterasource has you covered in the event of a data center emergency.
+
+Juniper Networks EX Series Switches offer carrier-class switching solutions for a variety of networks - from converged enterprise branch offices, data centres, campuses, or service provider deployments. Enterasource carries the EX Series models ranging from the EX2200 to the EX4300 to meet your budgetary, availability, and performance needs. All models support Virtual Chassis technology and scalable, pay-as-you-go options, making Juniper a smart investment that will grow with your expanding network. 
+
+Read More: https://www.enterasource.com/refurbished-servers

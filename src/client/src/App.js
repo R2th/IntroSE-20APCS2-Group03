@@ -11,6 +11,7 @@ import { AuthProvider } from "./contexts/Auth/authContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import FP_SendMessage from "./components/FP_SendMessage";
+import Postman from "./pages/Postman";
 
 const ROUTER = [
   {
@@ -44,6 +45,10 @@ const ROUTER = [
     path: "/profile/:id_user",
     element: <Profile />,
     isNeedProtected: true,
+  },
+  {
+    path: "/postman",
+    element: <Postman />,
   },
 ];
 

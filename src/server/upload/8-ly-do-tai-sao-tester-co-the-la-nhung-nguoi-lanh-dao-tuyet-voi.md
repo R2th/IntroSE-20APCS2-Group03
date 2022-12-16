@@ -1,0 +1,35 @@
+Trong số tất cả các yếu tố tạo nên một tổ chức thành công thì yếu tố lãnh đạo chất lượng là một trong những yếu tố quan trọng nhất, đặc biệt khi nói đến việc giữ chân các nhân tài hàng đầu.
+Một nghiên cứu gần đây của Tập đoàn Herman chỉ ra rằng : có tới 75% những người tự nguyện nghỉ việc  vì cấp trên của họ có khả năng lãnh đạo kém hoặc quản lý công việc không tốt.
+Với ý nghĩ đó, khi xây dựng đội ngũ lãnh đạo trong nghành IT nói riêng  thì một trong những nơi tốt nhất để bắt đầu là với những tester, bởi vì họ luôn ẩn chứa những tố chất để có thể trở thành 1 người lãnh đạo tuyệt vời. Cụ thể là nhờ có các lý do như sau:
+## 1. Họ luôn tò mò và thích  tìm hiểu mọi thứ 1 cách tự nhiên
+ Một trong những đặc điểm quan trọng nhất mà một nhà lãnh đạo có thể có là sự tò mò. Sự tự nhiên tò mò này thúc đẩy các nhà lãnh đạo hỏi về lý do vì sao và đi sâu vào câu hỏi đó cho đến khi họ tìm ra gốc rễ của câu trả lời. Đặc điểm này không chỉ giúp các nhà lãnh đạo liên tục mở rộng quan điểm của họ, mà còn cho phép họ thẳng thắn và tìm hiểu về những gì họ không biết. Hầu hết những tester đã tham gia vào lĩnh vực thử nghiệm vì bản chất tò mò của họ, một phẩm chất có thể coi họ là tester tuyệt vời và nhà lãnh đạo tuyệt vời.
+  ![](https://images.viblo.asia/e1a79be1-63b0-45df-b8ff-bfcb4bd43246.png)
+  
+##  2. Họ thích tìm tòi và đào sâu vào bản chất
+ Dựa trên nhu cầu về bản chất tò mò, các nhà lãnh đạo phải dành thời gian để hiểu nhóm của họ. Họ hiểu những điểm yếu, điểm mạnh của nhân viên, biết cách phát huy những điểm tốt và hạn chế cấc điểm xấu. Điều này giúp nhân viên cảm thấy họ được thấu hiểu và có thể tăng năng suất công việc. Trong khi đó đối với 1 tester thì việc đào sâu tìm hiểu vào một điều gì đó là điều mà họ luôn làm hằng ngày, và dù đó là công nghệ hay đối với con người, với họ cũng không phải là điều khó khăn. 
+ ![](https://images.viblo.asia/0ed056a5-7a1e-4d7f-8d84-22c483959238.jpg)
+ 
+##  3. Họ là những người có tư duy phê phán cao
+ Đối với các lãnh đạo, kinh nghiệm và cách suy nghĩ là điều rất quan trọng vì nó ảnh hưởng tới các quyết định của nhà lãnh đạo. Tư duy phê phán và tự phê phán cũng là 1 trong những điều cần thiết trong đó và nó cũng phải dựa trên nhiều kinh nghiệm được tích lũy. Điều này giúp nhà lãnh đạo luôn tự đặt câu hỏi và từ đó đưa ra được những quyết định hợp lý và khách quan. Tương tự như vậy, một tester luôn áp dụng điều đó khi họ thực hiện kiểm thử bất kỳ một phần mềm nào, họ luôn phải tự "vận động" để tìm bug và họ cũng phải khéo léo truyền đạt để có thể cộng tác với các developer hoặc khách hàng để giải quyết các vấn đề phức tạp theo một cách đơn giản và dễ dàng hơn.
+ ![](https://images.viblo.asia/bad7687c-7e68-4d14-ae0c-d76dba3d3011.jpeg)
+##  4. Họ luôn hào hứng giải quyết vấn đề 
+ Khi xuất hiện 1 vấn đề nào đo trong quá trình làm việc, thường thì người lãnh đạo sẽ là người xem xét và tìm cách giải quyết. Và kiểu giải quyết vấn đề này cũng nằm trong cốt lõi của kiểm thử phần mềm, khi những tester đi làm mỗi ngày với mục đích xác định các vấn đề trong một phần mềm và lao vào để giải quyết chúng. Trong thực tế, những tester tốt nhất là những người giải quyết vấn đề 1 cách tích cực và hào hứng, những người có thể xác định chính xác và đào sâu vào hành vi phần mềm bất thường, suy nghĩ về các bản sửa lỗi tiềm năng và tạo một báo cáo lỗi hoàn hảo cho các developer.
+ ![](https://images.viblo.asia/556d1232-3235-4762-8944-9185e78b17c8.jpg)
+##  5. Kinh nghiệm thực tế
+Có uy tín với team của bạn và kiếm được sự tôn trọng của họ là những thành phần thiết yếu để lãnh đạo thành công. Một cách để các nhà lãnh đạo xây dựng cả uy tín và sự tôn trọng là dành thời gian để tìm hiểu những gì mà member của họ làm hàng ngày, để không đi xa các member của mình. Đối với những  tester khi trở thành nhà lãnh đạo, kinh nghiệm thực tế của họ giúp họ đạt được mục tiêu này. Về lâu dài, thực tế luôn khiến họ đặt câu hỏi cho team của mình để duy trì sự hiểu biết về những gì tester làm mỗi ngày, ngay cả khi các công cụ kiểm tra phát triển từng ngày và nó giúp họ luôn có cái nhìn thực tế trước mọi vấn đề.
+![](https://images.viblo.asia/5d3d211d-45a8-4202-ad54-2f007786f68c.jpg)
+## 6) Họ biết tầm quan trọng của khả năng thích ứng
+Thay đổi là một thực tế của cuộc sống và là một hằng số cho bất kỳ doanh nghiệp đang phát triển, thành công. Do đó, các nhà lãnh đạo phải có khả năng thích ứng cao để họ có thể phản ứng với sự thay đổi - cả mong đợi và bất ngờ - nhanh chóng và giúp nhóm của họ nắm bắt sự thay đổi đó một cách dễ dàng. Đồng thời, tester ngày nay phải có khả năng thích ứng cao, vì môi trường thử nghiệm ngày càng phát triển đòi hỏi họ phải thích nghi để thay đổi thường xuyên. Hơn nữa, những tester hiện đại thường được giao nhiệm vụ xử lý các loại thử nghiệm khác nhau, điều quan trọng là họ có thể dễ dàng thích nghi từ tình huống này sang tình huống tiếp theo một cách dễ dàng.
+
+## 7) Họ có kỹ năng giao tiếp mạnh mẽ
+Khi nói đến việc thúc đẩy các thành viên trong nhóm, để họ phát triển và hợp tác thì kỹ năng giao tiếp mạnh mẽ là chìa khóa. Rất đơn giản, kỹ năng giao tiếp là rất quan trọng đối với mọi khía cạnh của một người lãnh đạo hiệu quả. Tương tự như vậy, tester cũng phải có kỹ năng giao tiếp mạnh mẽ để họ có thể nói rõ bất kỳ khiếm khuyết nào họ gặp phải. Nhu cầu về các kỹ năng giao tiếp mạnh mẽ trong thử nghiệm chỉ tăng lên trong vài năm qua với sự gia tăng của DevOps, vì những tester hiện đang làm việc trực tiếp với mọi người trong các vai trò khác nhau, bao gồm các developer, BrSE, PM.... Điều này có nghĩa là tester thường phải truyền đạt lại các vấn đề của họ đối với rất nhiều người khác nhau, buộc họ phải tăng cường hơn nữa các kỹ năng giao tiếp của họ theo thời gian. 
+![](https://images.viblo.asia/fbe9c8b2-d8b4-4993-aa2a-a578fe821377.jpg)
+## 8) Họ là những nhà hoạch định hiệu quả 
+Cuối cùng, các nhà lãnh đạo phải là nhà quy hoạch. Trách nhiệm này thuộc về các nhà lãnh đạo để phát triển các kế hoạch rõ ràng và chu đáo để đạt kỳ vọng, xác nhận các nguồn lực sẵn có và khiến mọi người có trách nhiệm đối với công việc chung. Không có kế hoạch đúng đắn sẽ dẫn tới lãng phí thời gian và tiền bạc khi các dự án liên tục bị đẩy mạnh. Kiểu lập kế hoạch này cũng rất quan trọng trong kiểm thử phần mềm, vì tester phải có kế hoạch rõ ràng cho bất kỳ chiến lược kiểm thử nào bao gồm các chi tiết như  thời gian, yêu cầu cần đạt và tiêu chí đạt / không đạt... 
+![](https://images.viblo.asia/67bf5fa9-1158-42d1-9254-f426c31784cc.jpeg)
+## **Chuyển đổi từ Người đảm bảo chất lượng sang Người lãnh đạo**
+Rõ ràng rằng những tester có nhiều phẩm chất khiến họ trở thành những nhà lãnh đạo tuyệt vời, nhưng làm thế nào để bạn thực hiện quá trình chuyển đổi từ một tester sang người lãnh đạo? Tất cả bắt đầu từ việc dám đảm nhận vị trí lãnh đạo,  sự sẵn sàng bước lên và lãnh đạo, ngay cả khi bạn đang không ở vị trí này.
+Hãy luôn tin rằng mình sẽ thành công. 
+
+* Bài viết được dịch từ trang blog Tricentis qTest
+https://www.qasymphony.com/blog/8-reasons-testers-make-great-leaders/

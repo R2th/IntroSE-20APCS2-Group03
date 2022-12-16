@@ -1,0 +1,1 @@
+Bài thuyết trình của diễn giả **Đỗ Trung Kiên**, [Logivan](https://www.logivan.com/) Lead Engineer, tại sự kiện [Tech Invasion 2018](https://www.facebook.com/vietcode.org/photos/a.894058857406220/1486733644805402/?type=3&theater) được tổ chức bởi [Vietcode.org](https://vietcode.org/)

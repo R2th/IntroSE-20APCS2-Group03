@@ -1,0 +1,5 @@
+Theo nghiên cứu, **90%** người dùng nói rằng họ đã ngừng sử dụng một ứng dụng do hiệu suất kém, **86%** người dùng đã xóa bỏ một ứng dụng khi họ gặp phải vấn đề về thiết kế hay chức năng. Ngược lại, có đến **86%** người dùng đánh giá cao những ứng dụng có trải nghiệm đặc biệt. Từ những con số này, không khó để hiểu được lý do tại sao các công ty **tập trung vào User Experience** như Apple, Google, Adobe, Dropbox và Amazon vẫn luôn dẫn đầu trong lĩnh vực của họ.
+
+Việc sở hữu một sản phẩm tuyệt vời là điều vô cùng quan trọng, tuy nhiên nó vẫn chưa đủ để bạn có thể giữ chân khách hàng. Đây là lý do tại sao việc đầu tư vào thiết kế UX đã được chứng minh là một chiến lược quan trọng. Một UX làm hài lòng khách hàng sẽ mang lại lợi ích rất lớn – không chỉ về lợi nhuận ngắn hạn mà còn là sự trung thành lâu dài về sau.
+
+Đến với sự kiện Vietnam Mobile Day lần thứ 8 năm 2018 anh Võ Thái Hiển, CEO Chili, đã mang đến cho người tham dự những kinh nghiệm trong việc thiết kế UX qua chủ đề **“Tầm quan trọng của thiết kế trải nghiệm người dùng”** mà anh đã đúc kết sau hơn 10 năm kinh nghiệm trong lĩnh vực xây dựng website.

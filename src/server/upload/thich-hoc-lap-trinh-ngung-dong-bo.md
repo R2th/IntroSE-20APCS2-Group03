@@ -1,0 +1,10 @@
+# Bất đồng bộ
+Ở thời hiện đại, bất đồng bộ dường như rất được ưa chuộng nhất là trong frontend, vậy bất đồng bộ là gì?
+
+Bất đồng bộ là một kiểu chạy không theo tuần tự, không theo một thứ tự nào cả và đôi khi là chạy đồng thời với nhau. Với bất đồng bộ, chúng ta có thể tận dụng được rất là nhiều thread để chạy một chương trình nào đó giúp cho trải nghiệm của người dùng được tốt hơn. Thay vì phải ngồi chờ những task được thực thi tuần tự, thì với bất đồng bộ, những task nào xong trước, thì sẽ được hiển thị trước. Như vậy, những task nặng sẽ vẫn được xử lí trong khi giao diện thì vẫn được render ra, giúp cho trải nghiệm người dùng tốt hơn, người dùng không còn phải đợi hàng tiếng đồng hồ để thấy được những gì cần thấy.
+
+Ví dụ như lấy dữ liệu về, nếu chạy đồng bộ thì phải đợi để lấy dữ liệu, rồi mới render ra navbar, footer,.... Như vậy, thứ người dùng thấy trong lúc chờ là một màn hình trắng tinh tươm. Còn với bất đồng bộ, cứ render ra navbar, footer trước rồi trong lúc render thì vẫn gọi đến để lấy dữ liệu. Đối với người dùng họ sẽ thấy à, navbar màu hồng heo được render ra nè, rồi đến footer mà tím mộng mơ, rồi chữ màu trắng nghệ nghệ trên navbar được render. Theo cách này, trải nghiệm người dùng sẽ ok hơn nhiều thay vì nhìn vào màn hình trắng tinh tươm và người ta tự hỏi là liệu trang này có hoạt động hay là không?
+
+# Ưu điểm của bất đồng bộ
+- Chạy được nhiều thread, điều này có nghĩ là có thể chạy được nhiều task hoặc là chương trình song song với nhau. Công việc sẽ xong nhanh hơn. Thử tưởng tượng nếu bạn muốn làm một task lớn chia ra làm 10 task nhỏ, mỗi task tốn 1s, nếu làm tuần tự thì bạn mất 10s. Nhưng nếu làm song song 10 task một lúc thì bạn chỉ tốn có 1s.
+- Do chạy được nhiều thread như vậy nên sẽ tăng hiệu suất của chương trình và giúp cho chương trình trở nên thân thiện hơn. Như là ví dụ render bên trên, chạy bất đồng bộ sẽ giúp cho trang web trở nên thân thiện với người dùng.

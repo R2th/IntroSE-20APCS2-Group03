@@ -1,5 +1,6 @@
 "use strict";
 module.exports = function createRateLimitChecker(CORSANYWHERE_RATELIMIT) {
+  console.log(CORSANYWHERE_RATELIMIT);
   // Configure rate limit. The following format is accepted for CORSANYWHERE_RATELIMIT:
   // <max requests per period> <period in minutes> <non-ratelimited hosts>
   // where <non-ratelimited hosts> is a space-separated list of strings or regexes (/.../) that

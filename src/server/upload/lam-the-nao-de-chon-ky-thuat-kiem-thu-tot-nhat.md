@@ -1,0 +1,26 @@
+Mỗi kỹ thuật là tối ưu theo cách riêng của nó trong việc tìm ra loại Defect nhất định, và không tối ưu cho việc tìm ra các loại Defect khác. Ví dụ, một trong những lợi ích của các kỹ thuật dựa trên cấu trúc (structure-based) là họ có thể tìm ra các defect hoặc những thứ trong code (mã)   chẳng hạn như Trojan horses - 1 loại phần mềm ác tính hay những mã độc khác.
+Tuy nhiên, nếu có các phần của đặc tả yêu cầu được tìm thấy là bị thiếu trong code (mã), chỉ có kỹ thuật dựa trên đặc tả (specification-based) mới tìm ra được, còn kỹ thuật dựa trên cấu trúc (structure-based) chỉ có thể kiểm tra những gì hiện tại đang có.
+
+Nếu có những vấn đề thực thi kỹ thuật từ đặc tả yêu cầu và từ code (mã) không thể phát hiện ra, thì chỉ có các kỹ thuật dựa trên kinh nghiệm (experience based) mới tìm thấy chúng.
+Do đó, mỗi kỹ thuật đặc thù là nhằm vào các loại defect cụ thể. Ví dụ, kỹ thuật kiểm tra chuyển đổi trạng thái (state transition testing) không có khả năng tìm thấy Boundary Defect.
+
+Vì vậy, làm thế nào để chọn kỹ thuật kiểm tra nào là tốt nhất, quyết định sẽ dựa trên một số yếu tố, cả bên trong và bên ngoài. Các yếu tố bên trong ảnh hưởng đến quyết định sử dụng kỹ thuật nào như sau:
+
+* **Các mô hình được sử dụng để phát triển hệ thống**  -  Khi sử dụng các kỹ thuật kiểm tra mà dựa trên các mô hình phát triển hệ thống đó, sẽ phần nào điều chỉnh các kỹ thuật kiểm tra nào có thể được sử dụng. Ví dụ: nếu đặc tả yêu cầu có chứa sơ đồ chuyển trạng thái, kiểm tra chuyển trạng thái (state transition testing) sẽ là một kỹ thuật tối ưu để sử dụng so với các kỹ thuật khác.
+* **Kiến thức và kinh nghiệm của người kiểm thử** - Có bao nhiêu người kiểm thử biết về hệ thống và về các kỹ thuật kiểm thử sẽ ảnh hưởng rõ ràng đến sự lựa chọn về các kỹ thuật kiểm tra. Bằng sự hiểu biết được tích lũy dần tự nó sẽ ảnh hưởng  tới kinh nghiệm và hệ thống đang tiến hành kiểm thử của họ.
+* **Các kiểu Defect tương tự nhau**  -  Sự hiểu biết về những loại Defect tương tự nhau sẽ rất hữu ích trong việc lựa chọn các kỹ thuật kiểm thử (vì mỗi kỹ thuật đều tốt trong việc tìm ra một loại Defect cụ thể). Sự hiểu biết này có thể có được thông qua kinh nghiệm kiểm thử phiên bản trước của hệ thống và các cấp độ kiểm thử trước đó trên phiên bản hiện tại.
+* **Mục tiêu kiểm thử** -  Nếu mục tiêu kiểm thử chỉ đơn giản là để có được sự tin tưởng rằng phần mềm sẽ đối phó với các tác vụ vận hành điển hình thì Use Case testing sẽ là một cách tiếp cận hợp lý. Nếu mục tiêu là để kiểm thử rất triệt để thì nên chọn các kỹ thuật chi tiết và chặt chẽ hơn (bao gồm cả các kỹ thuật dựa trên cấu trúc).
+* **Tài liệu** -  (Ví dụ: một đặc tả yêu cầu) đã tồn tại và việc nó có được cập nhật hay không sẽ ảnh hưởng đến việc lựa chọn các kỹ thuật kiểm thử. Nội dung và cách thể hiện của tài liệu cũng sẽ ảnh hưởng đến việc lựa chọn các kỹ thuật (ví dụ: nếu các bảng quyết định hoặc biểu đồ trạng thái đã được sử dụng thì nên sử dụng các kỹ thuật kiểm tra liên quan).
+* **Sử dụng mô hình "Life cycle"** : Mô hình vòng đời tuần tự (sequential life cycle model) sẽ được bổ sung để sử dụng các kỹ thuật formal hơn trong khi mô hình vòng đời lặp (iterative life cycle mode) có thể phù hợp hơn với việc sử dụng phương pháp kiểm thử thăm dò.
+
+Các yếu tố bên ngoài ảnh hưởng đến quyết định sử dụng kỹ thuật nào là:
+
+* **Đánh giá rủi ro** - Rủi ro càng lớn (ví dụ: các hệ thống quan trọng về an ninh , nhu cầu kiểm tra kỹ lưỡng và formal hơn càng lớn). Rủi ro về thương mại có thể bị ảnh hưởng bởi các vấn đề chất lượng (vì vậy loại hình kiểm thử thorough testing  sẽ phù hợp) hoặc bởi các vấn đề theo thời gian trên thị trường (vì vậy loại hình kiểm thử exploratory testing sẽ là lựa chọn phù hợp hơn).
+* **Đặc tả yêu cầu của khách hàng và hợp đồng kèm theo** - Đôi khi các hợp đồng chỉ định các kỹ thuật kiểm tra cụ thể sẽ sử dụng (phổ biến nhất là bao phủ dòng lệnh hoặc bao phủ rẽ nhánh).
+* **Loại hệ thống được sử dụng** -  Các loại hệ thống (ví dụ: nhúng, đồ họa, tài chính, v.v.) sẽ ảnh hưởng đến việc lựa chọn các kỹ thuật. Ví dụ, một ứng dụng tài chính sẽ liên quan đến nhiều tính toán thì kỹ thuật kiểm thử phân tích giá trị biên sẽ được thực thi tốt nhất.
+* **Yêu cầu quy định** - Một số ngành công nghiệp có các tiêu chuẩn hoặc hướng dẫn quy định chi phối các kỹ thuật kiểm tra được sử dụng. Ví dụ, ngành công nghiệp máy bay yêu cầu sử dụng phân vùng tương đương, phân tích giá trị biên và kiểm thử chuyển đổi trạng thái cho các hệ thống toàn vẹn cao hoặc điều chỉnh quyết định điều kiện tùy thuộc vào mức độ toàn vẹn của phần mềm.
+* **Thời gian và ngân sách của dự án** - Cuối cùng,  cần xác định thời gian mất bao lâu có thể cho việc lựa chọn các kỹ thuật thử nghiệm. Khi có nhiều thời gian hơn, những người kiểm thử có thể có đủ khả năng để chọn thêm các kỹ thuật và khi thời gian bị hạn chế nghiêm trọng, họ sẽ giới hạn ở những điểm có thể khai thác tốt để giúp tìm ra những Defect quan trọng nhất dự án.
+
+**Kết luận:**  Qua bài viết chúng ta có thể hiểu được tùy từng đặc thù dự án người kiểm thử cần có chiến lược chọn kỹ thuật kiểm thử phù hợp và tối ưu. Các yếu tố quyết định sẽ là cơ sở vững chắc để đưa ra kỹ thuật kiểm thử có tính thuyết phục cao với mọi thành viên phát triển dự án sản phẩm
+
+Link tài liệu tham khảo: http://tryqa.com/how-to-choose-that-which-testing-technique-is-best/

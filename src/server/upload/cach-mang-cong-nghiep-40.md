@@ -1,0 +1,1 @@
+Bài thuyết trình của diễn giả **Nguyễn Việt Hùng**, CEO [Keetool](https://keetool.com/) tại sự kiện [Tech Invasion 2018](https://www.facebook.com/vietcode.org/photos/a.1169722083173228/1483683195110447) được tổ chức bởi [Vietcode.org](https://vietcode.org/)

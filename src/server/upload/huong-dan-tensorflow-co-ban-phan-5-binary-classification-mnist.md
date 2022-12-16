@@ -1,0 +1,4 @@
+# Bài toán Classification 
+
+![](https://cdn-images-1.medium.com/max/1398/0*_cgWPP25djXBauNZ.png)
+Trong Machine Learning, Classification là một trong những bài toán rất quan trọng và chiếm phần lớn khối lượng trong lớp các bài toán mà nó có thể giải quyết. Trong những Tutorial trước chúng ta đã cùng tìm hiểu về bài toán Regression và những phương pháp để đánh giá hiệu năng của một bài toán Regression. Ngày hôm nay chúng ta sẽ cùng tìm hiểu về một trong những bài toán **Classification** đó là phân lớp nhị phân. Cùng các phương pháp đánh giá hiệu năng cơ bản sẽ được chia sẻ trong Video này. Rất mong các bạn tiếp tục ủng hộ series này.

@@ -1,0 +1,15 @@
+Là một lập trình viên từng sử dụng ngôn ngữ php. Trên tinh thần học hỏi khám phá, mình đã chuyển từ php sang ruby. Sau đây là những lý do nên tìm hiểu và sử dụng ruby.<br><br>
+**1. Tính linh hoạt**<br><br>
+    Ruby On rails là một Framework cho phép phát triển ứng dụng Web gồm 2 phần cơ bản: Phần ngôn ngữ Ruby: “Ruby là một ngôn lập trình mã nguồn mở, linh hoạt, với một sự nổi bật về sự đơn giản dễ dùng và hữu ích. Nó có cú pháp “tao nhã” và tự nhiên dễ đọc và dễ dàng để viết”. Phần Framework Rails bao gồm nhiều thư viện liên kết.<br><br>
+**2. Thời gian**<br><br>
+    “Chúng ta có nên sử dụng Python, Java hay RoR không?”. Khách hàng thường đến với RoR với tình huống khó xử này. Việc sử dụng các kịch bản trường hợp khác nhau, nhưng RoR cho phép phát triển nhanh hơn các ngôn ngữ thông thường khác. Ước tính khác nhau, nhưng RoR giảm thời gian phát triển so với các ngôn ngữ khác. Với RoR, nó không mất thời gian code bởi vì framework đã có nhiều plugin và các module hỗ trợ.<br><br>
+**3. Dễ học**<br><br>
+    Ruby on rails sử dụng cú pháp giống như tiếng Anh đơn giản để dễ hiểu hơn. Do đó, việc đọc code Rails dễ dàng hơn nhiều so với các ngôn ngữ khác. Và như đã đề cập, các nhà phát triển tiết kiệm thời gian bằng cách không phải viết lại hoặc tạo mới từ đầu.<br><br>
+**4. Bảo trì dễ dàng, dễ hỗ trợ**<br><br>
+    Các lợi ích của Ruby và Rails đã tạo ra một giải pháp hiệu quả, truyền cảm hứng cho cộng đồng phát triển RoR. Ruby Gems, plugin hỗ trợ mạnh mẽ, Rails dùng ít code hơn các framework khác, web site được xây dựng nhanh chóng nhưng tại tốn ít chi phí bảo trì.<br><br>
+**5. Code sạch**<br><br>
+    Bạn có một ứng dụng web tuyệt vời được xây dựng và mọi thứ hoạt động như mong đợi. Sau một thời gian(hoặc thậm chí nhiều năm sau) bạn gặp một vấn đề mà bạn không biết hoặc thêm chức năng mới. Điều gì xảy ra sau đó? Bạn sẽ thấy rằng công ty đã tạo ứng dụng gốc không còn tồn tại hoặc các nhà phát triển làm việc trên dự án không còn làm việc ở công ty nữa. Không ai biết mã bắt đầu hoặc kết thúc ở đâu. Kết quả là một bài học đau đớn là xây dựng lại tất cả mọi thứ, hoặc xây dựng trên nền tảng ban đầu với chi phí đắt đỏ. Với Ruby on Rails, theo dõi các quy ước mã hóa giúp dễ dàng truyền từ nhà phát triển này sang nhà phát triển khác. Code sạch, các nhà phát triển sau đều sử dụng và kế thừa nó một cách dễ dàng.<br><br>
+**6. Năng suất cao**<br><br>
+    Ruby là một ngôn ngữ mạnh, khi kết hợp với Rails và nhiều thư viện của bên thứ ba, cho phép bạn phát triển các tính năng cực kỳ nhanh. Đó là một trong những ngôn ngữ lập trình hiệu quả nhất.<br><br>
+**7. Thương mại điện tử thân thiện**<br><br>
+    Thương mại điện tử là sản phẩm tiên phong của các công ty khởi nghiệp ngày nay. Với Ruby on Rails, Cơ sở dữ liệu mạnh mẽ, tính năng ứng dụng trò chuyện hoặc tích hợp các ứng dụng web. Điều này làm cho RoR tạo nên nền tảng thân thiện với thương mại điện tử.

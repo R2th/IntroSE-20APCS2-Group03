@@ -10,18 +10,25 @@ const HOST = "localhost";
 const db = require("./src/db/index");
 const Role = db.role;
 
-if(process.env.RUN_MODE === 'dev'){
-  db.sequelize.sync({ force: true })
-  .then(() => {
-    console.log("Sync database");
-    initiate();
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-}
-else if(process.env.RUN_MODE === 'prod'){
-  db.sequelize.sync();
+if (process.env.RUN_MODE === "dev") {
+  db.sequelize
+    .sync({ force: true })
+    .then(() => {
+      console.log("--------- Ready to heacking ----------------");
+      initiate();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+} else if (process.env.RUN_MODE === "prod") {
+  db.sequelize
+    .sync()
+    .then(() => {
+      console.log("--------- Ready to heacking ----------------");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 const initiate = async () => {
@@ -31,9 +38,9 @@ const initiate = async () => {
   });
   await Role.create({
     id: 2,
-    roleName: "admin"
+    roleName: "admin",
   });
-}
+};
 
 http.listen(port, () => {
   const { 2: mode } = process.argv;

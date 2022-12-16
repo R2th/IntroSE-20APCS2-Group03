@@ -1,0 +1,15 @@
+Hello everyone, I am [Minh Anh](https://luatminhanh.vn/), an administrator with Phan Thanh Viet, Today Thanh Huyen would like to share a little knowledge about the google site with you. Previously, the old version of google site was simple, so many of you can edit it easily, but now the old version is dead and we all have to use the new version. Need to learn to create a new version of google site. Here are the steps on How to create and edit the new professional version of Google Site, Please refer to:
+
+Step 1: You click the button "Create", continue to click the frame "in new Sites", the next will automatically switch to an interface like the image below.
+
+Step 2:  The next job you have to do is to design the Home page. In the middle interface of the screen, you enter the title of the page, after entering the title or editing any content you must click "Publish" on the top right corner of the screen to complete.
+Next select "Change Image" to update the background image for the site homepage you create. If you want an image that meets the standards of quality, you should choose one that is about 1300 pixels wide.
+
+How to create and edit the new professional Google Site version
+If you want to set up other directory pages, such as About pages, news, services ... then click on the "Page" button located in the upper right corner of the screen, then click on the button. "Add page". You name the page according to you want to set and then select the button "Done". In the table below, click on "Add subpage" → You name the subpage and select "Done" as Ok)
+
+- In case when you finish creating subpage but it does not show menu level 1 but menu level 2, you move your mouse to the child page you just created and Right click on the 3 dots, Click next "set as homepage "For example: here I just created a subpage" Knowledge ", it shows up as a menu level 2, after I do" set as homepage "it will display a menu level 1, If ​​you want to leave a menu level 1. in the first position, you also move the mouse to the page and you want to set the first position, you click on the ellipsis and click "set as homepage" or you can also do by drag and drop. Finally, click "Publish" in the top corner of the page. So you have completed the operation of creating a subpage or Menu.
+
+Next: After creating a subpage, if you want to create the content of a subpage or Menu page. First, you move your mouse and click on the "Subpage" you just created (here I create a subpage named "Food hygiene and safety license service" so I click on a subpage named " Food hygiene and safety license service ". Next you click on" Insert "→" Text box "→ After displaying the text box you copy the content of the article and Paste in or you can write directly Enter the text in the dialog box that appears below the title as shown below:
+
+* Finally, click on "Publish" → So you have created a new google site version, You can refer to a simple site you just created about the license field: https://sites.google.com/view/xingiayphepantoanthucpham/

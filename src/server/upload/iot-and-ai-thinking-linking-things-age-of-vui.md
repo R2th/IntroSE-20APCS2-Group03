@@ -1,0 +1,12 @@
+Gần đây, thông tin trợ lý ảo “Google Assistant” của “gã khổng lồ” Google vừa được cộng đồng mạng chia sẻ một cách chóng mặt. Được hầu hết các nhà đầu tư “ngó” tới và là “cơn sốt” cho giới công nghệ quan tâm rộng rãi, điều đặc biệt là nó có suy nghĩ giống người, biết nhận diện giọng nói, dùng dấu ngắt câu và thanh điệu phù hợp với hoàn cảnh. Google Assistant hay Contana của Microsoft, Siri đối với tín đồ Iphone là những trí tuệ nhân tạo, được tạo ra bởi bàn tay con người, tưởng chừng như vật vô tri vô giác biết lắng nghe và đáp lại là điều bất khả thi, thì nay không còn gì là lạ lẫm với con người.
+
+**Trí thông minh nhân tạo - AI** đi đôi với **IoT** đã và đang minh chứng cho thời của giao tiếp giọng nói đã “lên ngôi”, các thiết bị được kết nối với nhau và điều khiển bằng giọng nói. Hàng chục triệu chiếc loa thông minh được bán ra, tốc độ tăng trưởng ứng dụng **VUI (Voice User Interface)** chóng mặt >200% một năm.
+
+Bằng cách sử dụng những tín hiệu tự nhiên và đầy sắc thái của giọng nói, thế hệ kế tiếp của công nghệ giao diện đang dẫn dắt chúng ta tiến xa hơn so với những hạn chế có sẵn của tính năng lướt, chạm và nhấp chuột. Điều muốn nhắc tới ngay đây chính là làn sóng mới về **giao diện người dùng thoại - VUI**. VUI cho phép mọi người sử dụng giọng nói để điều khiển máy tính và thiết bị. Vậy vì sao lại là VUI? Những điểm mạnh của công nghệ mũi nhọn này là gì?
+
+- Người dùng mong muốn giao diện giọng nói làm giảm thiểu đi số lượng của thông tin cá nhân, VUI không chỉ là trợ lý thông minh về mặt xã hội để tương tác hội thoại mà còn là người sử dụng giọng nói của chính bạn, ngữ điệu của bạn là “chìa khóa” ăn khớp với “ổ khóa” của VUI đã cài đặt sẵn.
+- Dẫn dắt hội thoại đơn giản hơn với câu hỏi yes, no nhanh chóng, dễ hiểu, tiện lợi 
+- Là trợ lý vào thẳng vấn đề mấu chốt “không dài dòng văn tự”
+- Khai thác thông tin không cần “đụng” vào thiết bị thay vì gõ từng chữ, “nheo mắt” dò từng con số trên màn hình nhỏ 5.5 inch
+
+Các bạn đã sẵn sàng cho thời kỳ thiết bị thông minh? Hãy cùng anh **Lê Ngọc Tuấn, IoT Product Manager tại FPT Corp** tìm hiểu về chủ đề này qua bài thuyết trình **"IoT and AI: Thinking Linking Things - Age of VUI"** tại Vietnam Mobile Day 2018 vừa qua nhé.

@@ -1,0 +1,7 @@
+Những cái tên như **Pinterest, Facebook, Canva, Dropbox,…** đã giải quyết rất tốt vấn đề và đạt được số lượng người dùng sản phẩm từ con số 0 lên đến hàng triệu (và đôi khi là hàng trăm triệu) chỉ với lời giải duy nhất, đó là ứng dụng kỹ thuật “**GROWTH HACKING**”.
+
+Là một Marketer thông minh, bạn phải luôn chuẩn bị sẵn sàng các kế hoạch, luôn đi trước đối thủ một bước trong bất cứ xu thế mới nào mới là những người làm chủ được sân chơi và vượt qua mọi cuộc đua tranh khốc liệt. Giờ đây, những kiểu Marketing truyền thống không còn là phương pháp tối ưu nhất để định vị nhãn hàng của bạn trên thị trường cạnh tranh. Vậy, bạn đã bao giờ nghe đến cụm từ “**Growth Hacking**”?
+
+Như một cuộc cách mạng trong thời đại công nghệ, các Marketer đã được “update” thành một phiên bản mới với tên gọi là “Growth Hacker”. Cụm từ này có vẻ còn khá mới so với các doanh nghiệp tại Việt Nam, nhưng một sự thật không thể thay đổi là hàng loạt công ty đã nổi danh nhờ sử dụng công nghệ này như Facebook, Dropbox, Quora, Pinterest,... Bạn đã kịp đón nhận kĩ thuật này chưa?
+
+Tại sự kiện **VIETNAM MOBILE DAY 2018**, CO-FOUNDER **BEEKETING** xinh đẹp và tài năng - chị **HÀ PHƯƠNG ANH** đã trực tiếp chia sẻ với chúng ta topic “HOW TO FIND THE RIGHT GROWTH HACKING CHANNEL FOR YOUR BUSINESS BASED ON DATA”. Đây sẽ là cơ hội có 1 không 2 dành cho những doanh nghiệp, nhất là đối với các startup đang tìm hiểu một sự giao thoa mới mẻ giữa Marketing và Coding trong quá trình tăng trưởng bền vững cũng như thấu hiểu được tâm lý khách hàng.

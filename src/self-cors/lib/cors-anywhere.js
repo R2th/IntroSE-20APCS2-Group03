@@ -265,6 +265,7 @@ function parseURL(req_url) {
     // "http://:1/" and "http:/notenoughslashes" could end up here.
     return null;
   }
+  console.log("==>", parsed.href);
   return parsed;
 }
 

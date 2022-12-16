@@ -1,0 +1,32 @@
+## 1. Cấu trúc project VueJS
+Mình sẽ sử dụng lại project ở [bài viết](https://viblo.asia/p/p1-vuejs-framework-den-tu-su-toi-gian-RQqKLqm6Z7z) và đây là cấu trúc của project của chúng ta.
+![](https://images.viblo.asia/7a96ac23-af85-4677-a96f-0f58afdfcafb.png)
+Đây là sample project được tạo ra từ vue-cli của vue, nó chủ yếu được xây dựng trên các module sau:
+1. Webpack : Webpack là một công cụ để có thể gói gọn các file js, css (bao gồm cả CSS Preprocessor) lại thành các resource duy nhất. Webpack giúp tái cấu trúc code trong project đồng thời nó cũng giảm kích cỡ các file đóng gói xuống nhỏ hơn rất nhiều. Các bạn có thể tìm hiểu thêm về webpack [tại đây](https://webpack.js.org/) hoặc series của bác [kentrung](https://viblo.asia/s/webpack-tu-a-den-a-cung-kentrung-pmleB8Am5rd)
+2. Babel: Như chúng ta đã biết, mục đích ban đầu của js là để chạy trên trình duyệt. Tuy vậy, mỗi trình duyệt lại có cách dịch js code khác nhau. Vì vậy, babel sẽ hỗ trợ chuyển dịch các JS code thành các JS code phiên bản thấp hơn tương thích với các trình duyệt. Tìm hiểu thêm về Babel [tại đây](https://babeljs.io/docs/en/)
+3. ESlint: ESlint là một công cụ để phân tích mã tĩnh. Giúp code của chúng ta luôn tuân theo một coding convention. Điều này rất có lợi trong các dự án lớn.
+
+Trong vue, các module này được tích hợp sẵn, và được vue-cli service cấu hình sẵn cho chúng ta thông qua các lệnh serve, build hay lint trong file package.json. Chúng ta có thể thêm các options cần thiết hoặc cấu hình thêm cho các module này. Về cơ bản, cấu trúc của một project Vue sẽ có cấu tạo như sau:
+* package.json: là nơi chứa khung sườn của toàn bộ project. Chúng ta sẽ khai báo các script, dependency, devDependency, author, version, ...
+* node_modules: là nơi chứa các dependency của chúng ta. Các dependency này sẽ được các package manager tool đọc từ trong file package.json và download từ internet về cho chúng ta thông qua lệnh `npm install` hoặc `yarn install`. Folder này thường không được push lên các git repository. 
+* public: là nơi chứa các public resource của chúng ta. File index.html cũng được đặt ở trong này.
+* src: nơi chứa các source code của chúng ta, các components, views, css
+## 2. Single File Components - SFC
+SFC là một kỹ thuật hiện đại, nó cũng như khái niệm kế thừa trong lập trình OOP , chúng giúp tái sử dụng lại code, các component thường được sử dụng sẽ được build lại thành một component riêng, đồng thời SFC cũng hỗ trợ xây dựng cả html và js dựa trên các DOM ảo thông qua các thẻ `template` và `script`. Lấy ví dụ, chúng ta cần một button để login, chúng ta cũng cần thêm một button khác cho các form register, quên mật khẩu, tìm kiếm. Do các button này khá giống nhau, cả về css lẫn một vài phần code javascript xử lý. Chúng ta cần phải copy lại từ trang login sang các trang register, quên mật khẩu, tìm kiếm. Điều này dẫn đến khi có bug xảy ra ở button login, chúng ta phải đồng thời thực hiện thay đổi trên các file khác. Thử tưởng tượng xem, nếu button này được sử dụng ở 1000 trang khác nhau thì sẽ như thế nào ? Do vậy, với SFC Vue sẽ chia tách các component thành các file riêng có đuôi là `.vue` , chúng ta có thể tái sử dụng các component này hoặc kết hợp thêm các component khác tạo ra component mới. 
+Một SFC gồm 3 thành phần chính : 
+* template: hỗ trợ các DOM ảo, phần code được viết ở đây khá giống với html. Ngoài ra, vue còn hỗ trợ thêm các syntax mới để có thể sử dụng linh hoạt các DOM này như `v-if`, `v-for`, `v-show` ,...
+* script: đây là nơi chứa toàn bộ source code JS của chúng ta. Ngoài ra, chúng ta có thể sử dụng thêm các function trong vòng đời của một Vue Object như created, mounted, updated, destroyed
+* style: đây là nơi chứa code css. Chúng ta cũng có thể nhúng code từ các file css bằng cách import các file này vào tại đây.
+
+![](https://images.viblo.asia/f2481021-f196-4fab-a1b9-218b37049bff.png)
+Trong file HelloWorld.vue được tạo sẵn, chúng ta có thể thấy có ba thẻ chính trong file vue này. Trong thẻ `<template>`, code trong này hầu như là code html thông thường, ngoại trừ việc props `msg` được khai báo và sử dụng theo kiểu syntax của vue. Trong thẻ `script` chúng ta có thể thấy một vài tag căn bản như `name` hay `props`, biến `msg` được định nghĩa là một props được truyền vào từ component cha và text `msg` trong thẻ template sẽ được binding theo props này. ![](https://images.viblo.asia/8e28dbef-7511-4f5f-aa36-6ce5017ea6b3.png)
+Có thể thấy, tại App.vue, components đang được sử dụng lại và được truyền vào một msg. Component HelloWorld được import từ project và được đĩnh nghĩa trong tag component
+## 3. Vue-cli service
+Như đã nói ở phần trên package.json là nơi chứa toàn bộ khung sườn, thông tin project của chúng ta. Nếu bạn tạo project bằng vue-cli thì vue đã cấu hình sẵn toàn bộ webpack, babel va eslint bằng các plugin mặc định cho chúng ta. Nếu như các bạn cần cấu hình thêm như deployment, hoặc webpack build thì có thể tham khảo thêm [tại đây](https://cli.vuejs.org/guide/). Trong tag `script`, chúng ta thấy vue đã cấu hình sẵn cho chúng ta ba câu lệnh:
+* `serve`: có thể sử dụng bằng cách `yarn serve` hoặc `npm run serve`. Câu lệnh này sẽ thay thế cho `vue-cli-service serve`, rằng hãy build project thành một server dev, hỗ trợ hot-reload. Mặc định trên port 8080, như chúng ta đã chạy thử trong [bài viết](https://viblo.asia/p/p1-vuejs-framework-den-tu-su-toi-gian-RQqKLqm6Z7z)
+* `build`: có thể sử dụng bằng cách `yarn build` hoặc `npm run build`. Câu lệnh này sẽ thay thế cho `vue-cli-service build`, webpack sẽ đóng gói tất cả các library, source code, public resource thành một các static resource gồm html, css, js. Tuy nhiên chúng ta không thể mở các file này qua trình duyệt, các file này chỉ có thể hoạt động trên các http server. Vì vậy, chúng ta có thể sử dụng các resource này khi build cùng với backend. 
+* `lint`: chủ yếu để chúng ta có thể check lại source code, xem code đã đúng coding convention chưa, còn lỗi nào không.
+
+Lưu ý, trước khi chạy các câu lệnh này chúng ta cần phải download tất cả các thư viện đã cấu hình trong file package.json về bằng lệnh `yarn install` hoặc `npm install`. Xem thêm về các lệnh trong vue-cli service [tại đây](https://cli.vuejs.org/guide/cli-service.html)
+
+Ok, bài viết cũng đã dài, hẹn gặp lại trong các bài viết sau.

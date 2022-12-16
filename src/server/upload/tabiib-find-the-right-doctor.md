@@ -1,0 +1,4 @@
+TABIIB is an online platform (web and app) that connects patients, doctors, and clinics to simplify healthcare and is focused on making healthcare accessible to every individual from the comfort of their homes. TABIIB intends to bridge the gap between patients, doctors, and clinics by helping them communicate at multiple levels.
+Patients can find the right doctors by using the location and specialization settings to book appointments. Clinics can add multiple doctors to their database and manage their schedules & appointments. TABIIB offers a solution to patients that allows them to TABIIB helps you find doctors online and allows you to Book Doctors Appointment Online easily, get diagnostic tests at home, as well as, reduce their wait time to see the doctor. Essentially, it offers an evolved healthcare experience for patients.
+
+https://www.tabiib.com/India

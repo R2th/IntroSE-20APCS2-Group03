@@ -1,0 +1,48 @@
+### Tư duy QA
+- Một nguyên tắc quan trong để phát triển các ứng dụng phần mềm tuyệt vời là nuôi dưỡng một QA mindset trong khi phát triển sản phẩm. Trước tiên chúng ta sẽ tìm hiểu QA là gì?
+### 1. QA là gì?
+- QA là viết tắt của đảm bảo chất lượng, duy trì một mức độ mong muốn về chất lượng trong một dịch vụ hoặc sản phẩm, nhấn mạnh sự chú ý đến mọi giai đoạn trong quá trình giao hàng hoặc sản xuất. Cụ thể hơn, đó là một tập hợp các nguyên tắc và cách tiếp cận được sử dụng để đảm bảo sản phẩm phần mềm của bạn hoạt động như mong đợi và duy trì chất lượng của nó.
+- Hầu hết các dự án phát triển phầm mềm hiện tại đều có bộ phận QA chuyên dụng, toàn bộ công việc của họ là thử nghiệm sản phẩm, đảm bảo mọi thay đổi của sản phẩm đều được xem sét kĩ càng trước khi đưa vào thị trường sử dụng, tuy nhiên nó cũng có nhược điểm nhất định đó là phải bổ sung chi phí và thêm thời gian để có được các tính năng do đó mọi thứ sẽ chậm hơn nếu chỉ làm đơn thuần không có khâu kiểm tra.
+- Đôi khi với các nhóm quá nhỏ sẽ không có QA, vậy làm thế nào để đảm bảo chất lượng của dự án. Lúc này chính các nhà phát triển sẽ làm thay luôn công việc của QA, chúng tối ưu hóa cho việc giao hàng nhanh chóng nếu xuất hiện lỗi chúng sẽ sửa lỗi nhanh chóng. Liệu đây có phải là xu hướng tốt không? câu trả lời là có, miễn sao nhiệm vụ đảm bảo chất lượng không bị mất thì tư duy QA trên nhà phát triển cũng có thể phát huy.
+### 2. Bồi dưỡng tư duy QA
+- Để sở hữu chất lượng sản phẩm thì suy nghĩ của QA phù hợp chính xác như thế nào? Đó là sự thay đổi trong suy nghĩ rằng không thể chỉ có nhóm sản phẩm hoặc bộ phận QA đảm bảo rằng họ đang cung cấp các tính năng chất lượng trong phần mềm của mình. Các nhà phát triển phải làm việc dựa trên những đánh giá có tư duy QA như dưới đây:
+   + Bạn có thực sự hiểu tính năng hoặc thay đổi này là gì không? Nó giúp người dùng của bạn như thế nào? Làm cách nào để cải thiện sản phẩm hoặc làm cho cuộc sống của khách hàng của bạn tốt hơn?       Nếu bạn không có câu trả lời cho những câu hỏi này, làm thế nào bạn có thể chắc chắn rằng thay đổi được gửi có chất lượng cao nhất và phù hợp với sản phẩm?
+   + Suy nghĩ về trải nghiệm người dùng khác nhau ở những nơi khác nhau, nó có trực quan không? Liệu có làm mọi thứ phức tạp lên không?
+   + Hãy là người bi quan. Hãy nhìn nhận và nghĩ ra các khía cạnh xấu ảnh hưởng đến chức năng của sản phẩm mình làm, khi những ảnh hưởng đó tác động vào thì sẽ mang lại lợi ích tốt hay xấu
+   + Hãy sáng tạo thi đang thử nghiệm. Hãy nghĩ ra nhiều khả năng xảy ra khi bạn thử nghiệm như điều gì sẽ xảy ra nếu đưa dữ liệu vô nghĩa hoặc một cái gì đó rõ ràng sai(nhập chữ) khi yêu cầu là dữ liệu số, nếu bạn nhập dài hơn 500 kí tự thì sẽ sao? có xảy ra ảnh hưởng xấu đến sản phẩm không
+   + Thăm dò các hạn chế, kiểm tra web ẩn danh. Nếu hệ thống của bạn có các quyền người dùng khác nhau như admin, manager, user, hãy xem xét với cương vị là các quyền khác nhau đó bạn có thể truy cập ở mức độ như thế nào, bạn có thể sử dụng các liên kết trực tiếp để truy cập vào những thứ bạn không thể có? Nếu bạn sử dụng curl để đăng dữ liệu biểu mẫu đến các điểm kết thúc khác nhau thì sao? Chắc chắn, bạn không thể làm điều đó trong giao diện người dùng của ứng dụng, nhưng điều gì sẽ xảy ra nếu một hacker cố gắng gửi các loại dữ liệu khác nhau đến điểm kết thúc của bạn?
+### 3. Làm nó trở thành một thói quen
+- Sử dụng tư duy QA có thể không phải là điều bạn hoặc nhóm của bạn hay làm nhưng nếu biến nó thành thói quen thì sẽ tạo ra một danh sách kiểm tra các nguyên tắc và xem xét từng điểm trước khi bạn xem xét công việc của bạn đã hoàn thành
+- Khi tạo thành thói quen trong một thời gian thì khi làm việc trên một tính năng những lo ngại sẽ được tự động ghi nhớ, tạo thành một lập trình phòng ngự, nó cũng trở lên dễ dàng hơn
+### 4. Sự khác nhau giữa tư duy tester và tư duy developer
+![](https://images.viblo.asia/f17c943e-7499-42a7-8696-c0807bfe6fa1.png)
+- Một số chuyên gia công nghệ thông tin cho rằng vai trò của người kiểm thử phần mềm là không quan trọng và một nhà phát triển có thể tự mình kiểm tra được code của mình. Điều đó là hoàn toàn sai, một nhà phát triển chắc chắn có thể kiểm tra mã riêng của mình và mã của các người khác nhưng một điều mà một nhà phát triển thiếu là chiến lược, cách tiếp cận tư duy người thử nghiệm hay còn gọi là tư duy QA
+- Công việc của nhà phát triển là tạo ra một ứng dụng, trong khi những người kiểm thử là tìm ra những sơ hở trong nó và tìm cách phá vỡ nó. Mặc dù các cách tiếp cận hoàn toàn khác nhau, cả hai vai trò đều hướng tới một mục tiêu chung, đó là tạo ra một ứng dụng ổn định mà không có bất kỳ vấn đề nào. Trong SDLC, cả nhà phát triển và người thử nghiệm đều làm việc trên cùng một ứng dụng trong khi mục tiêu của họ mâu thuẫn với nhau.
+
+![](https://images.viblo.asia/4506c66a-6eaf-4023-8d7d-f0478820372e.png)
+- Mindset của Tester trong SDLC:
+   + Trong giai đoạn thu thập yêu cầu, người thử nghiệm hiểu toàn bộ ứng dụng. Họ tạo ra các kế hoạch kiểm tra, chiến lược kiểm tra và hiểu phạm vi của ứng dụng.
+   + Sau khi phát triển xong và một sản phẩm ổn định và có thể chuyển đổi có sẵn, họ kiểm tra ứng dụng một cách nghiêm ngặt trên các môi trường khác nhau và kiểm tra hiệu suất và chức năng của ứng dụng tổng thể.
+   + Người thử nghiệm bắt đầu thử nghiệm với suy nghĩ rằng sự phát triển được thực hiện bởi các nhà phát triển có thể bị lỗi và cần phải được kiểm tra kỹ lưỡng trước khi cung cấp kiểm tra đăng xuất.
+   + Bất kỳ lỗi nào phát sinh trong quá trình kiểm tra đều được ghi lại trong công cụ theo dõi lỗi.
+   + Sau đó, các kịch bản tự động được tạo ra để giảm chi phí thủ công.
+   + Kiểm tra hồi quy và kiểm tra lại được thực hiện để đảm bảo phân phối sản phẩm chắc chắn về mặt chất lượng
+- Nhà phát triển tư duy trong SDLC:
+   + Post yêu cầu thu thập các nhà phát triển phân tích các yêu cầu và xác định những thách thức liên quan và kết hợp các phương pháp tốt nhất có thể.
+   + Các nhà phát triển, không phân biệt kỹ năng của họ, tự tin về mã hóa của họ. Họ cho rằng mã hóa của họ là hoàn hảo và không có khiếm khuyết. Sau khi mã hóa được hoàn thành, họ tạo ra các bài kiểm tra đơn vị và kiểm tra ứng dụng theo sự hiểu biết của họ.
+   + Nếu các vấn đề phát sinh trong giai đoạn này, các bản vá mã được sử dụng để sửa đổi chúng.
+Vậy trong toàn bộ quá trình của dự án khi các nhà phát triển và nhà thử nghiệm cùng làm việc song song với nhau sẽ có sự kết hợp về tư duy:
+   + Sau khi thu thập yêu cầu đã được thực hiện, các nhà phát triển chủ yếu tham gia vào việc viết mã các nhiệm vụ và tính năng của họ, trong khi người thử nghiệm sử dụng tài liệu yêu cầu nghiệp vụ để khung các trường hợp thử nghiệm và các chiến lược thử nghiệm.
+   + Sau khi nhà phát triển tạo ra các trường hợp thử nghiệm đơn vị và thực hiện ít nhất một vòng thử nghiệm, ứng dụng ổn định được đẩy tới nhóm của người thử nghiệm. Trong giai đoạn này, nhà phát triển thường dính vào yêu cầu hoặc nhiệm vụ trong tay và cung cấp dữ liệu thử nghiệm để thử nghiệm ứng dụng. Thử nghiệm như vậy có phạm vi hẹp và có thể bỏ qua rất nhiều lỗi có thể xảy ra.
+   + Bây giờ khi một người thử nghiệm nhận được ứng dụng được phát triển, họ đi qua tài liệu yêu cầu và thi hành từng trường hợp thử nghiệm. Ngoài ra, một vòng kiểm tra tích hợp được thực hiện để đảm bảo rằng logic hoặc chức năng mới được triển khai không gây nguy hiểm cho phiên bản trước của ứng dụng.
+   + Thử nghiệm chi tiết và chuyên sâu này cung cấp cho người thử nghiệm một lợi thế lớn và giúp họ xác định các lỗi đã bị nhà phát triển bỏ qua. Khi người thử nghiệm không tham gia vào việc viết mã ứng dụng, họ có một triển vọng mới đối với ứng dụng.
+   + Sau khi một vòng kiểm tra cơ bản được hoàn thành, và các vấn đề đã biết được ghi lại, các kịch bản tự động được tạo và thực hiện trong các khoảng thời gian định kỳ để cung cấp phạm vi kiểm tra tốt hơn.
+   + Một người thử nghiệm cũng chịu trách nhiệm thực hiện các thử nghiệm khác nhau, như hiệu suất, kiểm tra API để loại bỏ bất kỳ vấn đề nào trong tương lai. Thử nghiệm như vậy phụ thuộc vào loại ứng dụng và theo yêu cầu của khách hàng.
+- Thử nghiệm và nhà phát triển có suy nghĩ khác không:
+   + Trong một dự án liệu tư duy của nhà phát triển và nhà thử nghiệm khác nhau thì có điểm tốt không? câu trả lời là có
+   + Trong khi mối quan tâm duy nhất của nhà phát triển là tìm kiếm các giải phát cho nhiệm vụ họ phải làm thì mục đích người thử nghiệm là tìm ra lỗ hổng và các khu vực dễ xảy ra lỗi trong ứng dụng. Với lí do này việc ủy thác các hoạt động thử nghiệm cốt lõi cho người thử nghiệm là cách tiếp cận tốt nhất
+   + Khi một nhà phát triển thử nghiệm ứng dụng thì đã bỏ xót rất nhiều kịch bản do các khái niệm được hình thành trước đó và thiếu sự thoát ly khỏi luồng code nhưng khi thử nghiệm được đặt trong tay người thử nghiệm thì lại rẽ sang một triển vọng tươi mới và có cơ hội tốt hơn để nhắm mục tiêu  các sơ hở. Có sự khác biệt như vậy là suy nghĩ trong quá trình thực hiện kiểm tra được đánh giá cao bởi hầu hết các công ty, và họ có các nhóm riêng biệt để phát triển và thử nghiệm ứng dụng.
+- Làm thế nào để có được tốt nhất của cả hai thế giới?: Mặc dù người thử nghiệm và nhà phát triển đều có vai trò khác nhau nhưng cả 2 đều cố gắng làm cho ứng dụng trở lên tốt hơn, vì vậy để 2 bên có hoạt động tối ưu có thể một số hành động sau:
+   + Yêu cầu có process rõ ràng, luật rõ ràng trong toàn bộ quá trình của dự án. Điều này sẽ giúp các nhà phát triển xác định các tắc nghẽn trong yêu cầu được cung cấp bởi khách hàng và giúp người thử nghiệm lên kế hoạch hiệu quả.
+   + Các bài kiểm tra đơn vị được viết bởi các nhà phát triển nên được xem xét bởi người kiểm tra, để nâng cao chất lượng của các bài kiểm tra.
+   + Kết nối hoạt động của các nhà thử nghiệm với bên phát triển để xác định lỗi nhanh và chính xác hơn

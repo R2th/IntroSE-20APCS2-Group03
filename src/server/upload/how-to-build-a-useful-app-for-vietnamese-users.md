@@ -1,0 +1,1 @@
+Presented by **Mr. Vu Quoc Hiep**, [Coccoc](http://coccoc.com/) Marketing Manager, at Vietnam Mobile Day 2018

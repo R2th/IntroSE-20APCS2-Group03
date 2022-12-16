@@ -1,0 +1,31 @@
+version: "3"
+services:
+  db:
+    build: db
+    env_file: ./.env
+    environment:
+      - POSTGRES_PASSWORD=$PG_PASSWORD
+      - POSTGRES_USERNAME=$PG_USERNAME
+      - POSTGRES_DB=$PG_DB
+    image: database
+    ports:
+      - "$PG_PORT:$PG_PORT"
+  self-cors:
+    build:
+      context: self-cors
+      dockerfile: Dockerfile
+    volumes:
+      - /self-cors/node_modules
+    ports:
+      - "8080:8080"
+  service:
+    depends_on:
+      - db
+      - self-cors
+    build:
+      context: server
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+    ports:
+      - "2022:2022"

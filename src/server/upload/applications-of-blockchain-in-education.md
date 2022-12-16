@@ -1,0 +1,1 @@
+Presented by Mr. **Le Nhat Quang** - Head of R & D Infinity Blockchain Labs , at [State of Chain 2018](https://stateofchain.io)

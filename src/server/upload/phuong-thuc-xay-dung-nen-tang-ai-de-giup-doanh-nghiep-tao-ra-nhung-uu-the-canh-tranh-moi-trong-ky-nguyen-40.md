@@ -1,0 +1,9 @@
+**Trí tuệ nhân tạo** đã được xem xét như một nhân tố thay đổi chiến lược trong nhiều ngành nghề lĩnh vực, thứ sẽ góp một phần không nhỏ thay đổi bối cảnh cạnh tranh không ngừng hiện nay. Công ty chiến thắng sẽ là một trong những người áp dụng AI theo những cách sáng tạo và hiệu quả nhất. Buổi nói chuyện này sẽ đưa ra một bức tranh về cách các công ty đang đầu tư vào AI để xây dựng lợi thế cạnh tranh. Vốn từ đâu và dự đoán của các bộ trong tương lai?
+
+Nói tới nền tảng **Artificial Intelligence**, sẽ thật thiếu sót khi không nhắc tới **FPT.AI**. Nền tảng **FPT.AI** là sản phẩm mới ra đời, áp dụng các kỹ thuật học máy tiên tiến về xử lý ngôn ngữ tự nhiên. Sản phẩm hỗ trợ xây dựng hệ thống giao tiếp tự động để tích hợp vào các nền tảng hội thoại (Facebook Messenger,…), các ứng dụng hội thoại do doanh nghiệp tự phát triển và các thiết bị thông minh như robot, điện thoại di động, thiết bị điều khiển... FPT.AI hỗ trợ các ứng dụng sử dụng giao diện tương tác với người dùng bằng giọng nói hoặc văn bản.
+
+FPT.AI gồm 2 phần chính là :
+- Gói công nghệ liên quan đến giọng nói
+- Nền tảng hội thoại FPT (FPT.AI-Conversational Platform).
+
+Đến với sự kiện Vietnam Mobile Day lần thứ 8 năm 2018, anh **Nguyễn Thượng Tường Minh**, product manager tại **FPT.AI**, đã mang đến cho người tham dự những kinh nghiệm công nghệ giúp doanh nghiệp cạnh tranh trong thời đại trí tuệ nhân tạo là xu hướng phát triển tất yếu, với chủ đề “**Phương thức xây dựng nền tảng AI để giúp doanh nghiệp tạo ra những ưu thế cạnh tranh mới trong kỷ nguyên 4.0**” mà anh đã đúc kết sau khoảng thời gian anh làm việc tại FPT, hứa hẹn mang đến những bất ngờ không tưởng trong nên tảng của FPT.AI Platform.
