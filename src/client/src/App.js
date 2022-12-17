@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Content from "./pages/Content";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
-import NotFoundPageError from "./pages/NotFoundPage";
-import { AuthProvider } from "./contexts/Auth/authContext";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "components/Navbar";
 import ForgotPassword from "./components/ForgotPassword";
-import FP_SendMessage from "./components/FP_SendMessage";
+import SendMessage from "./components/FP_SendMessage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./contexts/Auth/authContext";
+import { StylesProvider } from "./contexts/Styles/stylesContext";
+import Content from "./pages/Content";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import NotFoundPageError from "./pages/NotFoundPage";
 import Postman from "./pages/Postman";
+import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
 
 const ROUTER = [
   {
@@ -19,7 +21,6 @@ const ROUTER = [
     index: true,
     element: <Home />,
     errorElement: <NotFoundPageError />,
-    isNeedProtected: true,
   },
   {
     path: "/content/:id_content",
@@ -39,7 +40,7 @@ const ROUTER = [
   },
   {
     path: "/send_messages",
-    element: <FP_SendMessage />,
+    element: <SendMessage />,
   },
   {
     path: "/profile/:id_user",
@@ -56,22 +57,25 @@ const App = () => {
   return (
     <Router>
       <AuthProvider>
-        <Routes>
-          {ROUTER.map((router) => {
-            if (router.isNeedProtected) {
-              console.log("???");
-              return (
-                <Route
-                  key={router.path}
-                  path={router.path}
-                  element={<ProtectedRoute>{router.element}</ProtectedRoute>}
-                />
-              );
-            }
+        <StylesProvider>
+          <Navbar />
+          <Routes>
+            {ROUTER.map((router) => {
+              if (router.isNeedProtected) {
+                console.log("???");
+                return (
+                  <Route
+                    key={router.path}
+                    path={router.path}
+                    element={<ProtectedRoute>{router.element}</ProtectedRoute>}
+                  />
+                );
+              }
 
-            return <Route key={router.path} {...router} />;
-          })}
-        </Routes>
+              return <Route key={router.path} {...router} />;
+            })}
+          </Routes>
+        </StylesProvider>
       </AuthProvider>
     </Router>
   );

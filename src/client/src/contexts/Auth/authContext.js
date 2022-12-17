@@ -1,6 +1,6 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useToken, { loginUser } from "../../hooks/useAuth";
+import { loginUser } from "../../hooks/useAuth";
 
 const AuthContext = createContext(null);
 

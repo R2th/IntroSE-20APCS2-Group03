@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Card from "components/Card";
-import NavBar from "components/NavBar";
 import Sidebar from "components/Sidebar";
 import { INIT_DATA_CONTENT } from "utils/const";
 
 import "./style.scss";
 import { useFetch } from "../../hooks/useFetch";
+import { StylesContext } from "../../contexts/Styles/stylesContext";
 
 const Home = () => {
   const fetchContent = useFetch("/posts/newest", INIT_DATA_CONTENT);
   const fetchTrending = useFetch("/trending?limit=10", INIT_DATA_CONTENT);
 
+  const { setPrefix } = useContext(StylesContext);
+
   const contents = fetchContent.data;
   const trending = fetchTrending.data;
+
+  useEffect(() => {
+    const prefix = document
+      .querySelector(".center-box")
+      .getBoundingClientRect().x;
+    console.log(prefix);
+    setPrefix(prefix);
+  }, []);
 
   return (
     <div className="homepage">
@@ -20,7 +30,6 @@ const Home = () => {
         <div className="background"></div>
         <div className="white-bg"></div>
         <div className="center-box">
-          <NavBar />
           <div className="contents">
             <div className="section">
               <div className="section_title">
