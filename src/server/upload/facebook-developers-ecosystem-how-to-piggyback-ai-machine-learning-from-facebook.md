@@ -1,1 +1,0 @@
-Presented by **Mr. Le Thanh Hung**, Lead of Facebook Developer Circle Hanoi, at Vietnam Mobile Day 2018

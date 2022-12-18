@@ -7,14 +7,13 @@ const Postman = () => {
   const [count, setCount] = useState(null);
   const [current, setCurrent] = useState([]);
 
-  const extractMediaList = (content) => {
-    let regex = /\!\[image.png]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)/gi;
-    return content
-      .match(regex)
-      ?.reduce(
-        (prev, cur) => [...prev, cur.slice("[image.png](".length + 1)],
-        []
-      );
+  const extractMediaList = (contents) => {
+    let regex = /\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\)/gi;
+    var result = []
+    for (const match of contents.matchAll(regex)){
+      result.push(match[1]);
+    }
+    return result;
   };
 
   const onDownloadContent = async (data) => {
@@ -36,9 +35,11 @@ const Postman = () => {
     });
 
     const mediaList = extractMediaList(data.contents);
+
     const storyData = {
       id: data.id,
-      file_id: filename + ".md",
+      contents: data.contents,
+      contents_short: data.contents_short,
       title: data.title,
       author_id: 1,
       tag: data.tags.data.reduce((prev, cur) => [...prev, cur.slug], []),
@@ -47,7 +48,7 @@ const Postman = () => {
     };
 
     const form = new FormData();
-    form.append("story", file);
+    // form.append("story", file);
     form.append("data", JSON.stringify(storyData));
 
     const postResponse = await fetch(
@@ -89,7 +90,8 @@ const Postman = () => {
       });
       total = resJson.meta.pagination.total;
       setCount(i * 100);
-    } while (i * 100 < total);
+    } // while (i * 100 < total);
+    while (0);
   };
 
   return (

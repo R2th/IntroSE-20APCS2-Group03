@@ -1,1 +1,0 @@
-Presented by **Mr. Pham Van Hai**, CEO Haravan - North Branch, at Vietnam Mobile Day 2018

@@ -1,1 +1,0 @@
-Bài thuyết trình của diễn giả **Lê Duy Quang**, Solution Architecture [Techkids](https://techkids.vn/), tại sự kiện [Tech Invasion 2018](https://www.facebook.com/vietcode.org/photos/a.894058857406220/1487370704741696/?type=3&theater) được tổ chức bởi [Vietcode.org](https://vietcode.org/)

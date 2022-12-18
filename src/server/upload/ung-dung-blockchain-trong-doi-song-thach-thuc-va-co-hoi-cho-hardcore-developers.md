@@ -1,1 +1,0 @@
-Presented by **Mr. Nguyen Thanh Trung**, Founder 123xe.vn, at Vietnam Mobile Day 2018

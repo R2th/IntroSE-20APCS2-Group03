@@ -1,8 +1,0 @@
-![](https://images.viblo.asia/e7718c61-a4c8-49d1-bf66-d3b9ae721ada.jpg)Vậy trước tiên hãy bắt đầu với câu hỏi quan trọng nhất, TypeScript là gì?
-Vậy TypeScript là gì? Bạn biết đấy Javascript, Javascript là ngôn ngữ script bạn đang sử dụng trong trình duyệt để làm cho các trang web của bạn phản ứng lại để chạy bất kỳ mã nào trong trình duyệt. Bây giờ Javascript là một ngôn ngữ tuyệt vời và nó liên tục được mở rộng, nó cung cấp cho chúng tôi rất nhiều tính năng như các hàm xây dựng hoặc nguyên mẫu và nó sử dụng các kiểu động. 
-cụ thể bạn có thể nói đây là ES5, chúng ta cũng có ES6, phiên bản tiếp theo của Javascript để đặt nó như thế, giới thiệu các tính năng mới cho Javascript, ví dụ như từ khóa lớp, v.v. . 
-Nhưng vấn đề ở đây là ES6 chưa được hỗ trợ bởi tất cả các trình duyệt,
-TypeScript là một trình bao bọc để giả sử, cuối cùng nó sẽ biên dịch thành Javascript và giới thiệu các tính năng mới mà chúng ta có thể sử dụng trong mã của mình và sau đó sẽ chạy trong trình duyệt vì trình biên dịch TypeScript sẽ đảm bảo tìm cách biên dịch tất cả các tính năng mới tuyệt vời này thành mã ES5 để sau đó chạy trong bất kỳ trình duyệt nào 
-Typecript là một trình bao bọc xung quanh Javascript. TypeScript không chạy trong trình duyệt, cần biên dịch nó thành Javascript để chạy ở đó.
-Bây giờ trong khi bạn có thể hỏi, làm thế nào chúng ta có thể biên dịch các tính năng không có sẵn trong Javascript sang Javascript,  có một mô-đun trên trình biên dịch TypeScript cũng có cái nhìn này nhưng bây giờ, hãy lưu ý rằng chúng ta phải biên dịch tất cả mã TypeScript thành Javascript vì cuối cùng nó sẽ chạy trong trình duyệt. 
-Vì vậy, TypeScript chỉ là ngôn ngữ bổ sung mà chúng ta có thể sử dụng trong quá trình phát triển, nó không phải là ngôn ngữ chạy trong trình duyệt.

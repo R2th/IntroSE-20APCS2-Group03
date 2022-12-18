@@ -5,8 +5,12 @@ module.exports = (sequelize, DataTypes) =>{
         primaryKey: true,
         autoIncrement: true
       },
-      file_id: {
-        type: DataTypes.STRING,
+      contents: {
+        type: DataTypes.TEXT,
+        allowNull: false
+      },
+      contents_short: {
+        type: DataTypes.TEXT,
         allowNull: false
       },
       media_list: {

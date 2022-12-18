@@ -1,1 +1,0 @@
-Bài thuyết trình của diễn giả **Nghiêm Tuấn Minh**, Framgia Group Leader, tại sự kiện [Tech Invasion 2018](https://www.facebook.com/vietcode.org/photos/a.1169722083173228/1488066008005499/?type=3&theater) được tổ chức bởi [Vietcode.org](https://vietcode.org/)

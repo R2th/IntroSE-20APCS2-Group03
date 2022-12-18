@@ -1,9 +1,0 @@
-- Tờ Economist tháng 6/2017 dẫn một khảo sát của IBM cho thấy 9 trên 10 các cơ quan nhà nước trên thế giới được hỏi thừa nhận có kế hoạch đầu tư vào **Blockchain** để quản lý các giao dịch tài chính, tài sản, hợp đồng và việc tuân thủ pháp luật của các tổ chức trong những năm tới vì tính an toàn và bảo mật của Blockchain
-
-- Cuối tháng 11/2017 vừa qua, Goldman Sachs và JPMorgan Chase đã hoàn thành cuộc thử nghiệm kéo dài 6 tháng trên thị trường hoán đổi có tổng trị giá 2.800 tỷ USD và theo đơn vị thực hiện chương trình thì tỷ lệ thành công là 100%.
-        
-- Tại Việt Nam, **Blockchain** được áp dụng chủ yếu trong các lĩnh vực: dịch vụ tài chính (hơn 83%), chuỗi cung ứng (40%), dịch vụ công cộng (30%), năng lượng (30%), giáo dục (30%),... Cho đến hiện tại, phần lớn startup sử dụng Blockchain trong lĩnh vực tài chính như VBTC, Cash2vn và StibLab.
-
-- Việt Nam đang có hơn 20 startup Blockchain, 10 sàn giao dịch và dưới 10 ICO (huy động vốn bằng tiền kỹ thuật số) hiện đã được công bố dù đa phần các công ty này đều đặt trụ sở tại nước ngoài.
-
-Nói tóm lại, sự sáng tạo trong bất kỳ ngành nào, thời kỳ nào đều là sự thể hiện của nền xã hội phát triển của thời kỳ đó. Công nghệ Blockchain được coi là phát minh vĩ đại của thế kỷ này. Vậy hiện nay các startups, doanh nghiệp, chính phủ sẵn sàng đổi mới sáng tạo trong việc ứng dụng công nghệ **Blockchain** tới đa ngành đa nghề trong ý tế, sản xuất, giáo dục, kinh tế tài chính, thương mại điện tử,... ra sao? Bạn sẽ “tò mò” và “hỏi” thêm về Blockchain bằng trợ lý ảo **NAMI** - một sản phẩm của ứng dụng công nghệ **Blockchain** - do anh **Giáp Văn Đại, CEO của Nami Corp.**, phát triển, không thua kém gì những Siri và Contana, và sẽ khiến bạn sẽ bất ngờ đấy!!
