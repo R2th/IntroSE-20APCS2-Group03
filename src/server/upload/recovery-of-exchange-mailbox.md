@@ -1,6 +1,0 @@
-EdbMails exchange recovery tool is capable of settling all corruption problems that maybe encountered by an exchange database, such as, dirty shutdown , JET errors, corruption due to disk failure,  header file issues and so on.
-
-The best thing about EdbMails is that it has a well organized user interface that lets you preview all the contents before export. Most exchange administrators would agree that the exchange database corruption is a plague that they intend to keep in check and perfect medicine to fight this plague is using EdbMails.
-
-In addition to reliable exchange recovery, EdbMails will let you directly migrate  exchange database to on premises exchange server or Office 365. What’s more novel about using EdbMails is that it doesn’t alter the data contained in original EDB file in anyway. Most versions of Microsoft Outlook,Windows and Exchange servers are supported by EdbMails. To alleviate any doubts that you may have about the functioning of EDB to PST Converter, there is also a free version of the tool that lets you test out all EdbMails’s features and export upto 30 items per folder/mailbox . 
-For more data visit: https://www.edbmails.com

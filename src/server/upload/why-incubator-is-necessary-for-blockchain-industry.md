@@ -1,1 +1,0 @@
-Presented by Mr.**YAN FENG CHEN** - Co-founder of [Longhash](https://www.longhash.com), at [State of Chain 2018](https://stateofchain.io)

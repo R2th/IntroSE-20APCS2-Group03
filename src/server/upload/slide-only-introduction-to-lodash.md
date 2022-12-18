@@ -1,1 +1,0 @@
-{@slideshare: https://www.slideshare.net/phucqd/introduction-to-lodash}

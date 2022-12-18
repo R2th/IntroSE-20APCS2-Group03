@@ -1,7 +1,0 @@
-**Trí tuệ nhân tạo (Artificial Intelligence – AI)** đang thâm nhập vào hàng loạt lĩnh vực, mang lại những thay đổi quan trọng trong đời sống hàng ngày của con người. Đặc biệt, ngành bán lẻ trực tuyến cũng đang biến chuyển mạnh mẽ nhờ áp dụng các tính năng mới dựa trên nền tảng công nghệ mới này.
-
-Năm 2017 có thể được xem là năm lên ngôi của công nghệ tìm kiếm bằng hình ảnh dựa vào AI. Trong khi các công ty lớn như Google và eBay đã giới thiệu các công cụ tìm kiếm bằng hình ảnh riêng. Các công cụ nhận diện hình ảnh sẽ giúp các thương hiệu nắm bắt được các ý kiến phản hồi về sự trải nghiệm của khách hàng để có những bước điều chỉnh phù hợp về giá cả, kiểu dáng... của hàng hóa.
-
-Hãng nghiên cứu thị trường công nghệ thông tin Gartner dự báo đến năm 2020, **85%** lượt tương tác giữa các nhà bán lẻ trực tuyến với khách hành sẽ được thực hiện thông qua chatbot. Các thiết bị hỗ trợ mua sắm trực tuyến bằng giọng nói sử dụng công nghệ NLP chẳng hạn như loa thông minh Echo của Amazon hay Google Home của Google sẽ thay đổi cách mà khách hàng tương tác với các trang web thương mại điện tử bằng cách cho phép họ tìm kiếm và mua hàng bằng các mệnh lệnh giọng nói. Gartner dự báo đến năm 2020, doanh thu bán các loa thông minh tích hợp trợ lý ảo giọng nói sẽ đạt 2,1 tỉ đô la Mỹ.
-
-Hãy cùng anh **Lê Mai Tùng, CEO [EYEQTECH](http://eyeq.tech/)** tìm hiểu kỹ hơn về vấn đề này thông qua bài thuyết trình với chủ đề "Ứng dụng trí tuệ nhân tạo trong bán lẻ như thế nào?" tại Vietnam Mobile Day 2018 vừa qua nhé :)

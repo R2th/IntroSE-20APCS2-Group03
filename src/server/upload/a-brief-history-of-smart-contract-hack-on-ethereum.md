@@ -1,1 +1,0 @@
-Presented by Mr. **Dang Viet Ha** - Technical Specialist of [Nexty Platform](https://nexty.io/) , at [State of Chain 2018](https://stateofchain.io)

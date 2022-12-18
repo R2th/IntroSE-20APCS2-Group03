@@ -1,1 +1,0 @@
-Panel Discussion Session at [State of Chain 2018](https://stateofchain.io), featured **Mr. Dang Viet Ha** - Technical Specialist of Nexty Platform, **Mr. Dang Minh Tuan** - Head of Lab Blockchain, Posts and Telecommunications Institute of Technology and **Mr. Nguyen Minh Thao**, CEO at Umbala Network.

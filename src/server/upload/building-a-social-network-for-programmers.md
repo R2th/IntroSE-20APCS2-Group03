@@ -1,1 +1,0 @@
-Bài thuyết trình của diễn giả **Trần Đức Thắng**, **Viblo Project Manager**, tại sự kiện [Tech Invasion 2018](https://www.facebook.com/vietcode.org/photos/a.1169722083173228/1485916054887161/?type=3&theater) được tổ chức bởi [Vietcode.org](https://vietcode.org/)
