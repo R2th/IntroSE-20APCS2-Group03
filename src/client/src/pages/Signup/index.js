@@ -3,6 +3,7 @@ import { SignupUser } from "../../hooks/useAuth";
 import styles from "./styles.module.scss";
 
 import Astronaut from "assets/astronaut.svg";
+import Icon from "assets/icon.svg";
 import classNames from "classnames";
 
 const Signup = ({ setToken }) => {
@@ -17,6 +18,10 @@ const Signup = ({ setToken }) => {
   const [month, setMonth] = React.useState();
   const [year, setYear] = React.useState();
   const [formErrors, setFormErrors] = React.useState({});
+  // const images = [Astronaut, Icon];
+  // const [curSlide, setCurSLide] = React.useState(0);
+  // let slideAnimation = React.useRef();
+
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
   };
@@ -115,6 +120,12 @@ const Signup = ({ setToken }) => {
     return err;
   };
 
+  // const animation = () => {
+  //   if (curSlide === 0) {
+  //     setCurSLide(1);
+  //   } else setCurSLide(0);
+  // };
+
   const onSignUp = async () => {
     setFormErrors(validate());
 
@@ -135,166 +146,193 @@ const Signup = ({ setToken }) => {
   }, [formErrors]);
 
   return (
-    <div className={styles.form}>
-      <div className={styles.art}>
-        <div>
-          <img src={Astronaut} alt="astronaut" />
-          <p>Welcome to BytesGo</p>
-        </div>
-      </div>
-      <div className={styles.paper}>
-        <p>Welcome</p>
-        <div className={styles.frame_mail_pass}>
+    <div className={styles.container}>
+      <div className={styles.background}></div>
+      <div className={styles.form}>
+        <div className={styles.art}>
           <div>
-            <div>
-              <i
-                className="fa fa-user-circle styles.icon"
-                aria-hidden="true"
-              ></i>
-              <input
-                value={username}
-                onChange={onChangeUsername}
-                placeholder="Username"
-                className={styles.inputField}
-              />
-            </div>
-            <p className={styles.validationText}>{formErrors.username}</p>
-          </div>
-          <div>
-            <div>
-              <i
-                className="fa fa-envelope-o styles.icon"
-                aria-hidden="true"
-              ></i>
-              <input
-                value={email}
-                onChange={onChangeMail}
-                placeholder="Email"
-                className={styles.inputField}
-              />
-            </div>
-            <p className={styles.validationText}>{formErrors.email}</p>
-          </div>
-          <div>
-            <div>
-              <i className="fa fa-lock styles.icon" aria-hidden="true"></i>
-              <input
-                value={password.content}
-                type={password.isHide ? "text" : "password"}
-                onChange={onChangePassword}
-                placeholder="Password"
-                className={styles.inputField}
-              />
-              <i
-                class={password.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
-                aria-hidden="true"
-                onClick={onChangeHidePassword}
-                style={{
-                  right: 15,
-                  cursor: "pointer",
-                }}
-              ></i>
-            </div>
-            <p className={styles.validationText}>{formErrors.password}</p>
-          </div>
-          <div>
-            <div>
-              <i className="fa fa-lock styles.icon" aria-hidden="true"></i>
-              <input
-                value={confirmPassword.content}
-                type={confirmPassword.isHide ? "text" : "password"}
-                onChange={onChangeConfirmPassword}
-                placeholder="Confirm Password"
-                className={styles.inputField}
-              />
-              <i
-                class={confirmPassword.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
-                aria-hidden="true"
-                onClick={onChangeHideConfirmPassword}
-                style={{
-                  right: 15,
-                  cursor: "pointer",
-                }}
-              ></i>
-            </div>
-            <p className={styles.validationText}>
-              {formErrors.confirmPassword}
-            </p>
-          </div>
-          <div>
-            <div>
-              <div>Date of Birth</div>
-              <span className="date_of_birth">
-                <select
-                  aria-label="day"
-                  className={classNames(styles.bd_day, styles.select)}
-                  value={day}
-                  onChange={onChangeDay}
-                  style={{ width: 118, height: 25 }}
-                >
-                  {generateDay()}
-                </select>
-                <select
-                  aria-label="month"
-                  className={classNames(styles.bd_month, styles.select)}
-                  value={month}
-                  onChange={onChangeMonth}
-                  style={{ width: 118, height: 25 }}
-                >
-                  {generateMonth()}
-                </select>
-                <select
-                  aria-label="year"
-                  className={classNames(styles.bd_year, styles.select)}
-                  value={year}
-                  onChange={onChangeYear}
-                  style={{ width: 118, height: 25 }}
-                >
-                  {generateYear()}
-                </select>
-              </span>
-            </div>
+            <img src={Astronaut} alt="astronaut" />
+            <p>Welcome to BytesGo</p>
           </div>
         </div>
-        <div className={styles.login_options}>
-          <div className={styles.login_button} onClick={onSignUp}>
-            SIGN UP
-          </div>
-          <div className={styles.separate_other}>
-            <div
-              style={{
-                width: 30,
-                height: 30,
-                backgroundColor: "#fff",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 2,
-              }}
-            >
-              <span>Or</span>
+        <div className={styles.paper}>
+          <div className={styles.dump}>
+            <p>Welcome</p>
+            <div className={styles.frame_mail_pass}>
+              <div>
+                <i
+                  className="fa fa-user-circle styles.icon"
+                  aria-hidden="true"
+                />
+                <input
+                  value={username}
+                  onChange={onChangeUsername}
+                  placeholder="Username"
+                  className={styles.inputField}
+                />
+              </div>
+              {formErrors.username && (
+                <span className={styles.validationText}>
+                  {formErrors.username}
+                </span>
+              )}
+              <div>
+                <i
+                  className="fa fa-envelope-o styles.icon"
+                  aria-hidden="true"
+                ></i>
+                <input
+                  value={email}
+                  onChange={onChangeMail}
+                  placeholder="Email"
+                  className={styles.inputField}
+                />
+              </div>
+              {formErrors.email && (
+                <span className={styles.validationText}>
+                  {formErrors.email}
+                </span>
+              )}
+              <div>
+                <i className="fa fa-lock styles.icon" aria-hidden="true"></i>
+                <input
+                  value={password.content}
+                  type={password.isHide ? "text" : "password"}
+                  onChange={onChangePassword}
+                  placeholder="Password"
+                  className={styles.inputField}
+                />
+                <i
+                  class={password.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
+                  aria-hidden="true"
+                  onClick={onChangeHidePassword}
+                  style={{
+                    right: 15,
+                    cursor: "pointer",
+                  }}
+                />
+              </div>
+              {formErrors.password && (
+                <span className={styles.validationText}>
+                  {formErrors.password}
+                </span>
+              )}
+
+              <div>
+                <div>
+                  <i className="fa fa-lock styles.icon" aria-hidden="true"></i>
+                  <input
+                    value={confirmPassword.content}
+                    type={confirmPassword.isHide ? "text" : "password"}
+                    onChange={onChangeConfirmPassword}
+                    placeholder="Confirm Password"
+                    className={styles.inputField}
+                  />
+                  <i
+                    class={
+                      confirmPassword.isHide ? "fa fa-eye" : "fa fa-eye-slash"
+                    }
+                    aria-hidden="true"
+                    onClick={onChangeHideConfirmPassword}
+                    style={{
+                      right: 15,
+                      cursor: "pointer",
+                    }}
+                  ></i>
+                </div>
+                {formErrors.confirmPassword && (
+                  <span className={styles.validationText}>
+                    {formErrors.confirmPassword}
+                  </span>
+                )}
+              </div>
+              <div>
+                <div
+                  style={{
+                    fontFamily: "Arial",
+                    fontStyle: "normal",
+                    fontWeight: 10,
+                    fontSize: 12,
+                    height: 20,
+                    display: "flex",
+                    color: "#3949ab;",
+                  }}
+                >
+                  Date of birth
+                </div>
+                <span className="date_of_birth">
+                  <select
+                    aria-label="day"
+                    className={classNames(styles.bd_day, styles.select)}
+                    value={day}
+                    onChange={onChangeDay}
+                    //style={{ width: "fixed", height: 20 }}
+                  >
+                    {generateDay()}
+                  </select>
+                  <select
+                    aria-label="month"
+                    className={classNames(styles.bd_month, styles.select)}
+                    value={month}
+                    onChange={onChangeMonth}
+                    //style={{ width: "fixed", height: 20 }}
+                  >
+                    {generateMonth()}
+                  </select>
+                  <select
+                    aria-label="year"
+                    className={classNames(styles.bd_year, styles.select)}
+                    value={year}
+                    onChange={onChangeYear}
+                    //style={{ width: "fixed", height: 20 }}
+                  >
+                    {generateYear()}
+                  </select>
+                </span>
+              </div>
             </div>
-            <div className={styles.hoz_line}></div>
-          </div>
-          <div className={styles.groupBtn}>
-            <div className={styles.oAuth2Btn}>
-              <i className="fa fa-google"></i>
-              <p>Google</p>
+            <div className={styles.login_options}>
+              <div className={styles.login_button} onClick={onSignUp}>
+                SIGN UP
+              </div>
+              <div className={styles.separate_other}>
+                <div
+                  style={{
+                    width: 30,
+                    height: 30,
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 2,
+                  }}
+                >
+                  <span>Or</span>
+                </div>
+                <div className={styles.hoz_line}></div>
+              </div>
+              <div className={styles.groupBtn}>
+                <div className={styles.oAuth2Btn}>
+                  <i className="fa fa-google"></i>
+                  <p>Google</p>
+                </div>
+                <div className={styles.oAuth2Btn}>
+                  <i className="fa fa-gitlab"></i>
+                  <p>Gitlab</p>
+                </div>
+                <div className={styles.oAuth2Btn}>
+                  <i className="fa fa-facebook"></i>
+                  <p>Facebook</p>
+                </div>
+              </div>
+              <div className={styles.BottomText}>
+                <span>Already have account? </span>
+                <a className={styles.BottomLink} href="/login">
+                  {" "}
+                  Log in
+                </a>
+              </div>
             </div>
-            <div className={styles.oAuth2Btn}>
-              <i className="fa fa-gitlab"></i>
-              <p>Gitlab</p>
-            </div>
-            <div className={styles.oAuth2Btn}>
-              <i className="fa fa-facebook"></i>
-              <p>Facebook</p>
-            </div>
-          </div>
-          <div className={styles.BottomText}>
-            <span>Already have account?</span>
-            <a className={styles.BottomLink} href="/login">
-              Log in
-            </a>
           </div>
         </div>
       </div>

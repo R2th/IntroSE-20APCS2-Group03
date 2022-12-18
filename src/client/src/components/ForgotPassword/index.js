@@ -25,23 +25,8 @@ const ForgotPassword = ({ setToken }) => {
     const err = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     const regexPhone = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
-    // if (phone_or_mail.length < 10 && parseInt(phone_or_mail) > 0) {
-    //   err.phone_or_mail = "Invalid phone number";
-    //   isSend = false;
-    // } else {
-    //   if (!phone_or_mail) {
-    //     err.phone_or_mail = "Please enter your email";
-    //     isSend = false;
-    //   } else if (
-    //     !regex.test(phone_or_mail) &&
-    //     !regexPhone.test(phone_or_mail)
-    //   ) {
-    //     err.phone_or_mail = "Invalid Email";
-    //   }
-    //   isSend = false;
-    // }
 
-    if (!regex.test(phone_or_mail) || !regexPhone.test(phone_or_mail)) {
+    if (!regex.test(phone_or_mail) && !regexPhone.test(phone_or_mail)) {
       err.phone_or_mail = "Invalid Email or Phone Number";
     }
     return err;
