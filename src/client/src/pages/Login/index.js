@@ -126,11 +126,11 @@ const Login = () => {
               <div className={styles.login_button} onClick={onLogin}>
                 <span>LOG IN</span>
               </div>
-              {/* <div className={styles.separate_other}>
+              <div className={styles.separate_other}>
                 <div
                   style={{
                     width: 30,
-                    height: 30,
+                    height: 10,
                     backgroundColor: "#fff",
                     display: "flex",
                     justifyContent: "center",
@@ -141,7 +141,7 @@ const Login = () => {
                   <span>Or</span>
                 </div>
                 <div className={styles.hoz_line}></div>
-              </div> */}
+              </div>
               <div className={styles.groupBtn}>
                 <div className={styles.oAuth2Btn}>
                   <i className="fa fa-google"></i>
