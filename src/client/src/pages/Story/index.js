@@ -2,14 +2,15 @@ import * as React from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
-import { thumbnail_url } from "../../utils/helpers";
+import { thumbnail_url } from "utils/helpers";
 import styles from "./styles.module.scss";
 import Navbar from "components/Navbar";
-const Content = () => {
-  const { id_content } = useParams();
+
+const Story = () => {
+  const { slug } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useFetch(`/posts/${id_content}`, {}, (data) => {
+  const { data } = useFetch(`/posts/${slug}`, {}, (prev, data) => {
     return data.post.data;
   });
 
@@ -35,21 +36,12 @@ const Content = () => {
           >
             Go back
           </div>
-
           {post && (
             <div className={styles.contentContainer}>
               <div className={styles.header} />
               <h1>{post.title}</h1>
               <zero-md>
-                <script type="text/markdown">
-                  {/* <template>
-                <link
-                  rel="stylesheet"
-                  href={`${process.env.PUBLIC_URL}/zero.css`}
-                />
-              </template> */}
-                  {post.contents}
-                </script>
+                <script type="text/markdown">{post.contents}</script>
               </zero-md>
             </div>
           )}
@@ -60,4 +52,4 @@ const Content = () => {
   );
 };
 
-export default Content;
+export default Story;

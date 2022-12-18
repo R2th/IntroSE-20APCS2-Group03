@@ -1,7 +1,7 @@
 import * as React from "react";
 import styles from "./style.module.scss";
 
-import Astronaut from "assets/astronaut.svg";
+import Astronaut from "assets/svg/astronaut.svg";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/Auth/authContext";
 
