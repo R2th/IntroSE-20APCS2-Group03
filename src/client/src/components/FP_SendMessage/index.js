@@ -1,8 +1,7 @@
 import * as React from "react";
-import { loginUser } from "../../hooks/useAuth";
 import styles from "./styles.module.scss";
 //import Communications from "react-native-communications";
-import Astronaut from "assets/astronaut.svg";
+import Astronaut from "assets/svg/astronaut.svg";
 
 const SendMessage = ({ setToken }) => {
   const Email_Phone = "BytesGo@gmail.com";

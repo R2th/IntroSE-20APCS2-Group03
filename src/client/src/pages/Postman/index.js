@@ -1,18 +1,11 @@
 import React, { useState } from "react";
-import { buildPath, fullPathAPI } from "utils/helpers";
+import { buildPath, fullPathAPI, encodeQueryData } from "utils/helpers";
 
 import styles from "./styles.module.scss";
 
 const Postman = () => {
   const [count, setCount] = useState(null);
   const [current, setCurrent] = useState([]);
-
-  function encodeQueryData(data) {
-    const ret = [];
-    for (let d in data)
-      ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
-    return ret.join("&");
-  }
 
   const extractMediaList = (content) => {
     let regex = /\!\[image.png]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)/gi;

@@ -6855,7 +6855,7 @@ button._2Mq93X6GCESH9CsQ6XVqOS {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: end;
-  justify-content: end;
+  justify-content: flex-end;
   padding: 16px 20px 0;
   position: relative;
 }
@@ -7755,5 +7755,3 @@ button._2Mq93X6GCESH9CsQ6XVqOS {
   bottom: 0;
   max-width: 960px;
 }
-
-/*# sourceMappingURL=https://www.redditstatic.com/desktop2x/chunkCSS/Reddit.3794197494282d633b10_.css.map*/
