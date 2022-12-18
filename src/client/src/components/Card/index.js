@@ -11,13 +11,14 @@ import "./small_verc.style.scss";
 const Card = ({ content, type = "fullWidth" }) => {
   const navigate = useNavigate();
 
+  const onClickStory = () => {
+    navigate(`story/${content.slug}`);
+  };
+
   switch (type) {
     case "fullWidth":
       return (
-        <div
-          className="card-container"
-          onClick={() => navigate(`content/${content.slug}`)}
-        >
+        <div className="card-container" onClick={onClickStory}>
           {content && (
             <>
               <div className="card-fullWidth">
@@ -77,10 +78,7 @@ const Card = ({ content, type = "fullWidth" }) => {
       );
     case "medium":
       return (
-        <div
-          className="card-container medium-card"
-          onClick={() => navigate(`content/${content.slug}`)}
-        >
+        <div className="card-container medium-card" onClick={onClickStory}>
           <div className="thumbnail medium">
             <img alt="thumbnail" src={thumbnail_url(content)} />
           </div>
@@ -128,10 +126,7 @@ const Card = ({ content, type = "fullWidth" }) => {
 
     case "small-verc":
       return (
-        <div
-          className="card-container small-verc-card"
-          onClick={() => navigate(`content/${content.slug}`)}
-        >
+        <div className="card-container small-verc-card" onClick={onClickStory}>
           <div className="thumbnail small-verc">
             <img alt="thumbnail" src={thumbnail_url(content)} />
           </div>
@@ -166,10 +161,7 @@ const Card = ({ content, type = "fullWidth" }) => {
       );
     case "small-hoz":
       return (
-        <div
-          className="card-container small-hoz-card"
-          onClick={() => navigate(`content/${content.slug}`)}
-        >
+        <div className="card-container small-hoz-card" onClick={onClickStory}>
           <div className="thumbnail small-hoz">
             <img alt="thumbnail" src={thumbnail_url(content)} />
           </div>

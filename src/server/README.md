@@ -31,3 +31,9 @@ root@52373a770cdc:/# psql -U postgres
 ```
 
 4. Exit.
+
+
+If docker failed to load metadata, run this
+```
+rm  ~/.docker/config.json 
+```

@@ -1,11 +1,14 @@
 import React, { useContext, useEffect } from "react";
+
 import Card from "components/Card";
 import Sidebar from "components/Sidebar";
+
 import { INIT_DATA_CONTENT } from "utils/const";
 
+import { StylesContext } from "contexts/Styles/stylesContext";
+import { useFetch } from "hooks/useFetch";
+
 import "./style.scss";
-import { useFetch } from "../../hooks/useFetch";
-import { StylesContext } from "../../contexts/Styles/stylesContext";
 
 const Home = () => {
   const fetchContent = useFetch("/posts/newest", INIT_DATA_CONTENT);
@@ -20,8 +23,8 @@ const Home = () => {
     const prefix = document
       .querySelector(".center-box")
       .getBoundingClientRect().x;
-    console.log(prefix);
     setPrefix(prefix);
+    //eslint-disable-next-line
   }, []);
 
   return (

@@ -4,16 +4,18 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "components/Navbar";
 import ForgotPassword from "./components/ForgotPassword";
 import SendMessage from "./components/FP_SendMessage";
+import SetNewPassword from "components/SetNewPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/Auth/authContext";
 import { StylesProvider } from "./contexts/Styles/stylesContext";
-import Content from "./pages/Content";
+import Story from "./pages/Story";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFoundPageError from "./pages/NotFoundPage";
 import Postman from "./pages/Postman";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
+import Trending from "./pages/Trending";
 
 const ROUTER = [
   {
@@ -23,33 +25,58 @@ const ROUTER = [
     errorElement: <NotFoundPageError />,
   },
   {
-    path: "/content/:id_content",
-    element: <Content />,
+    path: "/story/:slug",
+    errorElement: <NotFoundPageError />,
+    element: <Story />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/story/:slug/edit",
+    errorElement: <NotFoundPageError />,
+    element: <div>check this</div>,
   },
   {
-    path: "/signup",
-    element: <Signup />,
+    path: "/trending",
+    errorElement: <NotFoundPageError />,
+    element: <Trending />,
   },
+
   {
-    path: "/forgot_password",
-    element: <ForgotPassword />,
-  },
-  {
-    path: "/send_messages",
-    element: <SendMessage />,
+    path: "/set_password",
+    element: <SetNewPassword />,
   },
   {
     path: "/profile/:id_user",
+    errorElement: <NotFoundPageError />,
     element: <Profile />,
     isNeedProtected: true,
   },
   {
     path: "/postman",
+    errorElement: <NotFoundPageError />,
     element: <Postman />,
+  },
+];
+
+const AUTH_ROUTERS = [
+  {
+    path: "login",
+    errorElement: <NotFoundPageError />,
+    element: <Login />,
+  },
+  {
+    path: "signup",
+    errorElement: <NotFoundPageError />,
+    element: <Signup />,
+  },
+  {
+    path: "forgot_password",
+    errorElement: <NotFoundPageError />,
+    element: <ForgotPassword />,
+  },
+  {
+    path: "send_messages",
+    errorElement: <NotFoundPageError />,
+    element: <SendMessage />,
   },
 ];
 
@@ -62,7 +89,6 @@ const App = () => {
           <Routes>
             {ROUTER.map((router) => {
               if (router.isNeedProtected) {
-                console.log("???");
                 return (
                   <Route
                     key={router.path}
@@ -74,6 +100,11 @@ const App = () => {
 
               return <Route key={router.path} {...router} />;
             })}
+            <Route path="auth">
+              {AUTH_ROUTERS.map((router) => (
+                <Route key={router.path} {...router} />
+              ))}
+            </Route>
           </Routes>
         </StylesProvider>
       </AuthProvider>

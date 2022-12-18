@@ -1,24 +1,41 @@
 import classNames from "classnames";
 import React, { useContext, useState } from "react";
 import { StylesContext } from "../../contexts/Styles/stylesContext";
+import { AuthContext } from "../../contexts/Auth/authContext";
 
-import Logo from "assets/icon.svg";
+import Logo from "assets/svg/logo.svg";
 
 import styles from "./styles.module.scss";
+import { useLocation, useNavigate } from "react-router-dom";
+import { parseJwt } from "utils/helpers";
+import { md5 } from "utils/md5";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { prefix } = useContext(StylesContext);
+  const { token } = useContext(AuthContext);
+
+  if (location.pathname.startsWith("/auth")) return null;
 
   const onChangeSearch = (e) => {
     setSearch(e.target.value);
   };
 
+  const onCreateNewStory = () => {
+    const s = parseJwt(token).username || "r2th" + Date.now().toString();
+    navigate(`/story/${md5(s)}/edit`);
+  };
+
   return (
     <header className={styles.mainNavBar}>
       <div className={styles.container} id="nav-bar">
-        <div className={styles.left} style={{ width: prefix }}>
+        <div
+          className={styles.left}
+          style={prefix > 0 ? { width: prefix } : {}}
+        >
           <a aria-label="Home" className={styles.homeBtn} href="/">
             <img
               alt="BytesGo"
@@ -53,13 +70,15 @@ const Navbar = () => {
           </div>
           <div className={styles.icGroup}>
             <span className={styles.icTrending}>
-              <i className="icon icon-popular"></i>
+              <a href="/trending" aria-label="Trending">
+                <i className="icon icon-popular"></i>
+              </a>
             </span>
           </div>
         </div>
         <div className={styles.right}>
           <div className={styles.icGroup}>
-            <span className={styles.icAdd}>
+            <span className={styles.icAdd} onClick={onCreateNewStory}>
               <svg
                 width="24"
                 height="24"
@@ -125,8 +144,8 @@ const Navbar = () => {
                       <circle cx="6" cy="6" r="4"></circle>
                       <path
                         fill="white"
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M12 6C12 9.31371 9.31371 12 6 12C2.68629 12 0 9.31371 0 6C0 2.68629 2.68629 0 6 0C9.31371 0 12 2.68629 12 6ZM6 10C8.20914 10 10 8.20914 10 6C10 3.79086 8.20914 2 6 2C3.79086 2 2 3.79086 2 6C2 8.20914 3.79086 10 6 10Z"
                       ></path>
                     </svg>

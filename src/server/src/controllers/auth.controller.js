@@ -66,7 +66,7 @@ exports.login = async (req, res) => {
         });
       }
 
-      var token = jwt.sign({ id: user.id }, "bytesgotoken", {
+      var token = jwt.sign({ username: user.username }, "bytesgotoken", {
         expiresIn: 86400, //24h
       });
 
