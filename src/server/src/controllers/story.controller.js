@@ -8,7 +8,7 @@ const crawlStory = async (req, res) => {
   try {
     await Story.create(JSON.parse(req.body.data));
     res.status(200).send({
-      filename: req.file.originalname,
+      filename: "",
     });
   } catch (err) {
     console.log(err);
