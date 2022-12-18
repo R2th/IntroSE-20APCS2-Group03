@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) =>{
         type: DataTypes.STRING,
         allowNull: false
       },
+      views:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
       tag: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false

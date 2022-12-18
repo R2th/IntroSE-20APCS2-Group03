@@ -7,7 +7,6 @@ const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 
 exports.signup = async (req, res) => {
-  console.log(req.body);
   User.create({
     username: req.body.username,
     email: req.body.email,

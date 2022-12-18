@@ -2,6 +2,7 @@ const db = require("../db/index");
 const fs = require("fs");
 const Story = db.story;
 const User = db.user;
+const Reaction = db.reaction;
 
 const crawlStory = async (req, res) => {
   try {
@@ -33,9 +34,31 @@ const getStoryByStoryId = async (req, res) => {
   }
 };
 
-const getStoriesByAuthorId = async (req, res) => {};
+const getStoriesByAuthorId = async (req, res) => {
+  try{
+    const userId = req.userId;
+  
+    const stories = await Story.findAll({
+      where:{
+        author_id: userId
+      }
+    });
 
-const getStoriesByCategory = async (req, res) => {};
+    res.status(200).send({
+      message: "successful",
+      data: stories
+    })
+  }
+  catch(err){
+    res.status(500).send({
+      message: err.message
+    })
+  }
+};
+
+const getStoriesByCategory = async (req, res) => {
+
+};
 
 const createStory = async (req, res) => {};
 
@@ -58,13 +81,66 @@ const updateStory = async (req, res) => {
 
 const uploadImage = async (req, res) => {};
 
-const deleteStory = async (req, res) => {};
+const deleteStory = async (req, res) => {
+  try{
+    const storyId = req.params.storyId;
+    await Story.destroy({
+      where:{
+        id: storyId
+      }
+    })
+    res.status(200).send({
+      message: "successful"
+    })
+  }
+  catch(err){
+    res.status(500).send({
+      message: err.message
+    })
+  }
+};
 
 //Upvote/Downvote
-const voteStory = async (req, res) => {};
+const voteStory = async (req, res) => {
+  const userId = req.userId;
+  const story = Story.findOne({id: req.body.storyId})
+
+  const reaction = await Reaction.findOne({
+    where:{
+      story_id: req.body.storyId,
+      user_id: userId
+    }
+  })
+
+  if(!reaction){
+    const nReaction = await Reaction.create({
+      user_id: userId,
+      story_id: req.body.storyId,
+      react_type: req.body.react_type 
+    })
+  }
+};
 
 //Update the number of view
-const updateStoryView = async (req, res) => {};
+const updateStoryView = async (req, res) => {
+  const storyId = req.body.storyId;
+  const prev = await Story.findByPk(storyId);
+  try{
+    const story = await Story.update(
+      {views:(prev.views + 1)},
+      {where: {id: storyId}}
+    )
+    res.status(200).send({
+      message: "successful",
+      data: story
+    })
+  }
+  catch(err){
+    res.status(500).send({
+      message: err.message
+    })
+  }
+};
 
 module.exports = {
   // getStory,
