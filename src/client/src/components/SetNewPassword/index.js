@@ -1,6 +1,6 @@
 import * as React from "react";
-import Astronaut from "assets/svg/astronaut.svg";
 import styles from "./styles.module.scss";
+import Astronaut from "assets/svg/astronaut.svg";
 const SetNewPassword = ({ setToken }) => {
   const [newPassword, SetNewPassword] = React.useState({
     content: "",

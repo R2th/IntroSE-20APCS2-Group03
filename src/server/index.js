@@ -23,7 +23,9 @@ if (process.env.RUN_MODE === "dev") {
 } else if (process.env.RUN_MODE === "prod") {
   db.sequelize
     .sync()
-    .then(() => {
+    .then(async () => {
+      const role = await Role.findOne();
+      if (!role) initiate();
       console.log("--------- Ready to heacking ----------------");
     })
     .catch((err) => {
