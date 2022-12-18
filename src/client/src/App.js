@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "components/Navbar";
 import ForgotPassword from "./components/ForgotPassword";
 import SendMessage from "./components/FP_SendMessage";
+import SetNewPassword from "components/SetNewPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/Auth/authContext";
 import { StylesProvider } from "./contexts/Styles/stylesContext";
@@ -43,6 +44,10 @@ const ROUTER = [
     element: <SendMessage />,
   },
   {
+    path: "/set_password",
+    element: <SetNewPassword />,
+  },
+  {
     path: "/profile/:id_user",
     element: <Profile />,
     isNeedProtected: true,
@@ -58,7 +63,6 @@ const App = () => {
     <Router>
       <AuthProvider>
         <StylesProvider>
-          <Navbar />
           <Routes>
             {ROUTER.map((router) => {
               if (router.isNeedProtected) {

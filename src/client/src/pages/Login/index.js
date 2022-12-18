@@ -6,8 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/Auth/authContext";
 
 const Login = () => {
-  const [username, setUsername] = React.useState("handoikhongdoithu");
-  const [password, setPassword] = React.useState("user12345");
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState({
+    content: "",
+    isHide: true,
+  });
+  const [errorForm, setErrorForm] = React.useState({});
   const navigate = useNavigate();
 
   const { token, handleLogin } = React.useContext(AuthContext);
@@ -28,24 +32,37 @@ const Login = () => {
   };
 
   const onChangePassword = (e) => {
-    setPassword(e.target.value);
+    setPassword({ ...password, content: e.target.value });
   };
 
-  const onLogin = async () => {
-    if (!username | (username === "")) {
-      alert("Please enter a username or email address!!");
-      return;
-    }
-    if (password | (password === "")) {
-      alert("Please enter a password!!");
-      return;
-    }
+  const onChangeHidePassword = () => {
+    setPassword({ ...password, isHide: !password.isHide });
+  };
 
+  const validate = () => {
+    const err = {};
+    if (!username) {
+      err.username = "Username can not be empty";
+    }
+    // else if () { //check from database
+    //  err.username = "Invalid username or email";
+    // }
+    if (!password.content) {
+      err.password = "Password can not be empty";
+    }
+    // else if (!password.content) { //check from database
+
+    // }
+
+    return err;
+  };
+  const onLogin = async () => {
+    setErrorForm(validate());
     await handleLogin({ username: username, password: password });
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.background}></div>
       <div className={styles.form}>
         <div className={styles.art}>
@@ -55,75 +72,101 @@ const Login = () => {
           </div>
         </div>
         <div className={styles.paper}>
-          <p>Welcome</p>
-          <div className={styles.frame_mail_pass}>
-            <div>
-              <i className="fa fa-envelope-o icon" aria-hidden="true"></i>
-              <input
-                value={username}
-                onChange={onChangeMail}
-                placeholder="Username or email"
-                className={styles.inputField}
-              />
+          <div className={styles.dump}>
+            <p>Welcome</p>
+            <div className={styles.frame_mail_pass}>
+              <div>
+                <i
+                  className="fa fa-envelope-o styles.icon"
+                  aria-hidden="true"
+                ></i>
+                <input
+                  value={username}
+                  onChange={onChangeMail}
+                  placeholder="Username or email"
+                  className={styles.inputField}
+                />
+              </div>
+              {errorForm.username && (
+                <span className={styles.validationText}>
+                  {errorForm.username}
+                </span>
+              )}
+              <div>
+                <div style={{ margin: "auto" }}>
+                  <i className="fa fa-lock styles.icon" aria-hidden="true" />
+                  <input
+                    value={password.content}
+                    type={password.isHide ? "text" : "password"}
+                    onChange={onChangePassword}
+                    placeholder="Password"
+                    className={styles.inputField}
+                  />
+                  <i
+                    class={password.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
+                    aria-hidden="true"
+                    onClick={onChangeHidePassword}
+                    style={{
+                      right: 15,
+                      cursor: "pointer",
+                    }}
+                  />
+                </div>
+              </div>
+              {errorForm.password && (
+                <span className={styles.validationText}>
+                  {errorForm.password}
+                </span>
+              )}
             </div>
-            <div>
-              <i className="fa fa-lock icon" aria-hidden="true"></i>
-              <input
-                value={password}
-                type="password"
-                onChange={onChangePassword}
-                placeholder="Password"
-                className={styles.inputField}
-              />
-            </div>
-            <p>
+            <p className={styles.forgotPassword}>
               <a href="/forgot_password">Forgot password?</a>
             </p>
-          </div>
-          <div className={styles.login_options}>
-            <div className={styles.login_button} onClick={onLogin}>
-              <span>LOG IN</span>
-            </div>
-            <div className={styles.separate_other}>
-              <div
-                style={{
-                  width: 30,
-                  height: 30,
-                  backgroundColor: "#fff",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  zIndex: 2,
-                }}
-              >
-                <span>Or</span>
+            <div className={styles.login_options}>
+              <div className={styles.login_button} onClick={onLogin}>
+                <span>LOG IN</span>
               </div>
-              <div className={styles.hoz_line}></div>
-            </div>
-            <div className={styles.groupBtn}>
-              <div className={styles.oAuth2Btn}>
-                <i className="fa fa-google"></i>
-                <p>Google</p>
+              {/* <div className={styles.separate_other}>
+                <div
+                  style={{
+                    width: 30,
+                    height: 30,
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 2,
+                  }}
+                >
+                  <span>Or</span>
+                </div>
+                <div className={styles.hoz_line}></div>
+              </div> */}
+              <div className={styles.groupBtn}>
+                <div className={styles.oAuth2Btn}>
+                  <i className="fa fa-google"></i>
+                  <p>Google</p>
+                </div>
+                <div className={styles.oAuth2Btn}>
+                  <i className="fa fa-gitlab"></i>
+                  <p>Gitlab</p>
+                </div>
+                <div className={styles.oAuth2Btn}>
+                  <i className="fa fa-facebook"></i>
+                  <p>Facebook</p>
+                </div>
               </div>
-              <div className={styles.oAuth2Btn}>
-                <i className="fa fa-gitlab"></i>
-                <p>Gitlab</p>
+              <div className={styles.BottomText}>
+                <span>New to BytesGo? </span>
+                <a className={styles.BottomLink} href="/signup">
+                  Sign up
+                </a>
               </div>
-              <div className={styles.oAuth2Btn}>
-                <i className="fa fa-facebook"></i>
-                <p>Facebook</p>
-              </div>
-            </div>
-            <div className={styles.BottomText}>
-              <span>New to BytesGo? </span>
-              <a className={styles.BottomLink} href="/signup">
-                Sign up
-              </a>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

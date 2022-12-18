@@ -6,6 +6,7 @@ import { INIT_DATA_CONTENT } from "utils/const";
 import "./style.scss";
 import { useFetch } from "../../hooks/useFetch";
 import { StylesContext } from "../../contexts/Styles/stylesContext";
+import Navbar from "components/Navbar";
 
 const Home = () => {
   const fetchContent = useFetch("/posts/newest", INIT_DATA_CONTENT);
@@ -26,6 +27,7 @@ const Home = () => {
 
   return (
     <div className="homepage">
+      <Navbar />
       <div style={{ backgroundColor: "white", marginLeft: 100 }}>
         <div className="background"></div>
         <div className="white-bg"></div>

@@ -65,7 +65,7 @@
         position: relative;
         i {
           position: absolute;
-          top: 50%;
+          top: 52%;
           transform: translate(0, -50%);
           margin-left: 10px;
         }
@@ -94,10 +94,6 @@
         align-items: center;
         color: #6f74dd;
         align-self: flex-end;
-        &:hover {
-          cursor: pointer;
-          text-decoration: underline;
-        }
       }
     }
     .login_options {

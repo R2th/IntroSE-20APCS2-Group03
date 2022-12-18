@@ -82,6 +82,7 @@ input:focus-visible,
 input:focus-within {
   border: 1px solid #0079d3;
   background-color: #fff;
+  margin: -1px;
 }
 
 button:active {
