@@ -18,9 +18,10 @@ verifyToken = async (req, res, next) =>{
             });
         }
         else{
-            const user = await User.findByPk(decoded.id);
-            req.userId = decoded.id;
-            req.username = user.username;
+            const user = await User.findOne({
+                where: {username: decoded.username}
+            });
+            req.userId = user.id;
             next();
             return;
         }
