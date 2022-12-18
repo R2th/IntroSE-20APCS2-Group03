@@ -6,16 +6,19 @@ import { AuthContext } from "../../contexts/Auth/authContext";
 import Logo from "assets/svg/logo.svg";
 
 import styles from "./styles.module.scss";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { parseJwt } from "utils/helpers";
 import { md5 } from "utils/md5";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { prefix } = useContext(StylesContext);
   const { token } = useContext(AuthContext);
+
+  if (location.pathname.startsWith("/auth")) return null;
 
   const onChangeSearch = (e) => {
     setSearch(e.target.value);

@@ -39,26 +39,7 @@ const ROUTER = [
     errorElement: <NotFoundPageError />,
     element: <Trending />,
   },
-  {
-    path: "/login",
-    errorElement: <NotFoundPageError />,
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    errorElement: <NotFoundPageError />,
-    element: <Signup />,
-  },
-  {
-    path: "/forgot_password",
-    errorElement: <NotFoundPageError />,
-    element: <ForgotPassword />,
-  },
-  {
-    path: "/send_messages",
-    errorElement: <NotFoundPageError />,
-    element: <SendMessage />,
-  },
+
   {
     path: "/set_password",
     element: <SetNewPassword />,
@@ -76,11 +57,35 @@ const ROUTER = [
   },
 ];
 
+const AUTH_ROUTERS = [
+  {
+    path: "login",
+    errorElement: <NotFoundPageError />,
+    element: <Login />,
+  },
+  {
+    path: "signup",
+    errorElement: <NotFoundPageError />,
+    element: <Signup />,
+  },
+  {
+    path: "forgot_password",
+    errorElement: <NotFoundPageError />,
+    element: <ForgotPassword />,
+  },
+  {
+    path: "send_messages",
+    errorElement: <NotFoundPageError />,
+    element: <SendMessage />,
+  },
+];
+
 const App = () => {
   return (
     <Router>
       <AuthProvider>
         <StylesProvider>
+          <Navbar />
           <Routes>
             {ROUTER.map((router) => {
               if (router.isNeedProtected) {
@@ -95,6 +100,11 @@ const App = () => {
 
               return <Route key={router.path} {...router} />;
             })}
+            <Route path="auth">
+              {AUTH_ROUTERS.map((router) => (
+                <Route key={router.path} {...router} />
+              ))}
+            </Route>
           </Routes>
         </StylesProvider>
       </AuthProvider>

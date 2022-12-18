@@ -4,7 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { thumbnail_url } from "utils/helpers";
 import styles from "./styles.module.scss";
-import Navbar from "components/Navbar";
 
 const Story = () => {
   const { slug } = useParams();
@@ -25,7 +24,6 @@ const Story = () => {
 
   return (
     <div className={styles.container}>
-      <Navbar />
       <div className={styles.articlesAndSidebar}>
         <div className={styles.postCenter}>
           <div
