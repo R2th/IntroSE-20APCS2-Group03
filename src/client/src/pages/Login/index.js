@@ -6,8 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/Auth/authContext";
 
 const Login = () => {
-  const [username, setUsername] = React.useState("handoikhongdoithu");
-  const [password, setPassword] = React.useState("user12345");
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState({
+    content: "",
+    isHide: true,
+  });
+  const [errorForm, setErrorForm] = React.useState({});
   const navigate = useNavigate();
 
   const { token, handleLogin } = React.useContext(AuthContext);
@@ -28,19 +32,32 @@ const Login = () => {
   };
 
   const onChangePassword = (e) => {
-    setPassword(e.target.value);
+    setPassword({ ...password, content: e.target.value });
   };
 
-  const onLogin = async () => {
-    if (!username | (username === "")) {
-      alert("Please enter a username or email address!!");
-      return;
-    }
-    if (password | (password === "")) {
-      alert("Please enter a password!!");
-      return;
-    }
+  const onChangeHidePassword = () => {
+    setPassword({ ...password, isHide: !password.isHide });
+  };
 
+  const validate = () => {
+    const err = {};
+    if (!username) {
+      err.username = "Username can not be empty";
+    }
+    // else if () { //check from database
+    //  err.username = "Invalid username or email";
+    // }
+    if (!password.content) {
+      err.password = "Password can not be empty";
+    }
+    // else if (!password.content) { //check from database
+
+    // }
+
+    return err;
+  };
+  const onLogin = async () => {
+    setErrorForm(validate());
     await handleLogin({ username: username, password: password });
   };
 
@@ -58,7 +75,10 @@ const Login = () => {
           <p>Welcome</p>
           <div className={styles.frame_mail_pass}>
             <div>
-              <i className="fa fa-envelope-o icon" aria-hidden="true"></i>
+              <i
+                className="fa fa-envelope-o styles.icon"
+                aria-hidden="true"
+              ></i>
               <input
                 value={username}
                 onChange={onChangeMail}
@@ -66,16 +86,27 @@ const Login = () => {
                 className={styles.inputField}
               />
             </div>
+            <p className={styles.validationText}>{errorForm.username}</p>
             <div>
-              <i className="fa fa-lock icon" aria-hidden="true"></i>
+              <i className="fa fa-lock styles.icon" aria-hidden="true"></i>
               <input
-                value={password}
-                type="password"
+                value={password.content}
+                type={password.isHide ? "text" : "password"}
                 onChange={onChangePassword}
                 placeholder="Password"
                 className={styles.inputField}
               />
+              <i
+                class={password.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
+                aria-hidden="true"
+                onClick={onChangeHidePassword}
+                style={{
+                  right: 15,
+                  cursor: "pointer",
+                }}
+              ></i>
             </div>
+            <p className={styles.validationText}>{errorForm.password}</p>
             <p>
               <a href="/forgot_password">Forgot password?</a>
             </p>

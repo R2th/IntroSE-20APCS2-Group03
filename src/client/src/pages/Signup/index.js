@@ -8,8 +8,11 @@ import classNames from "classnames";
 const Signup = ({ setToken }) => {
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [password, setPassword] = React.useState({ content: "", isHide: true });
+  const [confirmPassword, setConfirmPassword] = React.useState({
+    content: "",
+    isHide: true,
+  });
   const [day, setDay] = React.useState();
   const [month, setMonth] = React.useState();
   const [year, setYear] = React.useState();
@@ -23,11 +26,19 @@ const Signup = ({ setToken }) => {
   };
 
   const onChangePassword = (e) => {
-    setPassword(e.target.value);
+    setPassword({ ...password, content: e.target.value });
+  };
+
+  const onChangeHidePassword = () => {
+    setPassword({ ...password, isHide: !password.isHide });
   };
 
   const onChangeConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
+    setConfirmPassword({ ...confirmPassword, content: e.target.value });
+  };
+
+  const onChangeHideConfirmPassword = () => {
+    setConfirmPassword({ ...confirmPassword, isHide: !confirmPassword.isHide });
   };
 
   const onChangeDay = (e) => {
@@ -79,6 +90,7 @@ const Signup = ({ setToken }) => {
     const err = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
+    const regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i;
     if (!username) {
       err.username = "Please enter username";
     } else if (username.length < 6) {
@@ -89,14 +101,14 @@ const Signup = ({ setToken }) => {
       err.email = "Please enter your email";
     } else if (!regex.test(email)) err.email = "Invalid Email";
 
-    if (!password) {
+    if (!password.content) {
       err.password = "Please enter your password";
-    } else if (password.length < 8)
-      err.password = "Password must be at least 8 characters";
+    } else if (!regexPass.test(password.content))
+      err.password = "Password must be at least 8 characters, A-Z, a-z, 0-9";
 
-    if (!confirmPassword) {
+    if (!confirmPassword.content) {
       err.confirmPassword = "Please enter confirm password";
-    } else if (password !== confirmPassword) {
+    } else if (password.content !== confirmPassword.content) {
       err.confirmPassword = "Your password must be the same";
     }
 
@@ -135,7 +147,10 @@ const Signup = ({ setToken }) => {
         <div className={styles.frame_mail_pass}>
           <div>
             <div>
-              <i className="fa fa-user-circle icon" aria-hidden="true"></i>
+              <i
+                className="fa fa-user-circle styles.icon"
+                aria-hidden="true"
+              ></i>
               <input
                 value={username}
                 onChange={onChangeUsername}
@@ -147,7 +162,10 @@ const Signup = ({ setToken }) => {
           </div>
           <div>
             <div>
-              <i className="fa fa-envelope-o icon" aria-hidden="true"></i>
+              <i
+                className="fa fa-envelope-o styles.icon"
+                aria-hidden="true"
+              ></i>
               <input
                 value={email}
                 onChange={onChangeMail}
@@ -159,27 +177,45 @@ const Signup = ({ setToken }) => {
           </div>
           <div>
             <div>
-              <i className="fa fa-lock icon" aria-hidden="true"></i>
+              <i className="fa fa-lock styles.icon" aria-hidden="true"></i>
               <input
-                value={password}
-                type="password"
+                value={password.content}
+                type={password.isHide ? "text" : "password"}
                 onChange={onChangePassword}
                 placeholder="Password"
                 className={styles.inputField}
               />
+              <i
+                class={password.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
+                aria-hidden="true"
+                onClick={onChangeHidePassword}
+                style={{
+                  right: 15,
+                  cursor: "pointer",
+                }}
+              ></i>
             </div>
             <p className={styles.validationText}>{formErrors.password}</p>
           </div>
           <div>
             <div>
-              <i className="fa fa-lock icon" aria-hidden="true"></i>
+              <i className="fa fa-lock styles.icon" aria-hidden="true"></i>
               <input
-                value={confirmPassword}
-                type="password"
+                value={confirmPassword.content}
+                type={confirmPassword.isHide ? "text" : "password"}
                 onChange={onChangeConfirmPassword}
                 placeholder="Confirm Password"
                 className={styles.inputField}
               />
+              <i
+                class={confirmPassword.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
+                aria-hidden="true"
+                onClick={onChangeHideConfirmPassword}
+                style={{
+                  right: 15,
+                  cursor: "pointer",
+                }}
+              ></i>
             </div>
             <p className={styles.validationText}>
               {formErrors.confirmPassword}
@@ -188,12 +224,13 @@ const Signup = ({ setToken }) => {
           <div>
             <div>
               <div>Date of Birth</div>
-              <span>
+              <span className="date_of_birth">
                 <select
                   aria-label="day"
                   className={classNames(styles.bd_day, styles.select)}
                   value={day}
                   onChange={onChangeDay}
+                  style={{ width: 118, height: 25 }}
                 >
                   {generateDay()}
                 </select>
@@ -202,6 +239,7 @@ const Signup = ({ setToken }) => {
                   className={classNames(styles.bd_month, styles.select)}
                   value={month}
                   onChange={onChangeMonth}
+                  style={{ width: 118, height: 25 }}
                 >
                   {generateMonth()}
                 </select>
@@ -210,6 +248,7 @@ const Signup = ({ setToken }) => {
                   className={classNames(styles.bd_year, styles.select)}
                   value={year}
                   onChange={onChangeYear}
+                  style={{ width: 118, height: 25 }}
                 >
                   {generateYear()}
                 </select>

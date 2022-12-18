@@ -73,7 +73,7 @@ const ForgotPassword = ({ setToken }) => {
             <p className={styles.validationText}>{errorForm.phone_or_mail}</p>
           </div>
           <div className={styles.send_message} onClick={onForgotPassword}>
-            SEND
+            SUBMIT
           </div>
           <div className={styles.BottomText}>
             Back to{" "}
