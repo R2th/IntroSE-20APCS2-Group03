@@ -145,5 +145,10 @@ const updateStoryView = async (req, res) => {
 module.exports = {
   // getStory,
   updateStory,
+  deleteStory,
   crawlStory,
+  getStoryByStoryId,
+  createStory,
+  updateStoryView,
+  voteStory
 };
