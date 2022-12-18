@@ -2,7 +2,7 @@ import * as React from "react";
 import { loginUser } from "../../hooks/useAuth";
 import styles from "./styles.module.scss";
 import Astronaut from "assets/astronaut.svg";
-
+import Icon from "assets/icon.svg";
 const SetNewPassword = ({ setToken }) => {
   const [newPassword, SetNewPassword] = React.useState({
     content: "",
