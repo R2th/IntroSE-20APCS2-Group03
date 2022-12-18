@@ -19,44 +19,42 @@ const getAllStories = async (req, res) => {
   try {
     const limit = req.params.limit;
     const stories = await Story.findAll({
-      limit: limit
+      limit: limit,
     });
     if (!stories) {
       throw new Error();
     }
     res.status(200).send({
       message: "successful",
-      data: stories
+      data: stories,
     });
   } catch (err) {
     res.status(500).send({
-      message: err.message
-    })
+      message: err.message,
+    });
   }
-}
+};
 
 const getNewestStories = async (req, res) => {
   try {
     const limit = req.params.limit;
-    const stories = await Story.findAll({ 
-      order: [
-        ['createdAt', 'DESC']
-      ],
-      limit: limit
+    const stories = await Story.findAll({
+      order: [["createdAt", "DESC"]],
+      limit: limit,
     });
     if (!stories) {
       throw new Error();
     }
     res.status(200).send({
       message: "successful",
-      data: stories
+      data: stories,
     });
   } catch (err) {
     res.status(500).send({
-      message: err.message
-    })
+      message: err.message,
+    });
   }
-}
+};
 
 const getStoryByStoryId = async (req, res) => {
   try {
@@ -66,7 +64,7 @@ const getStoryByStoryId = async (req, res) => {
     }
     res.status(200).send({
       message: "successful",
-      data: story
+      data: story,
     });
   } catch (err) {
     res.status(404).send();
@@ -74,24 +72,23 @@ const getStoryByStoryId = async (req, res) => {
 };
 
 const getStoriesOfUser = async (req, res) => {
-  try{
+  try {
     const userId = req.userId;
     const limit = req.body.limit;
     const stories = await Story.findAll({
-      where:{
-        author_id: userId
+      where: {
+        author_id: userId,
       },
-      limit: limit
+      limit: limit,
     });
     res.status(200).send({
       message: "successful",
-      data: stories
-    })
-  }
-  catch(err){
+      data: stories,
+    });
+  } catch (err) {
     res.status(500).send({
-      message: err.message
-    })
+      message: err.message,
+    });
   }
 };
 
@@ -99,7 +96,10 @@ const getStoriesByCategory = async (req, res) => {};
 
 const createStory = async (req, res) => {
   try {
-    const contents = await fs.readFileSync(req.file.path, {encoding:'utf8', flag:'r'});
+    const contents = await fs.readFileSync(req.file.path, {
+      encoding: "utf8",
+      flag: "r",
+    });
     const contentsShort = req.body.contentsShort;
     const mediaList = await extractMedia(contents);
     const authorId = req.userId;
@@ -115,29 +115,29 @@ const createStory = async (req, res) => {
       title: title,
       tag: tag,
       view: 0,
-      isPremium: isPremium
-    })
+      isPremium: isPremium,
+    });
 
     res.status(200).send({
       message: "successful",
-      data: story
-    })
-
+      data: story,
+    });
   } catch (err) {
     res.status(500).send({
-      message: err.message
-    })
+      message: err.message,
+    });
   }
 };
 
 const uploadImage = async () => {
   return null;
-};  
+};
 
 const extractMedia = async (contents) => {
-  let regex = /\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\)/gi;
+  let regex =
+    /\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\)/gi;
   let result = [];
-  for (const match of contents.matchAll(regex)){
+  for (const match of contents.matchAll(regex)) {
     result.push(match[1]);
   }
   return result;
@@ -151,7 +151,10 @@ const updateStory = async (req, res) => {
       throw new Error();
     }
 
-    const contents = await fs.readFileSync(req.file.path, {encoding:'utf8', flag:'r'});
+    const contents = await fs.readFileSync(req.file.path, {
+      encoding: "utf8",
+      flag: "r",
+    });
     const contentsShort = req.body.contentsShort;
     const mediaList = await extractMedia(contents);
     const title = req.body.title;
@@ -164,31 +167,30 @@ const updateStory = async (req, res) => {
       media_list: mediaList,
       title: title,
       tag: tag,
-      isPremium: isPremium
+      isPremium: isPremium,
     });
 
     await story.save();
 
     res.status(200).send({
       message: "successful",
-      data: story
+      data: story,
     });
-
   } catch (err) {
     res.status(500).send({
-      message: err.message
+      message: err.message,
     });
   }
 };
 
 const deleteStory = async (req, res) => {
-  try{
+  try {
     const storyId = req.params.storyId;
     const story = await Story.findOne({
-      where:{
+      where: {
         id: storyId,
-        author_id: req.userId
-      }
+        author_id: req.userId,
+      },
     });
 
     if (!story) {
@@ -196,77 +198,74 @@ const deleteStory = async (req, res) => {
     }
 
     await story.destroy();
-    
+
     res.status(200).send({
-      message: "successful"
-    })
-  }
-  catch(err){
+      message: "successful",
+    });
+  } catch (err) {
     res.status(500).send({
-      message: err.message
-    })
+      message: err.message,
+    });
   }
 };
 
 //Upvote/Downvote
 const voteStory = async (req, res) => {
   const userId = req.userId;
-  const story = await Story.findOne({id: req.param.storyId})
+  const story = await Story.findOne({ id: req.param.storyId });
 
   const prevReaction = await Reaction.findOne({
-    where:{
+    where: {
       story_id: req.param.storyId,
-      user_id: userId
-    }
-  })
+      user_id: userId,
+    },
+  });
 
   // If user has not ever react on story
-  if(!prevReaction){
+  if (!prevReaction) {
     const newReaction = await Reaction.create({
       user_id: userId,
       story_id: req.param.storyId,
-      react_type: req.body.reactType
-    })
-  }else{
+      react_type: req.body.reactType,
+    });
+  } else {
     // update type of vote if exist
     await Story.update(
-      {react_type: req.param.reactType},
-      {where: {story_id: req.body.storyId}}
+      { react_type: req.param.reactType },
+      { where: { story_id: req.body.storyId } }
     );
   }
 
-  res.status(200).send(
-    {
-      message: "successful",
-      points: await calculateVotes(req.param.storyId)
-    }
-  )
+  res.status(200).send({
+    message: "successful",
+    points: await calculateVotes(req.param.storyId),
+  });
 };
 
-const calculateVotes = async (storyId) => await Reaction.findAll({
-  where: {story_id: storyId},
-  attributes: [[sequelize.fn('sum', sequelize.col('react_type')), 'points']],
-  raw: true
-})
+const calculateVotes = async (storyId) =>
+  await Reaction.findAll({
+    where: { story_id: storyId },
+    attributes: [[sequelize.fn("sum", sequelize.col("react_type")), "points"]],
+    raw: true,
+  });
 
 //Update the number of view
 const updateStoryView = async (req, res) => {
   const storyId = req.body.storyId;
   const prev = await Story.findByPk(storyId);
-  try{
+  try {
     const story = await Story.update(
-      {views: (prev.views + 1)},
-      {where: {id: storyId}}
-    )
+      { views: prev.views + 1 },
+      { where: { id: storyId } }
+    );
     res.status(200).send({
       message: "successful",
-      data: story
-    })
-  }
-  catch(err){
+      data: story,
+    });
+  } catch (err) {
     res.status(500).send({
-      message: err.message
-    })
+      message: err.message,
+    });
   }
 };
 
@@ -281,4 +280,5 @@ module.exports = {
   crawlStory,
   voteStory,
   updateStoryView,
+  voteStory,
 };
