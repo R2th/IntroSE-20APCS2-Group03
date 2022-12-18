@@ -1,13 +1,10 @@
 import * as React from "react";
-import { loginUser } from "../../hooks/useAuth";
 import styles from "./styles.module.scss";
 
-import Astronaut from "assets/astronaut.svg";
-import FP_SendMessage from "components/FP_SendMessage";
+import Astronaut from "assets/svg/astronaut.svg";
 const ForgotPassword = ({ setToken }) => {
   var [phone_or_mail, setPhone_or_Mail] = React.useState("");
   const [errorForm, setErrorForm] = React.useState({});
-  var isSend = true;
   const onChangeMail = (e) => {
     setPhone_or_Mail(e.target.value);
   };

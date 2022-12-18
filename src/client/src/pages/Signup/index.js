@@ -2,8 +2,7 @@ import * as React from "react";
 import { SignupUser } from "../../hooks/useAuth";
 import styles from "./styles.module.scss";
 
-import Astronaut from "assets/astronaut.svg";
-import Icon from "assets/icon.svg";
+import Astronaut from "assets/svg/astronaut.svg";
 import classNames from "classnames";
 
 const Signup = ({ setToken }) => {

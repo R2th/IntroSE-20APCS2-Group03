@@ -5,9 +5,15 @@ import "./style.scss";
 import { useFetch } from "../../hooks/useFetch";
 
 const Sidebar = () => {
-  const { data } = useFetch("/api/questions", INIT_DATA_CONTENT, (data) => {
-    return data.questions.data;
-  });
+  const { data } = useFetch(
+    "/api/questions",
+    INIT_DATA_CONTENT,
+    (prev, data) => {
+      if (prev === INIT_DATA_CONTENT) {
+        return data.questions.data;
+      } else return prev;
+    }
+  );
 
   return (
     <div className="sticky-sidebar">
