@@ -4,7 +4,6 @@ const verifyToken = require("../../middleware/isLogin");
 const isAdmin = require("../../middleware/isAdmin");
 const storyController = require("../../controllers/story.controller");
 const { upload } = require("../../controllers/upload.controller");
-const verifyToken = require("../../middleware/isLogin");
 
 router.get("/story/me", verifyToken, storyController.getStoriesOfUser);
 router.post("/story/crawl", upload.single("story"), storyController.crawlStory);

@@ -1,1 +1,0 @@
-Presented by **Mr. Dao Hoang Thanh**, CTO & Fouder of Nexty Platform, at Vietnam Mobile Day 2018

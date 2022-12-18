@@ -1,5 +1,0 @@
-Nhắc đến lịch sử hình thành và phát triển của Blockchain, chúng ta không thể không thảo luận những đồng tiền mã hóa được xây dựng trên nền tảng này. Theo sau Bitcoin, Ethereum được tính toán và đánh giá là đồng tiền ảo có giá trị đứng thứ 2 trên thế giới hiện nay. **Hơn thế nữa, không bị giới hạn ở khái niệm tiền tệ, Ethereum được ứng dụng hiệu quả vào những lĩnh vực khác thông qua Smart Contract cũng được phát triển dựa trên công nghệ Blockchain**.
-
-Ethereum là một Decentralized Platform - nơi mọi người có thể xuất bản những Decentralised Applications (Dapps) mà không cần đến trung gian. Hiểu một cách đơn giản thì Dapps chính là những ứng dụng thông thường nhưng lại không cần dựa vào bất kỳ bên thứ ba hay máy chủ nào để duy trì hoạt động.
-
-Bài thuyết trình trên đây của anh **Nguyễn Anh Tiến**, tại sự kiện [OpenDev workshop From Zero to Dapp PROgrammer](https://viblo.asia/announcements/su-tro-lai-cua-opendev-voi-workshop-from-zero-to-dapp-programmer-OeVKBya05kW) vừa qua sẽ đưa đến cho các bạn các kiến thức cơ bản về blockchain Ethereum, những điều kiến nó có thể trở thành một nền tảng nơi quy tụ nhiều lập trình viên phát triển DApp của mình.

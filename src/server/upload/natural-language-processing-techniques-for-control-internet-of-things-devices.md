@@ -1,5 +1,0 @@
-Không thể phủ nhận được rằng **Trí tuệ nhân tạo** đang là một lĩnh vực vô cùng “hot” hiện nay. Bên cạnh những thành tựu to lớn về xử lý ảnh, xử lý âm thanh, xử lý tiếng nói thì xử lý ngôn ngữ tự nhiên - **Natural Language Processing (NLP)** cũng đang là một trong những lĩnh vực gặt hái được rất nhiều thành công. Mặc dù không phải là một lĩnh vực mới nhưng những bài toán của NLP thực hiện với tiếng Việt thì còn khá hiếm hoi. 
-
-Song song đó **Internet of Things** là một sân chơi rất rộng lớn trong giới công nghệ hiện nay với vô vàn các ứng dụng để điều khiển, theo dõi, thu thập thông tin của hàng tỷ thiết bị kết nối vào internet. Việc kết hợp giữa IoT và NLP trong tiếng Việt đang trở thành xu hướng tất yếu đối với đại bộ phận người Việt Nam, hứa hẹn mang tới lợi ích và làn sóng ủng hộ vô cùng mạnh mẽ đến từ cộng đồng người Việt Kiều và người bản xứ nói riêng.
-
-Và còn rất nhiều điều thú vị cùng chuyên gia “SIÊU CHẤT”, với những kiến thức và nghiên cứu của mình, diễn giả **Phạm Văn Toàn** đã mang đến **Vietnam Mobile Day 2018** những thông tin thú vị về sự kết hợp hai mảng công nghệ chủ chốt trong cuộc cách mạng 4.0.
