@@ -65,6 +65,7 @@ button {
   background-color: white;
   line-height: 1.5;
   margin: 0;
+  color: hsl(210, 8%, 25%);
 }
 button {
   color: #3992ff;
