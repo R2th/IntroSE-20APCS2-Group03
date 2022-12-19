@@ -2,11 +2,13 @@ const multer = require("multer");
 const { Score } = require("../db/index");
 
 const storage = multer.diskStorage({
-  destination: "upload/",
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
   filename: function (req, file, cb) {
     console.log(file);
-    cb(null, file.originalname + ".md");
-  },
+    cb(null, file.originalname);
+  }
 });
 
 const upload = multer({
