@@ -26,6 +26,12 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        &:hover {
+          background: -webkit-linear-gradient(#3b82f6, #d946ef);
+          -webkit-background-clip: text;
+          font-weight: bold;
+          -webkit-text-fill-color: transparent;
+        }
       }
       p {
         color: #464646;
@@ -53,6 +59,9 @@
         overflow: hidden;
         .name {
           font-size: 14px;
+          &:hover {
+            color: #3b82f6;
+          }
         }
         .time {
           display: flex;

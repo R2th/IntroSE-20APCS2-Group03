@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { fullPathImage, thumbnail_url } from "utils/helpers";
 
 import "./style.scss";
-import "./medium.style.scss";
 import "./small_hoz.style.scss";
 import "./small_verc.style.scss";
+import MediumCard from "./CardMedium";
+import classNames from "classnames";
 
 const Card = ({ content, type = "fullWidth" }) => {
   const navigate = useNavigate();
+
+  const [isHover, setIsHover] = useState(false);
 
   const onClickStory = () => {
     navigate(`story/${content.slug}`);
@@ -18,7 +21,16 @@ const Card = ({ content, type = "fullWidth" }) => {
   switch (type) {
     case "fullWidth":
       return (
-        <div className="card-container" onClick={onClickStory}>
+        <div
+          className="card-container"
+          onClick={onClickStory}
+          onMouseMove={() => {
+            setIsHover(true);
+          }}
+          onMouseLeave={() => {
+            setIsHover(false);
+          }}
+        >
           {content && (
             <>
               <div className="card-fullWidth">
@@ -62,7 +74,9 @@ const Card = ({ content, type = "fullWidth" }) => {
                     </div>
                   </div>
                   <div className="description">
-                    <h3 className="title">{content.title}</h3>
+                    <h3 className={classNames("title", isHover ? "hover" : "")}>
+                      {content.title}
+                    </h3>
                     <div className="contents_short">
                       {content.contents_short}
                     </div>
@@ -77,52 +91,7 @@ const Card = ({ content, type = "fullWidth" }) => {
         </div>
       );
     case "medium":
-      return (
-        <div className="card-container medium-card" onClick={onClickStory}>
-          <div className="thumbnail medium">
-            <img alt="thumbnail" src={thumbnail_url(content)} />
-          </div>
-          {content && (
-            <>
-              <div className="card-medium">
-                <div className="description">
-                  <h3 className="title">{content.title}</h3>
-                  <p className="contents_short">{content.contents_short}</p>
-                </div>
-                <div className="footer">
-                  <img
-                    alt="avatar"
-                    className="avatar"
-                    src={fullPathImage(content.user)}
-                  />
-                  <div className="title">
-                    <div className="name">
-                      <span>
-                        {content.user && content.user.data.username}&nbsp;
-                      </span>
-                    </div>
-                    <div className="time">
-                      <div>{moment(content.published_at).format("LL")}</div>
-                      <div
-                        style={{
-                          fontWeight: "bold",
-                          color: "yellow",
-                          textAlign: "center",
-                          textShadow:
-                            "-0.5px 0 #000, --0.5px 0 #000, 0 -0.5px #000, 0 --0.5px #000,1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000 ",
-                        }}
-                      >
-                        *
-                      </div>
-                      <div>{content.reading_time} mins read</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      );
+      return <MediumCard content={content} />;
 
     case "small-verc":
       return (
@@ -134,7 +103,9 @@ const Card = ({ content, type = "fullWidth" }) => {
             <>
               <div className="card-small-verc">
                 <div className="description">
-                  <h3 className="title">{content.title}</h3>
+                  <h3 className={classNames("title", isHover ? "hover" : "")}>
+                    {content.title}
+                  </h3>
                   <p className="contents_short">{content.contents_short}</p>
                 </div>
                 <div className="footer">
@@ -161,7 +132,12 @@ const Card = ({ content, type = "fullWidth" }) => {
       );
     case "small-hoz":
       return (
-        <div className="card-container small-hoz-card" onClick={onClickStory}>
+        <div
+          className="card-container small-hoz-card"
+          onClick={onClickStory}
+          onMouseMove={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
+        >
           <div className="thumbnail small-hoz">
             <img alt="thumbnail" src={thumbnail_url(content)} />
           </div>
@@ -169,7 +145,9 @@ const Card = ({ content, type = "fullWidth" }) => {
             <>
               <div className="card-small-hoz">
                 <div className="description">
-                  <h3 className="title">{content.title}</h3>
+                  <h3 className={classNames("title", isHover ? "hover" : "")}>
+                    {content.title}
+                  </h3>
                   <p className="contents_short">{content.contents_short}</p>
                 </div>
                 <div className="footer">

@@ -8,8 +8,8 @@ const Postman = () => {
   const [current, setCurrent] = useState([]);
 
   const extractMediaList = (contents) => {
-    //eslint-disable-next-line
     let regex =
+      //eslint-disable-next-line
       /\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\)/gi;
     var result = [];
     for (const match of contents.matchAll(regex)) {
