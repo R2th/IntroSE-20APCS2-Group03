@@ -113,7 +113,7 @@ const SetNewPassword = ({ setToken }) => {
           </div>
           <div className={styles.BottomText}>
             Back to{" "}
-            <a className={styles.BottomLink} href="/login">
+            <a className={styles.BottomLink} href="auth/login">
               LOG IN
             </a>{" "}
             page
