@@ -16,6 +16,49 @@ const crawlStory = async (req, res) => {
   }
 };
 
+const getAllStories = async (req, res) => {
+  try {
+    const limit = req.params.limit;
+    const stories = await Story.findAll({
+      limit: limit
+    });
+    if (!stories) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: "successful",
+      data: stories
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message
+    })
+  }
+}
+
+const getNewestStories = async (req, res) => {
+  try {
+    const limit = req.params.limit;
+    const stories = await Story.findAll({ 
+      order: [
+        ['createdAt', 'DESC']
+      ],
+      limit: limit
+    });
+    if (!stories) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: "successful",
+      data: stories
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message
+    })
+  }
+}
+
 const getStoryByStoryId = async (req, res) => {
   try {
     const story = await Story.findByPk(req.params.storyId);
@@ -253,6 +296,8 @@ const updateStoryView = async (req, res) => {
 };
 
 module.exports = {
+  getAllStories,
+  getNewestStories,
   getStoryByStoryId,
   getStoriesOfUser,
   createStory,

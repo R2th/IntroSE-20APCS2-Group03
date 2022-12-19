@@ -5,14 +5,10 @@ const isAdmin = require("../../middleware/isAdmin");
 const storyController = require("../../controllers/story.controller");
 const { upload } = require("../../controllers/upload.controller");
 
-<<<<<<< HEAD
-
-
 // Crawl the story
-
-=======
+router.get("/story/:limit", storyController.getAllStories);
+router.get("/story/newest/:limit", storyController.getNewestStories);
 router.get("/story/me", verifyToken, storyController.getStoriesOfUser);
->>>>>>> 730d2727 (story crud)
 router.post("/story/crawl", upload.single("story"), storyController.crawlStory);
 router.put("/story/:storyId", verifyToken, storyController.updateStory);
 router.delete("/story/", verifyToken, storyController.deleteStory);
