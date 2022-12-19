@@ -31,7 +31,7 @@ const Home = () => {
     <div className="homepage">
       <div style={{ backgroundColor: "white", marginLeft: 100 }}>
         <div className="background"></div>
-        <div className="white-bg"></div>
+        {/* <div className="white-bg"></div> */}
         <div className="center-box">
           <div className="contents">
             <div className="section">

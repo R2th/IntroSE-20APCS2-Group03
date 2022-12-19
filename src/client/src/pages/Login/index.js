@@ -124,7 +124,7 @@ const Login = () => {
               )}
             </div>
             <p className={styles.forgotPassword}>
-              <a href="/forgot_password">Forgot password?</a>
+              <a href="/auth/forgot_password">Forgot password?</a>
             </p>
             <div className={styles.login_options}>
               <div className={styles.login_button} onClick={onLogin}>
@@ -162,7 +162,7 @@ const Login = () => {
               </div>
               <div className={styles.BottomText}>
                 <span>New to BytesGo? </span>
-                <a className={styles.BottomLink} href="/signup">
+                <a className={styles.BottomLink} href="signup">
                   Sign up
                 </a>
               </div>

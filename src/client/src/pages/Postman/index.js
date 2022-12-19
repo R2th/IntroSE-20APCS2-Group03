@@ -8,9 +8,11 @@ const Postman = () => {
   const [current, setCurrent] = useState([]);
 
   const extractMediaList = (contents) => {
-    let regex = /\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\)/gi;
-    var result = []
-    for (const match of contents.matchAll(regex)){
+    //eslint-disable-next-line
+    let regex =
+      /\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\)/gi;
+    var result = [];
+    for (const match of contents.matchAll(regex)) {
       result.push(match[1]);
     }
     return result;
@@ -30,9 +32,9 @@ const Postman = () => {
       },
     ]);
 
-    const file = new File([data.contents], filename, {
-      type: "text/markdown",
-    });
+    // const file = new File([data.contents], filename, {
+    //   type: "text/markdown",
+    // });
 
     const mediaList = extractMediaList(data.contents);
 
@@ -76,7 +78,7 @@ const Postman = () => {
   };
 
   const onCrawlData = async () => {
-    let total = 0;
+    // let total = 0;
     let i = 152;
     const limit = 100;
     do {
@@ -88,10 +90,9 @@ const Postman = () => {
       resJson.data.forEach(async (data) => {
         await onDownloadContent(data);
       });
-      total = resJson.meta.pagination.total;
+      // total = resJson.meta.pagination.total;
       setCount(i * 100);
-    } // while (i * 100 < total);
-    while (0);
+    } while (0); // while (i * 100 < total);
   };
 
   return (

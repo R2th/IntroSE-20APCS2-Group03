@@ -34,7 +34,7 @@ const Navbar = () => {
       <div className={styles.container} id="nav-bar">
         <div
           className={styles.left}
-          style={prefix > 0 ? { width: prefix } : {}}
+          // style={prefix > 0 ? { width: prefix } : {}}
         >
           <a aria-label="Home" className={styles.homeBtn} href="/">
             <img
