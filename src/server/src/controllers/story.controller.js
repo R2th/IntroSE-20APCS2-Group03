@@ -11,7 +11,6 @@ const crawlStory = async (req, res) => {
       filename: "",
     });
   } catch (err) {
-    console.log(err);
     res.status(500).send({ error: err });
   }
 };
@@ -100,9 +99,9 @@ const getStoriesByCategory = async (req, res) => {};
 
 const createStory = async (req, res) => {
   try {
-    const contents = readContentsFromFile(req.body.title);
+    const contents = await fs.readFileSync(req.file.path, {encoding:'utf8', flag:'r'});
     const contentsShort = req.body.contentsShort;
-    const mediaList = extractMedia(contents);
+    const mediaList = await extractMedia(contents);
     const authorId = req.userId;
     const title = req.body.title;
     const tag = req.body.tag;
@@ -133,18 +132,10 @@ const createStory = async (req, res) => {
 
 const uploadImage = async () => {
   return null;
-};
-
-const readContentsFromFile = async (filename) => { 
-  fs.readFile(filename, 'utf8', function(err, data) {
-    if (err) throw err;
-    return data;
-  });
-  return filename;
-};
+};  
 
 const extractMedia = async (contents) => {
-  let regex = /(?:\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\((?<url>[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\))/gi;
+  let regex = /\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\)/gi;
   let result = [];
   for (const match of contents.matchAll(regex)){
     result.push(match[1]);
@@ -154,34 +145,18 @@ const extractMedia = async (contents) => {
 
 const updateStory = async (req, res) => {
   try {
-    const storyId = req.params.storyId;
-
     const story = await Story.findByPk(req.params.storyId);
 
     if (!story) {
       throw new Error();
     }
 
-    let contents = await readContentsFromFile(req.body.file);
-    if (!contents) contents = story.contents;
-
-    let contentsShort = req.body.contentsShort;
-    if (!contentsShort) contentsShort = story.contents_short;
-
-    let mediaList = await extractMedia(contents);
-    if (!mediaList) mediaList = story.media_list;
-
-    let authorId = req.userId;
-    if (!authorId) authorId = story.author_id;
-
-    let title = req.body.title;
-    if (!title) title = story.title;
-
-    let tag = req.body.tag;
-    if (!tag) tag = story.tag;
-
-    let isPremium = req.body.isPremium;
-    if (!isPremium) isPremium = story.isPremium;
+    const contents = await fs.readFileSync(req.file.path, {encoding:'utf8', flag:'r'});
+    const contentsShort = req.body.contentsShort;
+    const mediaList = await extractMedia(contents);
+    const title = req.body.title;
+    const tag = req.body.tag;
+    const isPremium = req.body.isPremium;
 
     story.set({
       contents: contents,

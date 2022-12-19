@@ -37,3 +37,8 @@ If docker failed to load metadata, run this
 ```
 rm  ~/.docker/config.json 
 ```
+
+If service did not wait for database to complete setting up before running, wait for db to finish running and run this
+```
+docker restart src-service-1
+```
