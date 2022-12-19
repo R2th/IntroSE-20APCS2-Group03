@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { thumbnail_url } from "utils/helpers";
 import styles from "./styles.module.scss";
+import Spinner from "components/Spinner";
 
 const Story = () => {
   const { slug } = useParams();
@@ -26,26 +27,30 @@ const Story = () => {
     <div className={styles.container}>
       <div className={styles.articlesAndSidebar}>
         <div className={styles.postCenter}>
-          <div
-            className={styles.goBack}
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            Go back
-          </div>
-          {post && (
-            <div className={styles.contentContainer}>
-              <div className={styles.header} />
-              <h1>{post.title}</h1>
-              <zero-md>
-                <script type="text/markdown">{post.contents}</script>
-              </zero-md>
-            </div>
+          {post.contents ? (
+            <>
+              <div
+                className={styles.goBack}
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                Go back
+              </div>
+              <div className={styles.contentContainer}>
+                <div className={styles.header} />
+                <h1>{post.title}</h1>
+                <zero-md>
+                  <script type="text/markdown">{post.contents}</script>
+                </zero-md>
+              </div>
+            </>
+          ) : (
+            <Spinner className={styles.spinnerFull} />
           )}
         </div>
-        {/* <Sidebar /> */}
       </div>
+      {/* <Sidebar /> */}
     </div>
   );
 };

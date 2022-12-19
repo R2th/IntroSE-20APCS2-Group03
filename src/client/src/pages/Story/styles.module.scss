@@ -23,7 +23,11 @@
         cursor: pointer;
         margin-right: 15px;
       }
-
+      .spinnerFull {
+        height: 100vh;
+        width: 100%;
+        flex: none;
+      }
       .contentContainer {
         max-width: 1000px;
         padding-right: 2rem;

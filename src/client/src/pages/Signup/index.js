@@ -292,7 +292,7 @@ const Signup = ({ setToken }) => {
           </div>
           <div className={styles.BottomText}>
             <span>Already have account?</span>
-            <a className={styles.BottomLink} href="/login">
+            <a className={styles.BottomLink} href="login">
               Log in
             </a>
           </div>
