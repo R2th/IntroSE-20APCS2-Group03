@@ -1,21 +1,19 @@
-import classNames from "classnames";
 import React, { useContext, useState } from "react";
-import { StylesContext } from "../../contexts/Styles/stylesContext";
 import { AuthContext } from "../../contexts/Auth/authContext";
 
 import Logo from "assets/svg/logo.svg";
 
-import styles from "./styles.module.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import { parseJwt } from "utils/helpers";
 import { md5 } from "utils/md5";
+import Menu from "../Menu";
+import styles from "./styles.module.scss";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { prefix } = useContext(StylesContext);
   const { token } = useContext(AuthContext);
 
   if (location.pathname.startsWith("/auth")) return null;
@@ -48,17 +46,7 @@ const Navbar = () => {
           </a>
         </div>
         <div className={styles.center}>
-          <div role="navigation" className={styles.filter}>
-            <button tabIndex={0}>
-              <span>Home</span>
-              <i
-                className={classNames(styles.icHome, "icon icon-home_fill")}
-              ></i>
-              <i
-                className={classNames(styles.caretDown, "icon icon-caret_down")}
-              ></i>
-            </button>
-          </div>
+          <Menu />
           <div className={styles.search}>
             <i className="icon icon-search"></i>
             <input
@@ -70,7 +58,7 @@ const Navbar = () => {
           </div>
           <div className={styles.icGroup}>
             <span className={styles.icTrending}>
-              <a href="/trending" aria-label="Trending">
+              <a href="/story/trending" aria-label="Trending">
                 <i className="icon icon-popular"></i>
               </a>
             </span>

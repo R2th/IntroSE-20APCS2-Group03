@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <div className="homepage">
       <div style={{ backgroundColor: "white", marginLeft: 100 }}>
-        <div className="background"></div>
+        <div className="background" />
         {/* <div className="white-bg"></div> */}
         <div className="center-box">
           <div className="contents">
@@ -73,7 +73,7 @@ const Home = () => {
                   <Card content={content} key={content.id} type="small-hoz" />
                 ))}
               </div>
-              <div className="hoz-line"></div>
+              <div className="hoz-line" />
             </div>
           </div>
           <Sidebar />

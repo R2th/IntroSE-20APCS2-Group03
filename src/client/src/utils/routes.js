@@ -15,23 +15,23 @@ import ProtectedRoute from "components/ProtectedRoute";
 export const AUTH_ROUTES = [
   {
     path: "login",
-    errorElement: <NotFoundPageError />,
     element: <Login />,
   },
   {
     path: "signup",
-    errorElement: <NotFoundPageError />,
     element: <Signup />,
   },
   {
     path: "forgot_password",
-    errorElement: <NotFoundPageError />,
     element: <ForgotPassword />,
   },
   {
     path: "send_messages",
-    errorElement: <NotFoundPageError />,
     element: <SendMessage />,
+  },
+  {
+    path: "set_password",
+    element: <SetNewPassword />,
   },
 ];
 
@@ -41,24 +41,30 @@ export const ROUTES = [
     element: <Home />,
   },
   {
-    path: "story/:slug",
-    element: <Story />,
-  },
-  {
-    path: "story/:slug/edit",
-    element: <div>check this</div>,
-  },
-  {
-    path: "trending",
-    element: <Trending />,
-  },
-  {
-    path: "set_password",
-    element: <SetNewPassword />,
+    path: "story",
+    errorElement: <NotFoundPageError />,
+    children: [
+      {
+        path: ":slug",
+        element: <Story />,
+      },
+      {
+        path: "edit",
+        element: <div>check this</div>,
+      },
+      {
+        path: "trending",
+        element: <Trending />,
+      },
+    ],
   },
   {
     path: "profile/:id_user",
-    element: <Profile />,
+    element: (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "postman",

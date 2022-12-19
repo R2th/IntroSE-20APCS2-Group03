@@ -6,7 +6,7 @@
     </path>
     <path
         d="M160 112C166.627 112 172 106.627 172 100C172 93.3726 166.627 88 160 88C153.373 88 148 93.3726 148 100C148 106.627 153.373 112 160 112Z"
-        fill="#74007A">
+        fill="#3b82f6">
         <animate attributeName="fill-opacity" begin="0s" dur="1.4s" values="0.5;1;0.5" calcMode="linear"
             repeatCount="indefinite" />
     </path>
@@ -17,7 +17,7 @@
     </path>
     <path
         d="M100 172C106.627 172 112 166.627 112 160C112 153.373 106.627 148 100 148C93.3726 148 88 153.373 88 160C88 166.627 93.3726 172 100 172Z"
-        fill="#74007A">
+        fill="#3b82f6">
         <animate attributeName="fill-opacity" begin="0.7s" dur="1.4s" values="0.5;1;0.5" calcMode="linear"
             repeatCount="indefinite" />
     </path>
@@ -28,7 +28,7 @@
     </path>
     <path
         d="M40 112C46.6274 112 52 106.627 52 100C52 93.3726 46.6274 88 40 88C33.3726 88 28 93.3726 28 100C28 106.627 33.3726 112 40 112Z"
-        fill="#74007A">
+        fill="#3b82f6">
         <animate attributeName="fill-opacity" begin="1.4s" dur="2.1s" values="0.5;1;0.5" calcMode="linear"
             repeatCount="indefinite" />
     </path>
@@ -39,7 +39,7 @@
     </path>
     <path
         d="M100 52C106.627 52 112 46.6274 112 40C112 33.3726 106.627 28 100 28C93.3726 28 88 33.3726 88 40C88 46.6274 93.3726 52 100 52Z"
-        fill="#74007A">
+        fill="#3b82f6">
         <animate attributeName="fill-opacity" begin="2.1s" dur="2.8s" values="0.5;1;0.5" calcMode="linear"
             repeatCount="indefinite" />
     </path>

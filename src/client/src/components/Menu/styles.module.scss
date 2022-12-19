@@ -1,0 +1,100 @@
+.navigation {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 36px;
+  position: relative;
+  min-width: 72px;
+  width: 270px;
+  button {
+    background-color: #fff;
+    bottom: 0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #1c1c1c;
+    height: 100%;
+    left: 0;
+    padding-left: 40px;
+    padding-right: 56px;
+    position: absolute;
+    text-align: left;
+    text-overflow: ellipsis;
+    top: 0;
+    white-space: nowrap;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+  }
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    display: inline;
+
+    h1 {
+      display: inline;
+    }
+  }
+  .icHome {
+    font-size: 20px;
+    height: 20px;
+    left: 10px;
+    margin-top: -10px;
+    max-height: 20px;
+    max-width: 20px;
+    position: absolute;
+    top: 50%;
+    width: 20px;
+  }
+  .caretDown {
+    margin-top: -10px;
+    pointer-events: none;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+  }
+  .menu {
+    padding-bottom: 16px;
+    background-color: #fff;
+    border-top-width: 1px;
+    border: 1px solid #edeff1;
+    border-top: 0 solid #edeff1;
+    border-radius: 0 0 4px 4px;
+    box-sizing: border-box;
+    color: #1c1c1c;
+    left: -1px;
+    margin-top: -1px;
+    max-height: 482px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 270px;
+    box-shadow: 0 0px 0px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #e9ecef;
+    }
+
+    .filter {
+      background-color: #edeff1;
+      border: 1px solid #edeff1;
+      color: #1c1c1c;
+      height: 30px;
+      margin: 16px 16px 0;
+      outline: none;
+      padding: 0 6px;
+      box-sizing: border-box;
+      width: calc(100% - 32px);
+      border-radius: 2px;
+      &:hover {
+        background-color: #fff;
+        border: 1px solid #3b82f6;
+      }
+    }
+  }
+}

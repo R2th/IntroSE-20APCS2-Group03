@@ -37,6 +37,9 @@
           justify-content: space-between;
           .name {
             font-size: 16px;
+            &:hover {
+              color: #3b82f6;
+            }
           }
           .time {
             display: flex;
@@ -78,6 +81,7 @@
     padding: 10px;
     img {
       height: 100%;
+      max-height: 200px;
       width: 200px;
       object-fit: scale-down;
       object-position: center center;
