@@ -138,13 +138,13 @@ const SetNewPassword = ({ setToken }) => {
               <div className={styles.send_message} onClick={onSetNewPassword}>
                 CHANGE
               </div>
-              <div className={styles.BottomText}>
-                Back to{" "}
-                <a className={styles.BottomLink} href="/login">
-                  LOG IN
-                </a>{" "}
-                page
-              </div>
+            </div>
+            <div className={styles.BottomText}>
+              Back to{" "}
+              <a className={styles.BottomLink} href="/login">
+                LOG IN
+              </a>{" "}
+              page
             </div>
           </div>
         </div>
