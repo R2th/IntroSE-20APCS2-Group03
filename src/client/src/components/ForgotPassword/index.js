@@ -64,13 +64,13 @@ const ForgotPassword = ({ setToken }) => {
               <div className={styles.send_message} onClick={onForgotPassword}>
                 SUBMIT
               </div>
-              <div className={styles.BottomText}>
-                Back to{" "}
-                <a className={styles.BottomLink} href="/login">
-                  LOG IN
-                </a>{" "}
-                page
-              </div>
+            </div>
+            <div className={styles.BottomText}>
+              Back to{" "}
+              <a className={styles.BottomLink} href="login">
+                LOG IN
+              </a>{" "}
+              page
             </div>
           </div>
         </div>
