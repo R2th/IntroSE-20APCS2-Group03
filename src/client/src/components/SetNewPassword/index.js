@@ -62,63 +62,92 @@ const SetNewPassword = ({ setToken }) => {
   }, []);
 
   return (
-    <div className={styles.form}>
-      <div className={styles.art}>
-        <div>
-          <img src={Astronaut} alt="astronaut" />
-          <p>Welcome to BytesGo</p>
+    <div className={styles.container}>
+      <div className={styles.background}></div>
+      <div className={styles.form}>
+        <div className={styles.art}>
+          <div>
+            <img src={Astronaut} alt="astronaut" />
+            <p>Welcome to BytesGo</p>
+          </div>
         </div>
-      </div>
-      <div className={styles.frame}>
-        <p>Set New Password</p>
-        <div className={styles.frame_set_pass}>
-          <div>
-            <input
-              value={newPassword.content}
-              onChange={onChangePassword}
-              placeholder="Create new password"
-              className={styles.inputField}
-              type={newPassword.isHide ? "text" : "password"}
-            />
-            <i
-              class={
-                newPassword.isHide
-                  ? "fa fa-eye style.icon"
-                  : "fa fa-eye-slash style.icon"
-              }
-              aria-hidden="true"
-              onClick={onChangeHidePassword}
-            ></i>
-          </div>
-          <p className={styles.validationText}>{errorForm.newPassword}</p>
-          <div>
-            <input
-              value={confirmPassword.content}
-              onChange={onChangeConfirmPassword}
-              placeholder="Confirm new password"
-              className={styles.inputField}
-              type={confirmPassword.isHide ? "text" : "password"}
-            />
-            <i
-              class={
-                confirmPassword.isHide
-                  ? "fa fa-eye style.icon"
-                  : "fa fa-eye-slash style.icon"
-              }
-              aria-hidden="true"
-              onClick={onChangeHideConfirmPassword}
-            ></i>
-          </div>
-          <p className={styles.validationText}>{errorForm.confirmPassword}</p>
-          <div className={styles.send_message} onClick={onSetNewPassword}>
-            CHANGE
-          </div>
-          <div className={styles.BottomText}>
-            Back to{" "}
-            <a className={styles.BottomLink} href="/login">
-              LOG IN
-            </a>{" "}
-            page
+        <div className={styles.frame}>
+          <div className={styles.dump}>
+            <p>Set New Password</p>
+            <div className={styles.frame_set_pass}>
+              <div>
+                <div style={{ margin: "auto" }}>
+                  <i
+                    className="fa fa-lock styles.icon"
+                    aria-hidden="true"
+                    style={{ left: 3 }}
+                  />
+                  <input
+                    value={newPassword.content}
+                    onChange={onChangePassword}
+                    placeholder="Create new password"
+                    className={styles.inputField}
+                    type={newPassword.isHide ? "text" : "password"}
+                  />
+                  <i
+                    class={newPassword.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
+                    style={{
+                      right: 15,
+                      cursor: "pointer",
+                    }}
+                    aria-hidden="true"
+                    onClick={onChangeHidePassword}
+                  ></i>
+                </div>
+              </div>
+              {errorForm.newPassword && (
+                <span className={styles.validationText}>
+                  {errorForm.newPassword}
+                </span>
+              )}
+              <div>
+                <div style={{ margin: "auto" }}>
+                  <i
+                    className="fa fa-lock styles.icon"
+                    aria-hidden="true"
+                    style={{ left: 3 }}
+                  />
+                  <input
+                    value={confirmPassword.content}
+                    onChange={onChangeConfirmPassword}
+                    placeholder="Confirm new password"
+                    className={styles.inputField}
+                    type={confirmPassword.isHide ? "text" : "password"}
+                  />
+                  <i
+                    class={
+                      confirmPassword.isHide ? "fa fa-eye" : "fa fa-eye-slash"
+                    }
+                    style={{
+                      right: 15,
+                      cursor: "pointer",
+                    }}
+                    aria-hidden="true"
+                    onClick={onChangeHideConfirmPassword}
+                  ></i>
+                </div>
+              </div>
+              {errorForm.confirmPassword && (
+                <span className={styles.validationText}>
+                  {errorForm.confirmPassword}
+                </span>
+              )}
+              <div className={styles.send_message} onClick={onSetNewPassword}>
+                CHANGE
+              </div>
+              <div className={styles.BottomText}>
+                Back to{" "}
+                <a className={styles.BottomLink} href="/login">
+                  LOG IN
+                </a>{" "}
+                page
+              </div>
+            </div>
           </div>
         </div>
       </div>

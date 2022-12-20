@@ -194,7 +194,11 @@ const Signup = ({ setToken }) => {
                 </span>
               )}
               <div>
-                <i className="fa fa-lock styles.icon" aria-hidden="true"></i>
+                <i
+                  className="fa fa-lock styles.icon"
+                  aria-hidden="true"
+                  style={{ left: 3 }}
+                />
                 <input
                   value={password.content}
                   type={password.isHide ? "text" : "password"}
@@ -220,7 +224,11 @@ const Signup = ({ setToken }) => {
 
               <div>
                 <div>
-                  <i className="fa fa-lock styles.icon" aria-hidden="true"></i>
+                  <i
+                    className="fa fa-lock styles.icon"
+                    aria-hidden="true"
+                    style={{ left: 3 }}
+                  />
                   <input
                     value={confirmPassword.content}
                     type={confirmPassword.isHide ? "text" : "password"}

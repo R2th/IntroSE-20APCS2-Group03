@@ -94,7 +94,11 @@ const Login = () => {
               )}
               <div>
                 <div style={{ margin: "auto" }}>
-                  <i className="fa fa-lock styles.icon" aria-hidden="true" />
+                  <i
+                    className="fa fa-lock styles.icon"
+                    aria-hidden="true"
+                    style={{ left: 3 }}
+                  />
                   <input
                     value={password.content}
                     type={password.isHide ? "text" : "password"}

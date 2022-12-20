@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 import Astronaut from "assets/astronaut.svg";
 
 const SendMessage = ({ setToken }) => {
-  const Email_Phone = "BytesGo@gmail.com";
+  const Email_Phone = "BytesGo_SE_Project@gmail.com";
   const [inputCode, setInputCode] = React.useState("");
   const [errorForm, setErrorForm] = React.useState({});
   const [CodeVerification, setCodeVerification] = React.useState("123456");
@@ -57,38 +57,54 @@ const SendMessage = ({ setToken }) => {
   }, []);
 
   return (
-    <div className={styles.form}>
-      <div className={styles.art}>
-        <div>
-          <img src={Astronaut} alt="astronaut" />
-          <p>Welcome to BytesGo</p>
-        </div>
-      </div>
-      <div className={styles.frame}>
-        <div className={styles.title}>Enter the Security Code</div>
-        <div className={styles.input_code}>
+    <div className={styles.container}>
+      <div className={styles.background}></div>
+      <div className={styles.form}>
+        <div className={styles.art}>
           <div>
-            <div>
-              Please check the code in your email or phone number. This code
-              consists of 6 numbers.{" "}
-            </div>{" "}
-            <div> We sent you the code to: {Email_Phone}</div>
-            <input
-              value={inputCode}
-              onChange={onChangeInputCode}
-              placeholder="Verification Code"
-              className={styles.input_field}
-            />
+            <img src={Astronaut} alt="astronaut" />
+            <p>Welcome to BytesGo</p>
           </div>
-          <p className={styles.validationText}>{errorForm.inputCode}</p>
         </div>
-        <div className={styles.send_button} onClick={onForgotPassword}>
-          SEND
-        </div>
-        <div className={styles.BottomText}>
-          Can not get the message?
-          <div className={styles.BottomLink} onClick={onSetCodeVerification}>
-            Try again
+        <div className={styles.frame}>
+          <div className={styles.dump}>
+            <p>Security Code</p>
+            <div className={styles.title}> We sent you the code to</div>
+            <div
+              className={styles.title}
+              style={{ color: "red", fontSize: 18 }}
+            >
+              {" "}
+              <u>{Email_Phone}</u>
+            </div>
+            <div className={styles.input_code}>
+              <div>
+                <input
+                  value={inputCode}
+                  onChange={onChangeInputCode}
+                  placeholder="Verification Code"
+                  className={styles.inputField}
+                />
+              </div>
+              {errorForm.inputCode && (
+                <span className={styles.validationText}>
+                  {errorForm.inputCode}
+                </span>
+              )}
+            </div>
+
+            <div className={styles.send_button} onClick={onForgotPassword}>
+              SEND
+            </div>
+            <div className={styles.BottomText}>
+              Can not get the message?
+              <div
+                className={styles.BottomLink}
+                onClick={onSetCodeVerification}
+              >
+                Try again
+              </div>
+            </div>
           </div>
         </div>
       </div>
