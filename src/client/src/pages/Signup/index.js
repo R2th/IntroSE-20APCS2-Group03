@@ -339,20 +339,6 @@ const Signup = ({ setToken }) => {
                 </a>
               </div>
             </div>
-            <div className={styles.oAuth2Btn}>
-              <i className="fa fa-gitlab"></i>
-              <p>Gitlab</p>
-            </div>
-            <div className={styles.oAuth2Btn}>
-              <i className="fa fa-facebook"></i>
-              <p>Facebook</p>
-            </div>
-          </div>
-          <div className={styles.BottomText}>
-            <span>Already have account?</span>
-            <a className={styles.BottomLink} href="login">
-              Log in
-            </a>
           </div>
         </div>
       </div>

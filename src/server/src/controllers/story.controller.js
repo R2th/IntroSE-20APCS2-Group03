@@ -1,7 +1,6 @@
 const db = require("../db/index");
 const fs = require("fs");
 const Story = db.story;
-const User = db.user;
 const Reaction = db.reaction;
 
 const crawlStory = async (req, res) => {
@@ -279,6 +278,11 @@ module.exports = {
   deleteStory,
   crawlStory,
   voteStory,
+  updateStoryView,
+  voteStory,
+  crawlStory,
+  getStoryByStoryId,
+  createStory,
   updateStoryView,
   voteStory,
 };
