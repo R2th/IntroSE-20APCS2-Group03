@@ -22,23 +22,8 @@ const ForgotPassword = ({ setToken }) => {
     const err = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     const regexPhone = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
-    // if (phone_or_mail.length < 10 && parseInt(phone_or_mail) > 0) {
-    //   err.phone_or_mail = "Invalid phone number";
-    //   isSend = false;
-    // } else {
-    //   if (!phone_or_mail) {
-    //     err.phone_or_mail = "Please enter your email";
-    //     isSend = false;
-    //   } else if (
-    //     !regex.test(phone_or_mail) &&
-    //     !regexPhone.test(phone_or_mail)
-    //   ) {
-    //     err.phone_or_mail = "Invalid Email";
-    //   }
-    //   isSend = false;
-    // }
 
-    if (!regex.test(phone_or_mail) || !regexPhone.test(phone_or_mail)) {
+    if (!regex.test(phone_or_mail) && !regexPhone.test(phone_or_mail)) {
       err.phone_or_mail = "Invalid Email or Phone Number";
     }
     return err;
@@ -50,34 +35,43 @@ const ForgotPassword = ({ setToken }) => {
   }, []);
 
   return (
-    <div className={styles.form}>
-      <div className={styles.art}>
-        <div>
-          <img src={Astronaut} alt="astronaut" />
-          <p>Welcome to BytesGo</p>
-        </div>
-      </div>
-      <div className={styles.frame}>
-        <p>Forgot Password</p>
-        <div className={styles.frame_phone_mail}>
+    <div className={styles.container}>
+      <div className={styles.background}></div>
+      <div className={styles.form}>
+        <div className={styles.art}>
           <div>
-            <input
-              value={phone_or_mail}
-              onChange={onChangeMail}
-              placeholder="Phone number or Email"
-              className={styles.inputField}
-            />
-            <p className={styles.validationText}>{errorForm.phone_or_mail}</p>
+            <img src={Astronaut} alt="astronaut" />
+            <p>Welcome to BytesGo</p>
           </div>
-          <div className={styles.send_message} onClick={onForgotPassword}>
-            SUBMIT
-          </div>
-          <div className={styles.BottomText}>
-            Back to{" "}
-            <a className={styles.BottomLink} href="login">
-              LOG IN
-            </a>{" "}
-            page
+        </div>
+        <div className={styles.frame}>
+          <div className={styles.dump}>
+            <p>Forgot Password</p>
+            <div className={styles.frame_phone_mail}>
+              <div>
+                <input
+                  value={phone_or_mail}
+                  onChange={onChangeMail}
+                  placeholder="Phone number or Email"
+                  className={styles.inputField}
+                />
+              </div>
+              {errorForm.phone_or_mail && (
+                <span className={styles.validationText}>
+                  {errorForm.phone_or_mail}
+                </span>
+              )}
+              <div className={styles.send_message} onClick={onForgotPassword}>
+                SUBMIT
+              </div>
+            </div>
+            <div className={styles.BottomText}>
+              Back to{" "}
+              <a className={styles.BottomLink} href="login">
+                LOG IN
+              </a>{" "}
+              page
+            </div>
           </div>
         </div>
       </div>
