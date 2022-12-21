@@ -8,7 +8,7 @@ import './small_verc.style.scss';
 import classNames from 'classnames';
 
 // eslint-disable-next-line
-import { fullPathImage, thumbnail_url } from 'utils/helpers';
+import { fullPathImage, thumbnailUrl } from 'utils/helpers';
 import MediumCard from './CardMedium';
 
 function Card({ content, type = 'fullWidth' }) {
@@ -80,7 +80,7 @@ function Card({ content, type = 'fullWidth' }) {
                 </div>
               </div>
               <div className="thumbnail">
-                <img alt="thumbnail" src={thumbnail_url(content)} />
+                <img alt="thumbnail" src={thumbnailUrl(content)} />
               </div>
             </>
           )}
@@ -93,7 +93,7 @@ function Card({ content, type = 'fullWidth' }) {
       return (
         <div className="card-container small-verc-card" onClick={onClickStory} aria-hidden="true">
           <div className="thumbnail small-verc">
-            <img alt="thumbnail" src={thumbnail_url(content)} />
+            <img alt="thumbnail" src={thumbnailUrl(content)} />
           </div>
           {content && (
             <div className="card-small-verc">
@@ -129,7 +129,7 @@ function Card({ content, type = 'fullWidth' }) {
           aria-hidden="true"
         >
           <div className="thumbnail small-hoz">
-            <img alt="thumbnail" src={thumbnail_url(content)} />
+            <img alt="thumbnail" src={thumbnailUrl(content)} />
           </div>
           {content && (
             <div className="card-small-hoz">

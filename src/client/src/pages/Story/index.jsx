@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { useParams, useNavigate } from 'react-router-dom';
 // eslint-disable-next-line
-import { thumbnail_url } from 'utils/helpers';
+import { thumbnailUrl } from 'utils/helpers';
 // eslint-disable-next-line
 import Spinner from 'components/Spinner';
 import useFetch from '../../hooks/useFetch';
@@ -18,7 +18,7 @@ function Story() {
 
   React.useEffect(() => {
     const html = document.querySelector('html');
-    html.style.setProperty('--featured-img', `url("${thumbnail_url(post)}")`);
+    html.style.setProperty('--featured-img', `url("${thumbnailUrl(post)}")`);
     html.style.setProperty('--bg-blend-mode', 'multiply');
     html.style.setProperty('background-size', '120% 2000px, 100% auto');
   }, [post]);
