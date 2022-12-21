@@ -1,14 +1,15 @@
 import { API_ENDPOINT } from './const';
+// eslint-disable-next-line
+import DefaultThumbnailImage from "assets/png/default.png"
 
-export const buildPath = (...args) => args
-  .map((part, i) => {
-    if (i === 0) {
-      // eslint-disable-next-line
-        return part.trim().replace(/[\/]*$/g, '');
-    }
+export const buildPath = (...args) => args.map((part, i) => {
+  if (i === 0) {
     // eslint-disable-next-line
+        return part.trim().replace(/[\/]*$/g, '');
+  }
+  // eslint-disable-next-line
       return part.trim().replace(/(^[\/]*|[\/]*$)/g, '');
-  })
+})
   .filter((x) => x.length)
   .join('/');
 
@@ -30,7 +31,7 @@ export const exportFile = (data, filename) => {
   element.click();
 };
 
-export const fullPathAPI = (path) => bypassCORSUrl(buildPath(API_ENDPOINT, path));
+export const fullPathAPI = (path) => bypassCORSUrl(buildPath(API_ENDPOINT, path || ''));
 
 export const fullPathImage = (user) => {
   if (user && user.data.avatar) return `https://images.viblo.asia/avatar/${user.data.avatar}`;
@@ -38,7 +39,7 @@ export const fullPathImage = (user) => {
 };
 
 export const thumbnailUrl = (content) => {
-  if (!content.slug) return 'https://miro.medium.com/fit/c/112/112/1*vZJLfVrLT4u_VY1zmAr1_A.png';
+  if (!content.slug) return DefaultThumbnailImage;
   if (content.thumbnail_url) {
     return content.thumbnail_url;
   }

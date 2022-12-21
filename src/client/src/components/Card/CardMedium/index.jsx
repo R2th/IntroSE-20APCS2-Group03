@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
-import './styles.scss';
 import classNames from 'classnames';
+import './styles.scss';
 
 // eslint-disable-next-line
-import { fullPathAPI, thumbnailUrl } from 'utils/helpers';
+import { fullPathImage, thumbnailUrl } from 'utils/helpers';
 
 function MediumCard({ content }) {
   const [isHover, setIsHover] = useState(false);
@@ -34,7 +35,7 @@ function MediumCard({ content }) {
             <p className="contents_short">{content.contents_short}</p>
           </div>
           <div className="footer">
-            <img alt="avatar" className="avatar" src={fullPathAPI(content.user)} />
+            <img alt="avatar" className="avatar" src={fullPathImage(content.user)} />
             <div className="title">
               <div className="name">
                 <span>
