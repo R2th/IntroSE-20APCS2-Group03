@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define(
-    "comment",
+    'comment',
     {
       comment_id: {
         type: DataTypes.INTEGER,
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       // freezeTableName: true,
       // timestamps: true,
-    }
+    },
   );
 
   return Comment;

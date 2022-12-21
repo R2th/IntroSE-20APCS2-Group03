@@ -1,10 +1,10 @@
-const db = require("../db/index");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const { Op } = require('sequelize');
+const db = require('../db/index');
+
 const User = db.user;
 const Role = db.role;
-
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const { Op } = require("sequelize");
 
 exports.signup = async (req, res) => {
   User.create({
@@ -26,20 +26,16 @@ exports.signup = async (req, res) => {
             },
           },
         }).then((roles) => {
-          user.setRoles(roles).then(() =>
-            res.status(200).send({
-              message: "User register successfully!",
-              username: req.body.username,
-            })
-          );
+          user.setRoles(roles).then(() => res.status(200).send({
+            message: 'User register successfully!',
+            username: req.body.username,
+          }));
         });
       } else {
-        user.setRoles([1]).then(() =>
-          res.status(200).send({
-            message: "User register successfully!",
-            username: req.body.username,
-          })
-        );
+        user.setRoles([1]).then(() => res.status(200).send({
+          message: 'User register successfully!',
+          username: req.body.username,
+        }));
       }
     })
     .catch((err) => {
@@ -55,22 +51,22 @@ exports.login = async (req, res) => {
   })
     .then(async (user) => {
       if (!user) {
-        return res.status(404).send({ message: "User not found." });
+        res.status(404).send({ message: 'User not found.' });
       }
 
-      var isMatched = await bcrypt.compare(req.body.password, user.password);
+      const isMatched = await bcrypt.compare(req.body.password, user.password);
       if (!isMatched) {
-        return res.status(401).send({
+        res.status(401).send({
           token: null,
-          message: "Wrong password!",
+          message: 'Wrong password!',
         });
       }
 
-      var token = jwt.sign({ username: user.username }, "bytesgotoken", {
-        expiresIn: 86400, //24h
+      const token = jwt.sign({ username: user.username }, 'bytesgotoken', {
+        expiresIn: 86400, // 24h
       });
 
-      var userRoles = [];
+      const userRoles = [];
       user.getRoles().then((roles) => {
         roles.forEach((role) => {
           userRoles.push(role.roleName.toUpperCase());
@@ -84,7 +80,7 @@ exports.login = async (req, res) => {
         first_name: user.first_name,
         last_name: user.last_name,
         roles: userRoles,
-        token: token,
+        token,
       });
     })
     .catch((err) => {

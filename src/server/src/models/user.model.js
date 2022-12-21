@@ -1,58 +1,61 @@
-module.exports = (sequelize, DataTypes) =>{
-    const User = sequelize.define("user",{
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define(
+    'user',
+    {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      email:{
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate:{
-            isEmail: true
-        }
+        validate: {
+          isEmail: true,
+        },
       },
-      password:{
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      first_name:{
+      password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      last_name:{
+      first_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      avatar:{
-        type: DataTypes.STRING
+      last_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
-      bio:{
-        type: DataTypes.STRING
+      avatar: {
+        type: DataTypes.STRING,
       },
-      isActivate:{
+      bio: {
+        type: DataTypes.STRING,
+      },
+      isActivate: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true
+        defaultValue: true,
       },
-      isPremium:{
+      isPremium: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
       },
-      createdAt:{
-        type: DataTypes.DATE
+      createdAt: {
+        type: DataTypes.DATE,
       },
-      updatedAt:{
-        type: DataTypes.DATE
-      }
+      updatedAt: {
+        type: DataTypes.DATE,
+      },
     },
     {
-      // freezeTableName: true,
-      // timestamps: true,
-    });
+    // freezeTableName: true,
+    // timestamps: true,
+    },
+  );
 
   return User;
-}
+};

@@ -1,31 +1,33 @@
 const jwt = require('jsonwebtoken');
-const db = require("../db/index");
+const db = require('../db/index');
+
 const User = db.user;
 
-verifyToken = async (req, res, next) =>{
-    var token = req.header('Authorization');
-    if(!token){
-        return res.status(403).send({
-            message: "No token provided!"
-        });
-    }
-    token = token.replace('Bearer ','');
+const verifyToken = async (req, res, next) => {
+  const header = req.header('Authorization');
+  if (!header) {
+    // WHAT THE FUCK YOU DOING IN HERE ???
+    // use res.redirect() instead
+    // res.status(403).send({
+    //   message: 'No token provided!',
+    // });
+  }
+  const token = header.replace('Bearer ', '');
 
-    jwt.verify(token, 'bytesgotoken', async (err, decoded) =>{
-        if(err){
-            return res.status(401).send({
-                message: "Unauthorized!"
-            });
-        }
-        else{
-            const user = await User.findOne({
-                where: {username: decoded.username}
-            });
-            req.userId = user.id;
-            next();
-            return;
-        }
+  jwt.verify(token, 'bytesgotoken', async (err, decoded) => {
+    if (err) {
+      // JUST LIKE IN ABOVE PROBLEM
+      //   res.status(401).send({
+      //     message: 'Unauthorized!',
+      //   });
+    }
+
+    const user = await User.findOne({
+      where: { username: decoded.username },
     });
-}
+    req.userId = user.id;
+    next();
+  });
+};
 
 module.exports = verifyToken;

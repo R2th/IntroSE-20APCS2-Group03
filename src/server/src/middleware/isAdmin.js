@@ -1,26 +1,24 @@
-const db = require('../db/index')
-const User = db.user
+const db = require('../db/index');
 
-isAdmin = (req, res, next) =>{
-    User.findByPk(req.userId)
-    .then(user =>{
-        user.getRoles()
-        .then(roles =>{
-            for(let i=0; i < roles.length; i++){
-                if(roles[i] === "admin"){
-                    next();
-                    return;
-                }
+const User = db.user;
+
+const isAdmin = (req, res, next) => {
+  User.findByPk(req.userId)
+    .then((user) => {
+      user.getRoles()
+        .then((roles) => {
+          roles.forEach((role) => {
+            if (role === 'admin') {
+              next();
             }
-            
-            res.status(403).send({
-                message: "Admin role is required"
-            });
-            return;
+          });
+          res.status(403).send({
+            message: 'Admin role is required',
+          });
         })
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err))
-}
+    .catch((err) => console.log(err));
+};
 
-module.exports = isAdmin
+module.exports = isAdmin;

@@ -1,6 +1,5 @@
-const dotEnv = require("dotenv");
-const Sequelize = require("sequelize");
-const chalk = require("chalk");
+const dotEnv = require('dotenv');
+const Sequelize = require('sequelize');
 
 dotEnv.config();
 
@@ -26,8 +25,8 @@ module.exports.sequelize = new Sequelize(
   {
     host: process.env.PG_HOST,
     port: process.env.PG_PORT,
-    dialect: "postgres",
+    dialect: 'postgres',
     // logging: (msg) => console.log(chalk.yellow(msg), "\n"),
     logging: false,
-  }
+  },
 );

@@ -1,16 +1,13 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("./database");
-const dotEnv = require("dotenv");
-const chalk = require("chalk");
-const bcrypt = require("bcryptjs");
+const { DataTypes } = require('sequelize');
+const dotEnv = require('dotenv');
+const chalk = require('chalk');
+const { sequelize } = require('./database');
 
 dotEnv.config();
 
 sequelize
   .authenticate()
-  .then(() =>
-    console.log(chalk.green(`[DATABASE] "${process.env.PG_DB}" is connected`))
-  )
+  .then(() => console.log(chalk.green(`[DATABASE] "${process.env.PG_DB}" is connected`)))
   .catch((err) => console.log(err));
 
 const db = {};
@@ -26,47 +23,47 @@ db.reaction = require('../models/reaction.model')(sequelize, DataTypes);
 db.comment = require('../models/comment.model')(sequelize, DataTypes);
 
 db.role.belongsToMany(db.user, {
-  through: "users_roles",
-  foreignKey: "roleId",
-  otherKey: "userId"
-})
+  through: 'users_roles',
+  foreignKey: 'roleId',
+  otherKey: 'userId',
+});
 
 db.user.belongsToMany(db.role, {
-  through: "users_roles",
-  foreignKey: "userId",
-  otherKey: "roleId"
-})
+  through: 'users_roles',
+  foreignKey: 'userId',
+  otherKey: 'roleId',
+});
 
 db.story.belongsTo(db.user, {
   targetKey: 'id',
-  foreignKey: 'author_id' 
-})
+  foreignKey: 'author_id',
+});
 
 db.draft.belongsTo(db.user, {
   targetKey: 'id',
-  foreignKey: 'author_id' 
-})
+  foreignKey: 'author_id',
+});
 
 db.reaction.belongsTo(db.user, {
   targetKey: 'id',
-  foreignKey: 'user_id' 
-})
+  foreignKey: 'user_id',
+});
 
 db.reaction.belongsTo(db.story, {
   targetKey: 'id',
-  foreignKey: 'story_id'
-})
+  foreignKey: 'story_id',
+});
 
 db.comment.belongsTo(db.user, {
   targetKey: 'id',
-  foreignKey: 'user_id' 
-})
+  foreignKey: 'user_id',
+});
 
 db.comment.belongsTo(db.story, {
   targetKey: 'id',
-  foreignKey: 'story_id'
-})
+  foreignKey: 'story_id',
+});
 
-db.ROLES = ['user', 'admin']
+db.ROLES = ['user', 'admin'];
 
 module.exports = db;
