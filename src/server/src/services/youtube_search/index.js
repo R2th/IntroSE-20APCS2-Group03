@@ -1,36 +1,37 @@
-const axios = require("axios");
-const youtubeEndpoint = `https://www.youtube.com`;
+/*eslint-disable*/
+const axios = require('axios');
+
+const youtubeEndpoint = 'https://www.youtube.com';
 
 const GetYoutubeInitData = async (url) => {
-  var initdata = await {};
-  var apiToken = await null;
-  var context = await null;
+  let initdata = await {};
+  let apiToken = await null;
+  let context = await null;
   try {
     const page = await axios.get(encodeURI(url));
-    const ytInitData = await page.data.split("var ytInitialData =");
+    const ytInitData = await page.data.split('var ytInitialData =');
     if (ytInitData && ytInitData.length > 1) {
-      const data = await ytInitData[1].split("</script>")[0].slice(0, -1);
+      const data = await ytInitData[1].split('</script>')[0].slice(0, -1);
 
-      if (page.data.split("innertubeApiKey").length > 0) {
+      if (page.data.split('innertubeApiKey').length > 0) {
         apiToken = await page.data
-          .split("innertubeApiKey")[1]
+          .split('innertubeApiKey')[1]
           .trim()
-          .split(",")[0]
+          .split(',')[0]
           .split('"')[2];
       }
 
-      if (page.data.split("INNERTUBE_CONTEXT").length > 0) {
+      if (page.data.split('INNERTUBE_CONTEXT').length > 0) {
         context = await JSON.parse(
-          page.data.split("INNERTUBE_CONTEXT")[1].trim().slice(2, -2)
+          page.data.split('INNERTUBE_CONTEXT')[1].trim().slice(2, -2),
         );
       }
 
       initdata = await JSON.parse(data);
       return await Promise.resolve({ initdata, apiToken, context });
-    } else {
-      console.error("cannot_get_init_data");
-      return await Promise.reject("cannot_get_init_data");
     }
+    console.error('cannot_get_init_data');
+    return await Promise.reject('cannot_get_init_data');
   } catch (ex) {
     await console.error(ex);
     return await Promise.reject(ex);
@@ -48,26 +49,25 @@ const GetData = async (keyword, withPlaylist = false, limit = 0) => {
 
     let contToken = await {};
 
-    let items = await [];
+    const items = await [];
 
     await sectionListRenderer.contents.forEach((content) => {
       if (content.continuationItemRenderer) {
-        contToken =
-          content.continuationItemRenderer.continuationEndpoint
-            .continuationCommand.token;
+        contToken = content.continuationItemRenderer.continuationEndpoint
+          .continuationCommand.token;
       } else if (content.itemSectionRenderer) {
         content.itemSectionRenderer.contents.forEach((item) => {
           if (item.channelRenderer) {
-            let channelRenderer = item.channelRenderer;
+            const { channelRenderer } = item;
             items.push({
               id: channelRenderer.channelId,
-              type: "channel",
+              type: 'channel',
               thumbnail: channelRenderer.thumbnail,
               title: channelRenderer.title.simpleText,
             });
           } else {
-            let videoRender = item.videoRenderer;
-            let playListRender = item.playlistRenderer;
+            const videoRender = item.videoRenderer;
+            const playListRender = item.playlistRenderer;
 
             if (videoRender && videoRender.videoId) {
               items.push(VideoRender(item));
@@ -76,7 +76,7 @@ const GetData = async (keyword, withPlaylist = false, limit = 0) => {
               if (playListRender && playListRender.playlistId) {
                 items.push({
                   id: playListRender.playlistId,
-                  type: "playlist",
+                  type: 'playlist',
                   thumbnail: playListRender.thumbnails,
                   title: playListRender.title.simpleText,
                   length: playListRender.videoCount,
@@ -92,11 +92,11 @@ const GetData = async (keyword, withPlaylist = false, limit = 0) => {
     });
     const apiToken = await page.apiToken;
     const context = await page.context;
-    const nextPageContext = await { context: context, continuation: contToken };
+    const nextPageContext = await { context, continuation: contToken };
     const itemsResult = limit != 0 ? items.slice(0, limit) : items;
     return await Promise.resolve({
       items: itemsResult,
-      nextPage: { nextPageToken: apiToken, nextPageContext: nextPageContext },
+      nextPage: { nextPageToken: apiToken, nextPageContext },
     });
   } catch (ex) {
     await console.error(ex);
@@ -105,21 +105,19 @@ const GetData = async (keyword, withPlaylist = false, limit = 0) => {
 };
 
 const nextPage = async (nextPage, withPlaylist = false, limit = 0) => {
-  const endpoint =
-    await `${youtubeEndpoint}/youtubei/v1/search?key=${nextPage.nextPageToken}`;
+  const endpoint = await `${youtubeEndpoint}/youtubei/v1/search?key=${nextPage.nextPageToken}`;
   try {
     const page = await axios.post(
       encodeURI(endpoint),
-      nextPage.nextPageContext
+      nextPage.nextPageContext,
     );
-    const item1 =
-      page.data.onResponseReceivedCommands[0].appendContinuationItemsAction;
-    let items = [];
+    const item1 = page.data.onResponseReceivedCommands[0].appendContinuationItemsAction;
+    const items = [];
     item1.continuationItems.forEach((conitem) => {
       if (conitem.itemSectionRenderer) {
         conitem.itemSectionRenderer.contents.forEach((item, index) => {
-          let videoRender = item.videoRenderer;
-          let playListRender = item.playlistRenderer;
+          const videoRender = item.videoRenderer;
+          const playListRender = item.playlistRenderer;
           if (videoRender && videoRender.videoId) {
             items.push(VideoRender(item));
           }
@@ -127,7 +125,7 @@ const nextPage = async (nextPage, withPlaylist = false, limit = 0) => {
             if (playListRender && playListRender.playlistId) {
               items.push({
                 id: playListRender.playlistId,
-                type: "playlist",
+                type: 'playlist',
                 thumbnail: playListRender.thumbnails,
                 title: playListRender.title.simpleText,
                 length: playListRender.videoCount,
@@ -137,12 +135,11 @@ const nextPage = async (nextPage, withPlaylist = false, limit = 0) => {
           }
         });
       } else if (conitem.continuationItemRenderer) {
-        nextPage.nextPageContext.continuation =
-          conitem.continuationItemRenderer.continuationEndpoint.continuationCommand.token;
+        nextPage.nextPageContext.continuation = conitem.continuationItemRenderer.continuationEndpoint.continuationCommand.token;
       }
     });
     const itemsResult = limit != 0 ? items.slice(0, limit) : items;
-    return await Promise.resolve({ items: itemsResult, nextPage: nextPage });
+    return await Promise.resolve({ items: itemsResult, nextPage });
   } catch (ex) {
     await console.error(ex);
     return await Promise.reject(ex);
@@ -160,18 +157,17 @@ const GetPlaylistData = async (playlistId, limit = 0) => {
         .twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content
         .sectionListRenderer.contents[0].itemSectionRenderer.contents[0]
         .playlistVideoListRenderer.contents;
-      let items = await [];
+      const items = await [];
       await videoItems.forEach((item) => {
-        let videoRender = item.playlistVideoRenderer;
+        const videoRender = item.playlistVideoRenderer;
         if (videoRender && videoRender.videoId) {
           items.push(VideoRender(item));
         }
       });
       const itemsResult = limit != 0 ? items.slice(0, limit) : items;
-      return await Promise.resolve({ items: itemsResult, metadata: metadata });
-    } else {
-      return await Promise.reject("invalid_playlist");
+      return await Promise.resolve({ items: itemsResult, metadata });
     }
+    return await Promise.reject('invalid_playlist');
   } catch (ex) {
     await console.error(ex);
     return await Promise.reject(ex);
@@ -185,11 +181,11 @@ const GetSuggestData = async (limit = 0) => {
     const sectionListRenderer = await page.initdata.contents
       .twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content
       .richGridRenderer.contents;
-    let items = await [];
-    let otherItems = await [];
+    const items = await [];
+    const otherItems = await [];
     await sectionListRenderer.forEach((item) => {
       if (item.richItemRenderer && item.richItemRenderer.content) {
-        let videoRender = item.richItemRenderer.content.videoRenderer;
+        const videoRender = item.richItemRenderer.content.videoRenderer;
         if (videoRender && videoRender.videoId) {
           items.push(VideoRender(item.richItemRenderer.content));
         } else {
@@ -209,17 +205,17 @@ const GetChannelById = async (channelId) => {
   const endpoint = await `${youtubeEndpoint}/channel/${channelId}`;
   try {
     const page = await GetYoutubeInitData(endpoint);
-    const tabs = page.initdata.contents.twoColumnBrowseResultsRenderer.tabs;
+    const { tabs } = page.initdata.contents.twoColumnBrowseResultsRenderer;
     const items = tabs
       .map((json) => {
         if (json && json.tabRenderer) {
-          const tabRenderer = json.tabRenderer;
-          const title = tabRenderer.title;
-          const content = tabRenderer.content;
+          const { tabRenderer } = json;
+          const { title } = tabRenderer;
+          const { content } = tabRenderer;
           return { title, content };
         }
       })
-      .filter((y) => typeof y != "undefined");
+      .filter((y) => typeof y !== 'undefined');
     return await Promise.resolve(items);
   } catch (ex) {
     return await Promise.reject(ex);
@@ -238,7 +234,7 @@ const GetVideoDetails = async (videoId) => {
     const res = await {
       title: firstContent.title.runs[0].text,
       isLive: firstContent.viewCount.videoViewCountRenderer.hasOwnProperty(
-        "isLive"
+        'isLive',
       )
         ? firstContent.viewCount.videoViewCountRenderer.isLive
         : false,
@@ -248,7 +244,7 @@ const GetVideoDetails = async (videoId) => {
         .join()
         .toString(),
       suggestion: result.secondaryResults.secondaryResults.results
-        .filter((y) => y.hasOwnProperty("compactVideoRenderer"))
+        .filter((y) => y.hasOwnProperty('compactVideoRenderer'))
         .map((x) => compactVideoRenderer(x)),
     };
 
@@ -267,43 +263,42 @@ const VideoRender = (json) => {
       } else if (json.playlistVideoRenderer) {
         videoRenderer = json.playlistVideoRenderer;
       }
-      var isLive = false;
+      let isLive = false;
       if (
-        videoRenderer.badges &&
-        videoRenderer.badges.length > 0 &&
-        videoRenderer.badges[0].metadataBadgeRenderer &&
-        videoRenderer.badges[0].metadataBadgeRenderer.style ==
-          "BADGE_STYLE_TYPE_LIVE_NOW"
+        videoRenderer.badges
+        && videoRenderer.badges.length > 0
+        && videoRenderer.badges[0].metadataBadgeRenderer
+        && videoRenderer.badges[0].metadataBadgeRenderer.style
+          == 'BADGE_STYLE_TYPE_LIVE_NOW'
       ) {
         isLive = true;
       }
       if (videoRenderer.thumbnailOverlays) {
         videoRenderer.thumbnailOverlays.forEach((item) => {
           if (
-            item.thumbnailOverlayTimeStatusRenderer &&
-            item.thumbnailOverlayTimeStatusRenderer.style &&
-            item.thumbnailOverlayTimeStatusRenderer.style == "LIVE"
+            item.thumbnailOverlayTimeStatusRenderer
+            && item.thumbnailOverlayTimeStatusRenderer.style
+            && item.thumbnailOverlayTimeStatusRenderer.style == 'LIVE'
           ) {
             isLive = true;
           }
         });
       }
       const id = videoRenderer.videoId;
-      const thumbnail = videoRenderer.thumbnail;
+      const { thumbnail } = videoRenderer;
       const title = videoRenderer.title.runs[0].text;
       const shortBylineText = videoRenderer.shortBylineText
         ? videoRenderer.shortBylineText
-        : "";
+        : '';
       const lengthText = videoRenderer.lengthText
         ? videoRenderer.lengthText
-        : "";
-      const channelTitle =
-        videoRenderer.ownerText && videoRenderer.ownerText.runs
-          ? videoRenderer.ownerText.runs[0].text
-          : "";
+        : '';
+      const channelTitle = videoRenderer.ownerText && videoRenderer.ownerText.runs
+        ? videoRenderer.ownerText.runs[0].text
+        : '';
       return {
         id,
-        type: "video",
+        type: 'video',
         thumbnail,
         title,
         channelTitle,
@@ -311,9 +306,8 @@ const VideoRender = (json) => {
         length: lengthText,
         isLive,
       };
-    } else {
-      return {};
     }
+    return {};
   } catch (ex) {
     throw ex;
   }
@@ -322,19 +316,19 @@ const VideoRender = (json) => {
 const compactVideoRenderer = (json) => {
   const compactVideoRendererJson = json.compactVideoRenderer;
 
-  var isLive = false;
+  let isLive = false;
   if (
-    compactVideoRendererJson.badges &&
-    compactVideoRendererJson.badges.length > 0 &&
-    compactVideoRendererJson.badges[0].metadataBadgeRenderer &&
-    compactVideoRendererJson.badges[0].metadataBadgeRenderer.style ==
-      "BADGE_STYLE_TYPE_LIVE_NOW"
+    compactVideoRendererJson.badges
+    && compactVideoRendererJson.badges.length > 0
+    && compactVideoRendererJson.badges[0].metadataBadgeRenderer
+    && compactVideoRendererJson.badges[0].metadataBadgeRenderer.style
+      == 'BADGE_STYLE_TYPE_LIVE_NOW'
   ) {
     isLive = true;
   }
   const result = {
     id: compactVideoRendererJson.videoId,
-    type: "video",
+    type: 'video',
     thumbnail: compactVideoRendererJson.thumbnail.thumbnails,
     title: compactVideoRendererJson.title.simpleText,
     channelTitle: compactVideoRendererJson.shortBylineText.runs[0].text,

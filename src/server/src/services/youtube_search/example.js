@@ -1,4 +1,6 @@
-const youtube = require("./index");
+/*eslint-disable*/
+
+const youtube = require('./index');
 /*
 youtube
   .GetListByKeyword("JS Developer", true, 2)
@@ -54,7 +56,7 @@ youtube
   });
 */
 youtube
-  .GetVideoDetails("cC2UqBuFAEY")
+  .GetVideoDetails('cC2UqBuFAEY')
   .then((result) => {
     console.log(result);
   })
