@@ -1,36 +1,36 @@
-import Story from "pages/Story";
-import Home from "pages/Home";
-import Login from "pages/Login";
-import NotFoundPageError from "pages/NotFoundPage";
-import Postman from "pages/Postman";
-import Profile from "pages/Profile";
-import Signup from "pages/Signup";
-import Trending from "pages/Trending";
+import Story from 'pages/Story';
+import Home from 'pages/Home';
+import Login from 'pages/Login';
+import NotFoundPageError from 'pages/NotFoundPage';
+import Postman from 'pages/Postman';
+import Profile from 'pages/Profile';
+import Signup from 'pages/Signup';
+import Trending from 'pages/Trending';
 
-import ForgotPassword from "components/ForgotPassword";
-import SendMessage from "components/FP_SendMessage";
-import SetNewPassword from "components/SetNewPassword";
-import ProtectedRoute from "components/ProtectedRoute";
+import ForgotPassword from 'components/ForgotPassword';
+import SendMessage from 'components/FP_SendMessage';
+import SetNewPassword from 'components/SetNewPassword';
+import ProtectedRoute from 'components/ProtectedRoute';
 
 export const AUTH_ROUTES = [
   {
-    path: "login",
+    path: 'login',
     element: <Login />,
   },
   {
-    path: "signup",
+    path: 'signup',
     element: <Signup />,
   },
   {
-    path: "forgot_password",
+    path: 'forgot_password',
     element: <ForgotPassword />,
   },
   {
-    path: "send_messages",
+    path: 'send_messages',
     element: <SendMessage />,
   },
   {
-    path: "set_password",
+    path: 'set_password',
     element: <SetNewPassword />,
   },
 ];
@@ -41,25 +41,25 @@ export const ROUTES = [
     element: <Home />,
   },
   {
-    path: "story",
+    path: 'story',
     errorElement: <NotFoundPageError />,
     children: [
       {
-        path: ":slug",
+        path: ':slug',
         element: <Story />,
       },
       {
-        path: "edit",
+        path: 'edit',
         element: <div>check this</div>,
       },
       {
-        path: "trending",
+        path: 'trending',
         element: <Trending />,
       },
     ],
   },
   {
-    path: "profile/:id_user",
+    path: 'profile/:id_user',
     element: (
       <ProtectedRoute>
         <Profile />
@@ -67,11 +67,11 @@ export const ROUTES = [
     ),
   },
   {
-    path: "postman",
+    path: 'postman',
     element: <Postman />,
   },
   {
-    path: "auth",
+    path: 'auth',
     children: AUTH_ROUTES,
   },
 ];

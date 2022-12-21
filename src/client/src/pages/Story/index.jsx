@@ -1,26 +1,26 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { useParams, useNavigate } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch";
-import { thumbnail_url } from "utils/helpers";
-import styles from "./styles.module.scss";
-import Spinner from "components/Spinner";
+import { useParams, useNavigate } from 'react-router-dom';
+// eslint-disable-next-line
+import { thumbnail_url } from 'utils/helpers';
+// eslint-disable-next-line
+import Spinner from 'components/Spinner';
+import useFetch from '../../hooks/useFetch';
+import styles from './styles.module.scss';
 
-const Story = () => {
+function Story() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useFetch(`/posts/${slug}`, {}, (prev, data) => {
-    return data.post.data;
-  });
+  const { data } = useFetch(`/posts/${slug}`, {}, (prev, content) => content.post.data);
 
   const post = data;
 
   React.useEffect(() => {
-    var html = document.querySelector("html");
-    html.style.setProperty("--featured-img", `url("${thumbnail_url(post)}")`);
-    html.style.setProperty("--bg-blend-mode", "multiply");
-    html.style.setProperty("background-size", "120% 2000px, 100% auto");
+    const html = document.querySelector('html');
+    html.style.setProperty('--featured-img', `url("${thumbnail_url(post)}")`);
+    html.style.setProperty('--bg-blend-mode', 'multiply');
+    html.style.setProperty('background-size', '120% 2000px, 100% auto');
   }, [post]);
 
   return (
@@ -34,6 +34,7 @@ const Story = () => {
                 onClick={() => {
                   navigate(-1);
                 }}
+                aria-hidden
               >
                 Go back
               </div>
@@ -53,6 +54,6 @@ const Story = () => {
       {/* <Sidebar /> */}
     </div>
   );
-};
+}
 
 export default Story;

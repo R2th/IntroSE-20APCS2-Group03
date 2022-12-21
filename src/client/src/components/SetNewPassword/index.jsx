@@ -1,25 +1,27 @@
-import * as React from "react";
-import styles from "./styles.module.scss";
-import Astronaut from "assets/svg/astronaut.svg";
-const SetNewPassword = ({ setToken }) => {
-  const [newPassword, SetNewPassword] = React.useState({
-    content: "",
+import * as React from 'react';
+// eslint-disable-next-line
+import Astronaut from 'assets/svg/astronaut.svg';
+import styles from './styles.module.scss';
+
+function SetNewPassword() {
+  const [newPassword, setNewPassword] = React.useState({
+    content: '',
     isHide: true,
   });
-  //const [isHidepass, setIsHidePassword] = React.useState("password");
+  // const [isHidepass, setIsHidePassword] = React.useState("password");
   const [confirmPassword, setConfirmPassword] = React.useState({
-    content: "",
+    content: '',
     isHide: true,
   });
   const [errorForm, setErrorForm] = React.useState({});
-  //const [isHideconfirmpass, setIsHideConfirmPassword] = React.useState("password");
+  // const [isHideconfirmpass, setIsHideConfirmPassword] = React.useState("password");
 
   const onChangePassword = (e) => {
-    SetNewPassword(e.target.value);
+    setNewPassword(e.target.value);
   };
 
   const onChangeHidePassword = () => {
-    SetNewPassword({ ...newPassword, isHide: !newPassword.isHide });
+    setNewPassword({ ...newPassword, isHide: !newPassword.isHide });
   };
 
   const onChangeConfirmPassword = (e) => {
@@ -33,6 +35,18 @@ const SetNewPassword = ({ setToken }) => {
     });
   };
 
+  const validate = () => {
+    const err = {};
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i;
+    if (!regex.test(newPassword)) {
+      err.newPassword = 'Password must be at least 8 characters, A-Z, a-z, 0-9';
+    }
+    if (newPassword !== confirmPassword) {
+      err.confirmPassword = 'Password does not match.';
+    }
+    return err;
+  };
+
   const onSetNewPassword = async () => {
     setErrorForm(validate());
     // const { token } = await loginUser({ phone_or_mail });
@@ -42,26 +56,14 @@ const SetNewPassword = ({ setToken }) => {
     // }
   };
 
-  const validate = () => {
-    const err = {};
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i;
-    if (!regex.test(newPassword)) {
-      err.newPassword = "Password must be at least 8 characters, A-Z, a-z, 0-9";
-    }
-    if (newPassword !== confirmPassword) {
-      err.confirmPassword = "Password does not match.";
-    }
-    return err;
-  };
-
   React.useEffect(() => {
-    var html = document.querySelector("body");
-    html.style.setProperty("background-color", "#A78AF9");
+    const html = document.querySelector('body');
+    html.style.setProperty('background-color', '#A78AF9');
   }, []);
 
   return (
     <div className={styles.container}>
-      <div className={styles.background}></div>
+      <div className={styles.background} />
       <div className={styles.form}>
         <div className={styles.art}>
           <div>
@@ -74,76 +76,60 @@ const SetNewPassword = ({ setToken }) => {
             <p>Set New Password</p>
             <div className={styles.frame_set_pass}>
               <div>
-                <div style={{ margin: "auto" }}>
-                  <i
-                    className="fa fa-lock styles.icon"
-                    aria-hidden="true"
-                    style={{ left: 3 }}
-                  />
+                <div style={{ margin: 'auto' }}>
+                  <i className="fa fa-lock styles.icon" aria-hidden="true" style={{ left: 3 }} />
                   <input
                     value={newPassword.content}
                     onChange={onChangePassword}
                     placeholder="Create new password"
                     className={styles.inputField}
-                    type={newPassword.isHide ? "text" : "password"}
+                    type={newPassword.isHide ? 'text' : 'password'}
                   />
                   <i
-                    class={newPassword.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
+                    className={newPassword.isHide ? 'fa fa-eye' : 'fa fa-eye-slash'}
                     style={{
                       right: 15,
-                      cursor: "pointer",
+                      cursor: 'pointer',
                     }}
                     aria-hidden="true"
                     onClick={onChangeHidePassword}
-                  ></i>
+                  />
                 </div>
               </div>
-              {errorForm.newPassword && (
-                <span className={styles.validationText}>
-                  {errorForm.newPassword}
-                </span>
-              )}
+              {/* eslint-disable-next-line */}
+              {errorForm.newPassword && <span className={styles.validationText}>{errorForm.newPassword}</span>}
               <div>
-                <div style={{ margin: "auto" }}>
-                  <i
-                    className="fa fa-lock styles.icon"
-                    aria-hidden="true"
-                    style={{ left: 3 }}
-                  />
+                <div style={{ margin: 'auto' }}>
+                  <i className="fa fa-lock styles.icon" aria-hidden="true" style={{ left: 3 }} />
                   <input
                     value={confirmPassword.content}
                     onChange={onChangeConfirmPassword}
                     placeholder="Confirm new password"
                     className={styles.inputField}
-                    type={confirmPassword.isHide ? "text" : "password"}
+                    type={confirmPassword.isHide ? 'text' : 'password'}
                   />
                   <i
-                    class={
-                      confirmPassword.isHide ? "fa fa-eye" : "fa fa-eye-slash"
-                    }
+                    className={confirmPassword.isHide ? 'fa fa-eye' : 'fa fa-eye-slash'}
                     style={{
                       right: 15,
-                      cursor: "pointer",
+                      cursor: 'pointer',
                     }}
                     aria-hidden="true"
                     onClick={onChangeHideConfirmPassword}
-                  ></i>
+                  />
                 </div>
               </div>
-              {errorForm.confirmPassword && (
-                <span className={styles.validationText}>
-                  {errorForm.confirmPassword}
-                </span>
-              )}
-              <div className={styles.send_message} onClick={onSetNewPassword}>
+              {/* eslint-disable-next-line */}
+              {errorForm.confirmPassword && <span className={styles.validationText}>{errorForm.confirmPassword}</span>}
+              <div className={styles.send_message} onClick={onSetNewPassword} aria-hidden>
                 CHANGE
               </div>
             </div>
             <div className={styles.BottomText}>
-              Back to{" "}
+              Back to&nbsp;
               <a className={styles.BottomLink} href="/login">
-                LOG IN
-              </a>{" "}
+                LOG IN&nbsp;
+              </a>
               page
             </div>
           </div>
@@ -151,6 +137,6 @@ const SetNewPassword = ({ setToken }) => {
       </div>
     </div>
   );
-};
+}
 
 export default SetNewPassword;

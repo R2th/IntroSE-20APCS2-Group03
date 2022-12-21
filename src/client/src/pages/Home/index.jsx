@@ -1,18 +1,23 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from 'react';
 
-import Card from "components/Card";
-import Sidebar from "components/Sidebar";
+// eslint-disable-next-line
+import Card from 'components/Card';
+// eslint-disable-next-line
+import Sidebar from 'components/Sidebar';
 
-import { INIT_DATA_CONTENT } from "utils/const";
+// eslint-disable-next-line
+import { INIT_DATA_CONTENT } from 'utils/const';
 
-import { StylesContext } from "contexts/Styles/stylesContext";
-import { useFetch } from "hooks/useFetch";
+// eslint-disable-next-line
+import { StylesContext } from 'contexts/Styles/stylesContext';
+// eslint-disable-next-line
+import useFetch from 'hooks/useFetch';
 
-import "./style.scss";
+import './style.scss';
 
-const Home = () => {
-  const fetchContent = useFetch("/posts/newest", INIT_DATA_CONTENT);
-  const fetchTrending = useFetch("/trending?limit=10", INIT_DATA_CONTENT);
+function Home() {
+  const fetchContent = useFetch('/posts/newest', INIT_DATA_CONTENT);
+  const fetchTrending = useFetch('/trending?limit=10', INIT_DATA_CONTENT);
 
   const { setPrefix } = useContext(StylesContext);
 
@@ -20,16 +25,14 @@ const Home = () => {
   const trending = fetchTrending.data;
 
   useEffect(() => {
-    const prefix = document
-      .querySelector(".center-box")
-      .getBoundingClientRect().x;
+    const prefix = document.querySelector('.center-box').getBoundingClientRect().x;
     setPrefix(prefix);
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   return (
     <div className="homepage">
-      <div style={{ backgroundColor: "white", marginLeft: 100 }}>
+      <div style={{ backgroundColor: 'white', marginLeft: 100 }}>
         <div className="background" />
         {/* <div className="white-bg"></div> */}
         <div className="center-box">
@@ -43,12 +46,10 @@ const Home = () => {
                   <Card content={content} key={content.id} type="medium" />
                 ))}
               </div>
-              <div className="hoz-line"></div>
+              <div className="hoz-line" />
             </div>
-            {contents &&
-              contents
-                .slice(10)
-                .map((content) => <Card content={content} key={content.id} />)}
+            {/* eslint-disable-next-line */}
+            {contents && contents.slice(10).map((content) => <Card content={content} key={content.id} />)}
             <div className="section">
               <div className="section_title">
                 <h1>Member only</h1>
@@ -58,12 +59,10 @@ const Home = () => {
                   <Card content={content} key={content.id} type="small-verc" />
                 ))}
               </div>
-              <div className="hoz-line"></div>
+              <div className="hoz-line" />
             </div>
-            {contents &&
-              contents
-                .slice(-10)
-                .map((content) => <Card content={content} key={content.id} />)}
+            {/* eslint-disable-next-line */}
+            {contents && contents.slice(-10).map((content) => <Card content={content} key={content.id} />)}
             <div className="section">
               <div className="section_title">
                 <h1>For you</h1>
@@ -81,6 +80,6 @@ const Home = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Home;

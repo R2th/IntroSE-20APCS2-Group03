@@ -1,9 +1,8 @@
-import * as React from "react";
-import { useRouteError } from "react-router-dom";
+import * as React from 'react';
+import { useRouteError } from 'react-router-dom';
 
-const NotFoundPageError = () => {
+function NotFoundPageError() {
   const error = useRouteError();
-  console.error(error);
   return (
     <div id="error-page">
       <h1>Oops!</h1>
@@ -13,6 +12,6 @@ const NotFoundPageError = () => {
       </p>
     </div>
   );
-};
+}
 
 export default NotFoundPageError;

@@ -1,35 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import Card from "components/Card";
-import Spinner from "components/Spinner";
+// eslint-disable-next-line
+import Card from 'components/Card';
+// eslint-disable-next-line
+import Spinner from 'components/Spinner';
 
-import { useFetch } from "hooks/useFetch";
+// eslint-disable-next-line
+import useFetch from 'hooks/useFetch';
 
-import { INIT_DATA_CONTENT } from "utils/const";
-import { encodeQueryData } from "utils/helpers";
+// eslint-disable-next-line
+import { INIT_DATA_CONTENT } from 'utils/const';
+// eslint-disable-next-line
+import { encodeQueryData } from 'utils/helpers';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
-const Trending = () => {
-  const { data, reloadFetch } = useFetch(
-    `/trending?${encodeQueryData({ limit: 100 })}`,
-    INIT_DATA_CONTENT
-  );
+function Trending() {
+  const { data, reloadFetch } = useFetch(`/trending?${encodeQueryData({ limit: 100 })}`, INIT_DATA_CONTENT);
 
   useEffect(() => {
     const handleScroll = () => {
-      const windowHeight =
-        "innerHeight" in window
-          ? window.innerHeight
-          : document.documentElement.offsetHeight;
-      const body = document.body;
+      const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
+      const { body } = document;
       const html = document.documentElement;
       const docHeight = Math.max(
         body.scrollHeight,
         body.offsetHeight,
         html.clientHeight,
         html.scrollHeight,
-        html.offsetHeight
+        html.offsetHeight,
       );
       const windowBottom = Math.round(windowHeight + window.pageYOffset);
       if (windowBottom >= docHeight) {
@@ -37,12 +36,12 @@ const Trending = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -61,6 +60,6 @@ const Trending = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Trending;

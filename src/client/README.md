@@ -18,11 +18,11 @@ You need run `npm run postinstall` to link all module alias of the src directory
 
 Now you can start the project by running `npm start`
 
-### IF HAVE ANYTHING PROBLEM, 
+### IF HAVE ANYTHING PROBLEM,
 
 - PLEASE contact me (`R2th`) as soon as possible
 
-### BEFORE YOUR WORKING TASK, 
+### BEFORE YOUR WORKING TASK,
 
 - PLEASE DO NOT EDIT in `main` branch!!!
 
@@ -32,7 +32,7 @@ Now you can start the project by running `npm start`
 
   - You could try `git checkout -b {branch_name}` to create and switch to that branch
 
-### END OF WORKING, 
+### END OF WORKING,
 
 - PLEASE PUSH THE BRANCH AND PULL REQUEST IF NEEDED (contact me to accept your request)
 

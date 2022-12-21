@@ -32,7 +32,7 @@
           width: 18vw;
         }
         p {
-          font-family: "Open Sans";
+          font-family: 'Open Sans';
           font-weight: 600;
           font-size: 24px;
           line-height: 200%;
@@ -103,7 +103,7 @@
             line-height: 19px;
           }
           p {
-            font-family: "Open Sans";
+            font-family: 'Open Sans';
             font-style: normal;
             font-weight: 400;
             font-size: 14px;
@@ -140,7 +140,7 @@
             display: flex;
             justify-content: center;
             position: relative;
-            font-family: "Open Sans";
+            font-family: 'Open Sans';
             font-style: normal;
             font-weight: 400;
             font-size: 14px;
@@ -163,8 +163,7 @@
           .login_button {
             &:hover {
               cursor: pointer;
-              box-shadow: 0 0px 1px hsl(0deg, 0%, 0% / 20%),
-                0 1px 2px hsl(0deg, 0%, 0% / 20%);
+              box-shadow: 0 0px 1px hsl(0deg, 0%, 0% / 20%), 0 1px 2px hsl(0deg, 0%, 0% / 20%);
             }
             border: 1px solid #fff;
             width: 100%;
@@ -174,7 +173,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: "Open Sans";
+            font-family: 'Open Sans';
             font-weight: bold;
             font-size: 14px;
             line-height: 19px;
@@ -205,8 +204,7 @@
               &:hover {
                 cursor: pointer;
                 background: linear-gradient(to bottom, #3949ab, #a78af9);
-                box-shadow: 0 0px 1px hsl(0deg, 0%, 0% / 20%),
-                  0 1px 2px hsl(0deg, 0%, 0% / 20%);
+                box-shadow: 0 0px 1px hsl(0deg, 0%, 0% / 20%), 0 1px 2px hsl(0deg, 0%, 0% / 20%);
                 border: 1px solid #fff;
                 color: #fff;
               }
@@ -214,7 +212,7 @@
                 color: inherit;
               }
               p {
-                font-family: "Open Sans";
+                font-family: 'Open Sans';
                 font-style: normal;
                 font-weight: 400;
                 font-size: 14px;
@@ -228,7 +226,7 @@
             }
           }
           .BottomText {
-            font-family: "Open Sans";
+            font-family: 'Open Sans';
             font-style: normal;
             font-weight: 400;
             font-size: 14px;

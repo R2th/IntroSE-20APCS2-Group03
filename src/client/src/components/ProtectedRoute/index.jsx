@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { AuthContext } from "../../contexts/Auth/authContext";
+import React, { useContext } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
+import { AuthContext } from '../../contexts/Auth/authContext';
 
-const ProtectedRoute = ({ children }) => {
+function ProtectedRoute({ children }) {
   const { token } = useContext(AuthContext);
 
   const location = useLocation();
@@ -12,6 +12,6 @@ const ProtectedRoute = ({ children }) => {
   }
 
   return children;
-};
+}
 
 export default ProtectedRoute;

@@ -1,9 +1,9 @@
-import classNames from "classnames";
-import React, { useState } from "react";
+import classNames from 'classnames';
+import React, { useState } from 'react';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
-const Menu = () => {
+function Menu() {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClickOpenNavigation = () => {
@@ -15,19 +15,15 @@ const Menu = () => {
       <button
         tabIndex={0}
         onClick={onClickOpenNavigation}
-        style={
-          isOpen
-            ? { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }
-            : {}
-        }
+        style={isOpen ? { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 } : {}}
       >
         <span>Home</span>
-        <i className={classNames(styles.icHome, "icon icon-home_fill")}></i>
-        <i className={classNames(styles.caretDown, "icon icon-caret_down")}></i>
+        <i className={classNames(styles.icHome, 'icon icon-home_fill')} />
+        <i className={classNames(styles.caretDown, 'icon icon-caret_down')} />
       </button>
       {isOpen && (
         <>
-          <i className={"icon icon-side_menu"}></i>
+          <i className="icon icon-side_menu" />
           <div role="menu" className={classNames(styles.menu)}>
             <input
               className={styles.filter}
@@ -40,6 +36,6 @@ const Menu = () => {
       )}
     </div>
   );
-};
+}
 
 export default Menu;

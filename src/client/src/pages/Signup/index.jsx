@@ -1,16 +1,16 @@
-import * as React from "react";
-import { SignupUser } from "../../hooks/useAuth";
-import styles from "./styles.module.scss";
+import * as React from 'react';
+import classNames from 'classnames';
+import { SignupUser } from '../../hooks/useAuth';
+import styles from './styles.module.scss';
+// eslint-disable-next-line
+import Astronaut from 'assets/svg/astronaut.svg';
 
-import Astronaut from "assets/svg/astronaut.svg";
-import classNames from "classnames";
-
-const Signup = ({ setToken }) => {
-  const [username, setUsername] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState({ content: "", isHide: true });
+function Signup({ setToken }) {
+  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState({ content: '', isHide: true });
   const [confirmPassword, setConfirmPassword] = React.useState({
-    content: "",
+    content: '',
     isHide: true,
   });
   const [day, setDay] = React.useState();
@@ -62,21 +62,20 @@ const Signup = ({ setToken }) => {
     const start = 1900;
     const end = new Date().getFullYear();
 
-    for (let i = end; i >= start; i--) {
+    for (let i = end; i >= start; i -= 1) {
       arr.push(<option value={i}>{i}</option>);
     }
     return arr;
   };
 
   const generateMonth = () => {
-    const arr = [];
-    const start = 1;
-    const end = 12;
+    const MONTH = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-    for (let i = start; i <= end; i++) {
-      arr.push(<option value={i}>{i}</option>);
-    }
-    return arr;
+    return (
+      <>
+        {MONTH.map((m) => <option value={m} key={m}>{m}</option>)}
+      </>
+    );
   };
 
   const generateDay = () => {
@@ -84,7 +83,7 @@ const Signup = ({ setToken }) => {
     const start = 1;
     const end = 31;
 
-    for (let i = start; i <= end; i++) {
+    for (let i = start; i <= end; i += 1) {
       arr.push(<option value={i}>{i}</option>);
     }
     return arr;
@@ -96,24 +95,23 @@ const Signup = ({ setToken }) => {
 
     const regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i;
     if (!username) {
-      err.username = "Please enter username";
+      err.username = 'Please enter username';
     } else if (username.length < 6) {
-      err.username = "Username must be at least 6 characters";
+      err.username = 'Username must be at least 6 characters';
     }
 
     if (!email) {
-      err.email = "Please enter your email";
-    } else if (!regex.test(email)) err.email = "Invalid Email";
+      err.email = 'Please enter your email';
+    } else if (!regex.test(email)) err.email = 'Invalid Email';
 
     if (!password.content) {
-      err.password = "Please enter your password";
-    } else if (!regexPass.test(password.content))
-      err.password = "Password must be at least 8 characters, A-Z, a-z, 0-9";
+      err.password = 'Please enter your password';
+    } else if (!regexPass.test(password.content)) err.password = 'Password must be at least 8 characters, A-Z, a-z, 0-9';
 
     if (!confirmPassword.content) {
-      err.confirmPassword = "Please enter confirm password";
+      err.confirmPassword = 'Please enter confirm password';
     } else if (password.content !== confirmPassword.content) {
-      err.confirmPassword = "Your password must be the same";
+      err.confirmPassword = 'Your password must be the same';
     }
 
     return err;
@@ -140,13 +138,13 @@ const Signup = ({ setToken }) => {
   };
 
   React.useEffect(() => {
-    var html = document.querySelector("body");
-    html.style.setProperty("background-color", "#A78AF9");
+    const html = document.querySelector('body');
+    html.style.setProperty('background-color', '#A78AF9');
   }, [formErrors]);
 
   return (
     <div className={styles.container}>
-      <div className={styles.background}></div>
+      <div className={styles.background} />
       <div className={styles.form}>
         <div className={styles.art}>
           <div>
@@ -159,10 +157,7 @@ const Signup = ({ setToken }) => {
             <p>Welcome</p>
             <div className={styles.frame_mail_pass}>
               <div>
-                <i
-                  className="fa fa-user-circle styles.icon"
-                  aria-hidden="true"
-                />
+                <i className="fa fa-user-circle styles.icon" aria-hidden="true" />
                 <input
                   value={username}
                   onChange={onChangeUsername}
@@ -170,99 +165,69 @@ const Signup = ({ setToken }) => {
                   className={styles.inputField}
                 />
               </div>
-              {formErrors.username && (
-                <span className={styles.validationText}>
-                  {formErrors.username}
-                </span>
-              )}
+              {/* eslint-disable-next-line */}
+              {formErrors.username && <span className={styles.validationText}>{formErrors.username}</span>}
               <div>
-                <i
-                  className="fa fa-envelope-o styles.icon"
-                  aria-hidden="true"
-                ></i>
-                <input
-                  value={email}
-                  onChange={onChangeMail}
-                  placeholder="Email"
-                  className={styles.inputField}
-                />
+                <i className="fa fa-envelope-o styles.icon" aria-hidden="true" />
+                <input value={email} onChange={onChangeMail} placeholder="Email" className={styles.inputField} />
               </div>
-              {formErrors.email && (
-                <span className={styles.validationText}>
-                  {formErrors.email}
-                </span>
-              )}
+              {/* eslint-disable-next-line */}
+              {formErrors.email && <span className={styles.validationText}>{formErrors.email}</span>}
               <div>
-                <i
-                  className="fa fa-lock styles.icon"
-                  aria-hidden="true"
-                  style={{ left: 3 }}
-                />
+                <i className="fa fa-lock styles.icon" aria-hidden="true" style={{ left: 3 }} />
                 <input
                   value={password.content}
-                  type={password.isHide ? "text" : "password"}
+                  type={password.isHide ? 'text' : 'password'}
                   onChange={onChangePassword}
                   placeholder="Password"
                   className={styles.inputField}
                 />
                 <i
-                  class={password.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
+                  className={password.isHide ? 'fa fa-eye' : 'fa fa-eye-slash'}
                   aria-hidden="true"
                   onClick={onChangeHidePassword}
                   style={{
                     right: 15,
-                    cursor: "pointer",
+                    cursor: 'pointer',
                   }}
                 />
               </div>
-              {formErrors.password && (
-                <span className={styles.validationText}>
-                  {formErrors.password}
-                </span>
-              )}
-
+              {/* eslint-disable-next-line */}
+              {formErrors.password && <span className={styles.validationText}>{formErrors.password}</span>}
               <div>
                 <div>
-                  <i
-                    className="fa fa-lock styles.icon"
-                    aria-hidden="true"
-                    style={{ left: 3 }}
-                  />
+                  <i className="fa fa-lock styles.icon" aria-hidden="true" style={{ left: 3 }} />
                   <input
                     value={confirmPassword.content}
-                    type={confirmPassword.isHide ? "text" : "password"}
+                    type={confirmPassword.isHide ? 'text' : 'password'}
                     onChange={onChangeConfirmPassword}
                     placeholder="Confirm Password"
                     className={styles.inputField}
                   />
                   <i
-                    class={
-                      confirmPassword.isHide ? "fa fa-eye" : "fa fa-eye-slash"
-                    }
+                    className={confirmPassword.isHide ? 'fa fa-eye' : 'fa fa-eye-slash'}
                     aria-hidden="true"
                     onClick={onChangeHideConfirmPassword}
                     style={{
                       right: 15,
-                      cursor: "pointer",
+                      cursor: 'pointer',
                     }}
-                  ></i>
+                  />
                 </div>
                 {formErrors.confirmPassword && (
-                  <span className={styles.validationText}>
-                    {formErrors.confirmPassword}
-                  </span>
+                  <span className={styles.validationText}>{formErrors.confirmPassword}</span>
                 )}
               </div>
               <div>
                 <div
                   style={{
-                    fontFamily: "Arial",
-                    fontStyle: "normal",
+                    fontFamily: 'Arial',
+                    fontStyle: 'normal',
                     fontWeight: 10,
                     fontSize: 12,
                     height: 20,
-                    display: "flex",
-                    color: "#3949ab;",
+                    display: 'flex',
+                    color: '#3949ab;',
                   }}
                 >
                   Date of birth
@@ -273,7 +238,7 @@ const Signup = ({ setToken }) => {
                     className={classNames(styles.bd_day, styles.select)}
                     value={day}
                     onChange={onChangeDay}
-                    //style={{ width: "fixed", height: 20 }}
+                    // style={{ width: "fixed", height: 20 }}
                   >
                     {generateDay()}
                   </select>
@@ -282,7 +247,7 @@ const Signup = ({ setToken }) => {
                     className={classNames(styles.bd_month, styles.select)}
                     value={month}
                     onChange={onChangeMonth}
-                    //style={{ width: "fixed", height: 20 }}
+                    // style={{ width: "fixed", height: 20 }}
                   >
                     {generateMonth()}
                   </select>
@@ -291,7 +256,7 @@ const Signup = ({ setToken }) => {
                     className={classNames(styles.bd_year, styles.select)}
                     value={year}
                     onChange={onChangeYear}
-                    //style={{ width: "fixed", height: 20 }}
+                    // style={{ width: "fixed", height: 20 }}
                   >
                     {generateYear()}
                   </select>
@@ -299,7 +264,7 @@ const Signup = ({ setToken }) => {
               </div>
             </div>
             <div className={styles.login_options}>
-              <div className={styles.login_button} onClick={onSignUp}>
+              <div className={styles.login_button} onClick={onSignUp} aria-hidden>
                 SIGN UP
               </div>
               <div className={styles.separate_other}>
@@ -307,28 +272,28 @@ const Signup = ({ setToken }) => {
                   style={{
                     width: 30,
                     height: 30,
-                    backgroundColor: "#fff",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     zIndex: 2,
                   }}
                 >
                   <span>Or</span>
                 </div>
-                <div className={styles.hoz_line}></div>
+                <div className={styles.hoz_line} />
               </div>
               <div className={styles.groupBtn}>
                 <div className={styles.oAuth2Btn}>
-                  <i className="fa fa-google"></i>
+                  <i className="fa fa-google" />
                   <p>Google</p>
                 </div>
                 <div className={styles.oAuth2Btn}>
-                  <i className="fa fa-gitlab"></i>
+                  <i className="fa fa-gitlab" />
                   <p>Gitlab</p>
                 </div>
                 <div className={styles.oAuth2Btn}>
-                  <i className="fa fa-facebook"></i>
+                  <i className="fa fa-facebook" />
                   <p>Facebook</p>
                 </div>
               </div>
@@ -344,6 +309,6 @@ const Signup = ({ setToken }) => {
       </div>
     </div>
   );
-};
+}
 
 export default Signup;

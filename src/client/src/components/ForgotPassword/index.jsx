@@ -1,21 +1,14 @@
-import * as React from "react";
-import styles from "./styles.module.scss";
+import * as React from 'react';
 
-import Astronaut from "assets/svg/astronaut.svg";
-const ForgotPassword = ({ setToken }) => {
-  var [phone_or_mail, setPhone_or_Mail] = React.useState("");
+// eslint-disable-next-line
+import Astronaut from 'assets/svg/astronaut.svg';
+import styles from './styles.module.scss';
+
+function ForgotPassword() {
+  const [phoneOrMail, setPhoneOrMail] = React.useState('');
   const [errorForm, setErrorForm] = React.useState({});
   const onChangeMail = (e) => {
-    setPhone_or_Mail(e.target.value);
-  };
-
-  const onForgotPassword = async () => {
-    setErrorForm(validate());
-    // const { token } = await loginUser({ phone_or_mail });
-    // if (token) {
-    //   setToken(token);
-    //   window.location.reload(true);
-    // }
+    setPhoneOrMail(e.target.value);
   };
 
   const validate = () => {
@@ -23,20 +16,29 @@ const ForgotPassword = ({ setToken }) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     const regexPhone = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
 
-    if (!regex.test(phone_or_mail) && !regexPhone.test(phone_or_mail)) {
-      err.phone_or_mail = "Invalid Email or Phone Number";
+    if (!regex.test(phoneOrMail) && !regexPhone.test(phoneOrMail)) {
+      err.phoneOrMail = 'Invalid Email or Phone Number';
     }
     return err;
   };
 
+  const onForgotPassword = async () => {
+    setErrorForm(validate());
+    // const { token } = await loginUser({ phoneOrMail });
+    // if (token) {
+    //   setToken(token);
+    //   window.location.reload(true);
+    // }
+  };
+
   React.useEffect(() => {
-    var html = document.querySelector("body");
-    html.style.setProperty("background-color", "#A78AF9");
+    const html = document.querySelector('body');
+    html.style.setProperty('background-color', '#A78AF9');
   }, []);
 
   return (
     <div className={styles.container}>
-      <div className={styles.background}></div>
+      <div className={styles.background} />
       <div className={styles.form}>
         <div className={styles.art}>
           <div>
@@ -50,26 +52,23 @@ const ForgotPassword = ({ setToken }) => {
             <div className={styles.frame_phone_mail}>
               <div>
                 <input
-                  value={phone_or_mail}
+                  value={phoneOrMail}
                   onChange={onChangeMail}
                   placeholder="Phone number or Email"
                   className={styles.inputField}
                 />
               </div>
-              {errorForm.phone_or_mail && (
-                <span className={styles.validationText}>
-                  {errorForm.phone_or_mail}
-                </span>
-              )}
-              <div className={styles.send_message} onClick={onForgotPassword}>
+              {/* eslint-disable-next-line max-len */}
+              {errorForm.phoneOrMail && <span className={styles.validationText}>{errorForm.phoneOrMail}</span>}
+              <div className={styles.send_message} onClick={onForgotPassword} aria-hidden>
                 SUBMIT
               </div>
             </div>
             <div className={styles.BottomText}>
-              Back to{" "}
+              Back to &nbsp;
               <a className={styles.BottomLink} href="login">
                 LOG IN
-              </a>{" "}
+              </a>
               page
             </div>
           </div>
@@ -77,6 +76,6 @@ const ForgotPassword = ({ setToken }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ForgotPassword;

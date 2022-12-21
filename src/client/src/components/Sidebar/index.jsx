@@ -1,19 +1,16 @@
-import React from "react";
-import { INIT_DATA_CONTENT } from "utils/const";
+import React from 'react';
+// eslint-disable-next-line
+import { INIT_DATA_CONTENT } from 'utils/const';
 
-import "./style.scss";
-import { useFetch } from "../../hooks/useFetch";
+import './style.scss';
+import useFetch from '../../hooks/useFetch';
 
-const Sidebar = () => {
-  const { data } = useFetch(
-    "/api/questions",
-    INIT_DATA_CONTENT,
-    (prev, data) => {
-      if (prev === INIT_DATA_CONTENT) {
-        return data.questions.data;
-      } else return prev;
-    }
-  );
+function Sidebar() {
+  const { data } = useFetch('/api/questions', INIT_DATA_CONTENT, (prev, _data) => {
+    if (prev === INIT_DATA_CONTENT) {
+      return _data.questions.data;
+    } return prev;
+  });
 
   return (
     <div className="sticky-sidebar">
@@ -37,10 +34,7 @@ const Sidebar = () => {
                     data-tippy=""
                     data-original-title={`Câu trả lời: ${question.answers_count}`}
                   >
-                    <i
-                      aria-hidden="true"
-                      className="stats-item__icon fa fa-reply"
-                    ></i>
+                    <i aria-hidden="true" className="stats-item__icon fa fa-reply" />
                     {question.answers_count}
                   </span>
                   <span
@@ -48,10 +42,7 @@ const Sidebar = () => {
                     data-tippy=""
                     data-original-title={`Lượt xem: ${question.views_count}`}
                   >
-                    <i
-                      aria-hidden="true"
-                      className="stats-item__icon fa fa-eye"
-                    ></i>
+                    <i aria-hidden="true" className="stats-item__icon fa fa-eye" />
                     {question.views_count}
                   </span>
                   <span
@@ -59,20 +50,13 @@ const Sidebar = () => {
                     data-tippy=""
                     data-original-title={`Bình luận: ${question.comments_count} comments`}
                   >
-                    <i
-                      aria-hidden="true"
-                      className="stats-item__icon fa fa-comment"
-                    ></i>
+                    <i aria-hidden="true" className="stats-item__icon fa fa-comment" />
                     {question.comments_count}
                   </span>
-                  <div
-                    className="points stats-item text-nowrap"
-                    data-tippy=""
-                    data-original-title="Điểm"
-                  >
+                  <div className="points stats-item text-nowrap" data-tippy="" data-original-title="Điểm">
                     <div className="carets">
-                      <i aria-hidden="true" className="fa fa-caret-up"></i>
-                      <i aria-hidden="true" className="fa fa-caret-down"></i>
+                      <i aria-hidden="true" className="fa fa-caret-up" />
+                      <i aria-hidden="true" className="fa fa-caret-down" />
                     </div>
                     <span className="text-muted">{question.points}</span>
                   </div>
@@ -80,13 +64,13 @@ const Sidebar = () => {
               </div>
               <div className="subtitle">
                 <a href="*">{question.user && question.user.data.name}</a>
-              </div>{" "}
+              </div>
             </div>
           )}
         </div>
       ))}
     </div>
   );
-};
+}
 
 export default Sidebar;

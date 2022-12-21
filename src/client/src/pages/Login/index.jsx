@@ -1,14 +1,14 @@
-import * as React from "react";
-import styles from "./style.module.scss";
+import * as React from 'react';
+// eslint-disable-next-line
+import Astronaut from 'assets/svg/astronaut.svg';
+import { useNavigate } from 'react-router-dom';
+import styles from './style.module.scss';
+import { AuthContext } from '../../contexts/Auth/authContext';
 
-import Astronaut from "assets/svg/astronaut.svg";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/Auth/authContext";
-
-const Login = () => {
-  const [username, setUsername] = React.useState("");
+function Login() {
+  const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState({
-    content: "",
+    content: '',
     isHide: true,
   });
   const [errorForm, setErrorForm] = React.useState({});
@@ -18,9 +18,9 @@ const Login = () => {
 
   React.useEffect(() => {
     if (token) {
-      navigate("/");
+      navigate('/');
     }
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   if (token) {
@@ -42,13 +42,13 @@ const Login = () => {
   const validate = () => {
     const err = {};
     if (!username) {
-      err.username = "Username can not be empty";
+      err.username = 'Username can not be empty';
     }
     // else if () { //check from database
     //  err.username = "Invalid username or email";
     // }
     if (!password.content) {
-      err.password = "Password can not be empty";
+      err.password = 'Password can not be empty';
     }
     // else if (!password.content) { //check from database
 
@@ -58,12 +58,12 @@ const Login = () => {
   };
   const onLogin = async () => {
     setErrorForm(validate());
-    await handleLogin({ username: username, password: password });
+    await handleLogin({ username, password });
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.background}></div>
+      <div className={styles.background} />
       <div className={styles.form}>
         <div className={styles.art}>
           <div>
@@ -76,10 +76,7 @@ const Login = () => {
             <p>Welcome</p>
             <div className={styles.frame_mail_pass}>
               <div>
-                <i
-                  className="fa fa-envelope-o styles.icon"
-                  aria-hidden="true"
-                ></i>
+                <i className="fa fa-envelope-o styles.icon" aria-hidden="true" />
                 <input
                   value={username}
                   onChange={onChangeMail}
@@ -87,47 +84,37 @@ const Login = () => {
                   className={styles.inputField}
                 />
               </div>
-              {errorForm.username && (
-                <span className={styles.validationText}>
-                  {errorForm.username}
-                </span>
-              )}
+              {/* eslint-disable-next-line */}
+              {errorForm.username && <span className={styles.validationText}>{errorForm.username}</span>}
               <div>
-                <div style={{ margin: "auto" }}>
-                  <i
-                    className="fa fa-lock styles.icon"
-                    aria-hidden="true"
-                    style={{ left: 3 }}
-                  />
+                <div style={{ margin: 'auto' }}>
+                  <i className="fa fa-lock styles.icon" aria-hidden="true" style={{ left: 3 }} />
                   <input
                     value={password.content}
-                    type={password.isHide ? "text" : "password"}
+                    type={password.isHide ? 'text' : 'password'}
                     onChange={onChangePassword}
                     placeholder="Password"
                     className={styles.inputField}
                   />
                   <i
-                    class={password.isHide ? "fa fa-eye" : "fa fa-eye-slash"}
+                    className={password.isHide ? 'fa fa-eye' : 'fa fa-eye-slash'}
                     aria-hidden="true"
                     onClick={onChangeHidePassword}
                     style={{
                       right: 15,
-                      cursor: "pointer",
+                      cursor: 'pointer',
                     }}
                   />
                 </div>
               </div>
-              {errorForm.password && (
-                <span className={styles.validationText}>
-                  {errorForm.password}
-                </span>
-              )}
+              {/* eslint-disable-next-line */}
+              {errorForm.password && <span className={styles.validationText}>{errorForm.password}</span>}
             </div>
             <p className={styles.forgotPassword}>
               <a href="/auth/forgot_password">Forgot password?</a>
             </p>
             <div className={styles.login_options}>
-              <div className={styles.login_button} onClick={onLogin}>
+              <div className={styles.login_button} onClick={onLogin} aria-hidden>
                 <span>LOG IN</span>
               </div>
               <div className={styles.separate_other}>
@@ -135,28 +122,28 @@ const Login = () => {
                   style={{
                     width: 30,
                     height: 10,
-                    backgroundColor: "#fff",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     zIndex: 2,
                   }}
                 >
                   <span>Or</span>
                 </div>
-                <div className={styles.hoz_line}></div>
+                <div className={styles.hoz_line} />
               </div>
               <div className={styles.groupBtn}>
                 <div className={styles.oAuth2Btn}>
-                  <i className="fa fa-google"></i>
+                  <i className="fa fa-google" />
                   <p>Google</p>
                 </div>
                 <div className={styles.oAuth2Btn}>
-                  <i className="fa fa-gitlab"></i>
+                  <i className="fa fa-gitlab" />
                   <p>Gitlab</p>
                 </div>
                 <div className={styles.oAuth2Btn}>
-                  <i className="fa fa-facebook"></i>
+                  <i className="fa fa-facebook" />
                   <p>Facebook</p>
                 </div>
               </div>
@@ -172,6 +159,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;
