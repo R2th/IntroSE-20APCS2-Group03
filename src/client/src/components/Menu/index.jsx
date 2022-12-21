@@ -16,6 +16,7 @@ function Menu() {
         tabIndex={0}
         onClick={onClickOpenNavigation}
         style={isOpen ? { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 } : {}}
+        type="button"
       >
         <span>Home</span>
         <i className={classNames(styles.icHome, 'icon icon-home_fill')} />
