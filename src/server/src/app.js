@@ -48,6 +48,8 @@ app.use(require('./routes/user/user.route'));
 
 app.use(require('./routes/story/story.route'));
 
+app.use(require('./routes/search/search.route'));
+
 // Configure a middleware for 404s and the error handler
 // app.use((req, res, next) => {
 //   res.status(404);
