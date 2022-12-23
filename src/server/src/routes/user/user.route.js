@@ -1,6 +1,6 @@
 const express = require('express');
 
-const router = express.Router();
+const router = new express.Router();
 
 const verifyToken = require('../../middleware/isLogin');
 const isAdmin = require('../../middleware/isAdmin');
@@ -17,10 +17,10 @@ router.get('user/:username/avatar', userController.getAvatar);
 
 // Upload avatar
 router.post(
-  '/user/:username/avatar',
-  verifyToken,
-  uploadController.upload.single('image'),
-  userController.uploadAvatar,
+    '/user/:username/avatar',
+    verifyToken,
+    uploadController.upload.single('image'),
+    userController.uploadAvatar,
 );
 
 // Delete avatar
@@ -31,16 +31,16 @@ router.get('/user/test/all', userController.publicAccess);
 
 // Content for users who have logged in
 router.get(
-  '/user/test/userPanel',
-  [verifyToken],
-  userController.userPanel,
+    '/user/test/userPanel',
+    [verifyToken],
+    userController.userPanel,
 );
 
 // Only allow admin to access
 router.get(
-  '/user/test/adminPanel',
-  [verifyToken, isAdmin],
-  userController.adminPanel,
+    '/user/test/adminPanel',
+    [verifyToken, isAdmin],
+    userController.adminPanel,
 );
 
 module.exports = router;
