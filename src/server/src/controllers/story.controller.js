@@ -12,7 +12,71 @@ const crawlStory = async (req, res) => {
       filename: '',
     });
   } catch (err) {
-    res.status(500).send({ error: err });
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getPartContentsOfStory = async (req, res) => {
+  try {
+    const { limit } = req.params;
+    let contents = await Story.findByPk(req.params.storyId,{
+      attributes: [
+        'contents',
+        sequelize.literal('SUBSTRING(contents, 1, $limit) as contents')
+      ],
+      bind: {limit}
+    });
+    if (!contents) {
+      throw new Error();
+    };
+    res.status(200).send({
+      message: 'successful',
+      data: contents,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getContentsOfStory = async (req, res) => {
+  try {
+    const contents = await Story.findByPk(req.params.storyId,{
+      attributes: ['contents']
+    });
+    if (!contents) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: 'successful',
+      data: contents,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getOtherDataOfStory = async (req, res) => {
+  try {
+    const data = await Story.findByPk(req.params.storyId,{
+      attributes: { exclude: ['contents'] }
+    });
+    if (!data) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: 'successful',
+      data: data,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
   }
 };
 
@@ -98,7 +162,7 @@ const extractMedia = async (contents) => {
   // eslint-disable-next-line
   const regex = /\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\)/gi;
 
-  return contents.matchAll(regex).reduce((prev, cur) => [...prev, cur[1]], []);
+  return Array.from(contents.matchAll(regex), x => x[1]);
 };
 
 const createStory = async (req, res) => {
@@ -278,4 +342,7 @@ module.exports = {
   crawlStory,
   voteStory,
   updateStoryView,
+  getContentsOfStory,
+  getPartContentsOfStory,
+  getOtherDataOfStory
 };

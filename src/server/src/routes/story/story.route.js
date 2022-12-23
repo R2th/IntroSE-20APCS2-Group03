@@ -7,9 +7,11 @@ const storyController = require('../../controllers/story.controller');
 const { upload } = require('../../controllers/upload.controller');
 
 // Crawl the story
-router.get('/story/:limit', storyController.getAllStories);
+router.get('/story/all/:limit', storyController.getAllStories);
 router.get('/story/newest/:limit', storyController.getNewestStories);
 router.get('/story/me', verifyToken, storyController.getStoriesOfUser);
+router.get('/story/:storyId/contents/:limit', verifyToken, storyController.getPartContentsOfStory);
+router.get('/story/:storyId/fullcontents', verifyToken, storyController.getContentsOfStory);
 router.post('/story/crawl', upload.single('story'), storyController.crawlStory);
 router.put(
   '/story/:storyId',
