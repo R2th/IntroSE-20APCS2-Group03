@@ -1,14 +1,14 @@
-const { DataTypes } = require('sequelize');
+const {DataTypes} = require('sequelize');
 const dotEnv = require('dotenv');
 const chalk = require('chalk');
-const { sequelize } = require('./database');
+const {sequelize} = require('./database');
 
 dotEnv.config();
 
 sequelize
-  .authenticate()
-  .then(() => console.log(chalk.green(`[DATABASE] "${process.env.PG_DB}" is connected`)))
-  .catch((err) => console.log(err));
+    .authenticate()
+    .then(() => console.log(chalk.green(`[DATABASE] "${process.env.PG_DB}" is connected`)))
+    .catch((err) => console.log(err));
 
 const db = {};
 
