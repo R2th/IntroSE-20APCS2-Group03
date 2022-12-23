@@ -19,14 +19,14 @@ dotEnv.config();
 // });
 
 module.exports.sequelize = new Sequelize(
-  process.env.PG_DB,
-  process.env.PG_USERNAME,
-  process.env.PG_PASSWORD,
-  {
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    dialect: 'postgres',
-    // logging: (msg) => console.log(chalk.yellow(msg), "\n"),
-    logging: false,
-  },
+    process.env.PG_DB,
+    process.env.PG_USERNAME,
+    process.env.PG_PASSWORD,
+    {
+      host: process.env.PG_HOST,
+      port: process.env.PG_PORT,
+      dialect: 'postgres',
+      // logging: (msg) => console.log(chalk.yellow(msg), "\n"),
+      logging: false,
+    },
 );

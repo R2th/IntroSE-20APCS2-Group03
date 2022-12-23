@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { sequelize } = require('../db/database');
+const {sequelize} = require('../db/database');
 const db = require('../db/index');
 
 const Story = db.story;
@@ -12,13 +12,13 @@ const crawlStory = async (req, res) => {
       filename: '',
     });
   } catch (err) {
-    res.status(500).send({ error: err });
+    res.status(500).send({error: err});
   }
 };
 
 const getAllStories = async (req, res) => {
   try {
-    const { limit } = req.params;
+    const {limit} = req.params;
     const stories = await Story.findAll({
       limit,
     });
@@ -38,7 +38,7 @@ const getAllStories = async (req, res) => {
 
 const getNewestStories = async (req, res) => {
   try {
-    const { limit } = req.params;
+    const {limit} = req.params;
     const stories = await Story.findAll({
       order: [['createdAt', 'DESC']],
       limit,
@@ -74,8 +74,8 @@ const getStoryByStoryId = async (req, res) => {
 
 const getStoriesOfUser = async (req, res) => {
   try {
-    const { userId } = req;
-    const { limit } = req.body;
+    const {userId} = req;
+    const {limit} = req.body;
     const stories = await Story.findAll({
       where: {
         author_id: userId,
@@ -107,12 +107,12 @@ const createStory = async (req, res) => {
       encoding: 'utf8',
       flag: 'r',
     });
-    const { contentsShort } = req.body;
+    const {contentsShort} = req.body;
     const mediaList = await extractMedia(contents);
     const authorId = req.userId;
-    const { title } = req.body;
-    const { tag } = req.body;
-    const { isPremium } = req.body;
+    const {title} = req.body;
+    const {tag} = req.body;
+    const {isPremium} = req.body;
 
     const story = await Story.create({
       contents,
@@ -150,11 +150,11 @@ const updateStory = async (req, res) => {
       encoding: 'utf8',
       flag: 'r',
     });
-    const { contentsShort } = req.body;
+    const {contentsShort} = req.body;
     const mediaList = await extractMedia(contents);
-    const { title } = req.body;
-    const { tag } = req.body;
-    const { isPremium } = req.body;
+    const {title} = req.body;
+    const {tag} = req.body;
+    const {isPremium} = req.body;
 
     story.set({
       contents,
@@ -180,7 +180,7 @@ const updateStory = async (req, res) => {
 
 const deleteStory = async (req, res) => {
   try {
-    const { storyId } = req.params;
+    const {storyId} = req.params;
     const story = await Story.findOne({
       where: {
         id: storyId,
@@ -206,7 +206,7 @@ const deleteStory = async (req, res) => {
 
 const calculateVotes = async (storyId) => {
   const reaction = await Reaction.findAll({
-    where: { story_id: storyId },
+    where: {story_id: storyId},
     attributes: [[sequelize.fn('sum', sequelize.col('react_type')), 'points']],
     raw: true,
   });
@@ -216,7 +216,7 @@ const calculateVotes = async (storyId) => {
 
 // Upvote/Downvote
 const voteStory = async (req, res) => {
-  const { userId } = req;
+  const {userId} = req;
   // const story = await Story.findOne({ id: req.param.storyId });
 
   const prevReaction = await Reaction.findOne({
@@ -236,8 +236,8 @@ const voteStory = async (req, res) => {
   } else {
     // update type of vote if exist
     await Story.update(
-      { react_type: req.param.reactType },
-      { where: { story_id: req.body.storyId } },
+        {react_type: req.param.reactType},
+        {where: {story_id: req.body.storyId}},
     );
   }
 
@@ -249,12 +249,12 @@ const voteStory = async (req, res) => {
 
 // Update the number of view
 const updateStoryView = async (req, res) => {
-  const { storyId } = req.body;
+  const {storyId} = req.body;
   const prev = await Story.findByPk(storyId);
   try {
     const story = await Story.update(
-      { views: prev.views + 1 },
-      { where: { id: storyId } },
+        {views: prev.views + 1},
+        {where: {id: storyId}},
     );
     res.status(200).send({
       message: 'successful',
