@@ -19,17 +19,6 @@ const adminPanel = (req, res) => {
   });
 };
 
-const uploadAvatar = async (req, res) => {
-  await User.update(
-      {avatar: req.file.filename},
-      {
-        where: {
-          username: req.params.username,
-        },
-      },
-  );
-  res.send('file uploaded successfully');
-};
 
 const getAvatar = async (req, res) => {
   const user = await User.findOne({
@@ -45,10 +34,10 @@ const getAvatar = async (req, res) => {
   }
 };
 
+
 module.exports = {
   publicAccess,
   userPanel,
   adminPanel,
-  uploadAvatar,
   getAvatar,
 };

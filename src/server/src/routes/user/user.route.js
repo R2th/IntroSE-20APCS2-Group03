@@ -16,12 +16,12 @@ const uploadController = require('../../controllers/upload.controller');
 router.get('user/:username/avatar', userController.getAvatar);
 
 // Upload avatar
-router.post(
-    '/user/:username/avatar',
-    verifyToken,
-    uploadController.upload.single('image'),
-    userController.uploadAvatar,
-);
+// router.post(
+//     '/user/:username/avatar',
+//     verifyToken,
+//     uploadController.upload.single('image'),
+//     userController.uploadAvatar,
+// );
 
 // Delete avatar
 // router.delete('/user/:username/avatar', (req, res) => {});
