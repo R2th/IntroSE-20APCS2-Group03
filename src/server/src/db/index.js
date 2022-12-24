@@ -66,6 +66,11 @@ db.comment.belongsTo(db.story, {
   onDelete: 'cascade',
 });
 
+db.comment.belongsTo(db.comment, {
+  foreignKey: 'parent_id',
+  onDelete: 'cascade',
+});
+
 db.ROLES = ['user', 'admin'];
 
 module.exports = db;

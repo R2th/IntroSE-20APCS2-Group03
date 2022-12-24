@@ -2,10 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define(
       'comment',
       {
-        comment_id: {
-          type: DataTypes.INTEGER,
-          primaryKey: true,
-        },
+        // We don't need to define 'id' attribute since postgres do it automaticallly
         user_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
@@ -13,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         story_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
+        },
+        parent_id: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          defaultValue: null,
         },
         content: {
           type: DataTypes.STRING,
@@ -30,6 +32,5 @@ module.exports = (sequelize, DataTypes) => {
       // timestamps: true,
       },
   );
-
   return Comment;
 };
