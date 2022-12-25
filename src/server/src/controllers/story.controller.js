@@ -125,14 +125,19 @@ const getStoryByStoryId = async (req, res) => {
   try {
     const story = await Story.findByPk(req.params.storyId);
     if (!story) {
-      throw new Error();
+      res.status(404).send({
+        message: 'Story not found.',
+      });
     }
+    console.log(story);
     res.status(200).send({
       message: 'successful',
       data: story,
     });
   } catch (err) {
-    res.status(404).send();
+    res.status(500).send({
+      message: err.message,
+    });
   }
 };
 
@@ -179,7 +184,7 @@ const createStory = async (req, res) => {
     const {isPremium} = req.body;
 
     const story = await Story.create({
-      contents,
+      contents: contents,
       contents_short: contentsShort,
       media_list: mediaList,
       author_id: authorId,
@@ -207,7 +212,9 @@ const updateStory = async (req, res) => {
     const story = await Story.findByPk(req.params.storyId);
 
     if (!story) {
-      throw new Error();
+      res.status(404).send({
+        message: 'Story not found.',
+      });
     }
 
     const contents = await fs.readFileSync(req.file.path, {
@@ -245,6 +252,7 @@ const updateStory = async (req, res) => {
 const deleteStory = async (req, res) => {
   try {
     const {storyId} = req.params;
+    console.log(storyId);
     const story = await Story.findOne({
       where: {
         id: storyId,
@@ -253,7 +261,9 @@ const deleteStory = async (req, res) => {
     });
 
     if (!story) {
-      res.status(404).send();
+      res.status(404).send({
+        message: 'Story not found.',
+      });
     }
 
     await story.destroy();

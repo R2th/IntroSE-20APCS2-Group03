@@ -58,11 +58,18 @@ db.reaction.belongsTo(db.story, {
 db.comment.belongsTo(db.user, {
   targetKey: 'id',
   foreignKey: 'user_id',
+  onDelete: 'cascade',
 });
 
 db.comment.belongsTo(db.story, {
   targetKey: 'id',
   foreignKey: 'story_id',
+  onDelete: 'cascade',
+});
+
+db.comment.belongsTo(db.comment, {
+  foreignKey: 'parent_id',
+  onDelete: 'cascade',
 });
 
 db.collection.belongsTo(db.user, {

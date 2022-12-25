@@ -19,7 +19,7 @@ router.put(
     upload.single('story'),
     storyController.updateStory,
 );
-router.delete('/story/', verifyToken, storyController.deleteStory);
+router.delete('/story/:storyId', verifyToken, storyController.deleteStory);
 router.get('/story/:storyId', storyController.getStoryByStoryId);
 router.post(
     '/story/',
