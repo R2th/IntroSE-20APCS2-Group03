@@ -5,10 +5,13 @@ const router = new express.Router();
 
 const collectionController = require('../../controllers/collection.controller');
 
-router.get('/me/collection/', verifyToken, collectionController.getCollections);
-router.post('/me/collection/', verifyToken, collectionController.createCollection);
-router.patch('/me/collection/add', verifyToken, collectionController.addStoryToCollection); // ???
-router.patch('/me/collection/remove', verifyToken, collectionController.removeStoryToCollection); // ???
+router.get('/collection/', verifyToken, collectionController.getCollections);
+router.post('/collection/', verifyToken, collectionController.createCollection);
+router.delete('/collection/:collectionId/', verifyToken, collectionController.deleteCollection);
+router.patch('/collection/:collectionId/:storyId/add/', verifyToken, collectionController.addStoryToCollection); // ???
+router.patch('/collection/:collectionId/:storyId/remove/',
+    verifyToken,
+    collectionController.removeStoryToCollection); // ???
 
 
 module.exports = router;

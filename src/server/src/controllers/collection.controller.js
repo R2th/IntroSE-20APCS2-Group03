@@ -52,11 +52,37 @@ const createCollection = async (req, res) => {
   }
 };
 
+const deleteCollection = async (req, res) => {
+  try {
+    const collectionId = req.params.collectionId;
+    const userId = req.userId;
+    const collection = await Collection.findOne({
+      where: {
+        id: collectionId,
+        user_id: userId,
+      },
+    });
+    if (!collection) {
+      throw new Error();
+    };
+    await collection.destroy();
+    res.status(200).send({
+      message: 'successful',
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
 const addStoryToCollection = async (req, res) => {
   try {
-    const collectionId = req.body.collectionId;
+    const collectionId = req.params.collectionId;
     const userId = req.userId;
-    const storyId = req.body.storyId;
+    const storyId = req.params.storyId;
+    console.log(collectionId);
+    console.log(storyId);
     const collection = await Collection.findOne({
       where: {
         id: collectionId,
@@ -80,9 +106,9 @@ const addStoryToCollection = async (req, res) => {
 
 const removeStoryToCollection = async (req, res) => {
   try {
-    const collectionId = req.body.collectionId;
+    const collectionId = req.params.collectionId;
     const userId = req.userId;
-    const storyId = req.body.storyId;
+    const storyId = req.params.storyId;
     const collection = await Collection.findOne({
       where: {
         id: collectionId,
@@ -108,6 +134,7 @@ const removeStoryToCollection = async (req, res) => {
 module.exports = {
   getCollections,
   createCollection,
+  deleteCollection,
   addStoryToCollection,
   removeStoryToCollection,
 };
