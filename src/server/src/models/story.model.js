@@ -3,9 +3,8 @@ module.exports = (sequelize, DataTypes) => {
       'story',
       {
         id: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           primaryKey: true,
-          autoIncrement: true,
         },
         contents: {
           type: DataTypes.TEXT,

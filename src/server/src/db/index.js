@@ -1,4 +1,4 @@
-const {DataTypes} = require('sequelize');
+const {DataTypes, DOUBLE} = require('sequelize');
 const dotEnv = require('dotenv');
 const chalk = require('chalk');
 const {sequelize} = require('./database');
@@ -21,6 +21,7 @@ db.story = require('../models/story.model')(sequelize, DataTypes);
 db.draft = require('../models/draft.model')(sequelize, DataTypes);
 db.reaction = require('../models/reaction.model')(sequelize, DataTypes);
 db.comment = require('../models/comment.model')(sequelize, DataTypes);
+db.collection = require('../models/collection.model')(sequelize, DataTypes);
 
 db.role.belongsToMany(db.user, {
   through: 'users_roles',
@@ -69,6 +70,23 @@ db.comment.belongsTo(db.story, {
 db.comment.belongsTo(db.comment, {
   foreignKey: 'parent_id',
   onDelete: 'cascade',
+});
+
+db.collection.belongsTo(db.user, {
+  targetKey: 'id',
+  foreignKey: 'user_id',
+});
+
+db.story.belongsToMany(db.collection, {
+  through: 'collections_stories',
+  foreignKey: 'story_id',
+  otherKey: 'collection_id',
+});
+
+db.collection.belongsToMany(db.story, {
+  through: 'collections_stories',
+  foreignKey: 'collection_id',
+  otherKey: 'story_id',
 });
 
 db.ROLES = ['user', 'admin'];

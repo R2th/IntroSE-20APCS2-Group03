@@ -52,6 +52,8 @@ app.use(require('./routes/comment/comment.route'));
 
 app.use(require('./routes/search/search.route'));
 
+app.use(require('./routes/collection/collection.route'));
+
 // Configure a middleware for 404s and the error handler
 // app.use((req, res, next) => {
 //   res.status(404);

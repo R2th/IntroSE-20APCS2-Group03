@@ -1,21 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-  const Reaction = sequelize.define(
-      'reaction',
+  const Collection = sequelize.define(
+      'collection',
       {
+        id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
+        name: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
         user_id: {
           type: DataTypes.INTEGER,
-          primaryKey: true,
-        },
-        story_id: {
-          type: DataTypes.STRING,
-          primaryKey: true,
-        },
-        react_type: {
-          type: DataTypes.INTEGER,
           allowNull: false,
-          validate: {
-            isIn: [[-1, 1]],
-          },
         },
         createdAt: {
           type: DataTypes.DATE,
@@ -29,6 +27,6 @@ module.exports = (sequelize, DataTypes) => {
         // timestamps: true,
       },
   );
-
-  return Reaction;
+  return Collection;
 };
+
