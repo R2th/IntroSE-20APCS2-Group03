@@ -35,6 +35,10 @@ export const AUTH_ROUTES = [
     path: 'set_password',
     element: <SetNewPassword />,
   },
+  {
+    path: "profile",
+    element: <Profile />,
+  },
 ];
 
 export const ROUTES = [
