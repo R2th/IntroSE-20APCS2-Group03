@@ -1,5 +1,4 @@
 import * as React from 'react';
-// eslint-disable-next-line
 import Astronaut from 'assets/svg/astronaut.svg';
 import styles from './styles.module.scss';
 
@@ -96,7 +95,6 @@ function SetNewPassword() {
                   />
                 </div>
               </div>
-              {/* eslint-disable-next-line */}
               {errorForm.newPassword && <span className={styles.validationText}>{errorForm.newPassword}</span>}
               <div>
                 <div style={{ margin: 'auto' }}>
@@ -119,7 +117,6 @@ function SetNewPassword() {
                   />
                 </div>
               </div>
-              {/* eslint-disable-next-line */}
               {errorForm.confirmPassword && <span className={styles.validationText}>{errorForm.confirmPassword}</span>}
               <div className={styles.send_message} onClick={onSetNewPassword} aria-hidden>
                 CHANGE

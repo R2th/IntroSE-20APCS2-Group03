@@ -1,6 +1,5 @@
-import { API_ENDPOINT } from './const';
-// eslint-disable-next-line
 import DefaultThumbnailImage from 'assets/png/default.png';
+import { API_ENDPOINT } from './const';
 
 export const buildPath = (...args) => args
   .map((part, i) => {
@@ -48,20 +47,6 @@ export const thumbnailUrl = (content) => {
     return content.tags.data[0].image;
   }
   return fullPathImage(content.user);
-};
-
-export const parseJwt = (token) => {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(
-    window
-      .atob(base64)
-      .split('')
-      .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
-      .join(''),
-  );
-
-  return JSON.parse(jsonPayload);
 };
 
 export const encodeQueryData = (data) => {

@@ -14,5 +14,7 @@ module.exports = {
     // 'comma-dangle': [2, 'always-multiline'],
     'react/prop-types': 0,
     'linebreak-style': 0,
+    'max-len': 'off',
+    'import/no-extraneous-dependencies': 'off',
   },
 };

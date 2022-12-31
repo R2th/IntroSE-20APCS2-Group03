@@ -44,6 +44,8 @@ app.use(require('./routes/admin/content.route'));
 
 app.use(require('./routes/default/auth.route'));
 
+app.use(require('./routes/default/content.route'));
+
 app.use(require('./routes/user/user.route'));
 
 app.use(require('./routes/story/story.route'));

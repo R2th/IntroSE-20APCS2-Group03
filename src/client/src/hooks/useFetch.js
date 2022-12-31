@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-// eslint-disable-next-line
 import { fullPathAPI } from 'utils/helpers';
 
 const useFetch = (
@@ -64,7 +63,6 @@ const useFetch = (
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
   return {

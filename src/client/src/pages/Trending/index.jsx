@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react';
 
-// eslint-disable-next-line
 import Card from 'components/Card';
-// eslint-disable-next-line
 import Spinner from 'components/Spinner';
 
-// eslint-disable-next-line
 import useFetch from 'hooks/useFetch';
 
-// eslint-disable-next-line
 import { INIT_DATA_CONTENT } from 'utils/const';
-// eslint-disable-next-line
 import { encodeQueryData } from 'utils/helpers';
 
 import styles from './styles.module.scss';
@@ -41,7 +36,6 @@ function Trending() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-    // eslint-disable-next-line
   }, []);
 
   return (
