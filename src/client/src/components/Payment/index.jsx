@@ -1,37 +1,95 @@
-import React from 'react';
+import * as React from 'react';
 import styles from './styles.module.scss';
-const Payment = () => {
+
+function Payment() {
+  let payOption = 0;
+  const onClickOption = (value) => () => {
+    payOption = value;
+    if (payOption === '5') {
+      alert(payOption);
+    } else if (payOption === '20') {
+      alert(payOption);
+    } else if (payOption === '130') {
+      alert(payOption);
+    } else alert('??');
+    // console.log('Pay ' + payOption);
+  };
+
   return (
     <div className={styles.container}>
-      <div className={styles.background}></div>
-      <span className={styles.selectPay}>
-        <p className={styles.choose}>
-          1 Week
-          <div>Recommend for Beginner</div>
-          <div>You can see all stories with premium label</div>
-          <button>$5</button>
-        </p>
-        <p className={styles.choose}>
-          1 Month
+      <div className={styles.selectPay}>
+        <div className={styles.option}>
+          <div className={styles.text}>1 Week</div>
+          <hr />
           <div>
-            You can see all stories with premium label. You can update your stories only for premium member and earn
-            money. Tax for each story you earn is 5%.
+            <ul>
+              <div>
+                <i className="fa fa-check" aria-hidden="true" />
+                <span>View all premium labeled stories.</span>
+              </div>
+            </ul>
           </div>
-          <button>$20</button>
-        </p>
-        <p className={styles.choose}>
-          1 Year
+          <button type="button" onClick={onClickOption('5')}>
+            $5
+          </button>
+        </div>
+        <div className={styles.option}>
+          <div className={styles.text}>1 Month</div>
+          <hr />
           <div>
-            {' '}
-            Are you passionate and long-term commitment to BytesGo? This is the package suitable for your necessary. You
-            can see all stories with premium label. You can update your stories only for premium member and earn money
-            without tax.
+            <ul>
+              <div>
+                <i className="fa fa-check" aria-hidden="true" />
+                <span>View all premium labeled stories.</span>
+              </div>
+              <div>
+                <i className="fa fa-check" aria-hidden="true" />
+                <span>Stories only for premium members.</span>
+              </div>
+              <div>
+                <i className="fa fa-check" aria-hidden="true" />
+                <span>Uploading limited premium stories: 10</span>
+              </div>
+              <div>
+                <i className="fa fa-check" aria-hidden="true" />
+                <span>Tax: 5%.</span>
+              </div>
+            </ul>
           </div>
-          <button>$130</button>
-        </p>
-      </span>
+          <button type="button" onClick={onClickOption('20')}>
+            $20
+          </button>
+        </div>
+        <div className={styles.option}>
+          <div className={styles.text}>1 Year</div>
+          <hr />
+          <div>
+            <ul>
+              <div>
+                <i className="fa fa-check" aria-hidden="true" />
+                <span>View all premium labeled stories.</span>
+              </div>
+              <div>
+                <i className="fa fa-check" aria-hidden="true" />
+                <span>Stories only for premium members.</span>
+              </div>
+              <div>
+                <i className="fa fa-check" aria-hidden="true" />
+                <span>Unlimited uploading premium stories.</span>
+              </div>
+              <div>
+                <i className="fa fa-check" aria-hidden="true" />
+                <span>Tax: 0%</span>
+              </div>
+            </ul>
+          </div>
+          <button type="button" onClick={onClickOption('130')}>
+            $130
+          </button>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default Payment;
