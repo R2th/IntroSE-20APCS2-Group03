@@ -12,6 +12,7 @@ import ForgotPassword from 'components/ForgotPassword';
 import SendMessage from 'components/FP_SendMessage';
 import SetNewPassword from 'components/SetNewPassword';
 import ProtectedRoute from 'components/ProtectedRoute';
+import Editor from 'components/Editor';
 
 export const AUTH_ROUTES = [
   {
@@ -50,8 +51,8 @@ export const ROUTES = [
         element: <Story />,
       },
       {
-        path: 'edit',
-        element: <div>check this</div>,
+        path: ':slug/edit',
+        element: <Editor />,
       },
       {
         path: 'trending',

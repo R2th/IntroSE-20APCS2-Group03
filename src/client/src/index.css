@@ -65,10 +65,21 @@ button {
   font-weight: 500;
 }
 
+.w-md-editor-toolbar ul, .w-md-editor-toolbar li {
+  display: inline-flex;
+}
+.w-md-editor-toolbar-divider {
+  height: auto;
+}
+
 textarea:hover,
 input:hover,
 button:hover {
   box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+}
+
+input:focus {
+  border: 1px solid #0079d3;
 }
 
 input:hover,
@@ -77,6 +88,8 @@ input:focus-within {
   border: 1px solid #0079d3;
   background-color: #fff;
   margin: -1px;
+  outline: 0;
+
 }
 
 button:active {

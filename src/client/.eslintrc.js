@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    'comma-dangle': [2, 'always-multiline'],
+    // 'comma-dangle': [2, 'always-multiline'],
     'react/prop-types': 0,
     'linebreak-style': 0,
   },

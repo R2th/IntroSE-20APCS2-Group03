@@ -1,15 +1,16 @@
 import { API_ENDPOINT } from './const';
 // eslint-disable-next-line
-import DefaultThumbnailImage from "assets/png/default.png"
+import DefaultThumbnailImage from 'assets/png/default.png';
 
-export const buildPath = (...args) => args.map((part, i) => {
-  if (i === 0) {
-    // eslint-disable-next-line
+export const buildPath = (...args) => args
+  .map((part, i) => {
+    if (i === 0) {
+      // eslint-disable-next-line
         return part.trim().replace(/[\/]*$/g, '');
-  }
-  // eslint-disable-next-line
+    }
+    // eslint-disable-next-line
       return part.trim().replace(/(^[\/]*|[\/]*$)/g, '');
-})
+  })
   .filter((x) => x.length)
   .join('/');
 

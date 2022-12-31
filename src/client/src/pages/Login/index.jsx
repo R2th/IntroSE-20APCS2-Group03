@@ -58,7 +58,7 @@ function Login() {
   };
   const onLogin = async () => {
     setErrorForm(validate());
-    await handleLogin({ username, password });
+    await handleLogin({ username, password: password.content });
   };
 
   return (
