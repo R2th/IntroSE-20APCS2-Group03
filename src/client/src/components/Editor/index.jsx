@@ -5,6 +5,8 @@ import rehypeSanitize from 'rehype-sanitize';
 
 import onImagePasted from 'utils/onImagePasted';
 
+import debounce from 'utils/debounce';
+import moment from 'moment';
 import styles from './styles.module.scss';
 
 function Editor() {
@@ -15,6 +17,11 @@ function Editor() {
   const [content, setContent] = useState('');
 
   const [caretPos, setCaretPos] = useState(0);
+  const [saveTime, setSaveTime] = useState(null);
+
+  const saveDraft = () => {
+    setSaveTime(new Date());
+  };
 
   const onChangeCaretPosition = (e) => {
     setCaretPos(e.target.selectionStart);
@@ -43,6 +50,23 @@ function Editor() {
     setCurTag(e.target.value);
   };
 
+  const renderSaveStatus = () => {
+    const value = (new Date() - saveTime) / 1000;
+    if (value < 0) {
+      return 'Last edit was seconds ago';
+    }
+    if (value < 60) {
+      return `Last edit was ${Math.floor(value)} seconds ago`;
+    }
+    if (value < 60 * 60) {
+      return `Last edit was ${Math.floor(value / 60)} minutes ago`;
+    }
+    if (value < 60 * 60 * 24) {
+      return `Last edit was ${Math.floor(value / (60 * 60))} hours ago`;
+    }
+    return `Last edit was at ${moment(saveTime).format('MMMM Do YYYY, hh:mm')}`;
+  };
+
   return (
     <div className={styles.container}>
       <div
@@ -51,22 +75,34 @@ function Editor() {
         <div className={styles.input}>
           <input value={title} onChange={onChangeTitle} placeholder="Fill your story title" />
         </div>
-        <div className={styles.tags}>
-          {tags.map((tag) => (
-            <span key={tag} className={styles.tag}>
-              <span className={styles.tagName}>
-                {tag}
+        <div className={styles.publishContainer}>
+          <div className={styles.tags}>
+            {tags.map((tag) => (
+              <span key={tag} className={styles.tag}>
+                <span className={styles.tagName}>
+                  {tag}
+                </span>
+                <i className="icon icon-close" onClick={() => onDeleteTag(tag)} aria-hidden />
               </span>
-              <i className="icon icon-close" onClick={() => onDeleteTag(tag)} aria-hidden />
-            </span>
-          ))}
-          <input className={styles.inputTags} value={curTag} placeholder="..." onChange={onChangeCurTag} onKeyDown={onChangeTags} />
+            ))}
+            <input className={styles.inputTags} value={curTag} placeholder="..." onChange={onChangeCurTag} onKeyDown={onChangeTags} />
+          </div>
+          <button type="button" className={styles.publishBtn}>Publish</button>
         </div>
+        {saveTime && (
+        <div className={styles.saveStatus}>
+          <div>
+            <span>
+              {renderSaveStatus()}
+            </span>
+          </div>
+        </div>
+        )}
         <div className={styles.mdEditor} data-color-mode="light">
           <MDEditor
             value={content}
             onChange={setContent}
-            onKeyUp={onChangeCaretPosition}
+            onKeyUp={debounce(saveDraft, 3000)}
             onMouseUp={onChangeCaretPosition}
             height="100%"
             enableScroll

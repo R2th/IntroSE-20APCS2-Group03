@@ -51,7 +51,6 @@ const onImagePasted = async (dataTransfer, setMarkdown) => {
       const s = username + Date.now().toString();
       const form = new FormData();
       const newRenamedFile = new File([file], `${file.name.split('.').at(-2)}-${md5(s)}.${file.name.split('.').at(-1)}`);
-      console.log(newRenamedFile.name);
       form.append('image', newRenamedFile);
 
       const uploadResponse = await fetch(buildPath(API_ENDPOINT, 'upload-image'), {
@@ -68,7 +67,7 @@ const onImagePasted = async (dataTransfer, setMarkdown) => {
 
       if (status.filename) {
         const url = buildPath(API_ENDPOINT, 'image', status.filename);
-        const insertedMarkdown = insertToTextArea(`![](${url.replaceAll(' ', '%20')})`);
+        const insertedMarkdown = insertToTextArea(`![image](${url.replaceAll(' ', '%20')})\n`);
         if (!insertedMarkdown) {
           return;
         }
