@@ -1,6 +1,21 @@
 .small-verc-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   min-width: 200px;
+  background: linear-gradient(white, white) padding-box, linear-gradient(to bottom, #3b82f6, #d946ef) border-box;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  filter: drop-shadow(0px 20px 50px rgba(18, 17, 39, 0.08));
+  cursor: pointer;
+  /* width: 1000px; */
+  min-height: 180px;
+  margin: 20px;
+  .thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   &:first-child {
     margin-left: 0;
   }

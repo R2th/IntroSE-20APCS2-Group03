@@ -90,7 +90,7 @@ function Card({ content, type = 'fullWidth' }) {
 
     case 'small-verc':
       return (
-        <div className="card-container small-verc-card" onClick={onClickStory} aria-hidden="true">
+        <div className="small-verc-card" onClick={onClickStory} aria-hidden="true">
           <div className="thumbnail small-verc">
             <img alt="thumbnail" src={thumbnailUrl(content)} />
           </div>
