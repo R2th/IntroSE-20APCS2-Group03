@@ -52,7 +52,7 @@ function Editor() {
 
   const renderSaveStatus = () => {
     const value = (new Date() - saveTime) / 1000;
-    if (value < 0) {
+    if (value < 1) {
       return 'Last edit was seconds ago';
     }
     if (value < 60) {

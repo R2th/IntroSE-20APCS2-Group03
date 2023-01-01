@@ -36,10 +36,7 @@ export const AUTH_ROUTES = [
     path: 'set_password',
     element: <SetNewPassword />,
   },
-  {
-    path: 'payment',
-    element: <Payment />,
-  },
+ 
 ];
 
 export const ROUTES = [
@@ -80,5 +77,9 @@ export const ROUTES = [
   {
     path: 'auth',
     children: AUTH_ROUTES,
+  },
+  {
+    path: 'premium',
+    element: <Payment />,
   },
 ];

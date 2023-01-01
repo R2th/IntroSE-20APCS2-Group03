@@ -78,10 +78,12 @@ function Navbar() {
               </svg>
               <span>Write</span>
             </span>
-            <span className={styles.upgrade}>
-              <i className="icon icon-topic_activism" style={{ color: '#fff' }} />
-              <span>Unlimited Access</span>
-            </span>
+            <a href="premium" style={{ textDecoration: 'none' }}>
+              <span className={styles.upgrade}>
+                <i className="icon icon-topic_activism" style={{ color: '#fff' }} />
+                <span>Unlimited Access</span>
+              </span>
+            </a>
             <span className={styles.icChat}>
               <i className="icon icon-chat" />
             </span>
