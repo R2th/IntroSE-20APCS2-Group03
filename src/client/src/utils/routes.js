@@ -13,6 +13,7 @@ import SendMessage from 'components/FP_SendMessage';
 import SetNewPassword from 'components/SetNewPassword';
 import ProtectedRoute from 'components/ProtectedRoute';
 import Editor from 'components/Editor';
+import Payment from 'components/Payment';
 
 export const AUTH_ROUTES = [
   {
@@ -34,6 +35,10 @@ export const AUTH_ROUTES = [
   {
     path: 'set_password',
     element: <SetNewPassword />,
+  },
+  {
+    path: 'payment',
+    element: <Payment />,
   },
 ];
 
