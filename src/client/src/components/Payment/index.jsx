@@ -64,7 +64,7 @@ function Payment() {
                     chooser={payOption}
                     header="Standard"
                     description="Grow and nurture your network"
-                    body={['View all premium labeled stories.', 'Support quality writing.', 'Access on any device']}
+                    body={['View all premium labeled stories.', 'Limit reading premium stories: 50.']}
                   />
                   <Section
                     onClickOption={onClickOption}
@@ -74,7 +74,7 @@ function Payment() {
                     upgradedFrom="All Standard features, plus:"
                     header="Premium"
                     description="Grow and nurture your network"
-                    body={['View all premium labeled stories.', 'Support quality writing.', 'Access on any device']}
+                    body={['No ads.', 'Upgrade your stories to premium labeled.', 'Limited uploading premium stories: 10.']}
                   />
                   <Section
                     onClickOption={onClickOption}
@@ -84,11 +84,7 @@ function Payment() {
                     upgradedFrom="All Premium features, plus:"
                     header="Business"
                     description="Grow and nurture your network"
-                    body={[
-                      'View all premium labeled stories.',
-                      'Support quality writing.',
-                      'Access on any device',
-                    ]}
+                    body={['Unlimited reading premium stories', 'Unlimited uploading premium stories.', 'Earning money from your stories.', 'Save 5% compared to premium package']}
                   />
                   <Section
                     onClickOption={onClickOption}
@@ -98,12 +94,7 @@ function Payment() {
                     upgradedFrom="All Premium features, plus:"
                     header="Senior"
                     description="Grow and nurture your network"
-                    body={[
-                      'View all premium labeled stories.',
-                      'View all premium labeled stories.',
-                      'Support quality writing.',
-                      'Access on any device',
-                    ]}
+                    body={['Unlimited reading premium stories', 'Unlimited uploading premium stories.', 'Earning money from your stories.', 'Recommended to many users within hours after uploading', 'Save 15% compared to premium package']}
                   />
                 </div>
                 {payOption !== 0 && (
