@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import './styles.scss';
 
-// eslint-disable-next-line
 import { fullPathImage, thumbnailUrl } from 'utils/helpers';
 
 function MediumCard({ content }) {

@@ -89,5 +89,14 @@
     "service": "src/service",
     "hooks": "src/hooks",
     "assets": "src/assets"
-  }
+  },
+  "bundledDependencies": [
+    "components",
+    "utils",
+    "contexts",
+    "pages",
+    "service",
+    "hooks",
+    "assets"
+  ]
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// eslint-disable-next-line
 import { buildPath, fullPathAPI, encodeQueryData } from 'utils/helpers';
 
 import styles from './styles.module.scss';

@@ -1,16 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 
-// eslint-disable-next-line
 import Card from 'components/Card';
-// eslint-disable-next-line
 import Sidebar from 'components/Sidebar';
 
-// eslint-disable-next-line
 import { INIT_DATA_CONTENT } from 'utils/const';
 
-// eslint-disable-next-line
 import { StylesContext } from 'contexts/Styles/stylesContext';
-// eslint-disable-next-line
 import useFetch from 'hooks/useFetch';
 
 import './style.scss';
@@ -27,7 +22,6 @@ function Home() {
   useEffect(() => {
     const prefix = document.querySelector('.center-box').getBoundingClientRect().x;
     setPrefix(prefix);
-    // eslint-disable-next-line
   }, []);
 
   return (
@@ -48,7 +42,6 @@ function Home() {
               </div>
               <div className="hoz-line" />
             </div>
-            {/* eslint-disable-next-line */}
             {contents && contents.slice(10).map((content) => <Card content={content} key={content.id} />)}
             <div className="section">
               <div className="section_title">
@@ -61,7 +54,6 @@ function Home() {
               </div>
               <div className="hoz-line" />
             </div>
-            {/* eslint-disable-next-line */}
             {contents && contents.slice(-10).map((content) => <Card content={content} key={content.id} />)}
             <div className="section">
               <div className="section_title">

@@ -1,9 +1,7 @@
 import * as React from 'react';
 
 import { useParams, useNavigate } from 'react-router-dom';
-// eslint-disable-next-line
 import { thumbnailUrl } from 'utils/helpers';
-// eslint-disable-next-line
 import Spinner from 'components/Spinner';
 import useFetch from '../../hooks/useFetch';
 import styles from './styles.module.scss';

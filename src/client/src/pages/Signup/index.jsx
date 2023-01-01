@@ -1,9 +1,8 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import Astronaut from 'assets/svg/astronaut.svg';
 import { SignupUser } from '../../hooks/useAuth';
 import styles from './styles.module.scss';
-// eslint-disable-next-line
-import Astronaut from 'assets/svg/astronaut.svg';
 
 function Signup({ setToken }) {
   const [username, setUsername] = React.useState('');
@@ -165,13 +164,11 @@ function Signup({ setToken }) {
                   className={styles.inputField}
                 />
               </div>
-              {/* eslint-disable-next-line */}
               {formErrors.username && <span className={styles.validationText}>{formErrors.username}</span>}
               <div>
                 <i className="fa fa-envelope-o styles.icon" aria-hidden="true" />
                 <input value={email} onChange={onChangeMail} placeholder="Email" className={styles.inputField} />
               </div>
-              {/* eslint-disable-next-line */}
               {formErrors.email && <span className={styles.validationText}>{formErrors.email}</span>}
               <div>
                 <i className="fa fa-lock styles.icon" aria-hidden="true" style={{ left: 3 }} />
@@ -192,7 +189,6 @@ function Signup({ setToken }) {
                   }}
                 />
               </div>
-              {/* eslint-disable-next-line */}
               {formErrors.password && <span className={styles.validationText}>{formErrors.password}</span>}
               <div>
                 <div>

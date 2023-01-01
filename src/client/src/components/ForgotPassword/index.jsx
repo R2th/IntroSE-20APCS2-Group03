@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-// eslint-disable-next-line
 import Astronaut from 'assets/svg/astronaut.svg';
 import styles from './styles.module.scss';
 
@@ -58,7 +57,6 @@ function ForgotPassword() {
                   className={styles.inputField}
                 />
               </div>
-              {/* eslint-disable-next-line max-len */}
               {errorForm.phoneOrMail && <span className={styles.validationText}>{errorForm.phoneOrMail}</span>}
               <div className={styles.send_message} onClick={onForgotPassword} aria-hidden>
                 SUBMIT

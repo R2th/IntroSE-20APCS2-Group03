@@ -1,5 +1,4 @@
 import * as React from 'react';
-// eslint-disable-next-line
 import Astronaut from 'assets/svg/astronaut.svg';
 import { useNavigate } from 'react-router-dom';
 import styles from './style.module.scss';
@@ -20,7 +19,6 @@ function Login() {
     if (token) {
       navigate('/');
     }
-    // eslint-disable-next-line
   }, []);
 
   if (token) {
@@ -84,7 +82,6 @@ function Login() {
                   className={styles.inputField}
                 />
               </div>
-              {/* eslint-disable-next-line */}
               {errorForm.username && <span className={styles.validationText}>{errorForm.username}</span>}
               <div>
                 <div style={{ margin: 'auto' }}>
@@ -107,7 +104,6 @@ function Login() {
                   />
                 </div>
               </div>
-              {/* eslint-disable-next-line */}
               {errorForm.password && <span className={styles.validationText}>{errorForm.password}</span>}
             </div>
             <p className={styles.forgotPassword}>

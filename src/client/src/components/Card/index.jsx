@@ -7,7 +7,6 @@ import './small_hoz.style.scss';
 import './small_verc.style.scss';
 import classNames from 'classnames';
 
-// eslint-disable-next-line
 import { fullPathImage, thumbnailUrl } from 'utils/helpers';
 import MediumCard from './CardMedium';
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-// eslint-disable-next-line
 import Astronaut from 'assets/svg/astronaut.svg';
 import styles from './styles.module.scss';
 // import Communications from "react-native-communications";
@@ -78,7 +77,6 @@ function SendMessage() {
                   className={styles.inputField}
                 />
               </div>
-              {/* eslint-disable-next-line */}
               {errorForm.inputCode && <span className={styles.validationText}>{errorForm.inputCode}</span>}
             </div>
             <div className={styles.send_button} onClick={onForgotPassword} aria-hidden>

@@ -1,14 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-// eslint-disable-next-line
 import Logo from 'assets/svg/logo.svg';
-// eslint-disable-next-line
-import { parseJwt } from 'utils/helpers';
-// eslint-disable-next-line
 import { md5 } from 'utils/md5';
-// eslint-disable-next-line
 import { AuthContext } from 'contexts/Auth/authContext';
+import { parseJwt } from 'utils/token';
 import Menu from '../Menu';
 import styles from './styles.module.scss';
 
@@ -26,7 +22,8 @@ function Navbar() {
   };
 
   const onCreateNewStory = () => {
-    const s = parseJwt(token).username || `r2th${Date.now().toString()}`;
+    const { username } = parseJwt(token);
+    const s = username + Date.now().toString();
     navigate(`/story/${md5(s)}/edit`);
   };
 
