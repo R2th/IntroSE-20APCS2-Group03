@@ -21,5 +21,6 @@ module.exports = {
     'semi': ['error', 'always'],
     'no-unused-vars': 0,
     'max-len': ['error', {'code': 120}],
+    'require-jsdoc': 0,
   },
 };
