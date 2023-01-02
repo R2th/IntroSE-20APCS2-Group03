@@ -125,7 +125,7 @@ const getStoryByStoryId = async (req, res) => {
   try {
     const story = await Story.findByPk(req.params.storyId);
     if (!story) {
-      res.status(404).send({
+      return res.status(404).send({
         message: 'Story not found.',
       });
     }
@@ -211,7 +211,7 @@ const updateStory = async (req, res) => {
     const story = await Story.findByPk(req.params.storyId);
 
     if (!story) {
-      res.status(404).send({
+      return res.status(404).send({
         message: 'Story not found.',
       });
     }
@@ -259,7 +259,7 @@ const deleteStory = async (req, res) => {
     });
 
     if (!story) {
-      res.status(404).send({
+      return res.status(404).send({
         message: 'Story not found.',
       });
     }
