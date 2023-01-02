@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
       'comment',
       {
         // We don't need to define 'id' attribute since postgres do it automaticallly
-        user_id: {
+        username: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },

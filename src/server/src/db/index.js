@@ -26,28 +26,28 @@ db.collection = require('../models/collection.model')(sequelize, DataTypes);
 db.role.belongsToMany(db.user, {
   through: 'users_roles',
   foreignKey: 'roleId',
-  otherKey: 'userId',
+  otherKey: 'username',
 });
 
 db.user.belongsToMany(db.role, {
   through: 'users_roles',
-  foreignKey: 'userId',
+  foreignKey: 'username',
   otherKey: 'roleId',
 });
 
 db.story.belongsTo(db.user, {
-  targetKey: 'id',
-  foreignKey: 'author_id',
+  targetKey: 'username',
+  foreignKey: 'author_username',
 });
 
 db.draft.belongsTo(db.user, {
-  targetKey: 'id',
-  foreignKey: 'author_id',
+  targetKey: 'username',
+  foreignKey: 'author_username',
 });
 
 db.reaction.belongsTo(db.user, {
-  targetKey: 'id',
-  foreignKey: 'user_id',
+  targetKey: 'username',
+  foreignKey: 'username',
 });
 
 db.reaction.belongsTo(db.story, {
@@ -56,8 +56,8 @@ db.reaction.belongsTo(db.story, {
 });
 
 db.comment.belongsTo(db.user, {
-  targetKey: 'id',
-  foreignKey: 'user_id',
+  targetKey: 'username',
+  foreignKey: 'username',
   onDelete: 'cascade',
 });
 
@@ -73,8 +73,8 @@ db.comment.belongsTo(db.comment, {
 });
 
 db.collection.belongsTo(db.user, {
-  targetKey: 'id',
-  foreignKey: 'user_id',
+  targetKey: 'username',
+  foreignKey: 'username',
 });
 
 db.story.belongsToMany(db.collection, {
