@@ -8,6 +8,7 @@ import { parseJwt } from 'utils/token';
 import Menu from '../Menu';
 import styles from './styles.module.scss';
 import UserDropdownMenu from './userMenu';
+import NotificationPopUp from './notification';
 
 function Navbar() {
   const [search, setSearch] = useState('');
@@ -86,12 +87,13 @@ function Navbar() {
             </span>
             <span className={styles.icNotice}>
               <div>
-                <span>4</span>
-                <i className="icon icon-notification" />
+                <NotificationPopUp />
               </div>
             </span>
           </div>
-          <UserDropdownMenu />
+          <div>
+            <UserDropdownMenu />
+          </div>
         </div>
       </div>
     </header>
