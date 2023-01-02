@@ -10,13 +10,13 @@ import styles from './styles.module.scss';
 import UserDropdownMenu from './userMenu';
 
 function Navbar() {
+  const location = useLocation();
+  if (location.pathname.startsWith('/auth')) return null;
+
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
 
   const { token } = useContext(AuthContext);
-
-  if (location.pathname.startsWith('/auth')) return null;
 
   const onChangeSearch = (e) => {
     setSearch(e.target.value);
@@ -75,23 +75,48 @@ function Navbar() {
               </svg>
               <span>Write</span>
             </span>
-            <a href="premium" style={{ textDecoration: 'none' }}>
+            <div style={{ textDecoration: 'none' }} onClick={() => navigate('premium')} type="button" aria-hidden>
               <span className={styles.upgrade}>
                 <i className="icon icon-topic_activism" style={{ color: '#fff' }} />
                 <span>Unlimited Access</span>
               </span>
-            </a>
-            <span className={styles.icChat}>
-              <i className="icon icon-chat" />
-            </span>
-            <span className={styles.icNotice}>
-              <div>
-                <span>4</span>
-                <i className="icon icon-notification" />
-              </div>
-            </span>
+            </div>
+            {token && (
+            <>
+              <span className={styles.icChat}>
+                <i className="icon icon-chat" />
+              </span>
+              <span className={styles.icNotice}>
+                <div>
+                  <span>4</span>
+                  <i className="icon icon-notification" />
+                </div>
+              </span>
+            </>
+            ) }
           </div>
-          <UserDropdownMenu />
+          {token ? <UserDropdownMenu /> : (
+            <div className={styles.icGroup} style={{ marginLeft: 50 }}>
+              <button
+                type="button"
+                className={styles.signupBtn}
+                onClick={() => {
+                  navigate('auth/signup');
+                }}
+              >
+                Sign Up
+              </button>
+              <button
+                type="button"
+                className={styles.loginBtn}
+                onClick={() => {
+                  navigate('auth/login');
+                }}
+              >
+                Log In
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

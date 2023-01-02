@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import classNames from 'classnames';
 
@@ -6,6 +6,7 @@ import MoreIcon from 'assets/svg/icon-more.svg';
 import useFetch from 'hooks/useFetch';
 import { INIT_DATA_CONTENT } from 'utils/const';
 import Card from 'components/Card';
+import { AuthContext } from 'contexts/Auth/authContext';
 import styles from './styles.module.scss';
 
 function Profile() {
@@ -143,7 +144,16 @@ function Profile() {
 
 function ProfileMain() {
   const [tab, setTab] = useState('stories');
-  const { data } = useFetch('/story/newest/10', INIT_DATA_CONTENT);
+  const { token } = useContext(AuthContext);
+
+  const { data } = useFetch('/story/me', INIT_DATA_CONTENT, (prev, _data) => {
+    if (prev === INIT_DATA_CONTENT) {
+      return _data.data;
+    }
+    return [...prev, ..._data.data];
+  }, {
+    Authorization: `Bearer ${token}`,
+  });
 
   const renderStoriesTab = () => (
     <div className={styles.postsTab}>

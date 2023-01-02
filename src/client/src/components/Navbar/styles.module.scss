@@ -414,7 +414,7 @@
   width: 264px !important;
   height: auto !important;
   max-height: 573px !important;
-  left: 1580px !important;
+  right: 2px !important;
   top: 45.5px !important;
   background-color: #fff !important;
   position: absolute !important;
@@ -449,4 +449,39 @@
     font-weight: 400;
     line-height: 16px;
   }
+}
+
+.signupBtn {
+  background-color: #edeff1;
+  border-color: transparent;
+  color: #000;
+  font-family: Noto Sans, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: unset;
+  line-height: 17px;
+  text-transform: unset;
+  min-height: 32px;
+  min-width: 32px;
+  padding: 4px 16px;
+  border-radius: 9999px;
+  width: 120px;
+  cursor: pointer;
+}
+
+.loginBtn {
+  font-family: Noto Sans, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: unset;
+  line-height: 17px;
+  text-transform: unset;
+  min-height: 32px;
+  min-width: 32px;
+  padding: 4px 16px;
+  border-radius: 9999px;
+  width: 120px;
+  background: -webkit-linear-gradient(#3b82f6, #d946ef);
+  color: #fff;
+  cursor: pointer;
 }
