@@ -65,6 +65,7 @@ function Payment() {
                     header="Standard"
                     description="Grow and nurture your network"
                     body={['View all premium labeled stories.', 'Limit reading premium stories: 50.']}
+                    price="100.000đ"
                   />
                   <Section
                     onClickOption={onClickOption}
@@ -75,6 +76,7 @@ function Payment() {
                     header="Premium"
                     description="Grow and nurture your network"
                     body={['No ads.', 'Upgrade your stories to premium labeled.', 'Limited uploading premium stories: 10.']}
+                    price="250.000đ"
                   />
                   <Section
                     onClickOption={onClickOption}
@@ -85,6 +87,7 @@ function Payment() {
                     header="Business"
                     description="Grow and nurture your network"
                     body={['Unlimited reading premium stories', 'Unlimited uploading premium stories.', 'Earning money from your stories.', 'Save 5% compared to premium package']}
+                    price="400.000đ"
                   />
                   <Section
                     onClickOption={onClickOption}
@@ -95,6 +98,7 @@ function Payment() {
                     header="Senior"
                     description="Grow and nurture your network"
                     body={['Unlimited reading premium stories', 'Unlimited uploading premium stories.', 'Earning money from your stories.', 'Recommended to many users within hours after uploading', 'Save 15% compared to premium package']}
+                    price="650.000đ"
                   />
                 </div>
                 {payOption !== 0 && (
@@ -103,7 +107,7 @@ function Payment() {
                     <div className={styles.left}>
                       <div>
                         <h2 className={styles.featureName}>
-                          Business features
+                          Payment
                         </h2>
                         <span className={styles.description}>
                           Premium Business members get an average of 6X more profile views
@@ -220,6 +224,7 @@ function Section({
   description, body,
   upgradedFrom,
   value,
+  price,
 }) {
   return (
     <section
@@ -264,7 +269,7 @@ function Section({
           </ul>
         </div>
         <button className={styles.emberView} type="button" onClick={onClickOption(value)}>
-          Learn more
+          {price}
         </button>
       </div>
     </section>
