@@ -2,10 +2,15 @@ import React, { useState, useContext } from 'react';
 import Modal from 'components/Modal';
 import classNames from 'classnames';
 import { AuthContext } from 'contexts/Auth/authContext';
+import { useNavigate } from 'react-router-dom';
+import { parseJwt } from 'utils/token';
 import styles from './styles.module.scss';
 
 function UserDropdownMenu() {
-  const { handleLogout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { token, handleLogout } = useContext(AuthContext);
+
+  const { username } = parseJwt(token);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -64,7 +69,7 @@ function UserDropdownMenu() {
       </div>
       <Modal isOpen={isOpen} handleClose={handleClose} className={styles.dropDownUserMenu} contentClassName={styles.dropDownUserMenuContent}>
         <div className={styles.menu}>
-          <a href="profile">
+          <div type="button" onClick={() => navigate(`/${username}`)} aria-hidden>
             <div className={styles.item}>
               <div>
                 <i className="icon icon-profile" style={{ color: 'inherit' }} />
@@ -73,7 +78,7 @@ function UserDropdownMenu() {
                 </div>
               </div>
             </div>
-          </a>
+          </div>
           <a href="list">
             <div className={styles.item}>
               <div>

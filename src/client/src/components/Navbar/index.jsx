@@ -75,12 +75,12 @@ function Navbar() {
               </svg>
               <span>Write</span>
             </span>
-            <a href="premium" style={{ textDecoration: 'none' }}>
+            <div style={{ textDecoration: 'none' }} onClick={() => navigate('premium')} type="button" aria-hidden>
               <span className={styles.upgrade}>
                 <i className="icon icon-topic_activism" style={{ color: '#fff' }} />
                 <span>Unlimited Access</span>
               </span>
-            </a>
+            </div>
             {token && (
             <>
               <span className={styles.icChat}>
