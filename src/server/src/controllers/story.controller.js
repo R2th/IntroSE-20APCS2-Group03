@@ -20,7 +20,10 @@ const crawlStory = async (req, res) => {
 
 const getPartContentsOfStory = async (req, res) => {
   try {
-    const {limit} = req.params;
+    const limit = parseInt(req.params.limit);
+    if (!limit) {
+      throw new Error();
+    }
     const contents = await Story.findByPk(req.params.storyId, {
       attributes: [
         'contents',
@@ -84,6 +87,7 @@ const getAllStories = async (req, res) => {
   try {
     const {limit} = req.params;
     const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
       limit,
     });
     if (!stories) {
@@ -104,6 +108,7 @@ const getNewestStories = async (req, res) => {
   try {
     const {limit} = req.params;
     const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
       order: [['createdAt', 'DESC']],
       limit,
     });
@@ -146,6 +151,7 @@ const getStoriesOfUser = async (req, res) => {
     const {userId} = req;
     const {limit} = req.body;
     const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
       where: {
         author_id: userId,
       },
@@ -177,13 +183,14 @@ const createStory = async (req, res) => {
       flag: 'r',
     });
 
-    const {contentsShort, title, id, tag, isPremium} = JSON.parse(req.body.data);
+    const {id, contentsShort, thumbnail, title, tag, isPremium} = JSON.parse(req.body.data);
     const mediaList = await extractMedia(contents);
     const authorId = req.userId;
 
     const story = await Story.create({
       contents: contents,
       contents_short: contentsShort,
+      thumbnail: thumbnail,
       media_list: mediaList,
       author_id: authorId,
       title,
@@ -221,13 +228,14 @@ const updateStory = async (req, res) => {
       flag: 'r',
     });
 
-    const {contentsShort, title, tag, isPremium} = req.body;
+    const {contentsShort, thumbnail, title, tag, isPremium} = req.body;
 
     const mediaList = await extractMedia(contents);
 
     story.set({
       contents,
       contents_short: contentsShort,
+      thumbnail: thumbnail,
       media_list: mediaList,
       title,
       tag,

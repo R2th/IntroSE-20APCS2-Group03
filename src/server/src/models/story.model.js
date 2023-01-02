@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.TEXT,
           allowNull: false,
         },
+        thumbnail: {
+          type: DataTypes.STRING,
+          allowNull: true,
+        },
         media_list: {
           type: new DataTypes.ARRAY(DataTypes.STRING),
           allowNull: true,
