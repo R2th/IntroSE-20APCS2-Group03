@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { sequelize } = require('../db/database');
+const {sequelize} = require('../db/database');
 const db = require('../db/index');
 
 const Story = db.story;
@@ -12,14 +12,82 @@ const crawlStory = async (req, res) => {
       filename: '',
     });
   } catch (err) {
-    res.status(500).send({ error: err });
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getPartContentsOfStory = async (req, res) => {
+  try {
+    const limit = parseInt(req.params.limit);
+    if (!limit) {
+      throw new Error();
+    }
+    const contents = await Story.findByPk(req.params.storyId, {
+      attributes: [
+        'contents',
+        sequelize.literal('SUBSTRING(contents, 1, $limit) as contents'),
+      ],
+      bind: {limit},
+    });
+    if (!contents) {
+      throw new Error();
+    };
+    res.status(200).send({
+      message: 'successful',
+      data: contents,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getContentsOfStory = async (req, res) => {
+  try {
+    const contents = await Story.findByPk(req.params.storyId, {
+      attributes: ['contents'],
+    });
+    if (!contents) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: 'successful',
+      data: contents,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getOtherDataOfStory = async (req, res) => {
+  try {
+    const data = await Story.findByPk(req.params.storyId, {
+      attributes: {exclude: ['contents']},
+    });
+    if (!data) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: 'successful',
+      data: data,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
   }
 };
 
 const getAllStories = async (req, res) => {
   try {
-    const { limit } = req.params;
+    const {limit} = req.params;
     const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
       limit,
     });
     if (!stories) {
@@ -38,8 +106,9 @@ const getAllStories = async (req, res) => {
 
 const getNewestStories = async (req, res) => {
   try {
-    const { limit } = req.params;
+    const {limit} = req.params;
     const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
       order: [['createdAt', 'DESC']],
       limit,
     });
@@ -61,22 +130,28 @@ const getStoryByStoryId = async (req, res) => {
   try {
     const story = await Story.findByPk(req.params.storyId);
     if (!story) {
-      throw new Error();
+      return res.status(404).send({
+        message: 'Story not found.',
+      });
     }
+    console.log(story);
     res.status(200).send({
       message: 'successful',
       data: story,
     });
   } catch (err) {
-    res.status(404).send();
+    res.status(500).send({
+      message: err.message,
+    });
   }
 };
 
 const getStoriesOfUser = async (req, res) => {
   try {
-    const { userId } = req;
-    const { limit } = req.body;
+    const {userId} = req;
+    const {limit} = req.body;
     const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
       where: {
         author_id: userId,
       },
@@ -98,7 +173,7 @@ const extractMedia = async (contents) => {
   // eslint-disable-next-line
   const regex = /\!\[[-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*\]\(([-a-zA-Z0-9(@:%_\+.~#?&\/\/=]*)\)/gi;
 
-  return contents.matchAll(regex).reduce((prev, cur) => [...prev, cur[1]], []);
+  return Array.from(contents.matchAll(regex), (x) => x[1]);
 };
 
 const createStory = async (req, res) => {
@@ -107,22 +182,22 @@ const createStory = async (req, res) => {
       encoding: 'utf8',
       flag: 'r',
     });
-    const { contentsShort } = req.body;
+
+    const {id, contentsShort, thumbnail, title, tag, isPremium} = JSON.parse(req.body.data);
     const mediaList = await extractMedia(contents);
     const authorId = req.userId;
-    const { title } = req.body;
-    const { tag } = req.body;
-    const { isPremium } = req.body;
 
     const story = await Story.create({
-      contents,
+      contents: contents,
       contents_short: contentsShort,
+      thumbnail: thumbnail,
       media_list: mediaList,
       author_id: authorId,
       title,
       tag,
       view: 0,
       isPremium,
+      id,
     });
 
     res.status(200).send({
@@ -143,22 +218,24 @@ const updateStory = async (req, res) => {
     const story = await Story.findByPk(req.params.storyId);
 
     if (!story) {
-      throw new Error();
+      return res.status(404).send({
+        message: 'Story not found.',
+      });
     }
 
     const contents = await fs.readFileSync(req.file.path, {
       encoding: 'utf8',
       flag: 'r',
     });
-    const { contentsShort } = req.body;
+
+    const {contentsShort, thumbnail, title, tag, isPremium} = req.body;
+
     const mediaList = await extractMedia(contents);
-    const { title } = req.body;
-    const { tag } = req.body;
-    const { isPremium } = req.body;
 
     story.set({
       contents,
       contents_short: contentsShort,
+      thumbnail: thumbnail,
       media_list: mediaList,
       title,
       tag,
@@ -180,7 +257,8 @@ const updateStory = async (req, res) => {
 
 const deleteStory = async (req, res) => {
   try {
-    const { storyId } = req.params;
+    const {storyId} = req.params;
+    console.log(storyId);
     const story = await Story.findOne({
       where: {
         id: storyId,
@@ -189,7 +267,9 @@ const deleteStory = async (req, res) => {
     });
 
     if (!story) {
-      res.status(404).send();
+      return res.status(404).send({
+        message: 'Story not found.',
+      });
     }
 
     await story.destroy();
@@ -206,7 +286,7 @@ const deleteStory = async (req, res) => {
 
 const calculateVotes = async (storyId) => {
   const reaction = await Reaction.findAll({
-    where: { story_id: storyId },
+    where: {story_id: storyId},
     attributes: [[sequelize.fn('sum', sequelize.col('react_type')), 'points']],
     raw: true,
   });
@@ -216,7 +296,7 @@ const calculateVotes = async (storyId) => {
 
 // Upvote/Downvote
 const voteStory = async (req, res) => {
-  const { userId } = req;
+  const {userId} = req;
   // const story = await Story.findOne({ id: req.param.storyId });
 
   const prevReaction = await Reaction.findOne({
@@ -236,8 +316,8 @@ const voteStory = async (req, res) => {
   } else {
     // update type of vote if exist
     await Story.update(
-      { react_type: req.param.reactType },
-      { where: { story_id: req.body.storyId } },
+        {react_type: req.param.reactType},
+        {where: {story_id: req.body.storyId}},
     );
   }
 
@@ -249,12 +329,12 @@ const voteStory = async (req, res) => {
 
 // Update the number of view
 const updateStoryView = async (req, res) => {
-  const { storyId } = req.body;
+  const {storyId} = req.body;
   const prev = await Story.findByPk(storyId);
   try {
     const story = await Story.update(
-      { views: prev.views + 1 },
-      { where: { id: storyId } },
+        {views: prev.views + 1},
+        {where: {id: storyId}},
     );
     res.status(200).send({
       message: 'successful',
@@ -278,4 +358,7 @@ module.exports = {
   crawlStory,
   voteStory,
   updateStoryView,
+  getContentsOfStory,
+  getPartContentsOfStory,
+  getOtherDataOfStory,
 };

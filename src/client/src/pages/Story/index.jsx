@@ -12,11 +12,9 @@ function Story() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useFetch(`/posts/${slug}`, {}, (prev, content) => content.post.data);
+  const { data } = useFetch(`/story/${slug}`, {}, (prev, content) => content.data);
 
   const post = data;
-
-  console.log(post);
 
   React.useEffect(() => {
     const html = document.querySelector('html');

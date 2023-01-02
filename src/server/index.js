@@ -22,31 +22,32 @@ const initiate = async () => {
 
 if (process.env.RUN_MODE === 'dev') {
   db.sequelize
-    .sync({ force: true })
-    .then(() => {
-      console.log('--------- Ready to heacking ----------------');
-      initiate();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .sync({force: true})
+      .then(() => {
+        console.log('--------- Ready to heacking ----------------');
+        initiate();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 } else if (process.env.RUN_MODE === 'prod') {
   db.sequelize
-    .sync()
-    .then(async () => {
-      const role = await Role.findOne();
-      if (!role) initiate();
-      console.log('--------- Ready to heacking ----------------');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .sync()
+      .then(async () => {
+        const role = await Role.findOne();
+        if (!role) initiate();
+        console.log('--------- Ready to heacking ----------------');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 }
 
 app.listen(port, () => {
-  const { 2: mode } = process.argv;
+  const {2: mode} = process.argv;
   if (mode) {
-    // config[`is${mode[0].toUpperCase()}${mode.slice(1).toLowerCase()}`] = true;
+    // eslint-disable-next-line
+    config[`is${mode[0].toUpperCase()}${mode.slice(1).toLowerCase()}`] = true;
   }
   logger.appStarted(DEFAULT_PORT, HOST, port);
 });

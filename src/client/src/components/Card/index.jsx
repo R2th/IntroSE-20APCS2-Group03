@@ -7,7 +7,6 @@ import './small_hoz.style.scss';
 import './small_verc.style.scss';
 import classNames from 'classnames';
 
-// eslint-disable-next-line
 import { fullPathImage, thumbnailUrl } from 'utils/helpers';
 import MediumCard from './CardMedium';
 
@@ -17,7 +16,7 @@ function Card({ content, type = 'fullWidth' }) {
   const [isHover, setIsHover] = useState(false);
 
   const onClickStory = () => {
-    navigate(`story/${content.slug}`);
+    navigate(`/story/${content.id}`);
   };
 
   switch (type) {
@@ -91,7 +90,7 @@ function Card({ content, type = 'fullWidth' }) {
 
     case 'small-verc':
       return (
-        <div className="card-container small-verc-card" onClick={onClickStory} aria-hidden="true">
+        <div className="small-verc-card" onClick={onClickStory} aria-hidden="true">
           <div className="thumbnail small-verc">
             <img alt="thumbnail" src={thumbnailUrl(content)} />
           </div>

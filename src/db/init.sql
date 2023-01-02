@@ -29,13 +29,64 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: collections; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.collections (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    user_id integer NOT NULL,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
+
+ALTER TABLE public.collections OWNER TO postgres;
+
+--
+-- Name: collections_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.collections_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.collections_id_seq OWNER TO postgres;
+
+--
+-- Name: collections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.collections_id_seq OWNED BY public.collections.id;
+
+
+--
+-- Name: collections_stories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.collections_stories (
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    story_id character varying(255) NOT NULL,
+    collection_id integer NOT NULL
+);
+
+
+ALTER TABLE public.collections_stories OWNER TO postgres;
+
+--
 -- Name: comments; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.comments (
     comment_id integer NOT NULL,
     user_id integer NOT NULL,
-    story_id integer NOT NULL,
+    story_id character varying(255) NOT NULL,
     content character varying(255) NOT NULL,
     "createdAt" timestamp with time zone,
     "updatedAt" timestamp with time zone
@@ -49,9 +100,10 @@ ALTER TABLE public.comments OWNER TO postgres;
 --
 
 CREATE TABLE public.drafts (
-    id integer NOT NULL,
+    id character varying(255) NOT NULL,
     contents text NOT NULL,
     contents_short text NOT NULL,
+    thumbnail character varying(255),
     media_list character varying(255)[],
     author_id integer NOT NULL,
     title character varying(255) NOT NULL,
@@ -65,34 +117,12 @@ CREATE TABLE public.drafts (
 ALTER TABLE public.drafts OWNER TO postgres;
 
 --
--- Name: drafts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.drafts_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.drafts_id_seq OWNER TO postgres;
-
---
--- Name: drafts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.drafts_id_seq OWNED BY public.drafts.id;
-
-
---
 -- Name: reactions; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.reactions (
     user_id integer NOT NULL,
-    story_id integer NOT NULL,
+    story_id character varying(255) NOT NULL,
     react_type integer NOT NULL,
     "createdAt" timestamp with time zone,
     "updatedAt" timestamp with time zone
@@ -120,9 +150,10 @@ ALTER TABLE public.roles OWNER TO postgres;
 --
 
 CREATE TABLE public.stories (
-    id integer NOT NULL,
+    id character varying(255) NOT NULL,
     contents text NOT NULL,
     contents_short text NOT NULL,
+    thumbnail character varying(255),
     media_list character varying(255)[],
     author_id integer NOT NULL,
     title character varying(255) NOT NULL,
@@ -135,28 +166,6 @@ CREATE TABLE public.stories (
 
 
 ALTER TABLE public.stories OWNER TO postgres;
-
---
--- Name: stories_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.stories_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.stories_id_seq OWNER TO postgres;
-
---
--- Name: stories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.stories_id_seq OWNED BY public.stories.id;
-
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
@@ -217,17 +226,10 @@ CREATE TABLE public.users_roles (
 ALTER TABLE public.users_roles OWNER TO postgres;
 
 --
--- Name: drafts id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: collections id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.drafts ALTER COLUMN id SET DEFAULT nextval('public.drafts_id_seq'::regclass);
-
-
---
--- Name: stories id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.stories ALTER COLUMN id SET DEFAULT nextval('public.stories_id_seq'::regclass);
+ALTER TABLE ONLY public.collections ALTER COLUMN id SET DEFAULT nextval('public.collections_id_seq'::regclass);
 
 
 --
@@ -235,6 +237,22 @@ ALTER TABLE ONLY public.stories ALTER COLUMN id SET DEFAULT nextval('public.stor
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: collections; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.collections (id, name, user_id, "createdAt", "updatedAt") FROM stdin;
+\.
+
+
+--
+-- Data for Name: collections_stories; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.collections_stories ("createdAt", "updatedAt", story_id, collection_id) FROM stdin;
+\.
 
 
 --
@@ -398,17 +416,10 @@ COPY public.users_roles ("createdAt", "updatedAt", "roleId", "userId") FROM stdi
 
 
 --
--- Name: drafts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: collections_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.drafts_id_seq', 1, false);
-
-
---
--- Name: stories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.stories_id_seq', 1, false);
+SELECT pg_catalog.setval('public.collections_id_seq', 1, false);
 
 
 --
@@ -416,6 +427,22 @@ SELECT pg_catalog.setval('public.stories_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+
+
+--
+-- Name: collections collections_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.collections
+    ADD CONSTRAINT collections_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: collections_stories collections_stories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.collections_stories
+    ADD CONSTRAINT collections_stories_pkey PRIMARY KEY (story_id, collection_id);
 
 
 --
@@ -472,6 +499,30 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.users_roles
     ADD CONSTRAINT users_roles_pkey PRIMARY KEY ("roleId", "userId");
+
+
+--
+-- Name: collections_stories collections_stories_collection_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.collections_stories
+    ADD CONSTRAINT collections_stories_collection_id_fkey FOREIGN KEY (collection_id) REFERENCES public.collections(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: collections_stories collections_stories_story_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.collections_stories
+    ADD CONSTRAINT collections_stories_story_id_fkey FOREIGN KEY (story_id) REFERENCES public.stories(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: collections collections_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.collections
+    ADD CONSTRAINT collections_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE;
 
 
 --

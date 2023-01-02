@@ -11,7 +11,7 @@ const divider = chalk.gray('\n---------------------------------------');
 const logger = {
   // Called whenever there's an error on the server we want to print
   error: (err) => {
-    console.error("Can't start server due to: ", chalk.red(err));
+    console.error('Can\'t start server due to: ', chalk.red(err));
   },
 
   // Called when express.js app starts on given port w/o errors

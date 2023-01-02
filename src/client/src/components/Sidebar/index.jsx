@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line
 import { INIT_DATA_CONTENT } from 'utils/const';
 
 import './style.scss';

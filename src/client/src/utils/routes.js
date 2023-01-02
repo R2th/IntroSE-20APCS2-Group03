@@ -1,9 +1,8 @@
-/*eslint-disable*/
+/*eslint-disable */
 import Story from 'pages/Story';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import NotFoundPageError from 'pages/NotFoundPage';
-import Postman from 'pages/Postman';
 import Profile from 'pages/Profile';
 import Signup from 'pages/Signup';
 import Trending from 'pages/Trending';
@@ -12,6 +11,8 @@ import ForgotPassword from 'components/ForgotPassword';
 import SendMessage from 'components/FP_SendMessage';
 import SetNewPassword from 'components/SetNewPassword';
 import ProtectedRoute from 'components/ProtectedRoute';
+import Editor from 'components/Editor';
+import Payment from 'components/Payment';
 
 export const AUTH_ROUTES = [
   {
@@ -34,6 +35,7 @@ export const AUTH_ROUTES = [
     path: 'set_password',
     element: <SetNewPassword />,
   },
+
 ];
 
 export const ROUTES = [
@@ -50,8 +52,8 @@ export const ROUTES = [
         element: <Story />,
       },
       {
-        path: 'edit',
-        element: <div>check this</div>,
+        path: ':slug/edit',
+        element: <Editor />,
       },
       {
         path: 'trending',
@@ -60,7 +62,7 @@ export const ROUTES = [
     ],
   },
   {
-    path: 'profile/:id_user',
+    path: ':userId',
     element: (
       <ProtectedRoute>
         <Profile />
@@ -68,11 +70,11 @@ export const ROUTES = [
     ),
   },
   {
-    path: 'postman',
-    element: <Postman />,
-  },
-  {
     path: 'auth',
     children: AUTH_ROUTES,
+  },
+  {
+    path: 'premium',
+    element: <Payment />,
   },
 ];

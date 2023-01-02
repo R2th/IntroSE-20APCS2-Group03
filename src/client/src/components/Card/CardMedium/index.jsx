@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import './styles.scss';
 
-// eslint-disable-next-line
 import { fullPathImage, thumbnailUrl } from 'utils/helpers';
 
 function MediumCard({ content }) {
@@ -14,7 +13,7 @@ function MediumCard({ content }) {
 
   const navigate = useNavigate();
   const onClickStory = () => {
-    navigate(`story/${content.slug}`);
+    navigate(`story/${content.id}`);
   };
 
   return (

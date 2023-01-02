@@ -1,16 +1,16 @@
 import moment from 'moment';
+import DefaultThumbnailImage from 'assets/png/default.png';
 import { API_ENDPOINT } from './const';
-// eslint-disable-next-line
-import DefaultThumbnailImage from "assets/png/default.png"
 
-export const buildPath = (...args) => args.map((part, i) => {
-  if (i === 0) {
+export const buildPath = (...args) => args
+  .map((part, i) => {
+    if (i === 0) {
+      // eslint-disable-next-line
+        return part.trim().replace(/[\/]*$/g, '');
+    }
     // eslint-disable-next-line
-    return part.trim().replace(/[\/]*$/g, '');
-  }
-  // eslint-disable-next-line
-  return part.trim().replace(/(^[\/]*|[\/]*$)/g, '');
-})
+      return part.trim().replace(/(^[\/]*|[\/]*$)/g, '');
+  })
   .filter((x) => x.length)
   .join('/');
 
@@ -32,7 +32,7 @@ export const exportFile = (data, filename) => {
   element.click();
 };
 
-export const fullPathAPI = (path) => bypassCORSUrl(buildPath(API_ENDPOINT, path || ''));
+export const fullPathAPI = (path) => buildPath(API_ENDPOINT, path || '');
 
 export const fullPathImage = (user) => {
   if (user && user.data.avatar) return `https://images.viblo.asia/avatar/${user.data.avatar}`;
@@ -40,28 +40,14 @@ export const fullPathImage = (user) => {
 };
 
 export const thumbnailUrl = (content) => {
-  if (!content.slug) return DefaultThumbnailImage;
-  if (content.thumbnail_url) {
-    return content.thumbnail_url;
+  if (!content.id || !content.media_list) return DefaultThumbnailImage;
+  if (content.media_list.length > 0) {
+    return content.media_list[0];
   }
-  if (content.tags.data.length > 0) {
-    return content.tags.data[0].image;
-  }
+  // if (content.tags.data.length > 0) {
+  //   return content.tags.data[0].image;
+  // }
   return fullPathImage(content.user);
-};
-
-export const parseJwt = (token) => {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(
-    window
-      .atob(base64)
-      .split('')
-      .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
-      .join(''),
-  );
-
-  return JSON.parse(jsonPayload);
 };
 
 export const encodeQueryData = (data) => {

@@ -1,7 +1,5 @@
 import React from 'react';
-// eslint-disable-next-line
 import icLoading from 'assets/svg/spinning-circles.svg';
-// eslint-disable-next-line
 import icLoadingSecondary from 'assets/svg/spinning-circles-second.svg';
 import classNames from 'classnames';
 import styles from './styles.module.scss';

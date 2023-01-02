@@ -80,6 +80,15 @@ function md5cycle(x, k) {
   x[3] = add32(d, x[3]);
 }
 
+function cmn(q, a, b, x, s, t) {
+  a = add32(add32(a, q), add32(x, t));
+  return add32((a << s) | (a >>> (32 - s)), b);
+}
+
+function ff(a, b, c, d, x, s, t) {
+  return cmn((b & c) | (~b & d), a, b, x, s, t);
+}
+
 function gg(a, b, c, d, x, s, t) {
   return cmn((b & d) | (c & ~d), a, b, x, s, t);
 }
@@ -101,7 +110,7 @@ function md51(s) {
   }
   s = s.substring(i - 64);
   const tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  for (i = 0; i < s.length; i++) tail[i >> 2] |= s.charCodeAt(i) << (i % 4 << 3);
+  for (i = 0; i < s.length; i++) { tail[i >> 2] |= s.charCodeAt(i) << (i % 4 << 3); }
   tail[i >> 2] |= 0x80 << (i % 4 << 3);
   if (i > 55) {
     md5cycle(state, tail);
@@ -132,8 +141,10 @@ function md5blk(s) {
   const md5blks = [];
   let i; /* Andy King said do it this way. */
   for (i = 0; i < 64; i += 4) {
-    md5blks[i >> 2] =
-      s.charCodeAt(i) + (s.charCodeAt(i + 1) << 8) + (s.charCodeAt(i + 2) << 16) + (s.charCodeAt(i + 3) << 24);
+    md5blks[i >> 2] = s.charCodeAt(i)
+      + (s.charCodeAt(i + 1) << 8)
+      + (s.charCodeAt(i + 2) << 16)
+      + (s.charCodeAt(i + 3) << 24);
   }
   return md5blks;
 }
@@ -143,7 +154,7 @@ const hex_chr = '0123456789abcdef'.split('');
 function rhex(n) {
   let s = '';
   let j = 0;
-  for (; j < 4; j++) s += hex_chr[(n >> (j * 8 + 4)) & 0x0f] + hex_chr[(n >> (j * 8)) & 0x0f];
+  for (; j < 4; j++) { s += hex_chr[(n >> (j * 8 + 4)) & 0x0f] + hex_chr[(n >> (j * 8)) & 0x0f]; }
   return s;
 }
 

@@ -1,37 +1,27 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-// eslint-disable-next-line
 import Logo from 'assets/svg/logo.svg';
-// eslint-disable-next-line
-import { parseJwt } from 'utils/helpers';
-// eslint-disable-next-line
 import { md5 } from 'utils/md5';
-// eslint-disable-next-line
 import { AuthContext } from 'contexts/Auth/authContext';
+import { parseJwt } from 'utils/token';
+import Search from 'components/Search';
 import Menu from '../Menu';
 import styles from './styles.module.scss';
+import UserDropdownMenu from './userMenu';
 
 function Navbar() {
-  const [search, setSearch] = useState('');
-  const navigate = useNavigate();
   const location = useLocation();
+  if (location.pathname.startsWith('/auth')) return null;
+
+  const navigate = useNavigate();
 
   const { token } = useContext(AuthContext);
 
-  if (location.pathname.startsWith('/auth')) return null;
-
-  const onChangeSearch = (e) => {
-    setSearch(e.target.value);
-  };
-
   const onCreateNewStory = () => {
-    const s = parseJwt(token).username || `r2th${Date.now().toString()}`;
+    const { username } = parseJwt(token);
+    const s = username + Date.now().toString();
     navigate(`/story/${md5(s)}/edit`);
-  };
-
-  const onClickUserDropdown = () => {
-
   };
 
   return (
@@ -54,10 +44,7 @@ function Navbar() {
         </div>
         <div className={styles.center}>
           <Menu />
-          <div className={styles.search}>
-            <i className="icon icon-search" />
-            <input value={search} onChange={onChangeSearch} placeholder="Search..." className={styles.inputField} />
-          </div>
+          <Search />
           <div className={styles.icGroup}>
             <span className={styles.icTrending}>
               <a href="/story/trending" aria-label="Trending">
@@ -81,63 +68,48 @@ function Navbar() {
               </svg>
               <span>Write</span>
             </span>
-            <span className={styles.upgrade}>
-              <i className="icon icon-topic_activism" style={{ color: '#fff' }} />
-              <span>Unlimited Access</span>
-            </span>
-            <span className={styles.icChat}>
-              <i className="icon icon-chat" />
-            </span>
-            <span className={styles.icNotice}>
-              <div>
-                <span>4</span>
-                <i className="icon icon-notification" />
-              </div>
-            </span>
-          </div>
-          <div className={styles.headerUserDropdown}>
-            <button aria-expanded="false" aria-haspopup="true" id="USER_DROPDOWN_ID" className={styles.dropdownUserBtn} onClick={onClickUserDropdown} type="button">
-              <span className={styles.container}>
-                <span id="email-collection-tooltip-id" className={styles.left}>
-                  <div className={styles.avatarInfo}>
-                    <div className={styles.avatar}>
-                      <div className={styles.background} />
-                      <div className={styles.userAvatar}>
-                        <img
-                          alt="User avatar"
-                          className={styles.userAvatarImg}
-                          src="https://styles.redditmedia.com/t5_6f2r74/styles/profileIcon_snood4a055ab-ddb5-47be-9395-3a2abdb35fb5-headshot.png?width=256&amp;height=256&amp;crop=256:256,smart&amp;s=cb1245dee672a703f1d297aae8f361b27bfc1d57"
-                        />
-                      </div>
-                    </div>
-                    <svg
-                      className={styles.activeStatus}
-                      viewBox="0 0 12 12"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                    >
-                      <circle cx="6" cy="6" r="4" />
-                      <path
-                        fill="white"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M12 6C12 9.31371 9.31371 12 6 12C2.68629 12 0 9.31371 0 6C0 2.68629 2.68629 0 6 0C9.31371 0 12 2.68629 12 6ZM6 10C8.20914 10 10 8.20914 10 6C10 3.79086 8.20914 2 6 2C3.79086 2 2 3.79086 2 6C2 8.20914 3.79086 10 6 10Z"
-                      />
-                    </svg>
-                  </div>
-                  <span className={styles.userInfo}>
-                    <span className={styles.userName}>r2th</span>
-                    <span className={styles.karma}>
-                      <i className="icon icon-karma_fill" />
-                      <span>1 karma</span>
-                    </span>
-                  </span>
-                </span>
-                <i className="icon icon-caret_down" />
+            <div style={{ textDecoration: 'none' }} onClick={() => navigate('premium')} type="button" aria-hidden>
+              <span className={styles.upgrade}>
+                <i className="icon icon-topic_activism" style={{ color: '#fff' }} />
+                <span>Unlimited Access</span>
               </span>
-            </button>
+            </div>
+            {token && (
+            <>
+              <span className={styles.icChat}>
+                <i className="icon icon-chat" />
+              </span>
+              <span className={styles.icNotice}>
+                <div>
+                  <span>4</span>
+                  <i className="icon icon-notification" />
+                </div>
+              </span>
+            </>
+            ) }
           </div>
+          {token ? <UserDropdownMenu /> : (
+            <div className={styles.icGroup} style={{ marginLeft: 50 }}>
+              <button
+                type="button"
+                className={styles.signupBtn}
+                onClick={() => {
+                  navigate('auth/signup');
+                }}
+              >
+                Sign Up
+              </button>
+              <button
+                type="button"
+                className={styles.loginBtn}
+                onClick={() => {
+                  navigate('auth/login');
+                }}
+              >
+                Log In
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

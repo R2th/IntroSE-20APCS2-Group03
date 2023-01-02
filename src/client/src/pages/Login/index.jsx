@@ -1,5 +1,4 @@
 import * as React from 'react';
-// eslint-disable-next-line
 import Astronaut from 'assets/svg/astronaut.svg';
 import { useNavigate } from 'react-router-dom';
 import styles from './style.module.scss';
@@ -20,7 +19,6 @@ function Login() {
     if (token) {
       navigate('/');
     }
-    // eslint-disable-next-line
   }, []);
 
   if (token) {
@@ -32,33 +30,42 @@ function Login() {
   };
 
   const onChangePassword = (e) => {
-    setPassword({ ...password, content: e.target.value });
+    setPassword((prev) => (({ ...prev, content: e.target.value })));
   };
 
   const onChangeHidePassword = () => {
-    setPassword({ ...password, isHide: !password.isHide });
+    setPassword((prev) => ({ ...prev, isHide: !prev.isHide }));
   };
 
   const validate = () => {
-    const err = {};
     if (!username) {
-      err.username = 'Username can not be empty';
+      return { username: 'Username can not be empty' };
     }
-    // else if () { //check from database
-    //  err.username = "Invalid username or email";
-    // }
     if (!password.content) {
-      err.password = 'Password can not be empty';
+      return {
+        password: 'Password can not be empty',
+      };
     }
-    // else if (!password.content) { //check from database
-
-    // }
-
-    return err;
+    return null;
   };
+
   const onLogin = async () => {
-    setErrorForm(validate());
-    await handleLogin({ username, password });
+    const errors = validate();
+    if (errors) {
+      setErrorForm(errors);
+    } else {
+      try {
+        await handleLogin({ username, password: password.content });
+      } catch (err) {
+        setErrorForm({ error: err });
+      }
+    }
+  };
+
+  const onSubmitLogin = (e) => {
+    if (e.keyCode === 13) {
+      onLogin();
+    }
   };
 
   return (
@@ -82,22 +89,23 @@ function Login() {
                   onChange={onChangeMail}
                   placeholder="Username or email"
                   className={styles.inputField}
+                  onKeyDown={onSubmitLogin}
                 />
               </div>
-              {/* eslint-disable-next-line */}
               {errorForm.username && <span className={styles.validationText}>{errorForm.username}</span>}
               <div>
                 <div style={{ margin: 'auto' }}>
                   <i className="fa fa-lock styles.icon" aria-hidden="true" style={{ left: 3 }} />
                   <input
                     value={password.content}
-                    type={password.isHide ? 'text' : 'password'}
+                    type={!password.isHide ? 'text' : 'password'}
                     onChange={onChangePassword}
                     placeholder="Password"
+                    onKeyDown={onSubmitLogin}
                     className={styles.inputField}
                   />
                   <i
-                    className={password.isHide ? 'fa fa-eye' : 'fa fa-eye-slash'}
+                    className={!password.isHide ? 'fa fa-eye' : 'fa fa-eye-slash'}
                     aria-hidden="true"
                     onClick={onChangeHidePassword}
                     style={{
@@ -107,14 +115,21 @@ function Login() {
                   />
                 </div>
               </div>
-              {/* eslint-disable-next-line */}
               {errorForm.password && <span className={styles.validationText}>{errorForm.password}</span>}
+              {errorForm.error && (
+              <span className={styles.validationText}>
+                Login failed:
+                {' '}
+                {errorForm.error}
+                !!
+              </span>
+              )}
             </div>
             <p className={styles.forgotPassword}>
               <a href="/auth/forgot_password">Forgot password?</a>
             </p>
             <div className={styles.login_options}>
-              <div className={styles.login_button} onClick={onLogin} aria-hidden>
+              <div className={styles.login_button} tabIndex="0" onClick={onLogin} aria-hidden role="button">
                 <span>LOG IN</span>
               </div>
               <div className={styles.separate_other}>
