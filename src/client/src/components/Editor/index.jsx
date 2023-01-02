@@ -13,7 +13,7 @@ import { AuthContext } from 'contexts/Auth/authContext';
 import styles from './styles.module.scss';
 
 function Editor() {
-  const { slug } = useParams;
+  const { slug } = useParams();
 
   const { token } = useContext(AuthContext);
 
@@ -40,6 +40,7 @@ function Editor() {
       title,
       tag: tags,
       isPremium: true,
+      id: slug,
     }));
 
     const postRes = await fetch(fullPathAPI('/story/'), {

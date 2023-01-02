@@ -177,7 +177,7 @@ const createStory = async (req, res) => {
       flag: 'r',
     });
 
-    const {contentsShort, title, tag, isPremium} = JSON.parse(req.body.data);
+    const {contentsShort, title, id, tag, isPremium} = JSON.parse(req.body.data);
     const mediaList = await extractMedia(contents);
     const authorId = req.userId;
 
@@ -190,6 +190,7 @@ const createStory = async (req, res) => {
       tag,
       view: 0,
       isPremium,
+      id,
     });
 
     res.status(200).send({
