@@ -1,5 +1,9 @@
 import * as React from 'react';
 import CoWork from 'assets/svg/cowork.svg';
+import {
+  PAYMENT_PLANS,
+} from 'utils/const';
+import FandQ from './FandQ.json';
 import styles from './styles.module.scss';
 
 function Payment() {
@@ -7,14 +11,6 @@ function Payment() {
 
   const onClickOption = (value) => () => {
     setPayOption(value);
-    // if (payOption === '5') {
-    //   alert(payOption);
-    // } else if (payOption === '20') {
-    //   alert(payOption);
-    // } else if (payOption === '130') {
-    //   alert(payOption);
-    // } else alert('??');
-    // console.log('Pay ' + payOption);
   };
 
   return (
@@ -63,8 +59,8 @@ function Payment() {
                     value={1}
                     chooser={payOption}
                     header="Standard"
-                    description="Grow and nurture your network"
-                    body={['View all premium labeled stories.', 'Limit reading premium stories: 50.']}
+                    description="Recommend for beginners"
+                    body={['Reading premium stories.', 'Following other premium users.']}
                     price="100.000đ"
                   />
                   <Section
@@ -74,8 +70,8 @@ function Payment() {
                     chooser={payOption}
                     upgradedFrom="All Standard features, plus:"
                     header="Premium"
-                    description="Grow and nurture your network"
-                    body={['No ads.', 'Upgrade your stories to premium labeled.', 'Limited uploading premium stories: 10.']}
+                    description="Grow up yourself everyday"
+                    body={['Reducing ads.', 'Write premium stories.']}
                     price="250.000đ"
                   />
                   <Section
@@ -85,8 +81,8 @@ function Payment() {
                     chooser={payOption}
                     upgradedFrom="All Premium features, plus:"
                     header="Business"
-                    description="Grow and nurture your network"
-                    body={['Unlimited reading premium stories', 'Unlimited uploading premium stories.', 'Earning money from your stories.', 'Save 5% compared to premium package']}
+                    description="New big ideas effecting culture"
+                    body={['No ads.', 'Earning more money from your stories.', 'Save 5%.']}
                     price="400.000đ"
                   />
                   <Section
@@ -97,7 +93,7 @@ function Payment() {
                     upgradedFrom="All Premium features, plus:"
                     header="Senior"
                     description="Grow and nurture your network"
-                    body={['Unlimited reading premium stories', 'Unlimited uploading premium stories.', 'Earning money from your stories.', 'Recommended to many users within hours after uploading', 'Save 15% compared to premium package']}
+                    body={['No ads.', 'Earning more money from your stories.', 'Reach top trending, recommendation.', 'Save 10%.']}
                     price="650.000đ"
                   />
                 </div>
@@ -107,7 +103,7 @@ function Payment() {
                     <div className={styles.left}>
                       <div>
                         <h2 className={styles.featureName}>
-                          Payment
+                          Feature Details
                         </h2>
                         <span className={styles.description}>
                           Premium Business members get an average of 6X more profile views
@@ -158,11 +154,15 @@ function Payment() {
 
                     </div>
                     <ul className={styles.features}>
-                      <FeatureGroup />
-                      <FeatureGroup />
-                      <FeatureGroup />
+                      <FeatureGroup
+                        value={payOption}
+                      />
                     </ul>
                   </div>
+                  <ul>
+                    <hr />
+                    <FaQ />
+                  </ul>
                 </div>
                 )}
               </div>
@@ -174,28 +174,36 @@ function Payment() {
   );
 }
 
-function FeatureGroup() {
+function FeatureGroup({
+  value,
+}) {
   const renderList = () => (
     <li>
       <div
         className={styles.card}
         aria-disabled="false"
       >
-        <div style={{
-          marginRight: 5,
-          top: 2,
-          position: 'relative',
-        }}
-        >
-          <div>
-            <li-icon aria-hidden="true" type="check" size="small">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor" className="mercado-match" width="16" height="16" focusable="false">
-                <path d="M12.57 2H15L6 15l-5-5 1.41-1.41 3.31 3.3z" />
-              </svg>
-            </li-icon>
-          </div>
-        </div>
-        <span className="mr1">15 InMails per month</span>
+        <ul>
+          {PAYMENT_PLANS[`PAYMENT_PLANS_${value}`].map((content) => (
+            <div style={{
+              marginRight: 10,
+              top: 2,
+              position: 'relative',
+              padding: 7,
+            }}
+            >
+              <li-icon aria-hidden="true" type="check" size="small">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor" className="mercado-match" width="16" height="16" focusable="false">
+                  <path d="M12.57 2H15L6 15l-5-5 1.41-1.41 3.31 3.3z" />
+                </svg>
+              </li-icon>
+              {' '}
+              <span>
+                {content}
+              </span>
+            </div>
+          ))}
+        </ul>
       </div>
     </li>
   );
@@ -210,8 +218,6 @@ function FeatureGroup() {
           s viewed your profile
         </p>
         <ul>
-          {renderList()}
-          {renderList()}
           {renderList()}
         </ul>
       </div>
@@ -252,9 +258,9 @@ function Section({
           >
             {header}
           </div>
-          <h4>
+          <h3>
             {description}
-          </h4>
+          </h3>
         </div>
         <hr className={styles.divider} />
         <div className={styles.cardBody}>
@@ -271,6 +277,32 @@ function Section({
         <button className={styles.emberView} type="button" onClick={onClickOption(value)}>
           {price}
         </button>
+      </div>
+    </section>
+  );
+}
+
+function FaQ() {
+  return (
+    <section className={styles.frame_FAQ}>
+      <h2>Frequently asked questions</h2>
+      <div className={styles.FQ}>
+        {FandQ.map((question) => <h3 className={styles.question}>{question.question_1}</h3>)}
+        {FandQ.map((question) => <span className={styles.question}>{question.answer_1}</span>)}
+        {FandQ.map((question) => <h3 className={styles.question}>{question.question_2}</h3>)}
+        {FandQ.map((question) => <span className={styles.question}>{question.answer_2}</span>)}
+        {FandQ.map((question) => <h3 className={styles.question}>{question.question_3}</h3>)}
+        {FandQ.map((question) => <span className={styles.question}>{question.answer_3}</span>)}
+        {FandQ.map((question) => <h3 className={styles.question}>{question.question_4}</h3>)}
+        {FandQ.map((question) => <span className={styles.question}>{question.answer_4}</span>)}
+      </div>
+      <div className={styles.FQ}>
+        {FandQ.map((question) => <h3 className={styles.question}>{question.question_5}</h3>)}
+        {FandQ.map((question) => <span className={styles.question}>{question.answer_5}</span>)}
+        {FandQ.map((question) => <h3 className={styles.question}>{question.question_6}</h3>)}
+        {FandQ.map((question) => <span className={styles.question}>{question.answer_6}</span>)}
+        {FandQ.map((question) => <h3 className={styles.question}>{question.question_7}</h3>)}
+        {FandQ.map((question) => <span className={styles.question}>{question.answer_7}</span>)}
       </div>
     </section>
   );
