@@ -14,26 +14,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
     .welcomeHeadline {
       max-width: 1128px;
       width: 100%;
       margin: 0.4rem auto 0;
       text-align: center;
     }
+
     .welcomeNotice {
       color: rgba(0, 0, 0, 0.6);
       font-size: 1rem;
       line-height: 1.5;
     }
+
     .proofContainer {
       display: flex;
       justify-content: center;
       text-align: center;
       background-color: inherit;
       padding: 0.8rem;
+
       .centerContainer {
         display: inline-flex;
         align-items: center;
+
         .imgModel {
           .imgViewModel {
             list-style: none;
@@ -41,12 +46,15 @@
             justify-content: center;
             margin: 0;
             padding: 0;
+
             .imgListItem {
               .imgWrapper {
                 display: flex;
+
                 &:first-child {
                   margin-left: 0 !important;
                 }
+
                 img {
                   object-position: center;
                   object-fit: cover;
@@ -76,6 +84,7 @@
             width: 1px;
           }
         }
+
         p {
           margin: 0;
           margin-left: 0.8rem;
@@ -83,6 +92,7 @@
       }
     }
   }
+
   .selectPay {
     margin-bottom: 2rem;
     --premium-color-plan-1: #44712e;
@@ -91,8 +101,10 @@
     --premium-color-plan-4: #523a51;
     --premium-color-plan-5: #8f5849;
     --premium-color-plan-6: #13707e;
+
     .selectLayout {
       width: 1128px;
+
       .content {
         grid-template-areas: 'main';
         grid-template-columns: 100%;
@@ -101,16 +113,20 @@
         grid-template-rows: auto;
         column-gap: 2.4rem;
         row-gap: 2.4rem;
+
         main {
           grid-area: main;
+
           .premiumChooser {
             margin: 2.4rem auto;
+
             .atlas {
               max-width: 1128px;
               margin: 0 auto;
               display: flex;
               flex-wrap: wrap;
               justify-content: center;
+
               section {
                 border-radius: 0.8rem;
                 flex: 1 1 0px;
@@ -123,10 +139,12 @@
                 background-color: #fff;
                 position: relative;
                 box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.8);
+
                 &:hover {
                   filter: none !important;
                   opacity: 1 !important;
                 }
+
                 .accentBar {
                   height: 8px;
                 }
@@ -136,6 +154,7 @@
                   flex-direction: column;
                   height: 100%;
                   padding: 1rem 1rem 2rem;
+
                   .top {
                     .header {
                       font-size: 1.6rem;
@@ -145,6 +164,7 @@
                       justify-content: flex-start;
                       align-items: center;
                     }
+
                     h4 {
                       margin-bottom: 0;
                       font-size: 1rem;
@@ -153,6 +173,7 @@
                       margin-block-start: 0.8em;
                     }
                   }
+
                   .divider {
                     border: 0;
                     border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -161,8 +182,10 @@
                     width: 100%;
                     margin: 16px 0;
                   }
+
                   .cardBody {
                     flex-grow: 1;
+
                     ul {
                       list-style: disc;
                       padding-left: 1.6rem;
@@ -171,6 +194,7 @@
                       display: flex;
                       flex-direction: column;
                       gap: 10px;
+
                       div {
                         align-items: flex-start;
                         display: flex;
@@ -178,6 +202,7 @@
                       }
                     }
                   }
+
                   .emberView {
                     max-width: 100%;
                     margin-top: 24px;
@@ -202,6 +227,7 @@
                     background-color: hsla(0, 0%, 100%, 0);
                     color: #0a66c2;
                     vertical-align: middle;
+
                     &:hover {
                       color: #0a66c2;
                       box-shadow: inset 0 0 0 2px #0a66c2;
@@ -227,6 +253,7 @@
   margin-left: -50vw;
   margin-right: -50vw;
   background-color: #fff;
+
   .container {
     flex-wrap: nowrap;
     margin: 0 auto;
@@ -235,9 +262,11 @@
     padding: 24px;
     background-color: inherit;
     align-items: flex-start;
+
     .left {
       width: 50%;
       margin-right: 2rem;
+
       .featureName {
         font-size: 1.6rem;
         line-height: 1.333;
@@ -246,13 +275,16 @@
         justify-content: flex-start;
         align-items: center;
       }
+
       .description {
         font-size: 1rem;
         line-height: 1.5;
       }
+
       .imgViewModel {
         margin-top: 48px;
       }
+
       .artdecoBtn {
         min-width: 210px;
         margin-bottom: 1.2rem;
@@ -260,6 +292,7 @@
         padding-right: 2rem;
         cursor: pointer;
       }
+
       .secureBtn {
         cursor: pointer;
         background-color: rgba(255, 255, 255, 0);
@@ -268,6 +301,7 @@
         margin-top: 16px;
         display: flex;
         align-items: center;
+
         li-icon {
           display: inline-block;
           overflow: hidden;
@@ -275,29 +309,36 @@
           flex-shrink: 0;
           height: 1rem;
           margin: 0 4px 0 -2px;
+
           svg {
             width: 1rem;
             height: 1rem;
           }
         }
+
         &:hover {
           background-color: rgba(0, 0, 0, 0.08);
         }
       }
     }
+
     .features {
       width: 50%;
       text-align: left;
       list-style: none;
+
       .featureGroup {
         margin-bottom: calc(3.2rem + 0.8rem);
+
         ul {
           list-style: none;
           padding-top: 16px;
           margin-block-start: 0;
           padding-inline-start: 0;
+
           li {
             padding-bottom: 1rem;
+
             .card {
               display: flex;
               align-items: baseline;
@@ -305,6 +346,29 @@
             }
           }
         }
+      }
+    }
+  }
+
+  .frame_FAQ {
+    h2 {
+      text-align: center;
+      justify-content: center;
+      justify-items: center;
+      color: black;
+    }
+
+    .FQ {
+      float: left;
+      width: 50%;
+      padding: 10px;
+
+      h3 {
+        margin-block-start: 1em;
+        margin-block-end: 2em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
       }
     }
   }
