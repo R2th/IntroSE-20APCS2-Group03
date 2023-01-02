@@ -176,12 +176,10 @@ const createStory = async (req, res) => {
       encoding: 'utf8',
       flag: 'r',
     });
-    const {contentsShort} = req.body;
+
+    const {contentsShort, title, tag, isPremium} = JSON.parse(req.body.data);
     const mediaList = await extractMedia(contents);
     const authorId = req.userId;
-    const {title} = req.body;
-    const {tag} = req.body;
-    const {isPremium} = req.body;
 
     const story = await Story.create({
       contents: contents,
@@ -221,11 +219,10 @@ const updateStory = async (req, res) => {
       encoding: 'utf8',
       flag: 'r',
     });
-    const {contentsShort} = req.body;
+
+    const {contentsShort, title, tag, isPremium} = req.body;
+
     const mediaList = await extractMedia(contents);
-    const {title} = req.body;
-    const {tag} = req.body;
-    const {isPremium} = req.body;
 
     story.set({
       contents,

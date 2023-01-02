@@ -352,3 +352,101 @@
     }
   }
 }
+
+.dropDownUserMenu {
+  background-color: inherit !important;
+  padding: 0 !important;
+  .menu {
+    padding: 16px 0px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+    width: 100%;
+    &:last-child {
+      padding-bottom: 0;
+    }
+    a {
+      text-decoration: none;
+    }
+    .logoutBtn {
+      box-shadow: none;
+      cursor: pointer;
+      width: 100%;
+    }
+    .item {
+      padding: 8px 24px;
+      color: rgba(117, 117, 117, 1);
+      line-height: 20px;
+      font-size: 14px;
+      font-family: sohne, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      &:hover {
+        color: #1b1b1b;
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+      div {
+        display: flex;
+        align-items: center;
+      }
+      .content {
+        margin-left: 16px;
+
+        p {
+          max-height: 20px;
+          -webkit-line-clamp: 1;
+          word-break: break-all;
+          -webkit-box-orient: vertical;
+          display: -webkit-box;
+          text-overflow: ellipsis;
+          font-size: 16px;
+          margin-block-start: 0;
+          margin-block-end: 0;
+          color: inherit;
+        }
+      }
+    }
+  }
+}
+
+.dropDownUserMenuContent {
+  justify-content: flex-start !important;
+  flex-direction: column;
+  width: 264px !important;
+  height: auto !important;
+  max-height: 573px !important;
+  left: 1580px !important;
+  top: 45.5px !important;
+  background-color: #fff !important;
+  position: absolute !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-shadow: 0px 1px 4px rgb(230, 230, 230);
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 4px;
+  border-top: 1px solid #edeff1;
+  -ms-flex-pack: end;
+  justify-content: flex-end !important;
+  margin-top: 4px;
+  padding-bottom: 8px !important;
+  padding-top: 8px !important;
+}
+
+.notes {
+  box-sizing: border-box;
+  color: #878a8c;
+  display: block;
+  height: 40px;
+  width: 100%;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -ms-flexbox;
+  display: flex;
+  height: unset;
+  min-height: 40px;
+  padding: 12px 20px;
+  span {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+}

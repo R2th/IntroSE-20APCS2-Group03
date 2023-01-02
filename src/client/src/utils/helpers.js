@@ -31,7 +31,7 @@ export const exportFile = (data, filename) => {
   element.click();
 };
 
-export const fullPathAPI = (path) => bypassCORSUrl(buildPath(API_ENDPOINT, path || ''));
+export const fullPathAPI = (path) => buildPath(API_ENDPOINT, path || '');
 
 export const fullPathImage = (user) => {
   if (user && user.data.avatar) return `https://images.viblo.asia/avatar/${user.data.avatar}`;
@@ -39,13 +39,13 @@ export const fullPathImage = (user) => {
 };
 
 export const thumbnailUrl = (content) => {
-  if (!content.slug) return DefaultThumbnailImage;
-  if (content.thumbnail_url) {
-    return content.thumbnail_url;
+  if (!content.id || !content.media_list) return DefaultThumbnailImage;
+  if (content.media_list.length > 0) {
+    return content.media_list[0];
   }
-  if (content.tags.data.length > 0) {
-    return content.tags.data[0].image;
-  }
+  // if (content.tags.data.length > 0) {
+  //   return content.tags.data[0].image;
+  // }
   return fullPathImage(content.user);
 };
 

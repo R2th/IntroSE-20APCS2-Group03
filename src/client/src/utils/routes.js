@@ -63,7 +63,7 @@ export const ROUTES = [
     ],
   },
   {
-    path: 'profile/:id_user',
+    path: ':id_user',
     element: (
       <ProtectedRoute>
         <Profile />

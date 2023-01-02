@@ -26,6 +26,7 @@
     "react-router-dom": "^6.4.3",
     "react-scripts": "^5.0.1",
     "react-toastify": "^9.1.1",
+    "react-transition-group": "^4.4.5",
     "redux": "^4.2.0",
     "rehype-sanitize": "^5.0.1",
     "web-vitals": "^2.1.4"
@@ -91,6 +92,15 @@
     "assets": "src/assets"
   },
   "bundledDependencies": [
+    "components",
+    "utils",
+    "contexts",
+    "pages",
+    "service",
+    "hooks",
+    "assets"
+  ],
+  "bundleDependencies": [
     "components",
     "utils",
     "contexts",
