@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Modal from 'components/Modal';
 import classNames from 'classnames';
+import { AuthContext } from 'contexts/Auth/authContext';
 import styles from './styles.module.scss';
 
 function UserDropdownMenu() {
+  const { handleLogout } = useContext(AuthContext);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -140,7 +143,7 @@ function UserDropdownMenu() {
           </a>
         </div>
         <div className={styles.menu}>
-          <button className={classNames(styles.item, styles.logoutBtn)} type="button">
+          <button className={classNames(styles.item, styles.logoutBtn)} type="button" onClick={handleLogout}>
             <div>
               <i className="icon icon-logout" style={{ color: 'inherit' }} />
               <div className={styles.content}>

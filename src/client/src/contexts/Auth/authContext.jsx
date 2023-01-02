@@ -17,7 +17,7 @@ function AuthProvider({ children }) {
   const [token, setToken] = useState(getToken());
 
   const saveToken = (userToken) => {
-    localStorage.setItem('token', JSON.stringify(userToken));
+    localStorage.setItem('token', JSON.stringify(userToken.token));
     setToken(userToken.token);
   };
 
@@ -30,6 +30,7 @@ function AuthProvider({ children }) {
 
   const handleLogout = () => {
     saveToken({ token: null });
+    navigate('/auth/login');
   };
 
   const value = useMemo(() => ({

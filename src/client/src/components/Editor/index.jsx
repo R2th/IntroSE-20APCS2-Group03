@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
 
 import onImagePasted from 'utils/onImagePasted';
 
-import debounce from 'utils/debounce';
+// import debounce from 'utils/debounce';
 import moment from 'moment';
+import { fullPathAPI } from 'utils/helpers';
+import { useParams } from 'react-router-dom';
+import { AuthContext } from 'contexts/Auth/authContext';
 import styles from './styles.module.scss';
 
 function Editor() {
+  const { slug } = useParams;
+
+  const { token } = useContext(AuthContext);
+
   const [title, setTitle] = useState('');
 
   const [tags, setTags] = useState([]);
@@ -19,8 +26,33 @@ function Editor() {
   const [caretPos, setCaretPos] = useState(0);
   const [saveTime, setSaveTime] = useState(null);
 
-  const saveDraft = () => {
+  const saveDraft = async () => {
     setSaveTime(new Date());
+
+    const form = new FormData();
+    const file = new File([content], `${slug}.md`, {
+      type: 'text/markdown',
+    });
+
+    form.append('story', file);
+    form.append('data', JSON.stringify({
+      contentsShort: '',
+      title,
+      tag: tags,
+      isPremium: true,
+    }));
+
+    const postRes = await fetch(fullPathAPI('/story/'), {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: form,
+    });
+
+    const status = await postRes.json();
+
+    console.log(status);
   };
 
   const onChangeCaretPosition = (e) => {
@@ -87,7 +119,7 @@ function Editor() {
             ))}
             <input className={styles.inputTags} value={curTag} placeholder="..." onChange={onChangeCurTag} onKeyDown={onChangeTags} />
           </div>
-          <button type="button" className={styles.publishBtn}>Publish</button>
+          <button type="button" className={styles.publishBtn} onClick={saveDraft}>Publish</button>
         </div>
         {saveTime && (
         <div className={styles.saveStatus}>
@@ -102,7 +134,7 @@ function Editor() {
           <MDEditor
             value={content}
             onChange={setContent}
-            onKeyUp={debounce(saveDraft, 3000)}
+            // onKeyUp={debounce(saveDraft, 3000)}
             onMouseUp={onChangeCaretPosition}
             height="100%"
             enableScroll

@@ -13,7 +13,7 @@ function MediumCard({ content }) {
 
   const navigate = useNavigate();
   const onClickStory = () => {
-    navigate(`story/${content.slug}`);
+    navigate(`story/${content.id}`);
   };
 
   return (

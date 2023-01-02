@@ -143,7 +143,7 @@ function Profile() {
 
 function ProfileMain() {
   const [tab, setTab] = useState('stories');
-  const { data } = useFetch('/posts/newest', INIT_DATA_CONTENT);
+  const { data } = useFetch('/story/newest/10', INIT_DATA_CONTENT);
 
   const renderStoriesTab = () => (
     <div className={styles.postsTab}>
