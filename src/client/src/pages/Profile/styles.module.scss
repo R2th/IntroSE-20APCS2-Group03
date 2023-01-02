@@ -46,12 +46,12 @@ nav {
               // max-width: 260px;
               .basic {
                 text-align: center;
-                .avatar {
+                .avatarContainer {
                   width: 4.5rem;
                   height: 4.5rem;
                   margin-left: 0;
                   position: relative;
-                  avatar {
+                  .avatar {
                     left: 0;
                     width: 9rem;
                     height: 9rem;
@@ -138,6 +138,17 @@ nav {
                   margin-top: 1rem;
                   box-shadow: none;
                   cursor: pointer;
+                }
+                .editProfile {
+                  background-color: inherit;
+                  width: 100%;
+                  padding: 0.5rem;
+                  border-radius: 6px;
+                  margin-top: 1rem;
+                  cursor: pointer;
+                  &:hover {
+                    background-color: rgba(0, 0, 0, 0.04);
+                  }
                 }
                 .stats {
                   display: flex;
