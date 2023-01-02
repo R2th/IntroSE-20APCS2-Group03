@@ -11,8 +11,8 @@ import useFetch from 'hooks/useFetch';
 import './style.scss';
 
 function Home() {
-  const fetchContent = useFetch('/posts/newest', INIT_DATA_CONTENT);
-  const fetchTrending = useFetch('/trending?limit=10', INIT_DATA_CONTENT);
+  const fetchContent = useFetch('/story/all/10', INIT_DATA_CONTENT);
+  const fetchTrending = useFetch('/story/newest/10', INIT_DATA_CONTENT);
 
   const { setPrefix } = useContext(StylesContext);
 
