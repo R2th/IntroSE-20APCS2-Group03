@@ -7,9 +7,11 @@ import classNames from 'classnames';
 import './styles.scss';
 
 import { fullPathImage, thumbnailUrl } from 'utils/helpers';
+import useFetch from 'hooks/useFetch';
 
 function MediumCard({ content }) {
   const [isHover, setIsHover] = useState(false);
+  const { data } = useFetch(`user/${content.author_username}`, {}, (prev, _data) => _data.data);
 
   const navigate = useNavigate();
   const onClickStory = () => {
@@ -36,14 +38,16 @@ function MediumCard({ content }) {
           <div className="footer">
             <img alt="avatar" className="avatar" src={fullPathImage(content.user)} />
             <div className="title">
+              {data && (
               <div className="name">
                 <span>
-                  {content.user && content.user.data.username}
+                  {data.username}
                   &nbsp;
                 </span>
               </div>
+              )}
               <div className="time">
-                <div>{moment(content.published_at).format('LL')}</div>
+                <div>{moment(content.createdAt).format('LL')}</div>
                 <div
                   style={{
                     fontWeight: 'bold',

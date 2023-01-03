@@ -22,7 +22,8 @@ const getPartContentsOfStory = async (req, res) => {
   try {
     const start = parseInt(req.params.start);
     const len = parseInt(req.params.len);
-    if (!start || !len) {
+    console.log(start, len);
+    if (!len || start < 0) {
       throw new Error();
     }
     const contents = await Story.findByPk(req.params.storyId, {
@@ -32,15 +33,17 @@ const getPartContentsOfStory = async (req, res) => {
       ],
     });
     if (!contents) {
-      throw new Error();
+      return res.status(404).send({
+        message: 'Invalid story contents',
+      });
     };
-    res.status(200).send({
+    return res.status(200).send({
       message: 'successful',
       data: contents,
     });
   } catch (err) {
     res.status(500).send({
-      message: err.message,
+      message: err,
     });
   }
 };
