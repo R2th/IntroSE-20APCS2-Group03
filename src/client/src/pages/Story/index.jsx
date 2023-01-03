@@ -2,11 +2,13 @@ import * as React from 'react';
 
 import Spinner from 'components/Spinner';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fullPathImage, thumbnailUrl } from 'utils/helpers';
+import { fullPathAPI, fullPathImage, thumbnailUrl } from 'utils/helpers';
 
 import { AuthContext } from 'contexts/Auth/authContext';
 import { abbreviateNumber, calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
 import { parseJwt } from 'utils/token';
+import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import useFetch from '../../hooks/useFetch';
 
 import styles from './styles.module.scss';
@@ -27,7 +29,6 @@ function Story() {
     username,
     followers_count: 0,
     posts_count: 0,
-
   };
 
   React.useEffect(() => {
@@ -54,15 +55,7 @@ function Story() {
                   Go back
                 </div>
                 <div className={styles.smallerLeftSidePanel}>
-                  <button type="button" className={styles.voteButton}>
-                    <i className="icon icon-upvote_fill" />
-                  </button>
-                  <div className={styles.voteCount}>
-                    {abbreviateNumber(post.points)}
-                  </div>
-                  <button type="button" className={styles.voteButton}>
-                    <i className="icon icon-downvote_fill" />
-                  </button>
+                  <Vote token={token} storyId={slug} />
                   <button type="button" className={styles.bookmarkButton}>
                     <i className="icon icon-save_fill" />
                   </button>
@@ -75,12 +68,18 @@ function Story() {
                 <div className={styles.header}>
                   <div className={styles.authorAvatar}>
                     <a href="/" className={styles.avatarAuthorProfileLink}>
-                      {fullPathImage(post.user) ? <img src={fullPathImage(post.user)} alt="" className={styles.avatarAuthorImage} /> : <div>GAG</div>}
+                      {fullPathImage(post.user) ? (
+                        <img src={fullPathImage(post.user)} alt="" className={styles.avatarAuthorImage} />
+                      ) : (
+                        <div>GAG</div>
+                      )}
                     </a>
                   </div>
                   <div className={styles.authorInfo}>
                     <div className={styles.authorPersonalInfo}>
-                      <a href="/" className={styles.authorName}>{user.name}</a>
+                      <a href="/" className={styles.authorName}>
+                        {user.name}
+                      </a>
                       <span className={styles.authorUsername}>
                         @
                         {user.username}
@@ -92,15 +91,11 @@ function Story() {
                     <div className={styles.authorCommunityInfo}>
                       <div>
                         <i className="icon icon-star_fill" />
-                        <span>
-                          {user.reputation}
-                        </span>
+                        <span>{user.reputation}</span>
                       </div>
                       <div>
                         <i className="icon icon-user_fill" />
-                        <span>
-                          {user.followers_count}
-                        </span>
+                        <span>{user.followers_count}</span>
                       </div>
                       <div>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Write">
@@ -113,9 +108,7 @@ function Story() {
                             stroke="currentColor"
                           />
                         </svg>
-                        <span>
-                          {user.posts_count}
-                        </span>
+                        <span>{user.posts_count}</span>
                       </div>
                     </div>
                   </div>
@@ -149,6 +142,85 @@ function Story() {
       </div>
       {/* <Sidebar /> */}
     </div>
+  );
+}
+
+function Vote({ token, storyId }) {
+  const [vote, setVote] = useState(0);
+
+  const [typeVote, setTypeVoted] = useState(0);
+
+  useEffect(() => {
+    const getVoteData = async () => {
+      const get = await fetch(fullPathAPI(`/story/${storyId}/vote`), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { data } = await get.json();
+      setVote(data.points);
+      setTypeVoted(data.isVoted || -1);
+    };
+    getVoteData();
+  }, []);
+
+  const onClickUpVote = async () => {
+    // const post = await fetch(fullPathAPI('/story/vote'), {
+    //   method: 'POST',
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     // body : JSON.stringify({
+    //     //   userId:
+    //     // })
+    //   },
+    // });
+
+    setTypeVoted((prev) => (prev === 1 ? 0 : 1));
+  };
+
+  const onClickDownVote = async () => {
+    setTypeVoted((prev) => (prev === -1 ? 0 : -1));
+  };
+
+  return (
+    <>
+      <button type="button" className={styles.voteButton} onClick={onClickUpVote}>
+        <i
+          className={classNames(typeVote === 1 && styles.marked, 'icon icon-upvote_fill')}
+          style={
+          typeVote === 1
+            ? {
+              color: '#3b82f6',
+            }
+            : {}
+        }
+        />
+      </button>
+      <div
+        className={classNames(typeVote !== 0 && styles.marked, styles.voteCount)}
+        style={
+          typeVote !== 0
+            ? {
+              color: typeVote === 1 ? '#3b82f6' : '#d946ef',
+            }
+            : {}
+        }
+      >
+        {abbreviateNumber(vote + typeVote)}
+      </div>
+      <button type="button" className={styles.voteButton} onClick={onClickDownVote}>
+        <i
+          className={classNames(typeVote === -1 && styles.marked, 'icon icon-downvote_fill')}
+          style={
+            typeVote === -1
+              ? {
+                color: '#d946ef',
+              }
+              : {}
+          }
+        />
+      </button>
+    </>
   );
 }
 
