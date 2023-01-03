@@ -310,19 +310,41 @@ const calculateVotes = async (storyId) => {
 
 const getVoteStoryById = async (req, res) => {
   const {storyId} = req.params;
+  const {userId} = req;
 
   try {
-    vote = await calculateVotes(storyId);
+    const numVotes = await calculateVotes(storyId);
+    if (!numVotes) {
+      return res.status(404).send({
+        message: 'Some error occurred',
+      });
+    }
+
+    const reaction = await Reaction.findOne({
+      where: {
+        user_id: userId,
+        story_id: storyId,
+      },
+    });
+    const reactType = 0;
+    if (!reaction) {
+      // If reaction not found, it means user/guest has never voted the story yet
+      reactType = 0;
+    } else {
+      // Else, return the type of user reactions, 1 is upvote, -1 is downvote
+      reactType = reaction.react_type;
+    }
+
+    res.status(200).send({
+      message: 'success',
+      num_votes: numVotes,
+      user_react_type: reactType,
+    });
   } catch (err) {
-    return res.status(404).send({
-      message: 'Some error occurred',
+    res.status(500).send({
+      message: err.message,
     });
   }
-
-  res.status(200).send({
-    message: 'success',
-    data: vote,
-  });
 };
 
 // Upvote/Downvote
@@ -339,11 +361,11 @@ const voteStory = async (req, res) => {
 
   // If user has not ever react on story
   if (!prevReaction) {
-    // const newReaction = await Reaction.create({
-    //   username: username,
-    //   story_id: req.param.storyId,
-    //   react_type: req.body.reactType,
-    // });
+    const newReaction = await Reaction.create({
+      user_id: userId,
+      story_id: req.param.storyId,
+      react_type: req.body.reactType,
+    });
   } else {
     // update type of vote if exist
     await Story.update(
