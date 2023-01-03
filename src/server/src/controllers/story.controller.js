@@ -20,27 +20,30 @@ const crawlStory = async (req, res) => {
 
 const getPartContentsOfStory = async (req, res) => {
   try {
-    const limit = parseInt(req.params.limit);
-    if (!limit) {
+    const start = parseInt(req.params.start);
+    const len = parseInt(req.params.len);
+    console.log(start, len);
+    if (!len || start < 0) {
       throw new Error();
     }
     const contents = await Story.findByPk(req.params.storyId, {
       attributes: [
         'contents',
-        sequelize.literal('SUBSTRING(contents, 1, $limit) as contents'),
+        sequelize.literal(`SUBSTRING(contents, ${start}, ${len}) as contents`),
       ],
-      bind: {limit},
     });
     if (!contents) {
-      throw new Error();
+      return res.status(404).send({
+        message: 'Invalid story contents',
+      });
     };
-    res.status(200).send({
+    return res.status(200).send({
       message: 'successful',
       data: contents,
     });
   } catch (err) {
     res.status(500).send({
-      message: err.message,
+      message: err,
     });
   }
 };
@@ -128,13 +131,25 @@ const getNewestStories = async (req, res) => {
 
 const getStoryByStoryId = async (req, res) => {
   try {
-    const story = await Story.findByPk(req.params.storyId);
+    const storyIsPremium = Story.findByPk(req.params.storyId, {
+      attributes: ['isPremium'],
+    });
+    if (storyIsPremium === null) {
+      throw new Error();
+    }
+    let story = null;
+    if (storyIsPremium && !req.isPremium) {
+      story = await Story.findByPk(req.params.storyId, {
+        attributes: {exclude: ['contents']},
+      });
+    } else {
+      story = await Story.findByPk(req.params.storyId);
+    }
     if (!story) {
       return res.status(404).send({
         message: 'Story not found.',
       });
     }
-    console.log(story);
     res.status(200).send({
       message: 'successful',
       data: story,
@@ -146,14 +161,14 @@ const getStoryByStoryId = async (req, res) => {
   }
 };
 
-const getStoriesOfUser = async (req, res) => {
+const getStoriesOfAuthor = async (req, res) => {
   try {
-    const {userId} = req;
+    const {username} = req.params;
     const {limit} = req.body;
     const stories = await Story.findAll({
       attributes: {exclude: ['contents']},
       where: {
-        author_id: userId,
+        author_username: username,
       },
       limit,
     });
@@ -178,21 +193,21 @@ const extractMedia = async (contents) => {
 
 const createStory = async (req, res) => {
   try {
-    const contents = await fs.readFileSync(req.file.path, {
+    const contents = fs.readFileSync(req.file.path, {
       encoding: 'utf8',
       flag: 'r',
     });
 
     const {id, contentsShort, thumbnail, title, tag, isPremium} = JSON.parse(req.body.data);
     const mediaList = await extractMedia(contents);
-    const authorId = req.userId;
+    const authorId = req.username;
 
     const story = await Story.create({
       contents: contents,
       contents_short: contentsShort,
       thumbnail: thumbnail,
       media_list: mediaList,
-      author_id: authorId,
+      author_username: authorId,
       title,
       tag,
       view: 0,
@@ -258,11 +273,10 @@ const updateStory = async (req, res) => {
 const deleteStory = async (req, res) => {
   try {
     const {storyId} = req.params;
-    console.log(storyId);
     const story = await Story.findOne({
       where: {
         id: storyId,
-        author_id: req.userId,
+        author_username: req.username,
       },
     });
 
@@ -335,13 +349,13 @@ const getVoteStoryById = async (req, res) => {
 
 // Upvote/Downvote
 const voteStory = async (req, res) => {
-  const {userId} = req;
+  const {username} = req;
   // const story = await Story.findOne({ id: req.param.storyId });
 
   const prevReaction = await Reaction.findOne({
     where: {
       story_id: req.param.storyId,
-      user_id: userId,
+      username: username,
     },
   });
 
@@ -393,7 +407,7 @@ module.exports = {
   getAllStories,
   getNewestStories,
   getStoryByStoryId,
-  getStoriesOfUser,
+  getStoriesOfAuthor,
   createStory,
   updateStory,
   deleteStory,

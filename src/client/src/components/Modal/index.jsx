@@ -9,8 +9,6 @@ import styles from './styles.module.scss';
 function Modal({
   children, isOpen, handleClose, className, closeBtn, contentClassName, prefix, width,
 }) {
-  if (!isOpen) return null;
-
   const nodeRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +22,7 @@ function Modal({
   if (!isOpen) return null;
 
   return (
-    <ReactPortal wrapperId="react-portal-modal-container">
+    <ReactPortal id="bytes-go-modal">
       <CSSTransition
         in={isOpen}
         timeout={{ entry: 0, exit: 300 }}

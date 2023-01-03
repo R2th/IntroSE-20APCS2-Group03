@@ -26,6 +26,10 @@ router.get('user/:username/avatar', userController.getAvatar);
 // Delete avatar
 // router.delete('/user/:username/avatar', (req, res) => {});
 
+router.get('/user/:username', userController.getUserProfile);
+
+router.post('/user/', verifyToken, userController.updateUserProfile);
+
 // Test accesss public resource without login
 router.get('/user/test/all', userController.publicAccess);
 

@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
+
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
-import './style.scss';
+import classNames from 'classnames';
 import './small_hoz.style.scss';
 import './small_verc.style.scss';
-import classNames from 'classnames';
+import './style.scss';
 
 import { fullPathImage, thumbnailUrl } from 'utils/helpers';
+import useFetch from 'hooks/useFetch';
 import MediumCard from './CardMedium';
 
 function Card({ content, type = 'fullWidth' }) {
   const navigate = useNavigate();
 
   const [isHover, setIsHover] = useState(false);
+
+  const { data } = useFetch(`user/${content.author_username}`, {}, (prev, _data) => _data.data);
 
   const onClickStory = () => {
     navigate(`/story/${content.id}`);
@@ -40,9 +44,10 @@ function Card({ content, type = 'fullWidth' }) {
                   <div className="header">
                     <img alt="avatar" className="avatar" src={fullPathImage(content.user)} />
                     <div className="title">
+                      {data && (
                       <div className="name">
                         <span>
-                          {content.user && content.user.data.username}
+                          {data.username}
                           &nbsp;
                         </span>
                         <span
@@ -53,10 +58,11 @@ function Card({ content, type = 'fullWidth' }) {
                         >
                           in&nbsp;
                         </span>
-                        <span>{content.user && content.user.data.name}</span>
+                        <span>{data.username}</span>
                       </div>
+                      )}
                       <div className="time">
-                        <div>{moment(content.published_at).format('LL')}</div>
+                        <div>{moment(content.createdAt).format('LL')}</div>
                         <div
                           style={{
                             fontWeight: 'bold',
@@ -68,7 +74,7 @@ function Card({ content, type = 'fullWidth' }) {
                         >
                           *
                         </div>
-                        <div>{`${content.reading_time} mins read`}</div>
+                        <div>{`${content.reading_time || 1} mins read`}</div>
                       </div>
                     </div>
                   </div>
@@ -103,14 +109,16 @@ function Card({ content, type = 'fullWidth' }) {
               <div className="footer">
                 <img alt="avatar" className="avatar" src={fullPathImage(content.user)} />
                 <div className="title">
+                  {data && (
                   <div className="name">
                     <span>
-                      {content.user && content.user.data.username}
+                      {data.username}
                       &nbsp;
                     </span>
                   </div>
+                  )}
                   <div className="time">
-                    <div>{moment(content.published_at).format('LL')}</div>
+                    <div>{moment(content.createdAt).format('LL')}</div>
                   </div>
                 </div>
               </div>
@@ -126,6 +134,7 @@ function Card({ content, type = 'fullWidth' }) {
           onMouseMove={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
           aria-hidden="true"
+          style={{ alignItems: 'center' }}
         >
           <div className="thumbnail small-hoz">
             <img alt="thumbnail" src={thumbnailUrl(content)} />
@@ -139,14 +148,16 @@ function Card({ content, type = 'fullWidth' }) {
               <div className="footer">
                 <img alt="avatar" className="avatar" src={fullPathImage(content.user)} />
                 <div className="title">
+                  {data && (
                   <div className="name">
                     <span>
-                      {content.user && content.user.data.username}
+                      {data.username}
                       &nbsp;
                     </span>
                   </div>
+                  )}
                   <div className="time">
-                    <div>{moment(content.published_at).format('LL')}</div>
+                    <div>{moment(content.createdAt).format('LL')}</div>
                   </div>
                 </div>
               </div>

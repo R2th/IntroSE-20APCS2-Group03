@@ -63,7 +63,7 @@ const getCommentsByStoryId = async (req, res) => {
 };
 
 const createComment = async (req, res) => {
-  const {userId} = req;
+  const {username} = req;
   const {storyId} = req.body;
   let {parentId} = req.body;
   try {
@@ -72,7 +72,7 @@ const createComment = async (req, res) => {
     }
     const comment = await Comment.create({
       ...req.body,
-      user_id: userId,
+      username: username,
       story_id: storyId,
       parent_id: parentId,
     });
