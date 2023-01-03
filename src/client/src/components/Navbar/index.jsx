@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from 'assets/svg/logo.svg';
 import { md5 } from 'utils/md5';
 import { AuthContext } from 'contexts/Auth/authContext';
 import { parseJwt } from 'utils/token';
+import Search from 'components/Search';
 import Menu from '../Menu';
 import styles from './styles.module.scss';
 import UserDropdownMenu from './userMenu';
@@ -13,14 +14,9 @@ function Navbar() {
   const location = useLocation();
   if (location.pathname.startsWith('/auth')) return null;
 
-  const [search, setSearch] = useState('');
   const navigate = useNavigate();
 
   const { token } = useContext(AuthContext);
-
-  const onChangeSearch = (e) => {
-    setSearch(e.target.value);
-  };
 
   const onCreateNewStory = () => {
     const { username } = parseJwt(token);
@@ -48,10 +44,7 @@ function Navbar() {
         </div>
         <div className={styles.center}>
           <Menu />
-          <div className={styles.search}>
-            <i className="icon icon-search" />
-            <input value={search} onChange={onChangeSearch} placeholder="Search..." className={styles.inputField} />
-          </div>
+          <Search />
           <div className={styles.icGroup}>
             <span className={styles.icTrending}>
               <a href="/story/trending" aria-label="Trending">

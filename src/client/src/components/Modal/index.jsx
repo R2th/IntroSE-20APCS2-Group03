@@ -7,7 +7,7 @@ import './modal.css';
 import styles from './styles.module.scss';
 
 function Modal({
-  children, isOpen, handleClose, className, closeBtn, contentClassName,
+  children, isOpen, handleClose, className, closeBtn, contentClassName, prefix, width,
 }) {
   if (!isOpen) return null;
 
@@ -37,13 +37,25 @@ function Modal({
           aria-hidden
           className={classNames(styles.modal, className)}
           onClick={handleClose}
+
         >
           {closeBtn && (
           <button onClick={handleClose} className={styles.closeBtn} type="button">
             Close
           </button>
           )}
-          <div aria-hidden className={classNames(styles.content, contentClassName)} onClick={(e) => e.stopPropagation()}>{children}</div>
+          <div
+            style={width && prefix ? {
+              left: prefix,
+              width,
+            } : {}}
+            aria-hidden
+            className={classNames(styles.content, contentClassName)}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {children}
+
+          </div>
         </div>
       </CSSTransition>
     </ReactPortal>

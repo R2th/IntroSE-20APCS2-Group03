@@ -1,0 +1,121 @@
+.search {
+  position: relative;
+  flex-grow: 1;
+  margin-left: 16px;
+  margin-right: 16px;
+  width: auto;
+  height: auto;
+  i {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    margin-left: 10px;
+  }
+  .inputField {
+    width: 100%;
+    padding: 5px;
+    padding-left: 40px;
+    color: #1b1b1b;
+    background-color: #f6f7f8;
+    border-radius: 5px;
+    height: 40px;
+  }
+}
+.dropDownUserMenu {
+  background-color: inherit !important;
+  padding: 0 !important;
+  .search {
+    .searchContainer {
+      border-top: 2px solid #edeff1;
+      padding-bottom: 8px;
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 18px;
+        padding: 12px 16px;
+        color: #1c1c1c;
+      }
+      .searchResult {
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        color: rgb(28, 28, 28);
+        cursor: pointer;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.06);
+        }
+        img {
+          height: 30px;
+          min-width: 30px;
+
+          background: linear-gradient(white, white) padding-box, linear-gradient(to bottom, #3b82f6, #d946ef) border-box;
+          border-radius: 10px;
+          border: 2px solid transparent;
+        }
+        .title {
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 18px;
+          margin-left: 8px;
+        }
+        .contentShort {
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 16px;
+          color: #7c7c7c;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          margin-left: 8px;
+          word-break: break-all;
+        }
+      }
+    }
+    .searchSubmit {
+      width: 100%;
+      text-align: start;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      padding: 12px 16px;
+      border-top: 2px solid #edeff1;
+      position: relative;
+      color: rgb(28, 28, 28);
+      box-shadow: none;
+      i {
+        position: relative;
+        top: 0;
+        transform: none;
+        margin: 0;
+      }
+      span {
+        flex-grow: 1;
+        margin-left: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+.dropDownUserMenuContent {
+  position: fixed;
+  z-index: 100;
+  left: 466px;
+  top: 44.5px;
+  width: fit-content;
+  height: fit-content !important;
+  border-top: 1px solid #edeff1;
+  overflow: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(28, 28, 28, 0.2);
+  color: #1c1c1c;
+  background-color: #fff;
+}
