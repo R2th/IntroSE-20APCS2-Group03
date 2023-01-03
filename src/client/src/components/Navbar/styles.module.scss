@@ -8,6 +8,7 @@
   height: 48px;
   display: flex;
   justify-content: center;
+
   .container {
     margin: auto;
     width: 100%;
@@ -20,18 +21,22 @@
     flex-direction: row;
     -ms-flex-positive: 1;
     flex-grow: 1;
+
     .left {
       display: flex;
       justify-content: center;
+
       .homeBtn {
         flex-direction: row;
         text-decoration: none;
         display: flex;
         gap: 10px;
         padding: 10px 20px;
+
         &:hover {
           color: #3b82f6;
         }
+
         .logo {
           background: -webkit-linear-gradient(#3b82f6, #d946ef);
           -webkit-background-clip: text;
@@ -41,6 +46,7 @@
         }
       }
     }
+
     .center {
       padding-left: 20px;
       display: flex;
@@ -48,9 +54,11 @@
       flex-grow: 1;
       // margin-right: 8px;
       padding-right: 8px;
+
       // border-right: 1px solid #edeff1;
       // border-left: 1px solid #edeff1;
     }
+
     .right {
       flex-grow: 0;
       margin: auto;
@@ -72,16 +80,23 @@
           position: relative;
           min-height: 32px;
           margin-left: 8px;
-          &:hover,
+
+          &:hover {
+            background: #D3D3D3;
+            cursor: pointer;
+          }
+
           &focus {
             border-color: #edeff1;
             outline: none;
             cursor: pointer;
           }
+
           .container {
             display: flex;
             flex-direction: row;
             align-items: center;
+
             .left {
               align-items: center;
               display: flex;
@@ -89,10 +104,12 @@
               text-align: left;
               width: 175px;
               justify-content: flex-start;
+
               .avatarInfo {
                 position: relative;
                 height: 100%;
                 margin-right: 5px;
+
                 .avatar {
                   position: relative;
                   border-radius: 4px;
@@ -101,103 +118,103 @@
                   max-width: 24px;
                   height: 24px;
                   width: 24px;
+
                   .background {
                     width: 100%;
                     height: 100%;
                     border-radius: 50%;
                     background-color: #edeff1;
                   }
+
                   .userAvatar {
                     width: 100%;
                     position: absolute;
                     bottom: 0;
+
                     img {
                       width: 100%;
                       transform-origin: bottom center;
                       display: block;
                       transform: scale(1.3);
                       border-radius: 50%;
-                      -webkit-clip-path: polygon(
-                        0 68.22%,
-                        12.12% 68.22%,
-                        12.85% 71.49%,
-                        13.86% 74.69%,
-                        15.14% 77.79%,
-                        16.69% 80.77%,
-                        18.49% 83.6%,
-                        20.54% 86.26%,
-                        22.8% 88.73%,
-                        25.28% 91%,
-                        27.94% 93.04%,
-                        30.77% 94.85%,
-                        33.75% 96.4%,
-                        36.85% 97.68%,
-                        40.05% 98.69%,
-                        43.32% 99.42%,
-                        46.65% 99.85%,
-                        50% 100%,
-                        53.35% 99.85%,
-                        56.68% 99.42%,
-                        59.95% 98.69%,
-                        63.15% 97.68%,
-                        66.25% 96.4%,
-                        69.23% 94.85%,
-                        72.06% 93.04%,
-                        74.72% 91%,
-                        77.2% 88.73%,
-                        79.46% 86.26%,
-                        81.51% 83.6%,
-                        83.31% 80.77%,
-                        84.86% 77.79%,
-                        86.14% 74.69%,
-                        87.15% 71.49%,
-                        87.88% 68.22%,
-                        100% 68.22%,
-                        100% 0,
-                        0 0
-                      );
-                      clip-path: polygon(
-                        0 68.22%,
-                        12.12% 68.22%,
-                        12.85% 71.49%,
-                        13.86% 74.69%,
-                        15.14% 77.79%,
-                        16.69% 80.77%,
-                        18.49% 83.6%,
-                        20.54% 86.26%,
-                        22.8% 88.73%,
-                        25.28% 91%,
-                        27.94% 93.04%,
-                        30.77% 94.85%,
-                        33.75% 96.4%,
-                        36.85% 97.68%,
-                        40.05% 98.69%,
-                        43.32% 99.42%,
-                        46.65% 99.85%,
-                        50% 100%,
-                        53.35% 99.85%,
-                        56.68% 99.42%,
-                        59.95% 98.69%,
-                        63.15% 97.68%,
-                        66.25% 96.4%,
-                        69.23% 94.85%,
-                        72.06% 93.04%,
-                        74.72% 91%,
-                        77.2% 88.73%,
-                        79.46% 86.26%,
-                        81.51% 83.6%,
-                        83.31% 80.77%,
-                        84.86% 77.79%,
-                        86.14% 74.69%,
-                        87.15% 71.49%,
-                        87.88% 68.22%,
-                        100% 68.22%,
-                        100% 0,
-                        0 0
-                      );
+                      -webkit-clip-path: polygon(0 68.22%,
+                          12.12% 68.22%,
+                          12.85% 71.49%,
+                          13.86% 74.69%,
+                          15.14% 77.79%,
+                          16.69% 80.77%,
+                          18.49% 83.6%,
+                          20.54% 86.26%,
+                          22.8% 88.73%,
+                          25.28% 91%,
+                          27.94% 93.04%,
+                          30.77% 94.85%,
+                          33.75% 96.4%,
+                          36.85% 97.68%,
+                          40.05% 98.69%,
+                          43.32% 99.42%,
+                          46.65% 99.85%,
+                          50% 100%,
+                          53.35% 99.85%,
+                          56.68% 99.42%,
+                          59.95% 98.69%,
+                          63.15% 97.68%,
+                          66.25% 96.4%,
+                          69.23% 94.85%,
+                          72.06% 93.04%,
+                          74.72% 91%,
+                          77.2% 88.73%,
+                          79.46% 86.26%,
+                          81.51% 83.6%,
+                          83.31% 80.77%,
+                          84.86% 77.79%,
+                          86.14% 74.69%,
+                          87.15% 71.49%,
+                          87.88% 68.22%,
+                          100% 68.22%,
+                          100% 0,
+                          0 0);
+                      clip-path: polygon(0 68.22%,
+                          12.12% 68.22%,
+                          12.85% 71.49%,
+                          13.86% 74.69%,
+                          15.14% 77.79%,
+                          16.69% 80.77%,
+                          18.49% 83.6%,
+                          20.54% 86.26%,
+                          22.8% 88.73%,
+                          25.28% 91%,
+                          27.94% 93.04%,
+                          30.77% 94.85%,
+                          33.75% 96.4%,
+                          36.85% 97.68%,
+                          40.05% 98.69%,
+                          43.32% 99.42%,
+                          46.65% 99.85%,
+                          50% 100%,
+                          53.35% 99.85%,
+                          56.68% 99.42%,
+                          59.95% 98.69%,
+                          63.15% 97.68%,
+                          66.25% 96.4%,
+                          69.23% 94.85%,
+                          72.06% 93.04%,
+                          74.72% 91%,
+                          77.2% 88.73%,
+                          79.46% 86.26%,
+                          81.51% 83.6%,
+                          83.31% 80.77%,
+                          84.86% 77.79%,
+                          86.14% 74.69%,
+                          87.15% 71.49%,
+                          87.88% 68.22%,
+                          100% 68.22%,
+                          100% 0,
+                          0 0);
                     }
                   }
                 }
+
                 .activeStatus {
                   fill: #46d160;
                   height: 50%;
@@ -207,9 +224,11 @@
                   width: 50%;
                 }
               }
+
               .userInfo {
                 display: flex;
                 flex-direction: column;
+
                 .userName {
                   font-size: 12px;
                   font-weight: 500;
@@ -218,11 +237,13 @@
                   display: block;
                   white-space: nowrap;
                 }
+
                 .karma {
                   font-size: 12px;
                   font-weight: 500;
                   line-height: 16px;
                   color: #a8aaab;
+
                   i {
                     color: #ff4500;
                     font-size: 12px;
@@ -242,16 +263,19 @@
 .icGroup {
   display: flex;
   gap: 10px;
+
   span {
     height: 32px;
     width: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
+
     &:hover {
       cursor: pointer;
     }
   }
+
   .icNotice {
     div {
       height: 32px;
@@ -264,6 +288,7 @@
       font-size: 100%;
       font: inherit;
       vertical-align: baseline;
+
       span {
         background: #3b82f6;
         border-radius: 12px;
@@ -284,6 +309,7 @@
         width: auto;
         z-index: 1;
       }
+
       i {
         position: absolute;
         top: 0;
@@ -294,6 +320,7 @@
       }
     }
   }
+
   .upgrade {
     width: fit-content;
     background-color: rgb(255, 200, 0);
@@ -313,6 +340,7 @@
       width: fit-content;
     }
   }
+
   .icAdd {
     background-color: #edeff1;
     border-radius: 10px;
@@ -321,6 +349,7 @@
     // margin-left: 20px;
     width: fit-content;
     color: #1c1c1c;
+
     span {
       width: fit-content;
       font-size: 14px;
@@ -334,21 +363,26 @@
 .dropDownUserMenu {
   background-color: inherit !important;
   padding: 0 !important;
+
   .menu {
     padding: 16px 0px;
     border-bottom: 1px solid rgb(230, 230, 230);
     width: 100%;
+
     &:last-child {
       padding-bottom: 0;
     }
+
     a {
       text-decoration: none;
     }
+
     .logoutBtn {
       box-shadow: none;
       cursor: pointer;
       width: 100%;
     }
+
     .item {
       padding: 8px 24px;
       color: rgba(117, 117, 117, 1);
@@ -356,16 +390,20 @@
       font-size: 14px;
       font-family: sohne, 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-weight: 400;
+
       &:hover {
         color: #1b1b1b;
       }
+
       &:hover {
         background-color: rgba(0, 0, 0, 0.04);
       }
+
       div {
         display: flex;
         align-items: center;
       }
+
       .content {
         margin-left: 16px;
 
@@ -409,6 +447,82 @@
   padding-top: 8px !important;
 }
 
+.dropDownNotification {
+  padding: 0;
+
+  .menu {
+    padding: 16px 0px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+    width: 100%;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .item {
+      padding: 8px 24px;
+      color: rgba(117, 117, 117, 1);
+      line-height: 20px;
+      font-size: 14px;
+      font-family: sohne, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 400;
+
+      &:hover {
+        color: #1b1b1b;
+      }
+
+      .name {
+        p {
+          word-break: break-all;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
+          font-size: 20px;
+          margin-block-start: 0;
+          margin-block-end: 0;
+          font-weight: bold;
+        }
+      }
+
+      ul {
+        width: 100%;
+        height: 100%;
+        padding-left: 0%;
+        overflow-y: scroll;
+
+        .contents {
+          display: flex;
+          align-items: center;
+          height: 50px;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #D3D3D3;
+          }
+
+          .notice {
+            padding: 3px;
+            font-size: 15px;
+          }
+
+          .time {
+            font-size: 8px;
+            padding-top: 30px;
+            transform: translateX(10px);
+          }
+        }
+      }
+
+      .viewall {
+        text-align: center;
+      }
+    }
+  }
+}
+
 .notes {
   box-sizing: border-box;
   color: #878a8c;
@@ -422,6 +536,7 @@
   height: unset;
   min-height: 40px;
   padding: 12px 20px;
+
   span {
     font-size: 12px;
     font-weight: 400;

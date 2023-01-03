@@ -9,6 +9,7 @@ import Search from 'components/Search';
 import Menu from '../Menu';
 import styles from './styles.module.scss';
 import UserDropdownMenu from './userMenu';
+import NotificationPopUp from './Notification/notification';
 
 function Navbar() {
   const location = useLocation();
@@ -81,8 +82,9 @@ function Navbar() {
               </span>
               <span className={styles.icNotice}>
                 <div>
-                  <span>4</span>
-                  <i className="icon icon-notification" />
+                  {/* <span>4</span>
+                  <i className="icon icon-notification" /> */}
+                  <NotificationPopUp />
                 </div>
               </span>
             </>

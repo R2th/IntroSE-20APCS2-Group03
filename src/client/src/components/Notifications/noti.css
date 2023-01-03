@@ -1,0 +1,16 @@
+.modal {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.4);
+}
+
+.modal-enter-done {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+.modal-exit {
+    opacity: 0;
+    transform: scale(0.4);
+}
