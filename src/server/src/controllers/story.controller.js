@@ -291,7 +291,46 @@ const calculateVotes = async (storyId) => {
     raw: true,
   });
 
-  return reaction;
+  return reaction[0].points ? reaction[0] : {points: 0};
+};
+
+const getVoteStoryById = async (req, res) => {
+  const {storyId} = req.params;
+  const {userId} = req;
+
+  try {
+    const numVotes = await calculateVotes(storyId);
+    if (!numVotes) {
+      return res.status(404).send({
+        message: 'Some error occurred',
+      });
+    }
+
+    const reaction = await Reaction.findOne({
+      where: {
+        user_id: userId,
+        story_id: storyId,
+      },
+    });
+    const reactType = 0;
+    if (!reaction) {
+      // If reaction not found, it means user/guest has never voted the story yet
+      reactType = 0;
+    } else {
+      // Else, return the type of user reactions, 1 is upvote, -1 is downvote
+      reactType = reaction.react_type;
+    }
+
+    res.status(200).send({
+      message: 'success',
+      num_votes: numVotes,
+      user_react_type: reactType,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
 };
 
 // Upvote/Downvote
@@ -308,11 +347,11 @@ const voteStory = async (req, res) => {
 
   // If user has not ever react on story
   if (!prevReaction) {
-    // const newReaction = await Reaction.create({
-    //   user_id: userId,
-    //   story_id: req.param.storyId,
-    //   react_type: req.body.reactType,
-    // });
+    const newReaction = await Reaction.create({
+      user_id: userId,
+      story_id: req.param.storyId,
+      react_type: req.body.reactType,
+    });
   } else {
     // update type of vote if exist
     await Story.update(
@@ -336,10 +375,13 @@ const updateStoryView = async (req, res) => {
         {views: prev.views + 1},
         {where: {id: storyId}},
     );
-    res.status(200).send({
-      message: 'successful',
-      data: story,
-    });
+
+    if (story) {
+      res.status(200).send({
+        message: 'successful',
+        view: prev.views + 1,
+      });
+    }
   } catch (err) {
     res.status(500).send({
       message: err.message,
@@ -361,4 +403,5 @@ module.exports = {
   getContentsOfStory,
   getPartContentsOfStory,
   getOtherDataOfStory,
+  getVoteStoryById,
 };
