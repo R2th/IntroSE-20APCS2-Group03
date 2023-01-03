@@ -27,13 +27,13 @@ const useFetch = (
           break;
         }
         try {
-          const postResponse = await fetch(path.startsWith('http' ? path : fullPathAPI(path)), {
-            method,
+          const postResponse = await fetch(fullPathAPI(path), {
+            method: 'POST',
             headers,
             body: JSON.stringify(initData),
           });
           const postJson = await postResponse.json();
-          setData(postJson.data);
+          setData((prev) => dump(prev, postJson));
         } catch (err) {
           setError(err);
         }

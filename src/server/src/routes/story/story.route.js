@@ -28,6 +28,8 @@ router.post(
     storyController.createStory,
 );
 router.post('/story/views', verifyToken, storyController.updateStoryView);
+
+router.get('/story/voters', verifyToken, storyController.calculateVotes);
 router.post('/story/vote/', verifyToken, storyController.voteStory);
 
 module.exports = router;

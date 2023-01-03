@@ -27,12 +27,16 @@ function Search() {
   };
 
   useEffect(() => {
+    if (search === '') {
+      return;
+    }
     const fetchApi = async (path, set) => {
       try {
         const getResponse = await fetch(fullPathAPI(path));
         const getJson = await getResponse.json();
         set(getJson.data);
       } catch (err) {
+        // eslint-disable-next-line
         console.error(err);
       }
     };

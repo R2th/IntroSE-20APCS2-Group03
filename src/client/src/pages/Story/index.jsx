@@ -1,20 +1,34 @@
 import * as React from 'react';
 
-import { useParams, useNavigate } from 'react-router-dom';
-// eslint-disable-next-line
-import { fullPathImage, getDateMonthYear, thumbnailUrl, abbreviateNumber } from 'utils/helpers';
-// eslint-disable-next-line
 import Spinner from 'components/Spinner';
+import { useNavigate, useParams } from 'react-router-dom';
+import { fullPathImage, thumbnailUrl } from 'utils/helpers';
+
+import { AuthContext } from 'contexts/Auth/authContext';
+import { abbreviateNumber, calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
+import { parseJwt } from 'utils/token';
 import useFetch from '../../hooks/useFetch';
+
 import styles from './styles.module.scss';
 
 function Story() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
+  const { token } = React.useContext(AuthContext);
+  const { username } = parseJwt(token);
+
   const { data } = useFetch(`/story/${slug}`, {}, (prev, content) => content.data);
 
   const post = data;
+
+  const user = post.user?.data || {
+    name: username,
+    username,
+    followers_count: 0,
+    posts_count: 0,
+
+  };
 
   React.useEffect(() => {
     const html = document.querySelector('html');
@@ -66,10 +80,10 @@ function Story() {
                   </div>
                   <div className={styles.authorInfo}>
                     <div className={styles.authorPersonalInfo}>
-                      <a href="/" className={styles.authorName}>{post.user.data.name}</a>
+                      <a href="/" className={styles.authorName}>{user.name}</a>
                       <span className={styles.authorUsername}>
                         @
-                        {post.user.data.username}
+                        {user.username}
                       </span>
                       <div>
                         <button type="button">Follow</button>
@@ -79,13 +93,13 @@ function Story() {
                       <div>
                         <i className="icon icon-star_fill" />
                         <span>
-                          {post.user.data.reputation}
+                          {user.reputation}
                         </span>
                       </div>
                       <div>
                         <i className="icon icon-user_fill" />
                         <span>
-                          {post.user.data.followers_count}
+                          {user.followers_count}
                         </span>
                       </div>
                       <div>
@@ -100,20 +114,17 @@ function Story() {
                           />
                         </svg>
                         <span>
-                          {post.user.data.posts_count}
+                          {user.posts_count}
                         </span>
                       </div>
                     </div>
                   </div>
                   <div className={styles.postInfo}>
                     <div className={styles.postTimeInfo}>
-                      {`Posted on ${getDateMonthYear(post.published_at)} - ${post.reading_time} min read`}
+                      {`Posted on ${getDateMonthYear(post.published_at)} - ${calculateMinsToRead(post.contents)} read`}
                     </div>
                     <div className={styles.postReputationInfo}>
-                      <div>
-                        <i className="icon icon-views" />
-                        <span>{post.views_count}</span>
-                      </div>
+                      <ViewCount token={token} storyId={slug} />
                       <div>
                         <i className="icon icon-comments" />
                         <span>{post.comments_count}</span>
@@ -137,6 +148,30 @@ function Story() {
         </div>
       </div>
       {/* <Sidebar /> */}
+    </div>
+  );
+}
+
+function ViewCount({ token, storyId }) {
+  const { data } = useFetch(
+    '/story/views',
+    { storyId },
+    (prev, _data) => _data,
+    {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    'POST',
+  );
+
+  if (!data.view) {
+    return null;
+  }
+
+  return (
+    <div>
+      <i className="icon icon-views" />
+      <span>{data.view}</span>
     </div>
   );
 }

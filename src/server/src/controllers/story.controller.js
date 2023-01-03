@@ -336,10 +336,13 @@ const updateStoryView = async (req, res) => {
         {views: prev.views + 1},
         {where: {id: storyId}},
     );
-    res.status(200).send({
-      message: 'successful',
-      data: story,
-    });
+
+    if (story) {
+      res.status(200).send({
+        message: 'successful',
+        view: prev.views + 1,
+      });
+    }
   } catch (err) {
     res.status(500).send({
       message: err.message,
@@ -361,4 +364,5 @@ module.exports = {
   getContentsOfStory,
   getPartContentsOfStory,
   getOtherDataOfStory,
+  calculateVotes,
 };

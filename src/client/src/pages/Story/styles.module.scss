@@ -35,12 +35,12 @@
           height: 630px;
           padding-right: 12px;
           gap: 3px;
-          
-          .voteButton { 
+
+          .voteButton {
             background-color: transparent;
             box-shadow: none;
             i {
-              font-size: 28px!important;
+              font-size: 28px !important;
             }
           }
           .voteCount {
@@ -50,8 +50,8 @@
             height: 30px;
             font-size: 2rem;
             line-height: 1.6;
-            font-weight: 600!important;
-            color: #9b9b9b!important;
+            font-weight: 600 !important;
+            color: #9b9b9b !important;
             text-decoration: none;
             background-color: initial;
             box-sizing: border-box;
@@ -60,17 +60,19 @@
             margin-top: 25px;
             border-radius: 50%;
             border: 3px solid transparent;
-            background: linear-gradient(white, white) padding-box, linear-gradient(to bottom, #3b82f6, #d946ef) border-box;
+            background: linear-gradient(white, white) padding-box,
+              linear-gradient(to bottom, #3b82f6, #d946ef) border-box;
           }
           .shareButton {
             margin-top: 25px;
             border-radius: 50%;
             border: 1px solid transparent;
-            background: linear-gradient(white, white) padding-box, linear-gradient(to bottom, #3b82f6, #d946ef) border-box;
+            background: linear-gradient(white, white) padding-box,
+              linear-gradient(to bottom, #3b82f6, #d946ef) border-box;
           }
         }
       }
-      
+
       .spinnerFull {
         height: 100vh;
         width: 100%;
@@ -110,16 +112,15 @@
             }
           }
           .authorInfo {
-
             display: flex;
             flex-direction: column;
             justify-content: center;
-            word-break: break-word!important;
-            word-wrap: break-word!important;
+            word-break: break-word !important;
+            word-wrap: break-word !important;
             min-width: 200px;
             width: 45%;
             padding: 1%;
-            
+
             .authorPersonalInfo {
               display: flex;
               align-items: center;
@@ -131,70 +132,69 @@
               background-color: initial;
               gap: 5px;
               .authorName {
-                font-weight: 700!important;
-                color: #5488c7!important;
+                font-weight: 700 !important;
+                color: #5488c7 !important;
                 cursor: pointer;
               }
-              .authorUsername{
-                font-weight: 300!important;
-                color: #9b9b9b!important;
+              .authorUsername {
+                font-weight: 300 !important;
+                color: #9b9b9b !important;
               }
             }
-            .authorCommunityInfo{
+            .authorCommunityInfo {
               display: flex;
               height: 50%;
               align-items: center;
               box-sizing: border-box;
               column-gap: 3%;
-              div{
+              div {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 gap: 5px;
-                span{
+                span {
                   white-space: nowrap;
                 }
               }
             }
-            
           }
           .postInfo {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             justify-content: center;
-            word-break: break-word!important;
-            word-wrap: break-word!important;
-            box-sizing: border-box; 
+            // word-break: break-word!important;
+            // word-wrap: break-word!important;
+            white-space: nowrap;
+            box-sizing: border-box;
             min-width: 200px;
             padding: 1%;
             .postTimeInfo {
               display: flex;
-              align-items: center; 
+              align-items: center;
               height: 50%;
               font-size: 1.2rem;
-              font-weight: 400!important;
-              color: #9b9b9b!important;
+              font-weight: 400 !important;
+              color: #9b9b9b !important;
               line-height: 1.6;
               box-sizing: border-box;
             }
-            .postReputationInfo{
+            .postReputationInfo {
               display: flex;
               height: 50%;
               align-items: center;
               justify-content: center;
               box-sizing: border-box;
               column-gap: 6%;
-              div{
+              div {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 gap: 5px;
-                span{
+                span {
                   white-space: nowrap;
                 }
               }
-              
             }
           }
         }
