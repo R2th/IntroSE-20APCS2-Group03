@@ -1,27 +1,23 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from 'assets/svg/logo.svg';
 import { md5 } from 'utils/md5';
 import { AuthContext } from 'contexts/Auth/authContext';
 import { parseJwt } from 'utils/token';
+import Search from 'components/Search';
 import Menu from '../Menu';
 import styles from './styles.module.scss';
 import UserDropdownMenu from './userMenu';
-import NotificationPopUp from './notification';
+import NotificationPopUp from './Notification/notification';
 
 function Navbar() {
-  const [search, setSearch] = useState('');
-  const navigate = useNavigate();
   const location = useLocation();
-
-  const { token } = useContext(AuthContext);
-
   if (location.pathname.startsWith('/auth')) return null;
 
-  const onChangeSearch = (e) => {
-    setSearch(e.target.value);
-  };
+  const navigate = useNavigate();
+
+  const { token } = useContext(AuthContext);
 
   const onCreateNewStory = () => {
     const { username } = parseJwt(token);
@@ -49,10 +45,7 @@ function Navbar() {
         </div>
         <div className={styles.center}>
           <Menu />
-          <div className={styles.search}>
-            <i className="icon icon-search" />
-            <input value={search} onChange={onChangeSearch} placeholder="Search..." className={styles.inputField} />
-          </div>
+          <Search />
           <div className={styles.icGroup}>
             <span className={styles.icTrending}>
               <a href="/story/trending" aria-label="Trending">
@@ -76,24 +69,49 @@ function Navbar() {
               </svg>
               <span>Write</span>
             </span>
-            <a href="premium" style={{ textDecoration: 'none' }}>
+            <div style={{ textDecoration: 'none' }} onClick={() => navigate('premium')} type="button" aria-hidden>
               <span className={styles.upgrade}>
                 <i className="icon icon-topic_activism" style={{ color: '#fff' }} />
                 <span>Unlimited Access</span>
               </span>
-            </a>
-            <span className={styles.icChat}>
-              <i className="icon icon-chat" />
-            </span>
-            <span className={styles.icNotice}>
-              <div>
-                <NotificationPopUp />
-              </div>
-            </span>
+            </div>
+            {token && (
+            <>
+              <span className={styles.icChat}>
+                <i className="icon icon-chat" />
+              </span>
+              <span className={styles.icNotice}>
+                <div>
+                  {/* <span>4</span>
+                  <i className="icon icon-notification" /> */}
+                  <NotificationPopUp />
+                </div>
+              </span>
+            </>
+            ) }
           </div>
-          <div>
-            <UserDropdownMenu />
-          </div>
+          {token ? <UserDropdownMenu /> : (
+            <div className={styles.icGroup} style={{ marginLeft: 50 }}>
+              <button
+                type="button"
+                className={styles.signupBtn}
+                onClick={() => {
+                  navigate('auth/signup');
+                }}
+              >
+                Sign Up
+              </button>
+              <button
+                type="button"
+                className={styles.loginBtn}
+                onClick={() => {
+                  navigate('auth/login');
+                }}
+              >
+                Log In
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

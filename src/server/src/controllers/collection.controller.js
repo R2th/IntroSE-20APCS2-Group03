@@ -17,7 +17,9 @@ const getCollections = async (req, res) => {
       },
     });
     if (!collections) {
-      throw new Error();
+      return res.status(404).send({
+        message: 'Collection not found.',
+      });
     }
     res.status(200).send({
       message: 'successful',
@@ -63,7 +65,9 @@ const deleteCollection = async (req, res) => {
       },
     });
     if (!collection) {
-      throw new Error();
+      return res.status(404).send({
+        message: 'Collection not found.',
+      });
     };
     await collection.destroy();
     res.status(200).send({
@@ -90,7 +94,9 @@ const addStoryToCollection = async (req, res) => {
       },
     });
     if (!collection) {
-      throw new Error();
+      return res.status(404).send({
+        message: 'Collection not found.',
+      });
     };
     collection.addStory(storyId);
     res.status(200).send({
@@ -116,7 +122,9 @@ const removeStoryToCollection = async (req, res) => {
       },
     });
     if (!collection) {
-      throw new Error();
+      return res.status(404).send({
+        message: 'Collection not found.',
+      });
     };
     collection.removeStory(storyId);
     res.status(200).send({

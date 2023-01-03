@@ -11,7 +11,7 @@ function AuthProvider({ children }) {
   const getToken = () => {
     const tokenString = localStorage.getItem('token');
     const userToken = JSON.parse(tokenString);
-    return userToken?.token || userToken;
+    return userToken;
   };
 
   const [token, setToken] = useState(getToken());
@@ -23,6 +23,9 @@ function AuthProvider({ children }) {
 
   const handleLogin = async ({ username, password }) => {
     const reqAuth = await loginUser({ username, password });
+    if (!reqAuth.token) {
+      throw reqAuth.message;
+    }
     saveToken({ token: reqAuth.token });
     const origin = location.state?.from?.pathname || '/';
     navigate(origin);
@@ -30,14 +33,14 @@ function AuthProvider({ children }) {
 
   const handleLogout = () => {
     saveToken({ token: null });
-    navigate('/auth/login');
+    // navigate('/auth/login');
   };
 
   const value = useMemo(() => ({
     token,
     handleLogin,
     handleLogout,
-  }), []);
+  }), [token]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

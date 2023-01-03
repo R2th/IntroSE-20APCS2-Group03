@@ -4,11 +4,11 @@ import { fullPathAPI } from 'utils/helpers';
 const useFetch = (
   path,
   initData,
-  resFormula = (prev, data) => {
+  resFormula = (prev, _data) => {
     if (prev === initData) {
-      return data.data;
+      return _data.data;
     }
-    return [...prev, ...data.data];
+    return [...Array.from(new Set([...prev, _data.data]))];
   },
   headers = {
     'Content-Type': 'application/json',

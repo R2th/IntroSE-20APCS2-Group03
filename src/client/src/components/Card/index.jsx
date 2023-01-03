@@ -16,7 +16,7 @@ function Card({ content, type = 'fullWidth' }) {
   const [isHover, setIsHover] = useState(false);
 
   const onClickStory = () => {
-    navigate(`story/${content.id}`);
+    navigate(`/story/${content.id}`);
   };
 
   switch (type) {

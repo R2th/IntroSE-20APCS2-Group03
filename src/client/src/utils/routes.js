@@ -1,9 +1,8 @@
-/*eslint-disable*/
+/*eslint-disable */
 import Story from 'pages/Story';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import NotFoundPageError from 'pages/NotFoundPage';
-import Postman from 'pages/Postman';
 import Profile from 'pages/Profile';
 import Signup from 'pages/Signup';
 import Trending from 'pages/Trending';
@@ -36,7 +35,7 @@ export const AUTH_ROUTES = [
     path: 'set_password',
     element: <SetNewPassword />,
   },
- 
+
 ];
 
 export const ROUTES = [
@@ -63,16 +62,12 @@ export const ROUTES = [
     ],
   },
   {
-    path: ':id_user',
+    path: ':userId',
     element: (
       <ProtectedRoute>
         <Profile />
       </ProtectedRoute>
     ),
-  },
-  {
-    path: 'postman',
-    element: <Postman />,
   },
   {
     path: 'auth',

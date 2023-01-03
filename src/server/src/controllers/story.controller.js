@@ -20,7 +20,10 @@ const crawlStory = async (req, res) => {
 
 const getPartContentsOfStory = async (req, res) => {
   try {
-    const {limit} = req.params;
+    const limit = parseInt(req.params.limit);
+    if (!limit) {
+      throw new Error();
+    }
     const contents = await Story.findByPk(req.params.storyId, {
       attributes: [
         'contents',
@@ -84,6 +87,7 @@ const getAllStories = async (req, res) => {
   try {
     const {limit} = req.params;
     const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
       limit,
     });
     if (!stories) {
@@ -104,6 +108,7 @@ const getNewestStories = async (req, res) => {
   try {
     const {limit} = req.params;
     const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
       order: [['createdAt', 'DESC']],
       limit,
     });
@@ -125,7 +130,7 @@ const getStoryByStoryId = async (req, res) => {
   try {
     const story = await Story.findByPk(req.params.storyId);
     if (!story) {
-      res.status(404).send({
+      return res.status(404).send({
         message: 'Story not found.',
       });
     }
@@ -146,6 +151,7 @@ const getStoriesOfUser = async (req, res) => {
     const {userId} = req;
     const {limit} = req.body;
     const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
       where: {
         author_id: userId,
       },
@@ -177,19 +183,21 @@ const createStory = async (req, res) => {
       flag: 'r',
     });
 
-    const {contentsShort, title, tag, isPremium} = JSON.parse(req.body.data);
+    const {id, contentsShort, thumbnail, title, tag, isPremium} = JSON.parse(req.body.data);
     const mediaList = await extractMedia(contents);
     const authorId = req.userId;
 
     const story = await Story.create({
       contents: contents,
       contents_short: contentsShort,
+      thumbnail: thumbnail,
       media_list: mediaList,
       author_id: authorId,
       title,
       tag,
       view: 0,
       isPremium,
+      id,
     });
 
     res.status(200).send({
@@ -210,7 +218,7 @@ const updateStory = async (req, res) => {
     const story = await Story.findByPk(req.params.storyId);
 
     if (!story) {
-      res.status(404).send({
+      return res.status(404).send({
         message: 'Story not found.',
       });
     }
@@ -220,13 +228,14 @@ const updateStory = async (req, res) => {
       flag: 'r',
     });
 
-    const {contentsShort, title, tag, isPremium} = req.body;
+    const {contentsShort, thumbnail, title, tag, isPremium} = req.body;
 
     const mediaList = await extractMedia(contents);
 
     story.set({
       contents,
       contents_short: contentsShort,
+      thumbnail: thumbnail,
       media_list: mediaList,
       title,
       tag,
@@ -258,7 +267,7 @@ const deleteStory = async (req, res) => {
     });
 
     if (!story) {
-      res.status(404).send({
+      return res.status(404).send({
         message: 'Story not found.',
       });
     }

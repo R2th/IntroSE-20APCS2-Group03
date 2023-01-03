@@ -51,12 +51,12 @@ exports.login = async (req, res) => {
   })
       .then(async (user) => {
         if (!user) {
-          res.status(404).send({message: 'User not found.'});
+          return res.status(404).send({message: 'User not found.'});
         }
 
         const isMatched = await bcrypt.compare(req.body.password, user.password);
         if (!isMatched) {
-          res.status(401).send({
+          return res.status(401).send({
             token: null,
             message: 'Wrong password!',
           });

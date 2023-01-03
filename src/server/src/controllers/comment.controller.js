@@ -103,7 +103,7 @@ const updateComment = async (req, res) =>{
     const {commentId} = req.params;
     const comment = await Comment.findByPk(commentId);
     if (!comment) {
-      res.status(404).send({
+      return res.status(404).send({
         message: 'Comment not found.',
       });
     }
@@ -127,7 +127,7 @@ const deleteComment = async (req, res) =>{
     const comment = await Comment.findByPk(commentId);
 
     if (!comment) {
-      res.status(404).send({
+      return res.status(404).send({
         message: 'Comment not found.',
       });
     }

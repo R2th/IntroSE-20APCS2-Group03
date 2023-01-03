@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import classNames from 'classnames';
 
@@ -6,43 +6,54 @@ import MoreIcon from 'assets/svg/icon-more.svg';
 import useFetch from 'hooks/useFetch';
 import { INIT_DATA_CONTENT } from 'utils/const';
 import Card from 'components/Card';
+import { AuthContext } from 'contexts/Auth/authContext';
+import { useParams } from 'react-router-dom';
+import { parseJwt } from 'utils/token';
 import styles from './styles.module.scss';
 
 function Profile() {
+  const { userId } = useParams();
+  const { token } = useContext(AuthContext);
+
+  const { username } = parseJwt(token);
+
   const renderSidebar = () => (
     <div className={styles.profileInfo}>
       <div className={styles.dynamicSidebar}>
         <div className={styles.widget}>
           <div className={styles.body}>
             <div className={styles.basic}>
-              <div className={styles.avatar}>
-                <avatar>
+              <div className={styles.avatarContainer}>
+                <div className={styles.avatar}>
                   <a href="/user-id">
                     <img loading="lazy" src="https://viblo.asia/images/mm.png" alt="samurice" />
                   </a>
-                </avatar>
+                </div>
               </div>
               <div className={styles.items}>
                 <h1 className={styles.name}>
                   <a href="/user-id">R2th</a>
                 </h1>
                 <i className="icon icon-chat" />
-                <app-more-options>
+                <div>
                   <div className={styles.more}>
                     <img alt="More" src={MoreIcon} />
                   </div>
-                </app-more-options>
+                </div>
               </div>
               <div className={styles.tns}>
                 <p>
                   <a href="/user-id">@r2th</a>
                 </p>
               </div>
-              <button className={styles.subscribeBtn} type="button">
-                <div className={styles.dump}>
-                  <span>Follow</span>
-                </div>
-              </button>
+              {username !== userId ? (
+                <button className={styles.subscribeBtn} type="button">
+                  <div className={styles.dump}>
+                    <span>Follow</span>
+                  </div>
+                </button>
+              )
+                : <button type="button" className={styles.editProfile}>Edit profile</button>}
               <div className={styles.stats}>
                 <div>
                   <div className={styles.value}>112323</div>
@@ -61,7 +72,7 @@ function Profile() {
           </div>
         </div>
         <div className={styles.bio}>Some bio buh buh lmao</div>
-        <about-me>
+        <div>
           <div className={styles.intro}>
             <div className={styles.body}>
               <div className={styles.about}>
@@ -94,7 +105,7 @@ function Profile() {
               </div>
             </div>
           </div>
-        </about-me>
+        </div>
         <div className={styles.othersContact}>
           <ul>
             <li className={styles.list}>
@@ -143,7 +154,16 @@ function Profile() {
 
 function ProfileMain() {
   const [tab, setTab] = useState('stories');
-  const { data } = useFetch('/story/newest/10', INIT_DATA_CONTENT);
+  const { token } = useContext(AuthContext);
+
+  const { data } = useFetch('/story/me', INIT_DATA_CONTENT, (prev, _data) => {
+    if (prev === INIT_DATA_CONTENT) {
+      return _data.data;
+    }
+    return [...Array.from(new Set([...prev, _data.data]))];
+  }, {
+    Authorization: `Bearer ${token}`,
+  });
 
   const renderStoriesTab = () => (
     <div className={styles.postsTab}>
@@ -185,7 +205,7 @@ function ProfileMain() {
   return (
     <div id={styles.main}>
       <div className={styles.profileTabs}>
-        <TabHeader name="Stories (207)" icon="feed_posts" setTab={setTab} value="stories" tab={tab} />
+        <TabHeader name={`Stories (${data.length})`} icon="feed_posts" setTab={setTab} value="stories" tab={tab} />
         <TabHeader name="Series" icon="tag" setTab={setTab} value="series" tab={tab} />
         <TabHeader name="Comments" icon="comment" setTab={setTab} value="comments" tab={tab} />
       </div>
