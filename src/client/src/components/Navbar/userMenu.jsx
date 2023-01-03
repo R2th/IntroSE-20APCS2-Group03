@@ -16,7 +16,7 @@ function UserDropdownMenu() {
   const { token, handleLogout } = useContext(AuthContext);
   const { username } = parseJwt(token);
 
-  const { data } = useFetch(`/user/${username}`, INIT_USER_INFO);
+  const { data } = useFetch(`/user/${username}`, INIT_USER_INFO, (prev, _data) => _data.data);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -63,7 +63,7 @@ function UserDropdownMenu() {
               </div>
               <span className={styles.userInfo}>
                 <span className={styles.userName}>
-                  {username}
+                  {`${data.first_name} ${data.last_name}` || data.username}
                 </span>
                 <span className={styles.karma}>
                   {/* <i className="icon icon-karma_fill" /> */}

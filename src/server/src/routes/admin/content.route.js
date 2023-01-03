@@ -11,5 +11,4 @@ router.post(
     upload.uploadImage,
 );
 
-
 module.exports = router;

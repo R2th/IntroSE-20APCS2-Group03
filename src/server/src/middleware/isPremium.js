@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 const db = require('../db/index');
 
 const User = db.user;
+const Story = db.story;
 
-const verifyToken = async (req, res, next) => {
+const isPremium = async (req, res, next) => {
   try {
     const header = req.header('Authorization');
     if (!header) {
@@ -22,11 +23,28 @@ const verifyToken = async (req, res, next) => {
       //     message: 'Unauthorized!',
       //   });
       }
-
-      const user = await User.findOne({
-        where: {username: decoded.username},
+      let isPremium = false;
+      if (decoded) {
+        const user = await User.findByPk(decoded.username, {
+          attributes: ['isPremium'],
+        });
+        if (!user) {
+          throw new Error();
+        }
+        req.username = user.username;
+        isPremium = user.isPremium;
+      }
+      const story = await Story.findByPk(req.params.storyId, {
+        attributes: ['isPremium'],
       });
-      req.username = user.username;
+      if (!story) {
+        throw new Error();
+      }
+      if (story.isPremium && !isPremium) {
+        return res.send({
+          message: 'user does not have access to premium content',
+        });
+      }
       next();
     });
   } catch (err) {
@@ -36,4 +54,4 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-module.exports = verifyToken;
+module.exports = isPremium;

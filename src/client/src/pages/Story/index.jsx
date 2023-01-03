@@ -6,7 +6,6 @@ import { fullPathAPI, fullPathImage, thumbnailUrl } from 'utils/helpers';
 
 import { AuthContext } from 'contexts/Auth/authContext';
 import { abbreviateNumber, calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
-import { parseJwt } from 'utils/token';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useFetch from '../../hooks/useFetch';
@@ -17,32 +16,50 @@ function Story() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
+  const [author, setAuthor] = useState(null);
+
   const { token } = React.useContext(AuthContext);
-  const { username } = parseJwt(token);
 
-  const { data } = useFetch(`/story/${slug}`, {}, (prev, content) => content.data);
+  const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
+    Authorization: `Bearer ${token}`,
+  });
 
-  const post = data;
+  const contentFull = useFetch(`story/${slug}/contents/full`, { contents: '' }, (prev, data) => data.data, {
+    Authorization: `Bearer ${token}`,
+  });
 
-  const user = post.user?.data || {
-    name: username,
-    username,
-    followers_count: 0,
-    posts_count: 0,
-  };
+  const othersData = useFetch(`story/${slug}/other-data`, {}, (prev, data) => data.data);
+
+  const post = contentFull.data || contentPreview.data;
+  const others = othersData.data;
 
   React.useEffect(() => {
+    // eslint-disable-next-line
+    const { author_username } = others;
+
+    // eslint-disable-next-line
+    if (!author_username) return;
+
+    const getAuthor = async () => {
+      // eslint-disable-next-line
+      const getRes = await fetch(fullPathAPI(`user/${author_username}`));
+      const { data } = await getRes.json();
+      setAuthor(data);
+    };
+
+    getAuthor();
+
     const html = document.querySelector('html');
-    html.style.setProperty('--featured-img', `url("${thumbnailUrl(post)}")`);
+    html.style.setProperty('--featured-img', `url("${thumbnailUrl(othersData.data)}")`);
     html.style.setProperty('--bg-blend-mode', 'multiply');
     html.style.setProperty('background-size', '120% 2000px, 100% auto');
-  }, [post]);
+  }, [others]);
 
   return (
     <div className={styles.container}>
       <div className={styles.articlesAndSidebar}>
         <div className={styles.postCenter}>
-          {post.contents ? (
+          {othersData && post.contents ? (
             <>
               <div className={styles.leftSidePanel}>
                 <div
@@ -75,14 +92,15 @@ function Story() {
                       )}
                     </a>
                   </div>
+                  {author && (
                   <div className={styles.authorInfo}>
                     <div className={styles.authorPersonalInfo}>
                       <a href="/" className={styles.authorName}>
-                        {user.name}
+                        {`${author.first_name} ${author.last_name}` || author.username}
                       </a>
                       <span className={styles.authorUsername}>
                         @
-                        {user.username}
+                        {author.username}
                       </span>
                       <div>
                         <button type="button">Follow</button>
@@ -91,11 +109,11 @@ function Story() {
                     <div className={styles.authorCommunityInfo}>
                       <div>
                         <i className="icon icon-star_fill" />
-                        <span>{user.reputation}</span>
+                        <span>{author.reputation}</span>
                       </div>
                       <div>
                         <i className="icon icon-user_fill" />
-                        <span>{user.followers_count}</span>
+                        <span>{author.followers_count}</span>
                       </div>
                       <div>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Write">
@@ -108,13 +126,16 @@ function Story() {
                             stroke="currentColor"
                           />
                         </svg>
-                        <span>{user.posts_count}</span>
+                        <span>{author.posts_count}</span>
                       </div>
                     </div>
                   </div>
+                  ) }
                   <div className={styles.postInfo}>
                     <div className={styles.postTimeInfo}>
-                      {`Posted on ${getDateMonthYear(post.published_at)} - ${calculateMinsToRead(post.contents)} read`}
+                      {/* {others.createdAt !== others.updatedAt ? `Updated at ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`
+                        : `Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`} */}
+                      {`Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`}
                     </div>
                     <div className={styles.postReputationInfo}>
                       <ViewCount token={token} storyId={slug} />

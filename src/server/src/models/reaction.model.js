@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Reaction = sequelize.define(
       'reaction',
       {
-        user_id: {
+        username: {
           type: DataTypes.INTEGER,
           primaryKey: true,
         },
