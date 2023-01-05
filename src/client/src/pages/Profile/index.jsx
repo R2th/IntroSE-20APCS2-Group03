@@ -1,13 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import classNames from 'classnames';
 
 import MoreIcon from 'assets/svg/icon-more.svg';
-import useFetch from 'hooks/useFetch';
-import { INIT_DATA_CONTENT } from 'utils/const';
-import Card from 'components/Card';
+import TabHeader from 'components/Profile/TabHeader';
 import { AuthContext } from 'contexts/Auth/authContext';
-import { useParams } from 'react-router-dom';
+import useFetch from 'hooks/useFetch';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { parseJwt } from 'utils/token';
 import styles from './styles.module.scss';
 
@@ -166,88 +165,22 @@ function Profile() {
 
 function ProfileMain() {
   const [tab, setTab] = useState('stories');
-  const { token } = useContext(AuthContext);
+  const [value, setValue] = useState(null);
+  const navigate = useNavigate();
 
-  const { username } = parseJwt(token);
-
-  const { data } = useFetch(`/story/author/${username}`, INIT_DATA_CONTENT, (prev, _data) => {
-    if (prev === INIT_DATA_CONTENT) {
-      return _data.data;
-    }
-    return [...Array.from(new Set([...prev, _data.data]))];
-  }, {
-    Authorization: `Bearer ${token}`,
-  });
-
-  const renderStoriesTab = () => (
-    <div className={styles.postsTab}>
-      <div className={styles.controlLayout} />
-      <div className={styles.filter}>
-        <div>
-          <i
-            className="icon icon-new_fill"
-            style={{
-              color: '#0079d3',
-            }}
-          />
-          <span className="">New</span>
-        </div>
-        <div>
-          <i
-            className="icon icon-hot_fill"
-            style={{
-              color: 'orangered',
-            }}
-          />
-          <span className="">Hot</span>
-        </div>
-        <div>
-          <i
-            className="icon icon-top_fill"
-          />
-          <span className="">Top</span>
-        </div>
-      </div>
-      <div className={styles.body}>
-        {data.map((content) => <Card key={content.id} content={content} type="small-verc" />)}
-      </div>
-    </div>
-  );
-  const renderSeriesTab = () => <div className={styles.postsTab} />;
-  const renderCommentsTab = () => <div className={styles.postsTab} />;
+  useEffect(() => {
+    navigate(tab);
+  }, [tab]);
 
   return (
     <div id={styles.main}>
       <div className={styles.profileTabs}>
-        <TabHeader name={`Stories (${data.length})`} icon="feed_posts" setTab={setTab} value="stories" tab={tab} />
-        <TabHeader name="Series" icon="tag" setTab={setTab} value="series" tab={tab} />
-        <TabHeader name="Comments" icon="comment" setTab={setTab} value="comments" tab={tab} />
+        <TabHeader name="Stories" icon="feed_posts" setTab={setTab} value="stories" tab={tab} count={value} />
+        {/* <TabHeader name="Series" icon="tag" setTab={setTab} value="series" tab={tab} count={value} /> */}
+        <TabHeader name="Saved" icon="save_table" setTab={setTab} value="saved" tab={tab} count={value} />
+        <TabHeader name="Comments" icon="comment" setTab={setTab} value="comments" tab={tab} count={value} />
       </div>
-      {tab === 'stories' && renderStoriesTab()}
-      {tab === 'series' && renderSeriesTab()}
-      {tab === 'comments' && renderCommentsTab()}
-    </div>
-  );
-}
-
-function TabHeader({
-  name, icon, value, setTab, tab,
-}) {
-  const onSelectTab = () => {
-    setTab(value);
-  };
-  return (
-    <div
-      className={styles.item}
-      onClick={onSelectTab}
-      aria-hidden
-      style={tab === value ? {
-        borderBottom: ' 2px solid #3398d4',
-        color: 'black',
-      } : {}}
-    >
-      <i className={`icon icon-${icon}`} />
-      <span>{name}</span>
+      <Outlet context={[setValue]} />
     </div>
   );
 }
