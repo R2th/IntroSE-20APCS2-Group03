@@ -8,6 +8,8 @@ import { AuthContext } from 'contexts/Auth/authContext';
 import { abbreviateNumber, calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import CommentSystem from 'components/Comments/CommentSystem';
+import { CommentProvider } from 'contexts/CommentContext';
 import useFetch from '../../hooks/useFetch';
 
 import styles from './styles.module.scss';
@@ -154,11 +156,15 @@ function Story() {
                 <zero-md>
                   <script type="text/markdown">{post.contents}</script>
                 </zero-md>
+                <CommentProvider>
+                  <CommentSystem />
+                </CommentProvider>
               </div>
             </>
           ) : (
             <Spinner className={styles.spinnerFull} />
           )}
+
         </div>
       </div>
       {/* <Sidebar /> */}

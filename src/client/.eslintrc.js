@@ -16,5 +16,6 @@ module.exports = {
     'linebreak-style': 0,
     'max-len': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'import/no-cycle': 'off',
   },
 };
