@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 
 function TabHeader({
-  name, icon, value, setTab, tab, count,
+  name, icon, setTab, tab, count, value,
 }) {
+  const location = useLocation();
+
   const onSelectTab = () => {
     setTab(value);
   };
+
+  useEffect(() => {
+    setTab(location.pathname.split('/')[2]);
+  }, [location.pathname]);
+
   return (
     <div
       className={styles.item}

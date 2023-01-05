@@ -93,8 +93,8 @@ function SavedList() {
 }
 
 function NewCollection() {
-  const [isOpen, setIsOpen] = useState(false);
   const [isDescription, setIsDescription] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
     setIsOpen(false);

@@ -139,17 +139,6 @@ nav {
                   box-shadow: none;
                   cursor: pointer;
                 }
-                .editProfile {
-                  background-color: inherit;
-                  width: 100%;
-                  padding: 0.5rem;
-                  border-radius: 6px;
-                  margin-top: 1rem;
-                  cursor: pointer;
-                  &:hover {
-                    background-color: rgba(0, 0, 0, 0.04);
-                  }
-                }
                 .stats {
                   display: flex;
                   justify-content: space-between;

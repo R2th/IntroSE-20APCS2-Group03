@@ -8,6 +8,7 @@ import { AuthContext } from 'contexts/Auth/authContext';
 import useFetch from 'hooks/useFetch';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { parseJwt } from 'utils/token';
+import EditProfile from 'components/Profile/EditProfile';
 import styles from './styles.module.scss';
 
 const INIT_USER_INFO = {
@@ -62,7 +63,7 @@ function Profile() {
                   </div>
                 </button>
               )
-                : <button type="button" className={styles.editProfile}>Edit profile</button>}
+                : <EditProfile />}
               <div className={styles.stats}>
                 <div>
                   <div className={styles.value}>112323</div>
