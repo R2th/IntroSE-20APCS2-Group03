@@ -40,9 +40,24 @@ CREATE TABLE public.collections (
     "updatedAt" timestamp with time zone
 );
 
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.comments (
+    id integer NOT NULL,
+    username character varying(255) NOT NULL,
+    story_id character varying(255) NOT NULL,
+    parent_id id integer NOT NULL,
+    content character varying(255) NOT NULL,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone
+);
+
 
 ALTER TABLE public.collections OWNER TO postgres;
 
+ALTER TABLE public.comments OWNER TO postgres;
 --
 -- Name: collections_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -55,14 +70,26 @@ CREATE SEQUENCE public.collections_id_seq
     NO MAXVALUE
     CACHE 1;
 
+CREATE SEQUENCE public.comments_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 
 ALTER TABLE public.collections_id_seq OWNER TO postgres;
+
+ALTER TABLE public.comments_id_seq OWNER TO postgres;
 
 --
 -- Name: collections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.collections_id_seq OWNED BY public.collections.id;
+
+ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
 
 
 --
@@ -78,22 +105,6 @@ CREATE TABLE public.collections_stories (
 
 
 ALTER TABLE public.collections_stories OWNER TO postgres;
-
---
--- Name: comments; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.comments (
-    comment_id integer NOT NULL,
-    username character varying(255) NOT NULL,
-    story_id character varying(255) NOT NULL,
-    content character varying(255) NOT NULL,
-    "createdAt" timestamp with time zone,
-    "updatedAt" timestamp with time zone
-);
-
-
-ALTER TABLE public.comments OWNER TO postgres;
 
 --
 -- Name: drafts; Type: TABLE; Schema: public; Owner: postgres
@@ -215,6 +226,8 @@ ALTER TABLE public.users_roles OWNER TO postgres;
 
 ALTER TABLE ONLY public.collections ALTER COLUMN id SET DEFAULT nextval('public.collections_id_seq'::regclass);
 
+ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
+
 
 --
 -- Data for Name: collections; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -236,7 +249,7 @@ COPY public.collections_stories ("createdAt", "updatedAt", story_id, collection_
 -- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.comments (comment_id, username, story_id, content, "createdAt", "updatedAt") FROM stdin;
+COPY public.comments (id, username, story_id, content, "createdAt", "updatedAt") FROM stdin;
 \.
 
 
@@ -398,6 +411,7 @@ COPY public.users_roles ("createdAt", "updatedAt", "roleId", "username") FROM st
 
 SELECT pg_catalog.setval('public.collections_id_seq', 1, false);
 
+SELECT pg_catalog.setval('public.comments_id_seq', 1, false);
 
 --
 -- Name: username_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
@@ -425,7 +439,7 @@ ALTER TABLE ONLY public.collections_stories
 --
 
 ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT comments_pkey PRIMARY KEY (comment_id);
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
 
 
 --
