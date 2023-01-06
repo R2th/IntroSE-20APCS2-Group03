@@ -96,10 +96,9 @@
 
           div {
             position: relative !important;
-            max-width: 47.5%;
-            //max-height: auto;
+            max-width: 80%;
+            max-height: auto;
             padding: 15px;
-            bottom: 12px;
 
             .notice {
               font-size: 16px;
@@ -108,28 +107,26 @@
               -webkit-box-orient: vertical;
               overflow: hidden;
             }
+
+            .time {
+              margin-bottom: 20px;
+              font-size: 16px;
+              display: flex;
+              align-items: flex-end;
+            }
           }
 
           .ava_type {
             top: 20px;
+            font-size: 25px;
 
             .types {
               position: relative;
               width: auto;
-              left: 17px;
+              left: 25px;
               bottom: 35px;
               //transform: translate(50%, 50%);
             }
-          }
-
-          .time {
-            margin-left: auto;
-            margin-right: 20px;
-            font-size: 12px;
-            transform: translateX(10px);
-            display: flex;
-            align-items: flex-end;
-            max-height: 100px;
           }
         }
       }
@@ -143,7 +140,9 @@
           border: none;
           background: none;
           text-align: center;
-          font-size: 14px;
+          font-size: 15px;
+          box-shadow: none;
+          border: none;
 
           &:hover {
             cursor: pointer;

@@ -16,6 +16,7 @@ import Payment from 'components/Payment';
 import UserStories from 'components/Profile/Stories';
 import SaveList from 'components/Profile/Series';
 import UserComments from 'components/Profile/Comments';
+//import Settings from 'components/Profile/Settings';
 
 export const AUTH_ROUTES = [
   {
@@ -78,6 +79,7 @@ export const ROUTES = [
       },
       {
         path: 'settings',
+        //element: <Settings />,
       },
       {
         path: 'comments',

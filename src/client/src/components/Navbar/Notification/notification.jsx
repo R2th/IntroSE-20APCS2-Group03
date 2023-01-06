@@ -6,8 +6,8 @@ import styles from './styles.module.scss';
 function NotificationPopUp() {
   const [notification, setNotification] = React.useState([
     {
-      img: 'fa fa-user', // avatar user
-      notice: 'Hello World', // content
+      img: 'fa fa-check', // avatar user
+      notice: 'Nguyen Xuan Quang likes your story', // content
       time: '6 Jan 2023 at 21:21', // date
       state: 'bold', // bold: unread, normal: read
       type: 'fa fa-thumbs-up', // like, share, comment, upvote/downvote,...
@@ -20,63 +20,63 @@ function NotificationPopUp() {
       type: 'fa fa-thumbs-down',
     },
     {
-      img: 'fa fa-user',
+      img: 'fa fa-check',
       notice: 'Hello World. for i in ccjz print(i) print("Happy New Year"). Hahan"t an tet vui day',
       time: '6 Jan 2023 at 21:22',
       state: 'normal',
       type: 'fa fa-thumbs-down',
     },
     {
-      img: 'fa fa-user',
-      notice: 'Hello asfaWorld',
+      img: 'fa fa-check',
+      notice: 'Mach Vinh Phat starts following you',
       time: '6 Jan 2023 at 21:31',
       state: 'bold',
       type: 'fa fa-thumbs-down',
     },
     {
-      img: 'fa fa-user',
-      notice: 'Hello Worafafafadflf',
+      img: 'fa fa-check',
+      notice: 'Nguyen Quang Tan becomes your premium members',
       time: '6 Jan 2023 at 11:01',
       state: 'normal',
       type: 'fa fa-thumbs-down',
     },
     {
-      img: 'fa fa-user',
-      notice: 'Heldgfsgdfglo World',
+      img: 'fa fa-check',
+      notice: 'Truong Duc Thang has shared your stories to everyone!',
       time: '5 Jan 2021 at 22:21',
       state: 'bold',
       type: 'fa fa-thumbs-down',
     },
     {
-      img: 'fa fa-user',
-      notice: 'May troll',
+      img: 'fa fa-check',
+      notice: 'Some one reported you that you are cheating on BytesGo. If we find any problems, your account will be banned.',
       time: '1 Jan 2023 at 21:21',
       state: 'bold',
       type: 'fa fa-thumbs-down',
     },
     {
-      img: 'fa fa-user',
+      img: 'fa fa-check',
       notice: 'LmaoLmao',
       time: '6 Feb 2022 at 21:21',
       state: 'normal',
       type: 'fa fa-thumbs-down',
     },
     {
-      img: 'fa fa-user',
+      img: 'fa fa-check',
       notice: 'Mach Vinh Phat',
       time: '3 Feb 2022 at 21:21',
       state: 'normal',
       type: 'fa fa-thumbs-down',
     },
     {
-      img: 'fa fa-user',
+      img: 'fa fa-check',
       notice: 'Cứu Tui',
       time: '6 Feb 2022 at 21:21',
       state: 'normal',
       type: 'fa fa-thumbs-down',
     },
     {
-      img: 'fa fa-user',
+      img: 'fa fa-check',
       notice: 'Cuu',
       time: '6 Feb 2022 at 21:21',
       state: 'normal',
@@ -154,7 +154,7 @@ function NotificationPopUp() {
                         className={content.img}
                         aria-hidden="true"
                         style={{
-                          borderRadius: 100, background: '#fade7c', padding: 15, fontSize: 20,
+                          borderRadius: 100, background: '#fade7c', padding: 15, fontSize: 30,
                         }}
                       />
                       <div className={styles.types}>
@@ -162,16 +162,15 @@ function NotificationPopUp() {
                           className={content.type}
                           aria-hidden="true"
                           style={{
-                            borderRadius: 100, background: '#2c5d87', padding: 2, width: 'auto',
+                            borderRadius: 100, background: '#add8e6', padding: 2, width: 'auto',
                           }}
                         />
                       </div>
                     </div>
                     <div>
                       <p className={styles.notice} style={{ fontWeight: content.state }}>{content.notice}</p>
+                      <p className={styles.time} style={{ fontWeight: content.state }}>{content.time}</p>
                     </div>
-                    <div className={styles.time}>{content.time}</div>
-
                   </div>
                 </div>
               ))}
