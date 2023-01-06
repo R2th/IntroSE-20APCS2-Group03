@@ -22,6 +22,11 @@ function Profile() {
   const { username } = parseJwt(token);
   const { data } = useFetch(`/user/${username}`, INIT_USER_INFO, (prev, _data) => _data.data);
 
+  useEffect(() => {
+    const html = document.querySelector('body');
+    html.style.setProperty('background-color', '#f5f7fa');
+  }, []);
+
   const renderSidebar = () => (
     <div className={styles.profileInfo}>
       <div className={styles.dynamicSidebar}>

@@ -2,12 +2,19 @@ import classNames from 'classnames';
 import Modal from 'components/Modal';
 import DropDownModal from 'components/Modal/DropdownModal';
 import Spinner from 'components/Spinner';
-import React, { useRef, useState, useEffect } from 'react';
+import { AuthContext } from 'contexts/Auth/authContext';
+import React, {
+  useRef, useState, useEffect, useContext,
+} from 'react';
+import { useParams } from 'react-router-dom';
+import { fullPathAPI } from 'utils/helpers';
 
 import styles from './styles.module.scss';
 
 function SavedList() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { slug } = useParams();
   const [saveList, setSaveList] = useState([
     {
       name: 'test 1',
@@ -24,15 +31,28 @@ function SavedList() {
     },
   ]);
   const ref = useRef(null);
+  const { token } = useContext(AuthContext);
 
   const [position, setPosition] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = async () => {
-    setIsOpen(false);
     setIsLoading(true);
+    const collectionId = saveList.filter((collection) => collection.isChecked === true)[0].id;
 
-    setIsLoading(false);
+    const postRes = await fetch(fullPathAPI(`/collection/${collectionId}/${slug}/add`), {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { message } = await postRes.json();
+
+    if (message === 'successful') {
+      setIsOpen(false);
+      setIsLoading(false);
+    }
 
     // alert(saveList.filter((item) => item.isChecked === true)[0].name);
   };
@@ -46,6 +66,22 @@ function SavedList() {
       });
     }
   }, [isOpen]);
+
+  const fetchSaveList = async () => {
+    const getRes = await fetch(fullPathAPI('/collection'), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const { data } = await getRes.json();
+
+    setSaveList(data.map((collection) => ({
+      name: collection.name, isPrivate: true, isChecked: false, id: collection.id,
+    })));
+  };
+
+  useEffect(() => {
+    fetchSaveList();
+  }, []);
 
   return (
     <>
@@ -85,20 +121,49 @@ function SavedList() {
           {saveList.map((collection) => (
             <Item collection={collection} setSaveList={setSaveList} />
           ))}
-          <NewCollection />
+          <NewCollection fetchSaveList={fetchSaveList} />
         </div>
       </DropDownModal>
     </>
   );
 }
 
-function NewCollection() {
+function NewCollection({ fetchSaveList }) {
   const [isDescription, setIsDescription] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { token } = useContext(AuthContext);
 
-  const handleClose = () => {
+  const [name, setName] = useState('');
+
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleClose = async () => {
     setIsOpen(false);
   };
+
+  const handleCreate = async () => {
+    const postRes = await fetch(fullPathAPI('/collection'), {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+      }),
+
+    });
+
+    const { message } = await postRes.json();
+
+    if (message === 'successful') {
+      fetchSaveList();
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
       <div
@@ -134,7 +199,7 @@ function NewCollection() {
                         }}
                         >
                           <div className={styles.input}>
-                            <input placeholder="Give me a name" type="text" />
+                            <input placeholder="Give me a name" type="text" onChange={handleChangeName} />
                           </div>
                           <div className={styles.count}>
                             <p className={styles.validation} />
@@ -187,8 +252,8 @@ function NewCollection() {
                   </div>
                 </div>
                 <div className={styles.action}>
-                  <button type="button" className={styles.cancelBtn}>Cancel</button>
-                  <button type="button" className={styles.submitBtn}>Create</button>
+                  <button type="button" className={styles.cancelBtn} onClick={handleClose}>Cancel</button>
+                  <button type="button" className={styles.submitBtn} onClick={handleCreate}>Create</button>
                 </div>
               </div>
             </div>
