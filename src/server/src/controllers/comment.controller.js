@@ -25,7 +25,7 @@ const getAllReplies = async (commentId) => {
 
 const getCommentsByStoryId = async (req, res) => {
   try {
-    const {storyId} = req.body;
+    const {storyId} = req.params;
     const allComments = await Comment.findAll({
       where: {
         story_id: storyId,
