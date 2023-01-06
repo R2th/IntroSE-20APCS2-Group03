@@ -128,20 +128,7 @@ const getNewestStories = async (req, res) => {
 
 const getStoryByStoryId = async (req, res) => {
   try {
-    const storyIsPremium = Story.findByPk(req.params.storyId, {
-      attributes: ['isPremium'],
-    });
-    if (storyIsPremium === null) {
-      throw new Error();
-    }
-    let story = null;
-    if (storyIsPremium && !req.isPremium) {
-      story = await Story.findByPk(req.params.storyId, {
-        attributes: {exclude: ['contents']},
-      });
-    } else {
-      story = await Story.findByPk(req.params.storyId);
-    }
+    const story = await Story.findByPk(req.params.storyId);
     if (!story) {
       return res.status(404).send({
         message: 'Story not found.',
