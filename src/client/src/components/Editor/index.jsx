@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
@@ -36,7 +36,7 @@ function Editor() {
 
     form.append('story', file);
     form.append('data', JSON.stringify({
-      contentsShort: '',
+      contentsShort: content.slice(0, 200),
       title,
       tag: tags,
       isPremium: true,
@@ -99,6 +99,11 @@ function Editor() {
     }
     return `Last edit was at ${moment(saveTime).format('MMMM Do YYYY, hh:mm')}`;
   };
+
+  useEffect(() => {
+    const html = document.querySelector('body');
+    html.style.setProperty('background-color', '#fff');
+  }, []);
 
   return (
     <div className={styles.container}>

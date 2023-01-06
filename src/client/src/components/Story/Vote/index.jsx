@@ -15,6 +15,7 @@ function Vote({ token, storyId }) {
       const get = await fetch(fullPathAPI(`/story/${storyId}/vote`), {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
       });
       const { data } = await get.json();
