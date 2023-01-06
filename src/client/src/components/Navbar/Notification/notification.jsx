@@ -167,7 +167,9 @@ function NotificationPopUp() {
                         />
                       </div>
                     </div>
-                    <p className={styles.notice} style={{ fontWeight: content.state }}>{content.notice}</p>
+                    <div>
+                      <p className={styles.notice} style={{ fontWeight: content.state }}>{content.notice}</p>
+                    </div>
                     <div className={styles.time}>{content.time}</div>
 
                   </div>

@@ -94,25 +94,30 @@
             background-color: #d3d3d3;
           }
 
-          .notice {
+          div {
             position: relative !important;
-            max-width: 65%;
+            max-width: 47.5%;
             //max-height: auto;
             padding: 15px;
-            font-size: 14px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
             bottom: 12px;
+
+            .notice {
+              font-size: 16px;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
           }
 
           .ava_type {
+            top: 20px;
+
             .types {
               position: relative;
               width: auto;
-              left: 32px;
-              bottom: 19px;
+              left: 17px;
+              bottom: 35px;
               //transform: translate(50%, 50%);
             }
           }
@@ -120,7 +125,7 @@
           .time {
             margin-left: auto;
             margin-right: 20px;
-            font-size: 10px;
+            font-size: 12px;
             transform: translateX(10px);
             display: flex;
             align-items: flex-end;
