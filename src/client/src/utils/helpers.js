@@ -34,7 +34,7 @@ export const exportFile = (data, filename) => {
 export const fullPathAPI = (path) => buildPath(API_ENDPOINT, path || '');
 
 export const fullPathImage = (user) => {
-  if (user && user.data.avatar) return `https://images.viblo.asia/avatar/${user.data.avatar}`;
+  if (user && user.data?.avatar) return `https://images.viblo.asia/avatar/${user.data.avatar}`;
   return 'https://viblo.asia/images/mm.png';
 };
 

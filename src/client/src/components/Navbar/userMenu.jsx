@@ -16,7 +16,7 @@ function UserDropdownMenu() {
   const { token, handleLogout } = useContext(AuthContext);
   const { username } = parseJwt(token);
 
-  const { data } = useFetch(`/user/${username}`, INIT_USER_INFO);
+  const { data } = useFetch(`/user/${username}`, INIT_USER_INFO, (prev, _data) => _data.data);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -63,7 +63,7 @@ function UserDropdownMenu() {
               </div>
               <span className={styles.userInfo}>
                 <span className={styles.userName}>
-                  {username}
+                  {`${data.first_name} ${data.last_name}` || data.username}
                 </span>
                 <span className={styles.karma}>
                   {/* <i className="icon icon-karma_fill" /> */}
@@ -80,7 +80,7 @@ function UserDropdownMenu() {
       </div>
       <Modal isOpen={isOpen} handleClose={handleClose} className={styles.dropDownUserMenu} contentClassName={styles.dropDownUserMenuContent}>
         <div className={styles.menu}>
-          <div style={{ cursor: 'pointer' }} type="button" onClick={() => navigate(`/${username}`)} aria-hidden>
+          <div style={{ cursor: 'pointer' }} type="button" onClick={() => navigate(`/${username}/stories`)} aria-hidden>
             <div className={styles.item}>
               <div>
                 <i className="icon icon-profile" style={{ color: 'inherit' }} />
@@ -90,7 +90,8 @@ function UserDropdownMenu() {
               </div>
             </div>
           </div>
-          <a href="list">
+          <div style={{ cursor: 'pointer' }} type="button" onClick={() => navigate(`/${username}/saved`)} aria-hidden>
+
             <div className={styles.item}>
               <div>
                 <i className="icon icon-save_table" style={{ color: 'inherit' }} />
@@ -99,8 +100,9 @@ function UserDropdownMenu() {
                 </div>
               </div>
             </div>
-          </a>
-          <a href="stories">
+          </div>
+          <div style={{ cursor: 'pointer' }} type="button" onClick={() => navigate(`/${username}/stories`)} aria-hidden>
+
             <div className={styles.item}>
               <div>
                 <i className="icon icon-text_post" style={{ color: 'inherit' }} />
@@ -109,7 +111,7 @@ function UserDropdownMenu() {
                 </div>
               </div>
             </div>
-          </a>
+          </div>
           <a href="stats">
             <div className={styles.item}>
               <div>

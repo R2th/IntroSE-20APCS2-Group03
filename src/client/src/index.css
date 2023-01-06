@@ -46,6 +46,42 @@ body {
   line-height: 1.5;
   color: #121212;
 }
+
+input[type='checkbox'] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  appearance: none;
+  /* For iOS < 15 to remove gradient background */
+  background-color: #fff;
+  /* Not removed via appearance */
+  margin: 0 !important;
+
+  display: grid;
+  place-content: center;
+
+  font: inherit;
+  color: hsl(224, 98%, 58%)!important;
+  width: 0.8em;
+  height: 0.8em;
+  border: 1px solid hsl(224, 98%, 58%) !important;
+  border-radius: 0.15em;
+  /* border-radius: 50%; */
+  transform: translateY(-0.075em);
+}
+
+input[type='checkbox']::before {
+  content: '';
+  width: 0.8rem;
+  height: 0.8rem;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em rgb(27, 116, 228);
+}
+
+input[type='checkbox']:checked::before {
+  transform: scale(1);
+}
+
 textarea,
 input,
 button {
@@ -65,7 +101,8 @@ button {
   font-weight: 500;
 }
 
-.w-md-editor-toolbar ul, .w-md-editor-toolbar li {
+.w-md-editor-toolbar ul,
+.w-md-editor-toolbar li {
   display: inline-flex;
 }
 .w-md-editor-toolbar-divider {
@@ -89,7 +126,6 @@ input:focus-within {
   background-color: #fff;
   margin: -1px;
   outline: 0;
-
 }
 
 button:active {

@@ -4,11 +4,11 @@ import Spinner from 'components/Spinner';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fullPathAPI, fullPathImage, thumbnailUrl } from 'utils/helpers';
 
+import Vote from 'components/Story/Vote';
 import { AuthContext } from 'contexts/Auth/authContext';
-import { abbreviateNumber, calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
-import { parseJwt } from 'utils/token';
-import { useEffect, useState } from 'react';
-import classNames from 'classnames';
+import { useState } from 'react';
+import { calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
+import SavedList from 'components/Story/Saved';
 import useFetch from '../../hooks/useFetch';
 
 import styles from './styles.module.scss';
@@ -17,32 +17,50 @@ function Story() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
+  const [author, setAuthor] = useState(null);
+
   const { token } = React.useContext(AuthContext);
-  const { username } = parseJwt(token);
 
-  const { data } = useFetch(`/story/${slug}`, {}, (prev, content) => content.data);
+  const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
+    Authorization: `Bearer ${token}`,
+  });
 
-  const post = data;
+  const contentFull = useFetch(`story/${slug}/contents/full`, { contents: '' }, (prev, data) => data.data, {
+    Authorization: `Bearer ${token}`,
+  });
 
-  const user = post.user?.data || {
-    name: username,
-    username,
-    followers_count: 0,
-    posts_count: 0,
-  };
+  const othersData = useFetch(`story/${slug}/other-data`, {}, (prev, data) => data.data);
+
+  const post = contentFull.data || contentPreview.data;
+  const others = othersData.data;
 
   React.useEffect(() => {
+    // eslint-disable-next-line
+    const { author_username } = others;
+
+    // eslint-disable-next-line
+    if (!author_username) return;
+
+    const getAuthor = async () => {
+      // eslint-disable-next-line
+      const getRes = await fetch(fullPathAPI(`user/${author_username}`));
+      const { data } = await getRes.json();
+      setAuthor(data);
+    };
+
+    getAuthor();
+
     const html = document.querySelector('html');
-    html.style.setProperty('--featured-img', `url("${thumbnailUrl(post)}")`);
+    html.style.setProperty('--featured-img', `url("${thumbnailUrl(othersData.data)}")`);
     html.style.setProperty('--bg-blend-mode', 'multiply');
     html.style.setProperty('background-size', '120% 2000px, 100% auto');
-  }, [post]);
+  }, [others]);
 
   return (
     <div className={styles.container}>
       <div className={styles.articlesAndSidebar}>
         <div className={styles.postCenter}>
-          {post.contents ? (
+          {othersData && post.contents ? (
             <>
               <div className={styles.leftSidePanel}>
                 <div
@@ -56,9 +74,7 @@ function Story() {
                 </div>
                 <div className={styles.smallerLeftSidePanel}>
                   <Vote token={token} storyId={slug} />
-                  <button type="button" className={styles.bookmarkButton}>
-                    <i className="icon icon-save_fill" />
-                  </button>
+                  <SavedList />
                   <button type="button" className={styles.shareButton}>
                     <i className="icon icon-share_fill" />
                   </button>
@@ -75,14 +91,15 @@ function Story() {
                       )}
                     </a>
                   </div>
+                  {author && (
                   <div className={styles.authorInfo}>
                     <div className={styles.authorPersonalInfo}>
                       <a href="/" className={styles.authorName}>
-                        {user.name}
+                        {`${author.first_name} ${author.last_name}` || author.username}
                       </a>
                       <span className={styles.authorUsername}>
                         @
-                        {user.username}
+                        {author.username}
                       </span>
                       <div>
                         <button type="button">Follow</button>
@@ -91,11 +108,11 @@ function Story() {
                     <div className={styles.authorCommunityInfo}>
                       <div>
                         <i className="icon icon-star_fill" />
-                        <span>{user.reputation}</span>
+                        <span>{author.reputation}</span>
                       </div>
                       <div>
                         <i className="icon icon-user_fill" />
-                        <span>{user.followers_count}</span>
+                        <span>{author.followers_count}</span>
                       </div>
                       <div>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Write">
@@ -108,13 +125,16 @@ function Story() {
                             stroke="currentColor"
                           />
                         </svg>
-                        <span>{user.posts_count}</span>
+                        <span>{author.posts_count}</span>
                       </div>
                     </div>
                   </div>
+                  ) }
                   <div className={styles.postInfo}>
                     <div className={styles.postTimeInfo}>
-                      {`Posted on ${getDateMonthYear(post.published_at)} - ${calculateMinsToRead(post.contents)} read`}
+                      {/* {others.createdAt !== others.updatedAt ? `Updated at ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`
+                        : `Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`} */}
+                      {`Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`}
                     </div>
                     <div className={styles.postReputationInfo}>
                       <ViewCount token={token} storyId={slug} />
@@ -142,85 +162,6 @@ function Story() {
       </div>
       {/* <Sidebar /> */}
     </div>
-  );
-}
-
-function Vote({ token, storyId }) {
-  const [vote, setVote] = useState(0);
-
-  const [typeVote, setTypeVoted] = useState(0);
-
-  useEffect(() => {
-    const getVoteData = async () => {
-      const get = await fetch(fullPathAPI(`/story/${storyId}/vote`), {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const { data } = await get.json();
-      setVote(data.points);
-      setTypeVoted(data.isVoted || -1);
-    };
-    getVoteData();
-  }, []);
-
-  const onClickUpVote = async () => {
-    // const post = await fetch(fullPathAPI('/story/vote'), {
-    //   method: 'POST',
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //     // body : JSON.stringify({
-    //     //   userId:
-    //     // })
-    //   },
-    // });
-
-    setTypeVoted((prev) => (prev === 1 ? 0 : 1));
-  };
-
-  const onClickDownVote = async () => {
-    setTypeVoted((prev) => (prev === -1 ? 0 : -1));
-  };
-
-  return (
-    <>
-      <button type="button" className={styles.voteButton} onClick={onClickUpVote}>
-        <i
-          className={classNames(typeVote === 1 && styles.marked, 'icon icon-upvote_fill')}
-          style={
-          typeVote === 1
-            ? {
-              color: '#3b82f6',
-            }
-            : {}
-        }
-        />
-      </button>
-      <div
-        className={classNames(typeVote !== 0 && styles.marked, styles.voteCount)}
-        style={
-          typeVote !== 0
-            ? {
-              color: typeVote === 1 ? '#3b82f6' : '#d946ef',
-            }
-            : {}
-        }
-      >
-        {abbreviateNumber(vote + typeVote)}
-      </div>
-      <button type="button" className={styles.voteButton} onClick={onClickDownVote}>
-        <i
-          className={classNames(typeVote === -1 && styles.marked, 'icon icon-downvote_fill')}
-          style={
-            typeVote === -1
-              ? {
-                color: '#d946ef',
-              }
-              : {}
-          }
-        />
-      </button>
-    </>
   );
 }
 

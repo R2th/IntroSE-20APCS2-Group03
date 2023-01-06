@@ -13,7 +13,7 @@ const getCollections = async (req, res) => {
         attributes: {exclude: ['contents']},
       }],
       where: {
-        user_id: req.userId,
+        username: req.username,
       },
     });
     if (!collections) {
@@ -35,10 +35,10 @@ const getCollections = async (req, res) => {
 const createCollection = async (req, res) => {
   try {
     const name = req.body.name;
-    const userId = req.userId;
+    const username = req.username;
     const collection = await Collection.create({
       name,
-      user_id: userId,
+      username: username,
     });
     if (!collection) {
       throw new Error();
@@ -57,11 +57,11 @@ const createCollection = async (req, res) => {
 const deleteCollection = async (req, res) => {
   try {
     const collectionId = req.params.collectionId;
-    const userId = req.userId;
+    const username = req.username;
     const collection = await Collection.findOne({
       where: {
         id: collectionId,
-        user_id: userId,
+        username: username,
       },
     });
     if (!collection) {
@@ -83,14 +83,14 @@ const deleteCollection = async (req, res) => {
 const addStoryToCollection = async (req, res) => {
   try {
     const collectionId = req.params.collectionId;
-    const userId = req.userId;
+    const username = req.username;
     const storyId = req.params.storyId;
     console.log(collectionId);
     console.log(storyId);
     const collection = await Collection.findOne({
       where: {
         id: collectionId,
-        user_id: userId,
+        username: username,
       },
     });
     if (!collection) {
@@ -113,12 +113,12 @@ const addStoryToCollection = async (req, res) => {
 const removeStoryToCollection = async (req, res) => {
   try {
     const collectionId = req.params.collectionId;
-    const userId = req.userId;
+    const username = req.username;
     const storyId = req.params.storyId;
     const collection = await Collection.findOne({
       where: {
         id: collectionId,
-        user_id: userId,
+        username: username,
       },
     });
     if (!collection) {

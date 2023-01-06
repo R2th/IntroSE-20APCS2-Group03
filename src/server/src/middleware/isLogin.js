@@ -19,7 +19,7 @@ const verifyToken = async (req, res, next) => {
       const user = await User.findOne({
         where: {username: decoded.username},
       });
-      req.userId = user.id;
+      req.username = user.username;
       next();
     });
   } catch (err) {

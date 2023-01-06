@@ -1,0 +1,25 @@
+.voteButton {
+  background-color: transparent;
+  box-shadow: none !important;
+  cursor: pointer;
+  i {
+    font-size: 28px;
+  }
+  .marked {
+    -webkit-text-stroke: 2px white;
+    font-size: 30px;
+  }
+}
+.voteCount {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 30px;
+  font-size: 2rem;
+  line-height: 1.6;
+  font-weight: 600 !important;
+  color: #9b9b9b;
+  text-decoration: none;
+  background-color: initial;
+  box-sizing: border-box;
+}
