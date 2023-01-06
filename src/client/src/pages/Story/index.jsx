@@ -4,12 +4,13 @@ import Spinner from 'components/Spinner';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fullPathAPI, fullPathImage, thumbnailUrl } from 'utils/helpers';
 
-import { AuthContext } from 'contexts/Auth/authContext';
-import { abbreviateNumber, calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
-import { useEffect, useState } from 'react';
-import classNames from 'classnames';
 import CommentSystem from 'components/Comments/CommentSystem';
+import SavedList from 'components/Story/Saved';
+import Vote from 'components/Story/Vote';
+import { AuthContext } from 'contexts/Auth/authContext';
 import { CommentProvider } from 'contexts/CommentContext';
+import { useState } from 'react';
+import { calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
 import useFetch from '../../hooks/useFetch';
 
 import styles from './styles.module.scss';
@@ -75,9 +76,7 @@ function Story() {
                 </div>
                 <div className={styles.smallerLeftSidePanel}>
                   <Vote token={token} storyId={slug} />
-                  <button type="button" className={styles.bookmarkButton}>
-                    <i className="icon icon-save_fill" />
-                  </button>
+                  <SavedList />
                   <button type="button" className={styles.shareButton}>
                     <i className="icon icon-share_fill" />
                   </button>
@@ -169,85 +168,6 @@ function Story() {
       </div>
       {/* <Sidebar /> */}
     </div>
-  );
-}
-
-function Vote({ token, storyId }) {
-  const [vote, setVote] = useState(0);
-
-  const [typeVote, setTypeVoted] = useState(0);
-
-  useEffect(() => {
-    const getVoteData = async () => {
-      const get = await fetch(fullPathAPI(`/story/${storyId}/vote`), {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const { data } = await get.json();
-      setVote(data.points);
-      setTypeVoted(data.isVoted || -1);
-    };
-    getVoteData();
-  }, []);
-
-  const onClickUpVote = async () => {
-    // const post = await fetch(fullPathAPI('/story/vote'), {
-    //   method: 'POST',
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //     // body : JSON.stringify({
-    //     //   userId:
-    //     // })
-    //   },
-    // });
-
-    setTypeVoted((prev) => (prev === 1 ? 0 : 1));
-  };
-
-  const onClickDownVote = async () => {
-    setTypeVoted((prev) => (prev === -1 ? 0 : -1));
-  };
-
-  return (
-    <>
-      <button type="button" className={styles.voteButton} onClick={onClickUpVote}>
-        <i
-          className={classNames(typeVote === 1 && styles.marked, 'icon icon-upvote_fill')}
-          style={
-          typeVote === 1
-            ? {
-              color: '#3b82f6',
-            }
-            : {}
-        }
-        />
-      </button>
-      <div
-        className={classNames(typeVote !== 0 && styles.marked, styles.voteCount)}
-        style={
-          typeVote !== 0
-            ? {
-              color: typeVote === 1 ? '#3b82f6' : '#d946ef',
-            }
-            : {}
-        }
-      >
-        {abbreviateNumber(vote + typeVote)}
-      </div>
-      <button type="button" className={styles.voteButton} onClick={onClickDownVote}>
-        <i
-          className={classNames(typeVote === -1 && styles.marked, 'icon icon-downvote_fill')}
-          style={
-            typeVote === -1
-              ? {
-                color: '#d946ef',
-              }
-              : {}
-          }
-        />
-      </button>
-    </>
   );
 }
 

@@ -10,9 +10,12 @@ import Trending from 'pages/Trending';
 import ForgotPassword from 'components/ForgotPassword';
 import SendMessage from 'components/FP_SendMessage';
 import SetNewPassword from 'components/SetNewPassword';
-import ProtectedRoute from 'components/ProtectedRoute';
+// import ProtectedRoute from 'components/ProtectedRoute';
 import Editor from 'components/Editor';
 import Payment from 'components/Payment';
+import UserStories from 'components/Profile/Stories';
+import SaveList from 'components/Profile/Series';
+import UserComments from 'components/Profile/Comments';
 
 export const AUTH_ROUTES = [
   {
@@ -35,7 +38,6 @@ export const AUTH_ROUTES = [
     path: 'set_password',
     element: <SetNewPassword />,
   },
-
 ];
 
 export const ROUTES = [
@@ -63,11 +65,25 @@ export const ROUTES = [
   },
   {
     path: ':userId',
-    element: (
-      <ProtectedRoute>
-        <Profile />
-      </ProtectedRoute>
-    ),
+    element: <Profile />,
+    children: [
+      {
+        path: 'stories',
+        element: <UserStories/>,
+        index:true
+      },
+      {
+        path: 'saved',
+        element: <SaveList />,
+      },
+      {
+        path: 'settings',
+      },
+      {
+        path: 'comments',
+        element: <UserComments/>
+      },
+    ],
   },
   {
     path: 'auth',

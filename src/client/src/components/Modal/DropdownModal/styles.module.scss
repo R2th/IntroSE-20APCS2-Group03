@@ -1,0 +1,37 @@
+.modal {
+  position: absolute;
+  inset: 0; /* inset sets all 4 values (top right bottom left) much like how we set padding, margin etc., */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 999;
+  background-color: inherit;
+  padding: 0;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    align-items: center;
+    justify-content: flex-start;
+
+    font-size: 2rem;
+
+    background-color: #fff;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0px 1px 4px rgb(230, 230, 230);
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 4px;
+    border-top: 1px solid #edeff1;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    margin-top: 4px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+  }
+}
