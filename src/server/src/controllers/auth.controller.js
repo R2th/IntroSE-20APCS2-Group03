@@ -62,8 +62,8 @@ exports.login = async (req, res) => {
           });
         }
 
-        const token = jwt.sign({username: user.username}, 'bytesgotoken', {
-          expiresIn: 86400, // 24h
+        const token = jwt.sign({username: req.body.username}, 'bytesgotoken', {
+          expiresIn: 604800, // 7 days
         });
 
         const userRoles = [];

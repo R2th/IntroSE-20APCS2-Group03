@@ -7,20 +7,13 @@ const verifyToken = async (req, res, next) => {
   try {
     const header = req.header('Authorization');
     if (!header) {
-    // WHAT THE FUCK YOU DOING IN HERE ???
-    // use res.redirect() instead
-    // res.status(403).send({
-    //   message: 'No token provided!',
-    // });
+      return res.redirect('/auth/login');
     }
     const token = header.replace('Bearer ', '');
 
     jwt.verify(token, 'bytesgotoken', async (err, decoded) => {
       if (err) {
-      // JUST LIKE IN ABOVE PROBLEM
-      //   res.status(401).send({
-      //     message: 'Unauthorized!',
-      //   });
+        return res.redirect('/auth/login');
       }
 
       const user = await User.findOne({
