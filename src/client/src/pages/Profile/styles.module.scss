@@ -139,17 +139,6 @@ nav {
                   box-shadow: none;
                   cursor: pointer;
                 }
-                .editProfile {
-                  background-color: inherit;
-                  width: 100%;
-                  padding: 0.5rem;
-                  border-radius: 6px;
-                  margin-top: 1rem;
-                  cursor: pointer;
-                  &:hover {
-                    background-color: rgba(0, 0, 0, 0.04);
-                  }
-                }
                 .stats {
                   display: flex;
                   justify-content: space-between;
@@ -245,67 +234,5 @@ nav {
   .profileTabs {
     display: flex;
     border-bottom: 1px solid #f2f6fc;
-    .item {
-      display: flex;
-      color: #606266;
-      cursor: pointer;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      align-items: center;
-      span {
-        margin-left: 0.5rem;
-      }
-    }
-  }
-}
-
-.postsTab {
-  .filter {
-    margin-top: 0.5rem;
-    color: rgb(22, 22, 22);
-    align-items: center;
-    cursor: pointer;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-flow: row nowrap;
-    flex-flow: row nowrap;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    margin-bottom: 16px;
-    padding: 10px 12px;
-    div {
-      color: #0079d3;
-      cursor: pointer;
-      fill: #0079d3;
-      display: inline-flex;
-      text-transform: capitalize;
-      margin-right: 8px;
-      position: relative;
-      border: 1px solid transparent;
-      min-height: unset;
-      min-width: unset;
-      padding: 6px 8px;
-      border-radius: 20px;
-      gap: 10px;
-      align-items: center;
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.04);
-        fill: none;
-      }
-    }
-  }
-  .body {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin-top: 1.5rem;
-    margin-right: -20px;
   }
 }

@@ -1,0 +1,11 @@
+.item {
+  display: flex;
+  color: #606266;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  align-items: center;
+  span {
+    margin-left: 0.5rem;
+  }
+}
