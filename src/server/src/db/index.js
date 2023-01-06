@@ -35,6 +35,18 @@ db.user.belongsToMany(db.role, {
   otherKey: 'roleId',
 });
 
+db.user.belongsToMany(db.user, {
+  as: 'follower',
+  foreignKey: 'follower_username',
+  through: 'users_users',
+});
+
+db.user.belongsToMany(db.user, {
+  as: 'following',
+  foreignKey: 'following_username',
+  through: 'users_users',
+});
+
 db.story.belongsTo(db.user, {
   targetKey: 'username',
   foreignKey: 'author_username',
