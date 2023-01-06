@@ -37,31 +37,31 @@ function Home() {
               </div>
               <div className="section_content">
                 {trending.map((content) => (
-                  <Card content={content} key={content.id} type="medium" />
+                  <Card key={content.id} content={content} type="medium" />
                 ))}
               </div>
               <div className="hoz-line" />
             </div>
-            {contents && contents.slice(10).map((content) => <Card content={content} key={content.id} />)}
+            {contents && contents.slice(10).map((content) => <Card key={content.id} content={content} />)}
             <div className="section">
               <div className="section_title">
                 <h1>Member only</h1>
               </div>
               <div className="section_content">
                 {trending.map((content) => (
-                  <Card content={content} key={content.id} type="small-verc" />
+                  <Card key={content.id} content={content} type="small-verc" />
                 ))}
               </div>
               <div className="hoz-line" />
             </div>
-            {contents && contents.slice(-10).map((content) => <Card content={content} key={content.id} />)}
+            {contents && contents.slice(-10).map((content) => <Card key={content.id} content={content} />)}
             <div className="section">
               <div className="section_title">
                 <h1>For you</h1>
               </div>
               <div className="section_content">
                 {trending.map((content) => (
-                  <Card content={content} key={content.id} type="small-hoz" />
+                  <Card key={content.id} content={content} type="small-hoz" />
                 ))}
               </div>
               <div className="hoz-line" />

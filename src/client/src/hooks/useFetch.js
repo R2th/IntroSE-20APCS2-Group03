@@ -4,11 +4,11 @@ import { fullPathAPI } from 'utils/helpers';
 const useFetch = (
   path,
   initData,
-  resFormula = (prev, data) => {
+  resFormula = (prev, _data) => {
     if (prev === initData) {
-      return data.data;
+      return _data.data;
     }
-    return [...prev, ...data.data];
+    return [...Array.from(new Set([...prev, _data.data]))];
   },
   headers = {
     'Content-Type': 'application/json',
@@ -27,13 +27,13 @@ const useFetch = (
           break;
         }
         try {
-          const postResponse = await fetch(path.startsWith('http' ? path : fullPathAPI(path)), {
-            method,
+          const postResponse = await fetch(fullPathAPI(path), {
+            method: 'POST',
             headers,
             body: JSON.stringify(initData),
           });
           const postJson = await postResponse.json();
-          setData(postJson.data);
+          setData((prev) => dump(prev, postJson));
         } catch (err) {
           setError(err);
         }

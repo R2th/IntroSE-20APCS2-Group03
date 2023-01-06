@@ -4,13 +4,19 @@ import classNames from 'classnames';
 import { AuthContext } from 'contexts/Auth/authContext';
 import { useNavigate } from 'react-router-dom';
 import { parseJwt } from 'utils/token';
+import useFetch from 'hooks/useFetch';
 import styles from './styles.module.scss';
+
+const INIT_USER_INFO = {
+  avatar: 'https://viblo.asia/images/mm.png',
+};
 
 function UserDropdownMenu() {
   const navigate = useNavigate();
   const { token, handleLogout } = useContext(AuthContext);
-
   const { username } = parseJwt(token);
+
+  const { data } = useFetch(`/user/${username}`, INIT_USER_INFO, (prev, _data) => _data.data);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,7 +41,7 @@ function UserDropdownMenu() {
                     <img
                       alt="User avatar"
                       className={styles.userAvatarImg}
-                      src="https://styles.redditmedia.com/t5_6f2r74/styles/profileIcon_snood4a055ab-ddb5-47be-9395-3a2abdb35fb5-headshot.png?width=256&amp;height=256&amp;crop=256:256,smart&amp;s=cb1245dee672a703f1d297aae8f361b27bfc1d57"
+                      src={data.avatar}
                     />
                   </div>
                 </div>
@@ -56,10 +62,15 @@ function UserDropdownMenu() {
                 </svg>
               </div>
               <span className={styles.userInfo}>
-                <span className={styles.userName}>r2th</span>
+                <span className={styles.userName}>
+                  {`${data.first_name} ${data.last_name}` || data.username}
+                </span>
                 <span className={styles.karma}>
-                  <i className="icon icon-karma_fill" />
-                  <span>1 karma</span>
+                  {/* <i className="icon icon-karma_fill" /> */}
+                  <span>
+                    @
+                    {username}
+                  </span>
                 </span>
               </span>
             </span>
@@ -69,7 +80,7 @@ function UserDropdownMenu() {
       </div>
       <Modal isOpen={isOpen} handleClose={handleClose} className={styles.dropDownUserMenu} contentClassName={styles.dropDownUserMenuContent}>
         <div className={styles.menu}>
-          <div type="button" onClick={() => navigate(`/${username}`)} aria-hidden>
+          <div style={{ cursor: 'pointer' }} type="button" onClick={() => navigate(`/${username}`)} aria-hidden>
             <div className={styles.item}>
               <div>
                 <i className="icon icon-profile" style={{ color: 'inherit' }} />
