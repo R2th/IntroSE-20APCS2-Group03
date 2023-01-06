@@ -16,6 +16,8 @@ export async function loginUser(credentials) {
 export async function SignupUser(credentials) {
   const url = '/auth/signup';
 
+  console.log(credentials);
+
   return fetch(buildPath('http://localhost:2022', url), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -23,9 +25,12 @@ export async function SignupUser(credentials) {
       username: credentials.username,
       email: credentials.email,
       password: credentials.password,
-      day: credentials.day,
-      month: credentials.month,
-      year: credentials.year,
+      first_name: credentials.first_name,
+      last_name: credentials.last_name,
+      bio: credentials.bio,
+      // day: credentials.day,
+      // month: credentials.month,
+      // year: credentials.year,
     }),
   }).then((data) => data.json());
 }
