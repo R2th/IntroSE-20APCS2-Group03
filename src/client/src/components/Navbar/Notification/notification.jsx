@@ -6,52 +6,81 @@ import styles from './styles.module.scss';
 function NotificationPopUp() {
   const [notification, setNotification] = React.useState([
     {
-      img: 'fa fa-user',
-      notice: 'Hello World',
-      time: '3 days ago',
-      state: 'bold',
+      img: 'fa fa-user', // avatar user
+      notice: 'Hello World', // content
+      time: '6 Jan 2023 at 21:21', // date
+      state: 'bold', // bold: unread, normal: read
+      type: 'fa fa-thumbs-up', // like, share, comment, upvote/downvote,...
     },
     {
       img: 'fa fa-check',
-      notice: 'Hello World',
+      notice: 'Hello, This is BytesGo project CS300 hahahaa lmao lmao lmao dark dark bruh bruh',
       time: '3 mins ago',
       state: 'bold',
+      type: 'fa fa-thumbs-down',
     },
     {
       img: 'fa fa-user',
-      notice: 'Hello Worasdald',
-      time: 'a few minutes ago',
+      notice: 'Hello World. for i in ccjz print(i) print("Happy New Year"). Hahan"t an tet vui day',
+      time: '6 Jan 2023 at 21:22',
       state: 'normal',
+      type: 'fa fa-thumbs-down',
     },
     {
       img: 'fa fa-user',
       notice: 'Hello asfaWorld',
-      time: 'a few minutes ago',
+      time: '6 Jan 2023 at 21:31',
       state: 'bold',
+      type: 'fa fa-thumbs-down',
     },
     {
       img: 'fa fa-user',
       notice: 'Hello Worafafafadflf',
-      time: 'a few minutes ago',
+      time: '6 Jan 2023 at 11:01',
       state: 'normal',
+      type: 'fa fa-thumbs-down',
     },
     {
       img: 'fa fa-user',
       notice: 'Heldgfsgdfglo World',
-      time: 'a few minutes ago',
+      time: '5 Jan 2021 at 22:21',
       state: 'bold',
+      type: 'fa fa-thumbs-down',
     },
     {
       img: 'fa fa-user',
       notice: 'May troll',
-      time: 'a few minutes ago',
+      time: '1 Jan 2023 at 21:21',
       state: 'bold',
+      type: 'fa fa-thumbs-down',
     },
     {
       img: 'fa fa-user',
-      notice: 'Chet tao',
-      time: 'a few minutes ago',
+      notice: 'LmaoLmao',
+      time: '6 Feb 2022 at 21:21',
       state: 'normal',
+      type: 'fa fa-thumbs-down',
+    },
+    {
+      img: 'fa fa-user',
+      notice: 'Mach Vinh Phat',
+      time: '3 Feb 2022 at 21:21',
+      state: 'normal',
+      type: 'fa fa-thumbs-down',
+    },
+    {
+      img: 'fa fa-user',
+      notice: 'Cứu Tui',
+      time: '6 Feb 2022 at 21:21',
+      state: 'normal',
+      type: 'fa fa-thumbs-down',
+    },
+    {
+      img: 'fa fa-user',
+      notice: 'Cuu',
+      time: '6 Feb 2022 at 21:21',
+      state: 'normal',
+      type: 'fa fa-thumbs-down',
     },
   ]);
 
@@ -74,9 +103,12 @@ function NotificationPopUp() {
       }
     }
   };
+
   const onClickNotifications = () => {
     setIsOpen((prev) => !prev);
-    console.log(setNotification);
+    if (notification.length >= 8) {
+      setNotification(notification.splice(-(notification.length), 8));
+    }
   };
 
   const ref = useRef();
@@ -93,7 +125,7 @@ function NotificationPopUp() {
           className={styles.dropdownUserBtn}
           style={{ right: 8, borderRadius: 40 }}
         >
-          <span className={styles.trolllll}>
+          <span className={styles.count}>
             {notification.length - countUnread()}
           </span>
           <i className="icon icon-notification" />
@@ -105,8 +137,8 @@ function NotificationPopUp() {
         className={styles.dropDownNotification}
         contentClassName={styles.dropDownUserMenuContent}
         // eslint-disable-next-line
-        prefix={ref.current?.getBoundingClientRect().right - 264}
-        width={264}
+        prefix={ref.current?.getBoundingClientRect().right - 500}
+        width={500}
       >
         <div className={styles.menu}>
           <div className={styles.item}>
@@ -115,19 +147,36 @@ function NotificationPopUp() {
             </div>
             <ul>
               {notification.map((content) => (
-                <div className={styles.contents}>
-                  <div style={{ display: 'flex' }}>
-                    <i className={content.img} aria-hidden="true" style={{ borderRadius: 40, padding: 10 }} />
-                    <div className={styles.notice} style={{ fontWeight: content.state }}>{content.notice}</div>
+                <div>
+                  <div className={styles.contents}>
+                    <div className={styles.ava_type}>
+                      <i
+                        className={content.img}
+                        aria-hidden="true"
+                        style={{
+                          borderRadius: 100, background: '#fade7c', padding: 15, fontSize: 20,
+                        }}
+                      />
+                      <div className={styles.types}>
+                        <i
+                          className={content.type}
+                          aria-hidden="true"
+                          style={{
+                            borderRadius: 100, background: '#2c5d87', padding: 2, width: 'auto',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <p className={styles.notice} style={{ fontWeight: content.state }}>{content.notice}</p>
+                    <div className={styles.time}>{content.time}</div>
+
                   </div>
-                  <div className={styles.time}>{content.time}</div>
                 </div>
               ))}
             </ul>
             <hr />
             <div className={styles.viewall}>
-              <button type="button"> View details </button>
-              <button style={{ direction: 'rtl' }} onClick={onMarkAllRead} type="button">Mark all read</button>
+              <button onClick={onMarkAllRead} type="button">Mark all read</button>
             </div>
           </div>
         </div>

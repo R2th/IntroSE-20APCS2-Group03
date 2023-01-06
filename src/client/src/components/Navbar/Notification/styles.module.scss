@@ -45,7 +45,8 @@
 
     .item {
       padding: 8px 24px;
-      color: rgba(117, 117, 117, 1);
+      //color: rgba(117, 117, 117, 1);
+      color: #1b1b1b;
       line-height: 20px;
       font-size: 14px;
       font-family: sohne, 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -68,24 +69,25 @@
       }
 
       ul {
-        width: 100%;
-        height: 100%;
-        height: 250px;
+        width: 100% !important;
+        height: 250px !important;
         padding-left: 0%;
         overflow-y: scroll;
         overflow-x: hidden;
+
         &::-webkit-scrollbar {
           width: 4px;
         }
+
         &::-webkit-scrollbar-thumb {
           background-color: #e9ecef;
         }
+
         .contents {
           display: flex;
           max-height: 100px;
           align-items: center;
           width: 100%;
-          justify-content: space-between;
 
           &:hover {
             cursor: pointer;
@@ -93,26 +95,50 @@
           }
 
           .notice {
-            padding: 3px;
-            font-size: 15px;
+            position: relative !important;
+            max-width: 65%;
+            //max-height: auto;
+            padding: 15px;
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            bottom: 12px;
+          }
+
+          .ava_type {
+            .types {
+              position: relative;
+              width: auto;
+              left: 32px;
+              bottom: 19px;
+              //transform: translate(50%, 50%);
+            }
           }
 
           .time {
-            font-size: 8px;
+            margin-left: auto;
+            margin-right: 20px;
+            font-size: 10px;
             transform: translateX(10px);
             display: flex;
             align-items: flex-end;
+            max-height: 100px;
           }
         }
       }
 
       .viewall {
+        justify-content: center;
+        display: flex;
+        box-shadow: none;
+
         button {
-          font-size: 12px;
-          width: 50%;
-          float: left;
           border: none;
           background: none;
+          text-align: center;
+          font-size: 14px;
 
           &:hover {
             cursor: pointer;
