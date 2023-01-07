@@ -17,6 +17,7 @@ app.set('view engine', 'ejs');
 const allowedOrigins = [
   `http://${process.env.SERVER_IP}:3000`,
   'http://localhost:3000',
+  'https://bytes-go.vercel.app',
 ];
 
 app.use(
@@ -26,12 +27,11 @@ app.use(
       // (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
-          const msg = 'The CORS policy for this site does not ' +
+          const msg = 'The CORS policy for this site (' + origin + ') does not ' +
           'allow access from the specified Origin.';
-          console.log(msg);
+          // console.log(msg);
           return callback(new Error(msg), false);
         }
-        return callback(null, true);
       },
     }),
 );
