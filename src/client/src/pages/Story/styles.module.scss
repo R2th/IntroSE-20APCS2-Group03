@@ -19,14 +19,18 @@
       justify-content: center;
       align-self: start;
       margin-top: 100px;
+      margin-bottom: 100px;
+
       .leftSidePanel {
         display: flex;
         flex-direction: column;
         min-width: 80px;
         width: 80px;
+
         .goBack {
           cursor: pointer;
         }
+
         .smallerLeftSidePanel {
           display: flex;
           flex-direction: column;
@@ -51,6 +55,7 @@
         width: 100%;
         flex: none;
       }
+
       .contentContainer {
         max-width: 1000px;
         padding-right: 2rem;
@@ -59,6 +64,7 @@
         color: #000;
         overflow-wrap: break-word;
         position: relative;
+
         .header {
           display: flex;
           width: 100%;
@@ -67,16 +73,19 @@
           border-radius: 22px;
           background: linear-gradient(white, white) padding-box, linear-gradient(to bottom, #3b82f6, #d946ef) border-box;
           margin-bottom: 22px;
+
           .authorAvatar {
             display: flex;
             min-width: 100px;
             height: 100%;
             justify-content: center;
             align-items: center;
+
             .avatarAuthorProfileLink {
               display: flex;
               width: 70%;
               border-radius: 50%;
+
               .avatarAuthorImage {
                 width: 100%;
                 border-radius: 50%;
@@ -84,6 +93,7 @@
               }
             }
           }
+
           .authorInfo {
             display: flex;
             flex-direction: column;
@@ -104,33 +114,39 @@
               text-decoration: none;
               background-color: initial;
               gap: 5px;
+
               .authorName {
                 font-weight: 700 !important;
                 color: #5488c7 !important;
                 cursor: pointer;
               }
+
               .authorUsername {
                 font-weight: 300 !important;
                 color: #9b9b9b !important;
               }
             }
+
             .authorCommunityInfo {
               display: flex;
               height: 50%;
               align-items: center;
               box-sizing: border-box;
               column-gap: 3%;
+
               div {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 gap: 5px;
+
                 span {
                   white-space: nowrap;
                 }
               }
             }
           }
+
           .postInfo {
             display: flex;
             flex-direction: column;
@@ -142,6 +158,7 @@
             box-sizing: border-box;
             min-width: 200px;
             padding: 1%;
+
             .postTimeInfo {
               display: flex;
               align-items: center;
@@ -152,6 +169,7 @@
               line-height: 1.6;
               box-sizing: border-box;
             }
+
             .postReputationInfo {
               display: flex;
               height: 50%;
@@ -159,11 +177,13 @@
               justify-content: center;
               box-sizing: border-box;
               column-gap: 6%;
+
               div {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 gap: 5px;
+
                 span {
                   white-space: nowrap;
                 }
@@ -171,6 +191,7 @@
             }
           }
         }
+
         .articleTitle {
           text-align: left;
           line-height: 1.2;
@@ -179,6 +200,7 @@
           word-break: break-word;
           font-size: 1.5rem;
         }
+
         zero-md {
           padding: 4rem;
           border-radius: 8px;
