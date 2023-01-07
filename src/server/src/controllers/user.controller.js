@@ -1,7 +1,9 @@
+const {reaction} = require('../db/index');
 const db = require('../db/index');
 
 const User = db.user;
-const Following = db.following;
+const Reaction = db.reaction;
+const Story = db.story;
 
 const publicAccess = (req, res) => {
   res.status(200).send('This is public content.');
@@ -276,6 +278,34 @@ const hasFollowed = async (req, res) => {
   }
 };
 
+const getNumberOfUpvotes = async (req, res) => {
+  try {
+    const {username} = req.params;
+    const upvotes = await Reaction.count({
+      where: {
+        react_type: 1,
+      },
+      include: {
+        model: Story,
+        attributes: [],
+        required: true,
+        where: {
+          author_username: username,
+        },
+      },
+    });
+    res.status(200).send({
+      message: 'successful',
+      data: upvotes,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+
 module.exports = {
   publicAccess,
   userPanel,
@@ -290,4 +320,5 @@ module.exports = {
   hasFollowed,
   getNumberOfFollowers,
   getNumberOfFollowings,
+  getNumberOfUpvotes,
 };
