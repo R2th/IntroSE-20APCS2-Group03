@@ -182,8 +182,8 @@ function Following({ follow }) {
     const status = await postRes.json();
 
     if (status.message === 'successful') {
-      setData(true);
       follow.setData((prev) => prev + 1);
+      setData(true);
     }
   };
 
@@ -202,8 +202,8 @@ function Following({ follow }) {
     const status = await postRes.json();
 
     if (status.message === 'successful') {
-      setData(false);
       follow.setData((prev) => prev - 1);
+      setData(false);
     }
   };
 
