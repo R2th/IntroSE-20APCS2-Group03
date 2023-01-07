@@ -23,10 +23,10 @@ function AuthProvider({ children }) {
 
   const handleLogin = async ({ username, password }) => {
     const reqAuth = await loginUser({ username, password });
-    if (!reqAuth.token) {
+    if (!reqAuth.data.token) {
       throw reqAuth.message;
     }
-    saveToken({ token: reqAuth.token });
+    saveToken({ token: reqAuth.data.token });
     const origin = location.state?.from?.pathname || '/';
     navigate(origin);
   };
