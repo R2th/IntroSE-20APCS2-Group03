@@ -217,6 +217,7 @@ const getStoriesOfAuthor = async (req, res) => {
       where: {
         author_username: username,
       },
+      order: [['createdAt', 'DESC']],
       limit,
     });
     if (!stories) {

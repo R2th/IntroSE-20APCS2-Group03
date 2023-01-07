@@ -55,6 +55,8 @@ router.get('/user/:username/followings', userController.getFollowings);
 
 router.get('/user/:username/num_followings', userController.getNumberOfFollowings);
 
+router.get('/user/:username/num_upvotes', userController.getNumberOfUpvotes);
+
 
 // body: "followingUsername": ...
 router.post('/user/follow', verifyToken, userController.followUser);
