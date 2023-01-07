@@ -24,17 +24,30 @@ function Story() {
   const [toastProps, setToastProps] = useState([]);
   const toastAutoDelete = true;
 
-  const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
-    Authorization: `Bearer ${token}`,
-  });
+  // const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
+  //   Authorization: `Bearer ${token}`,
+  // });
 
-  const contentFull = useFetch(`story/${slug}/contents/full`, { contents: '' }, (prev, data) => data.data, {
+  const contentFull = useFetch(`story/${slug}/contents/full`, { contents: '' }, (prev, data) => data.data || data, {
     Authorization: `Bearer ${token}`,
   });
 
   const othersData = useFetch(`story/${slug}/other-data`, {}, (prev, data) => data.data);
 
-  const post = contentFull.data || contentPreview.data;
+  // const checkFull = () => {
+  //   if (contentFull.data.message) {
+  //     return 'no permission';
+  //   }
+  //   if (contentFull.data.contents) {
+  //     return contentFull.data.contents || 'no contents';
+  //   }
+  //   if (contentPreview.data.contents) {
+  //     return contentPreview.data.contents || 'no contents';
+  //   }
+  //   return '';
+  // };
+
+  const post = contentFull.data;
   const others = othersData.data;
 
   React.useEffect(() => {
