@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import Modal from 'components/Modal';
 import classNames from 'classnames';
 import { AuthContext } from 'contexts/Auth/authContext';
-import { useNavigate } from 'react-router-dom';
 import { parseJwt } from 'utils/token';
 import useFetch from 'hooks/useFetch';
 import styles from './styles.module.scss';
@@ -12,7 +11,6 @@ const INIT_USER_INFO = {
 };
 
 function UserDropdownMenu() {
-  const navigate = useNavigate();
   const { token, handleLogout } = useContext(AuthContext);
   const { username } = parseJwt(token);
 
@@ -80,7 +78,7 @@ function UserDropdownMenu() {
       </div>
       <Modal isOpen={isOpen} handleClose={handleClose} className={styles.dropDownUserMenu} contentClassName={styles.dropDownUserMenuContent}>
         <div className={styles.menu}>
-          <div style={{ cursor: 'pointer' }} type="button" onClick={() => navigate(`/@${username}/stories`)} aria-hidden>
+          <a style={{ cursor: 'pointer' }} href={`/@${username}/stories`} aria-hidden>
             <div className={styles.item}>
               <div>
                 <i className="icon icon-profile" style={{ color: 'inherit' }} />
@@ -89,8 +87,8 @@ function UserDropdownMenu() {
                 </div>
               </div>
             </div>
-          </div>
-          <div style={{ cursor: 'pointer' }} type="button" onClick={() => navigate(`/@${username}/saved`)} aria-hidden>
+          </a>
+          <a style={{ cursor: 'pointer' }} href={`/@${username}/saved`} aria-hidden>
             <div className={styles.item}>
               <div>
                 <i className="icon icon-save_table" style={{ color: 'inherit' }} />
@@ -99,8 +97,8 @@ function UserDropdownMenu() {
                 </div>
               </div>
             </div>
-          </div>
-          <div style={{ cursor: 'pointer' }} type="button" onClick={() => navigate(`/@${username}/comments`)} aria-hidden>
+          </a>
+          <a style={{ cursor: 'pointer' }} href={`/@${username}/comments`} aria-hidden>
             <div className={styles.item}>
               <div>
                 <i className="icon icon-text_post" style={{ color: 'inherit' }} />
@@ -109,7 +107,7 @@ function UserDropdownMenu() {
                 </div>
               </div>
             </div>
-          </div>
+          </a>
           <a href="stats">
             <div className={styles.item}>
               <div>
