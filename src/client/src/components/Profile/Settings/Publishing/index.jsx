@@ -80,7 +80,7 @@ function Publishing() {
               <div className={styles.annotation}>This page allows readers to subcribe to you via email</div>
             </div>
             <span>
-              <span className={styles.value}>Link</span>
+              <span className={styles.value}>Get Link</span>
             </span>
           </span>
         </button>
@@ -91,7 +91,7 @@ function Publishing() {
               <div className={styles.annotation}>This is the message on your subscribe, profile and story pages</div>
             </div>
             <span>
-              <span className={styles.value}>Link</span>
+              <span className={styles.value}>Get Link</span>
             </span>
           </span>
         </button>

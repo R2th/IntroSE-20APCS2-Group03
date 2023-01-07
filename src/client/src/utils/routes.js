@@ -105,8 +105,4 @@ export const ROUTES = [
     path: 'premium',
     element: <Payment />,
   },
-  {
-    path: 'settings',
-    element: <Settings />,
-  },
 ];

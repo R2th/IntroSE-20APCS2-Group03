@@ -27,7 +27,7 @@ function Account() {
               <div className={styles.annotation}>Edit your photo, names, bio, etc.</div>
             </div>
             <span>
-              <i className="fa fa-envelope" />
+              <i className="fa fa-user" aria-hidden="true" />
               <span className={styles.value}>BytesGo</span>
             </span>
           </span>
@@ -40,7 +40,7 @@ function Account() {
               <div className={styles.annotation}>Pick color and fonts, styles the header, and make your profile unique</div>
             </div>
             <span>
-              <i className="fa fa-envelope" />
+              <i className="fa fa-arrow-right" aria-hidden="true" />
               <span className={styles.value}>BytesGo</span>
             </span>
           </span>
@@ -53,7 +53,7 @@ function Account() {
               <div className={styles.annotation}>Upgrade to a BytesGo Membership to redirect your profile URL</div>
             </div>
             <span>
-              <i className="fa fa-envelope" />
+              <i className="fa fa-arrow-right" aria-hidden="true" />
               <span className={styles.value}>BytesGo</span>
             </span>
           </span>
@@ -64,7 +64,7 @@ function Account() {
         <button className={styles.content} type="button">
           <span className={styles.parent_span}>
             <span className={styles.title}>Muted writers and publications</span>
-            <span className={styles.value}><i className="fa fa-envelope" /></span>
+            <i className="fa fa-arrow-right" aria-hidden="true" />
           </span>
         </button>
 
