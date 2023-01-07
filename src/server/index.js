@@ -51,3 +51,5 @@ app.listen(port, () => {
   }
   logger.appStarted(DEFAULT_PORT, HOST, port);
 });
+
+module.exports = app; // For testing
