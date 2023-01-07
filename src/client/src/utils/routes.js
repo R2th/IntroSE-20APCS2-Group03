@@ -72,9 +72,7 @@ export const ROUTES = [
       {
         path: 'stories',
         element: (
-          <ProtectedRoute>
             <UserStories />
-          </ProtectedRoute>
         ),
         index: true,
       },

@@ -64,6 +64,9 @@ export function CommentProvider({ children }) {
   const { data, setData } = useFetch(`comments/${slug}`, [], (prev, _data) => _data.data.comment_trees);
 
   const { token } = useContext(AuthContext);
+
+  if (!token) return null;
+
   const { username } = parseJwt(token);
 
   const comments = data;
