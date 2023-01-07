@@ -61,8 +61,7 @@ function MediumCard({ content }) {
                   *
                 </div>
                 <div>
-                  <span>{content.reading_time}</span>
-                  <span>mins read</span>
+                  <span>{content.isPremium ? 'Premium Content' : ''}</span>
                 </div>
               </div>
             </div>

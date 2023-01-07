@@ -74,7 +74,7 @@ function Card({ content, type = 'fullWidth' }) {
                         >
                           *
                         </div>
-                        <div>{`${content.reading_time || 1} mins read`}</div>
+                        <div>{content.isPremium ? 'Premium Content' : ''}</div>
                       </div>
                     </div>
                   </div>

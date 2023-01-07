@@ -175,7 +175,7 @@ function Story() {
                     <div className={styles.postTimeInfo}>
                       {/* {others.createdAt !== others.updatedAt ? `Updated at ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`
                         : `Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`} */}
-                      {`Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`}
+                      {`Posted on ${getDateMonthYear(others.createdAt)} - ${calculateMinsToRead(post.contents)} read`}
                     </div>
                     <div className={styles.postReputationInfo}>
                       <ViewCount token={token} storyId={slug} />
