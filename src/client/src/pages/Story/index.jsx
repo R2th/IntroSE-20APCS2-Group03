@@ -21,9 +21,9 @@ function Story() {
 
   const { token } = React.useContext(AuthContext);
 
-  const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
-    Authorization: `Bearer ${token}`,
-  });
+  // const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
+  //   Authorization: `Bearer ${token}`,
+  // });
 
   const contentFull = useFetch(`story/${slug}/contents/full`, { contents: '' }, (prev, data) => data.data, {
     Authorization: `Bearer ${token}`,
@@ -31,7 +31,7 @@ function Story() {
 
   const othersData = useFetch(`story/${slug}/other-data`, {}, (prev, data) => data.data);
 
-  const post = contentFull.data || contentPreview.data;
+  const post = contentFull.data;
   const others = othersData.data;
 
   React.useEffect(() => {
@@ -139,7 +139,7 @@ function Story() {
                     <div className={styles.postTimeInfo}>
                       {/* {others.createdAt !== others.updatedAt ? `Updated at ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`
                         : `Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`} */}
-                      {`Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`}
+                      {`Posted on ${getDateMonthYear(others.createdAt)} - ${calculateMinsToRead(post.contents)} read`}
                     </div>
                     <div className={styles.postReputationInfo}>
                       <ViewCount token={token} storyId={slug} />
@@ -154,7 +154,7 @@ function Story() {
                     </div>
                   </div>
                 </div>
-                <h1>{post.title}</h1>
+                <h1>{others.title}</h1>
                 <zero-md>
                   <script type="text/markdown">{post.contents}</script>
                 </zero-md>
