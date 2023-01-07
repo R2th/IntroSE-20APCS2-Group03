@@ -11,12 +11,10 @@ const searchStory = async (req, res) => {
     const tokens = searchWord.trim().split(' ');
     queries = [];
     for (const token of tokens) {
-      const st = token.toLowerCase() + ' %';
-      const md = '% ' + token.toLowerCase() + ' %';
-      const ed = '% ' + token.toLowerCase();
-      queries.push(sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), 'LIKE', st));
+      const md = '% ' + token.toLowerCase() + '%';
+      const st = token.toLowerCase() + '%';
       queries.push(sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), 'LIKE', md));
-      queries.push(sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), 'LIKE', ed));
+      queries.push(sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), 'LIKE', st));
     }
     const stories = await Story.findAll({
       attributes: {exclude: ['contents']},
@@ -48,8 +46,10 @@ const searchUser = async (req, res) => {
     const tokens = searchWord.trim().split(' ');
     const queries = [];
     for (const token of tokens) {
-      const sus = '%' + token.toLowerCase() + '%';
-      queries.push(sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), 'LIKE', sus));
+      const md = '% ' + token.toLowerCase() + '%';
+      const st = token.toLowerCase() + '%';
+      queries.push(sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), 'LIKE', md));
+      queries.push(sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), 'LIKE', st));
     }
     const users = await User.findAll({
       where: {

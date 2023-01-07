@@ -18,28 +18,44 @@ function Vote({ token, storyId }) {
           'Content-Type': 'application/json',
         },
       });
-      const { data } = await get.json();
+      const data = await get.json();
       setVote(data.points);
-      setTypeVoted(data.isVoted || -1);
+      setTypeVoted(data.isVoted);
     };
     getVoteData();
   }, []);
 
   const onClickUpVote = async () => {
-    // const post = await fetch(fullPathAPI('/story/vote'), {
-    //   method: 'POST',
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //     // body : JSON.stringify({
-    //     //   userId:
-    //     // })
-    //   },
-    // });
-
+    const get = await fetch(fullPathAPI('/story/vote'), {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        storyId,
+        reactType: 1,
+      }),
+    });
+    const data = await get.json();
+    setVote(data.points);
     setTypeVoted((prev) => (prev === 1 ? 0 : 1));
   };
 
   const onClickDownVote = async () => {
+    const get = await fetch(fullPathAPI('/story/vote'), {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        storyId,
+        reactType: -1,
+      }),
+    });
+    const data = await get.json();
+    setVote(data.points);
     setTypeVoted((prev) => (prev === -1 ? 0 : -1));
   };
 
@@ -67,7 +83,7 @@ function Vote({ token, storyId }) {
               : {}
           }
       >
-        {abbreviateNumber(vote + typeVote)}
+        {abbreviateNumber(vote)}
       </div>
       <button type="button" className={styles.voteButton} onClick={onClickDownVote}>
         <i

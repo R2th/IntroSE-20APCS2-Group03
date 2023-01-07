@@ -5,17 +5,17 @@ const User = db.user;
 const checkDuplicateUsernameOrEmail = (req, res, next) => {
   if (req.body.username == undefined) {
     return res.status(400).send({
-      message: 'Username is missed',
+      message: 'Missing username.',
     });
   }
   if (req.body.email == undefined) {
     return res.status(400).send({
-      message: 'Email is missed',
+      message: 'Missing email.',
     });
   }
   if (req.body.password == undefined) {
     return res.status(400).send({
-      message: 'Password is missed',
+      message: 'Missing password.',
     });
   }
   User.findOne({
