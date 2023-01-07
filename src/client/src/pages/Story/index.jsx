@@ -107,8 +107,8 @@ function Story() {
                 <div className={styles.header}>
                   <div className={styles.authorAvatar}>
                     <a href="/" className={styles.avatarAuthorProfileLink}>
-                      {fullPathImage(post.user) ? (
-                        <img src={fullPathImage(post.user)} alt="" className={styles.avatarAuthorImage} />
+                      {fullPathImage(author) ? (
+                        <img src={fullPathImage(author)} alt="" className={styles.avatarAuthorImage} />
                       ) : (
                         <div>GAG</div>
                       )}

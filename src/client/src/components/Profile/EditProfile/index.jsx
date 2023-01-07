@@ -19,9 +19,7 @@ function EditProfile() {
           <div className={styles.body}>
             <div className={styles.dump}>
               <div className={styles.content}>
-                <div style={{
-                }}
-                >
+                <div>
                   <div className={styles.header}>
                     <h2>Profile information</h2>
                   </div>
@@ -110,8 +108,8 @@ function EditProfile() {
                   </div>
                 </div>
                 <div className={styles.action}>
-                  <button type="button" className={styles.cancelBtn}>Cancel</button>
-                  <button type="button" className={styles.submitBtn}>Create</button>
+                  <button type="button" className={styles.cancelBtn} onClick={handleClose}>Cancel</button>
+                  <button type="button" className={styles.submitBtn}>Update</button>
                 </div>
               </div>
             </div>

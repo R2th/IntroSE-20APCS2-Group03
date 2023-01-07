@@ -1,5 +1,4 @@
-import DefaultThumbnailImage from 'assets/png/default.png';
-import { API_ENDPOINT } from './const';
+import { API_ENDPOINT, THUMBNAIL_DEFAULT } from './const';
 
 export const buildPath = (...args) => args
   .map((part, i) => {
@@ -38,16 +37,7 @@ export const fullPathImage = (user) => {
   return 'https://viblo.asia/images/mm.png';
 };
 
-export const thumbnailUrl = (content) => {
-  if (!content.id || !content.media_list) return DefaultThumbnailImage;
-  if (content.media_list.length > 0) {
-    return content.media_list[0];
-  }
-  // if (content.tags.data.length > 0) {
-  //   return content.tags.data[0].image;
-  // }
-  return fullPathImage(content.user);
-};
+export const thumbnailUrl = (content) => content.thumbnail || THUMBNAIL_DEFAULT;
 
 export const encodeQueryData = (data) => {
   const ret = [];
