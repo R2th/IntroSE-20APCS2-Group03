@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
       'reaction',
       {
         username: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           primaryKey: true,
         },
         story_id: {

@@ -1,26 +1,21 @@
-import React, { useContext } from 'react';
-
-import { AuthContext } from 'contexts/Auth/authContext';
-import useFetch from 'hooks/useFetch';
-import { INIT_DATA_CONTENT } from 'utils/const';
-import { parseJwt } from 'utils/token';
+import React from 'react';
 import Card from 'components/Card';
-import { useOutletContext } from 'react-router-dom';
+import useFetch from 'hooks/useFetch';
+import { useOutletContext, useParams } from 'react-router-dom';
+import { INIT_DATA_CONTENT } from 'utils/const';
 import styles from './styles.module.scss';
 
 function UserStories() {
-  const { token } = useContext(AuthContext);
   const [setValue] = useOutletContext();
-  const { username } = parseJwt(token);
 
-  const { data } = useFetch(`/story/author/${username}`, INIT_DATA_CONTENT, (prev, _data) => {
+  const { userId } = useParams();
+
+  const { data } = useFetch(`/story/author/${userId}`, INIT_DATA_CONTENT, (prev, _data) => {
     if (prev === INIT_DATA_CONTENT) {
       setValue(_data.data.length);
       return _data.data;
     }
     return [...Array.from(new Set([...prev, _data.data]))];
-  }, {
-    Authorization: `Bearer ${token}`,
   });
 
   return (

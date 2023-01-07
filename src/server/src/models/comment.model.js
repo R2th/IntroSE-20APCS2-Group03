@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       {
         // We don't need to define 'id' attribute since postgres do it automaticallly
         username: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           allowNull: false,
         },
         story_id: {

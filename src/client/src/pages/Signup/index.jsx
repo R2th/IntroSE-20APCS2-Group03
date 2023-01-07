@@ -18,7 +18,7 @@ function Signup() {
   // const [year, setYear] = React.useState();
   const [formErrors, setFormErrors] = React.useState({});
 
-  const [nextForm, setNextForm] = React.useState(true);
+  const [nextForm, setNextForm] = React.useState(false);
   // const images = [Astronaut, Icon];
   // const [curSlide, setCurSLide] = React.useState(0);
   // let slideAnimation = React.useRef();

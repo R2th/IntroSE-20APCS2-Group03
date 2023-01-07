@@ -16,8 +16,6 @@ export async function loginUser(credentials) {
 export async function SignupUser(credentials) {
   const url = '/auth/signup';
 
-  console.log(credentials);
-
   return fetch(buildPath('http://localhost:2022', url), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
