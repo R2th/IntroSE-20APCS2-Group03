@@ -1,5 +1,6 @@
 const fs = require('fs');
 const {sequelize} = require('../db/database');
+const {QueryTypes} = require('sequelize');
 const db = require('../db/index');
 
 const Story = db.story;
@@ -22,7 +23,6 @@ const getPartContentsOfStory = async (req, res) => {
   try {
     const start = parseInt(req.params.start);
     const len = parseInt(req.params.len);
-    console.log(start, len);
     if (!len || start < 0) {
       throw new Error();
     }
@@ -129,6 +129,66 @@ const getNewestStories = async (req, res) => {
   }
 };
 
+const getPremiumStories = async (req, res) => {
+  try {
+    const {limit} = req.params;
+    const stories = await Story.findAll({
+      attributes: {exclude: ['contents']},
+      where: {
+        isPremium: true,
+      },
+      order: [['createdAt', 'DESC']],
+      limit,
+    });
+    if (!stories) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: 'successful',
+      data: stories,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getTrendingStories = async (req, res) => {
+  try {
+    const limit = parseInt(req.params.limit);
+    /* eslint-disable */
+    const stories = await sequelize.query(
+      'SELECT s.id, s.contents_short, s.thumbnail , s.media_list, s.author_username, \
+              s.title, s.tag, s.views, s.\"isPremium\", s.\"createdAt\", s.\"updatedAt\", \
+              SUM(COALESCE(r.react_type, 0)) AS points, \
+              DATE_PART(\'day\', NOW() - s.\"createdAt\") * 24 + \
+              DATE_PART(\'hour\', NOW() - s.\"createdAt\") AS weight \
+      FROM stories AS s LEFT OUTER JOIN reactions AS r ON s.id = r.story_id \
+      GROUP BY s.id \
+      ORDER BY 10 * SUM(COALESCE(r.react_type, 0)) - \
+              DATE_PART(\'day\', NOW() - s.\"createdAt\") * 24 - \
+              DATE_PART(\'hour\', NOW() - s.\"createdAt\") DESC \
+      LIMIT :limit',
+    {
+      replacements: { limit: limit },
+      type: QueryTypes.SELECT
+    });
+    /* eslint-enable */
+    if (!stories) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: 'successful',
+      data: stories,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
 const getStoryByStoryId = async (req, res) => {
   try {
     const story = await Story.findByPk(req.params.storyId);
@@ -159,6 +219,11 @@ const getStoriesOfAuthor = async (req, res) => {
       },
       limit,
     });
+    if (!stories) {
+      return res.status(404).send({
+        message: 'Story not found.',
+      });
+    }
     res.status(200).send({
       message: 'successful',
       data: stories,
@@ -286,46 +351,38 @@ const deleteStory = async (req, res) => {
 };
 
 const calculateVotes = async (storyId) => {
-  const reaction = await Reaction.findAll({
+  const reaction = await Reaction.findOne({
+    group: ['story_id'],
     where: {story_id: storyId},
     attributes: [[sequelize.fn('sum', sequelize.col('react_type')), 'points']],
     raw: true,
   });
-
-  return reaction[0].points ? reaction[0] : {points: 0};
+  return (reaction && reaction.points) ? reaction.points : 0;
 };
 
 const getVoteStoryById = async (req, res) => {
   const {storyId} = req.params;
-  const {userId} = req;
+  const {username} = req;
 
   try {
     const numVotes = await calculateVotes(storyId);
-    if (!numVotes) {
-      return res.status(404).send({
-        message: 'Some error occurred',
-      });
-    }
 
     const reaction = await Reaction.findOne({
       where: {
-        user_id: userId,
+        username: username,
         story_id: storyId,
       },
     });
-    const reactType = 0;
-    if (!reaction) {
-      // If reaction not found, it means user/guest has never voted the story yet
-      reactType = 0;
-    } else {
-      // Else, return the type of user reactions, 1 is upvote, -1 is downvote
+
+    let reactType = 0;
+    if (reaction) {
+      // return the type of user reactions, 1 is upvote, -1 is downvote
       reactType = reaction.react_type;
     }
-
     res.status(200).send({
-      message: 'success',
-      num_votes: numVotes,
-      user_react_type: reactType,
+      message: 'successful',
+      points: numVotes,
+      isVoted: reactType,
     });
   } catch (err) {
     res.status(500).send({
@@ -337,33 +394,35 @@ const getVoteStoryById = async (req, res) => {
 // Upvote/Downvote
 const voteStory = async (req, res) => {
   const {username} = req;
-  // const story = await Story.findOne({ id: req.param.storyId });
-
-  const prevReaction = await Reaction.findOne({
+  const {storyId, reactType} = req.body;
+  const reaction = await Reaction.findOne({
     where: {
-      story_id: req.param.storyId,
+      story_id: storyId,
       username: username,
     },
   });
 
-  // If user has not ever react on story
-  if (!prevReaction) {
-    const newReaction = await Reaction.create({
-      user_id: userId,
-      story_id: req.param.storyId,
-      react_type: req.body.reactType,
+  if (!reaction) {
+    // If user has not ever react on story
+    await Reaction.create({
+      username: username,
+      story_id: storyId,
+      react_type: reactType,
     });
+  } else if (reaction.react_type != reactType) {
+    // update type of vote
+    reaction.set({
+      react_type: reactType,
+    });
+    await reaction.save();
   } else {
-    // update type of vote if exist
-    await Story.update(
-        {react_type: req.param.reactType},
-        {where: {story_id: req.body.storyId}},
-    );
+    // If user un-reacts the story
+    await reaction.destroy();
   }
-
+  const numVotes = await calculateVotes(storyId);
   res.status(200).send({
     message: 'successful',
-    points: await calculateVotes(req.param.storyId),
+    points: numVotes,
   });
 };
 
@@ -393,6 +452,8 @@ const updateStoryView = async (req, res) => {
 module.exports = {
   getAllStories,
   getNewestStories,
+  getPremiumStories,
+  getTrendingStories,
   getStoryByStoryId,
   getStoriesOfAuthor,
   createStory,

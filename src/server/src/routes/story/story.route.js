@@ -10,6 +10,8 @@ const {upload} = require('../../controllers/upload.controller');
 // Crawl the story
 router.get('/story/all/:limit', storyController.getAllStories);
 router.get('/story/newest/:limit', storyController.getNewestStories);
+router.get('/story/premium/:limit', storyController.getPremiumStories);
+router.get('/story/trending/:limit', storyController.getTrendingStories);
 router.get('/story/author/:username', storyController.getStoriesOfAuthor);
 router.get('/story/:storyId/contents/:start/:len', isPremium, storyController.getPartContentsOfStory);
 router.get('/story/:storyId/contents/full', isPremium, storyController.getContentsOfStory);

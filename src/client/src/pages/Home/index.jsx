@@ -12,12 +12,15 @@ import './style.scss';
 
 function Home() {
   const fetchContent = useFetch('/story/all/10', INIT_DATA_CONTENT, (prev, _data) => _data.data);
-  const fetchTrending = useFetch('/story/newest/10', INIT_DATA_CONTENT, (prev, _data) => _data.data);
+  const fetchNewest = useFetch('/story/newest/10', INIT_DATA_CONTENT, (prev, _data) => _data.data);
+  const fetchPremium = useFetch('/story/premium/10', INIT_DATA_CONTENT, (prev, _data) => _data.data);
+  const fetchTrending = useFetch('/story/trending/10', INIT_DATA_CONTENT, (prev, _data) => _data.data);
 
   const { setPrefix } = useContext(StylesContext);
 
   const contents = fetchContent.data;
-
+  const newest = fetchNewest.data;
+  const premium = fetchPremium.data;
   const trending = fetchTrending.data;
 
   useEffect(() => {
@@ -43,25 +46,24 @@ function Home() {
               </div>
               <div className="hoz-line" />
             </div>
-            {contents && contents.slice(10).map((content) => <Card key={content.id} content={content} />)}
+            {contents.map((content) => <Card key={content.id} content={content} />)}
             <div className="section">
               <div className="section_title">
                 <h1>Member only</h1>
               </div>
               <div className="section_content">
-                {trending.map((content) => (
+                {premium.map((content) => (
                   <Card key={content.id} content={content} type="small-verc" />
                 ))}
               </div>
               <div className="hoz-line" />
             </div>
-            {contents && contents.slice(-10).map((content) => <Card key={content.id} content={content} />)}
             <div className="section">
               <div className="section_title">
                 <h1>For you</h1>
               </div>
               <div className="section_content">
-                {trending.map((content) => (
+                {newest.map((content) => (
                   <Card key={content.id} content={content} type="small-hoz" />
                 ))}
               </div>

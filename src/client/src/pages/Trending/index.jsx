@@ -10,7 +10,7 @@ import { INIT_DATA_CONTENT } from 'utils/const';
 import styles from './styles.module.scss';
 
 function Trending() {
-  const { data, reloadFetch } = useFetch('/story/newest/10', INIT_DATA_CONTENT);
+  const { data, reloadFetch } = useFetch('/story/trending/10', INIT_DATA_CONTENT);
 
   useEffect(() => {
     const handleScroll = () => {
