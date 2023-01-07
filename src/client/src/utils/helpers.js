@@ -37,7 +37,13 @@ export const fullPathImage = (user) => {
   return 'https://viblo.asia/images/mm.png';
 };
 
-export const thumbnailUrl = (content) => content.thumbnail || THUMBNAIL_DEFAULT;
+export const thumbnailUrl = (content) => {
+  if (content.thumbnail) return content.thumbnail;
+  if (content.media_list && content.media_list.length > 0) {
+    return content.media_list[0];
+  }
+  return THUMBNAIL_DEFAULT;
+};
 
 export const encodeQueryData = (data) => {
   const ret = [];
