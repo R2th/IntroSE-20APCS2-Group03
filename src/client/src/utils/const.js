@@ -1,4 +1,4 @@
-export const INIT_DATA_CONTENT = [{ id: 1 }, { id: 2 }, { id: 3 }];
+export const INIT_DATA_CONTENT = [{ id: 1, author_username: 'admin' }, { id: 2, author_username: 'admin' }, { id: 3, author_username: 'admin' }];
 
 export const API_ENDPOINT = 'http://localhost:2022';
 

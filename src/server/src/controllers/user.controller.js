@@ -1,6 +1,7 @@
 const db = require('../db/index');
 
 const User = db.user;
+const Following = db.following;
 
 const publicAccess = (req, res) => {
   res.status(200).send('This is public content.');
@@ -19,6 +20,7 @@ const adminPanel = (req, res) => {
   });
 };
 
+// tu tu sao cai nay o day
 const getAvatar = async (req, res) => {
   const user = await User.findOne({
     where: {
@@ -28,7 +30,7 @@ const getAvatar = async (req, res) => {
   if (!user || !user.avatar) {
     throw new Error('Avatar not found!');
   } else {
-    const filePath = `upload/${user.avatar}`;
+    const filePath = `uploads/${user.avatar}`;
     res.sendFile(filePath);
   }
 };
@@ -87,6 +89,193 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+const followUser = async (req, res) => {
+  try {
+    const {followingUsername} = req.body;
+    const follower = await User.findOne({
+      as: 'Follower',
+      where: {username: req.username},
+    });
+    if (!follower) {
+      throw new Error('wtf');
+    }
+    const following = await User.findOne({
+      as: 'Following',
+      where: {username: followingUsername},
+    });
+    if (!following) {
+      throw new Error('wtf');
+    }
+    await follower.addFollowing(following);
+    res.status(200).send({
+      message: 'successful',
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const unfollowUser = async (req, res) => {
+  try {
+    const {followingUsername} = req.body;
+    const follower = await User.findOne({
+      as: 'Follower',
+      where: {username: req.username},
+    });
+    if (!follower) {
+      throw new Error('wtf');
+    }
+    const following = await User.findOne({
+      as: 'Following',
+      where: {username: followingUsername},
+    });
+    if (!following) {
+      throw new Error('wtf');
+    }
+    await follower.removeFollowing(following);
+    res.status(200).send({
+      message: 'successful',
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getFollowers = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.username, {
+      as: 'Following',
+      include: {
+        model: User,
+        as: 'Follower',
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    if (!user) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: 'successful',
+      data: user.Follower,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getFollowings = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.username, {
+      as: 'Follower',
+      include: {
+        model: User,
+        as: 'Following',
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    if (!user) {
+      throw new Error();
+    }
+    res.status(200).send({
+      message: 'successful',
+      data: user.Following,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getNumberOfFollowers = async (req, res) => {
+  try {
+    const result = await User.count({
+      as: 'Following',
+      where: {username: req.params.username},
+      include: {
+        model: User,
+        as: 'Follower',
+        required: true,
+      },
+    });
+    res.status(200).send({
+      message: 'successful',
+      data: result,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getNumberOfFollowings = async (req, res) => {
+  try {
+    const result = await User.count({
+      as: 'Follower',
+      where: {username: req.params.username},
+      include: {
+        model: User,
+        as: 'Following',
+        required: true,
+      },
+    });
+    res.status(200).send({
+      message: 'successful',
+      data: result,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const hasFollowed = async (req, res) => {
+  try {
+    const {followingUsername} = req.params;
+    const followed = await User.findOne({
+      as: 'Follower',
+      where: {username: req.username},
+      include: {
+        model: User,
+        as: 'Following',
+        required: true,
+        where: {
+          username: followingUsername,
+        },
+      },
+    });
+    if (!followed) {
+      res.status(200).send({
+        message: 'successful',
+        followed: 'no',
+        data: followed,
+      });
+    } else {
+      res.status(200).send({
+        message: 'successful',
+        followed: 'yes',
+        data: followed,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   publicAccess,
   userPanel,
@@ -94,4 +283,11 @@ module.exports = {
   getAvatar,
   getUserProfile,
   updateUserProfile,
+  getFollowers,
+  getFollowings,
+  followUser,
+  unfollowUser,
+  hasFollowed,
+  getNumberOfFollowers,
+  getNumberOfFollowings,
 };
