@@ -124,7 +124,7 @@ function UserDropdownMenu() {
           </a>
         </div>
         <div className={styles.menu}>
-          <a href="settings">
+          <a href="/settings">
             <div className={styles.item}>
               Settings
             </div>
