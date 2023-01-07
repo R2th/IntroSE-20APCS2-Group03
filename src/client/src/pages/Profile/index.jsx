@@ -79,8 +79,8 @@ function Profile() {
                   <div className={styles.text}>Following</div>
                 </div>
                 <div>
-                  <div className={styles.value}>3323</div>
-                  <div className={styles.text}>{upvote && upvote.data}</div>
+                  <div className={styles.value}>{upvote && upvote.data}</div>
+                  <div className={styles.text}>Upvotes</div>
                 </div>
               </div>
             </div>
