@@ -45,6 +45,7 @@ const onImagePasted = async (dataTransfer, setMarkdown) => {
   await Promise.all(
     files.map(async (file) => {
       if (!file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        // eslint-disable-next-line
         alert('not an image');
       }
 
