@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from 'contexts/Auth/authContext';
+import { fullPathAPI } from 'utils/helpers';
 import IconBtn from './IconBtn';
 import { useComment } from '../../contexts/CommentContext';
 import CommentForm from './CommentForm';
@@ -17,6 +19,7 @@ function Comment({ comment }) {
     if (rate < 0.8) { return false; }
     return true;
   });
+
   const [likeCount, setLikeCount] = useState(Math.floor(Math.random() * (10 - 0 + 1)) + 0);
   const {
     slug,
@@ -24,13 +27,13 @@ function Comment({ comment }) {
     createLocalComment,
     updateLocalComment,
     deleteLocalComment,
-    getIdForNewComment,
   } = useComment();
+  const { token } = useContext(AuthContext);
 
   // call api to reply comment
-  const onCommentReply = (message) => {
+  const onCommentReply = async (message) => {
     const newComment = {
-      id: getIdForNewComment(),
+      id: 9999,
       username,
       story_id: slug,
       parent_id: comment.id,
@@ -39,19 +42,58 @@ function Comment({ comment }) {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    setIsReplying(false);
-    createLocalComment(newComment);
+    const postRes = await fetch(fullPathAPI('/comment/'), {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        storyId: slug,
+        parentId: newComment.parent_id,
+        content: message,
+      }),
+    });
+    const res = await postRes.json();
+    if (res.message === 'successful') {
+      newComment.id = res.data.new_id;
+      setIsReplying(false);
+      createLocalComment(newComment);
+    }
   };
 
   // call api to update comment
-  const onCommentUpdate = (message) => {
-    setIsEditing(false);
-    updateLocalComment(comment.id, message);
+  const onCommentUpdate = async (message) => {
+    const postRes = await fetch(fullPathAPI(`/comment/${comment.id}`), {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: message,
+      }),
+    });
+    const res = await postRes.json();
+    if (res.message === 'successful') {
+      setIsEditing(false);
+      updateLocalComment(comment.id, message);
+    }
   };
 
   // call api to delete comment
-  const onCommentDelete = () => {
-    deleteLocalComment(comment.id);
+  const onCommentDelete = async () => {
+    const postRes = await fetch(fullPathAPI(`/comment/${comment.id}`), {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const res = await postRes.json();
+    if (res.message === 'successful') {
+      deleteLocalComment(comment.id);
+    }
   };
 
   // call api to toogle comment like
