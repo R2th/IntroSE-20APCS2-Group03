@@ -171,6 +171,14 @@
             }
           }
         }
+        .articleTitle {
+          text-align: left;
+          line-height: 1.2;
+          font-weight: 700;
+          word-wrap: break-word;
+          word-break: break-word;
+          font-size: 1.5rem;
+        }
         zero-md {
           padding: 4rem;
           border-radius: 8px;

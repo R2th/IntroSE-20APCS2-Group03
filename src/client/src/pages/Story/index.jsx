@@ -172,7 +172,9 @@ function Story() {
                     </div>
                   </div>
                 </div>
-                <h1>{post.title}</h1>
+                <div className={styles.articleTitle}>
+                  <h1>{others.title}</h1>
+                </div>
                 <zero-md>
                   <script type="text/markdown">{post.contents}</script>
                 </zero-md>
