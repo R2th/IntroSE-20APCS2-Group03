@@ -11,17 +11,18 @@ import { AuthContext } from 'contexts/Auth/authContext';
 import { CommentProvider } from 'contexts/CommentContext';
 import { useState } from 'react';
 import { calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
+import Toast from 'components/Toast/Toast';
+import TOAST_PROPERTIES from 'components/Toast/toastProperties';
 import useFetch from '../../hooks/useFetch';
-
 import styles from './styles.module.scss';
 
 function Story() {
   const { slug } = useParams();
-  const navigate = useNavigate();
-
-  const [author, setAuthor] = useState(null);
-
   const { token } = React.useContext(AuthContext);
+  const navigate = useNavigate();
+  const [author, setAuthor] = useState(null);
+  const [toastProps, setToastProps] = useState([]);
+  const toastAutoDelete = true;
 
   const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
     Authorization: `Bearer ${token}`,
@@ -61,6 +62,19 @@ function Story() {
     html.style.setProperty('background-size', '120% 2000px, 100% auto');
   }, [others]);
 
+  const showToast = (type) => {
+    const toastProperties = TOAST_PROPERTIES.find((toast) => toast.title === type);
+    setToastProps([...toastProps, toastProperties]);
+  };
+
+  const copyTextToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Success');
+    }, () => {
+      showToast('Error');
+    });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.articlesAndSidebar}>
@@ -80,7 +94,11 @@ function Story() {
                 <div className={styles.smallerLeftSidePanel}>
                   <Vote token={token} storyId={slug} />
                   <SavedList />
-                  <button type="button" className={styles.shareButton}>
+                  <button
+                    type="button"
+                    className={styles.shareButton}
+                    onClick={() => { copyTextToClipboard(window.location.href); }}
+                  >
                     <i className="icon icon-share_fill" />
                   </button>
                 </div>
@@ -89,7 +107,6 @@ function Story() {
                 <div className={styles.header}>
                   <div className={styles.authorAvatar}>
                     <a href="/" className={styles.avatarAuthorProfileLink}>
-                      {console.log(post)}
                       {fullPathImage(post.user) ? (
                         <img src={fullPathImage(post.user)} alt="" className={styles.avatarAuthorImage} />
                       ) : (
@@ -170,6 +187,12 @@ function Story() {
 
         </div>
       </div>
+      <Toast
+        toastList={toastProps}
+        position="bottom-left"
+        autoDelete={toastAutoDelete}
+        autoDeleteTime={3000}
+      />
       {/* <Sidebar /> */}
     </div>
   );
