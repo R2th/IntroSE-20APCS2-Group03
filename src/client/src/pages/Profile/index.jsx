@@ -47,7 +47,7 @@ function Profile() {
                 <>
                   <div className={styles.items}>
                     <h1 className={styles.name}>
-                      <a href={`/${data.username}`}>
+                      <a href={`@/${data.username}`}>
                         {`${data.first_name} ${data.last_name}` || data.username}
                       </a>
                     </h1>
@@ -60,7 +60,7 @@ function Profile() {
                   </div>
                   <div className={styles.tns}>
                     <p>
-                      <a href={`/${data.username}`}>
+                      <a href={`/@${data.username}`}>
                         @
                         {data.username}
                       </a>

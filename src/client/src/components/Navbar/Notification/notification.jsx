@@ -137,8 +137,8 @@ function NotificationPopUp() {
         className={styles.dropDownNotification}
         contentClassName={styles.dropDownUserMenuContent}
         // eslint-disable-next-line
-        prefix={ref.current?.getBoundingClientRect().right - 500}
-        width={500}
+        prefix={ref.current?.getBoundingClientRect().right - 375}
+        width={375}
       >
         <div className={styles.menu}>
           <div className={styles.item}>

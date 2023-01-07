@@ -5,17 +5,18 @@ import rehypeSanitize from 'rehype-sanitize';
 
 import onImagePasted from 'utils/onImagePasted';
 
-// import debounce from 'utils/debounce';
+import debounce from 'utils/debounce';
 import moment from 'moment';
 import { fullPathAPI } from 'utils/helpers';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from 'contexts/Auth/authContext';
+import Modal from 'components/Modal';
+import { THUMBNAIL_DEFAULT } from 'utils/const';
 import styles from './styles.module.scss';
+import Thumbnail from './Thumbnail';
 
 function Editor() {
   const { slug } = useParams();
-
-  const { token } = useContext(AuthContext);
 
   const [title, setTitle] = useState('');
 
@@ -43,17 +44,15 @@ function Editor() {
       id: slug,
     }));
 
-    const postRes = await fetch(fullPathAPI('/story/'), {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: form,
-    });
+    // const postRes = await fetch(fullPathAPI('/story/'), {
+    //   method: 'POST',
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: form,
+    // });
 
-    const status = await postRes.json();
-
-    console.log(status);
+    // const status = await postRes.json();
   };
 
   const onChangeCaretPosition = (e) => {
@@ -125,7 +124,7 @@ function Editor() {
             ))}
             <input className={styles.inputTags} value={curTag} placeholder="..." onChange={onChangeCurTag} onKeyDown={onChangeTags} />
           </div>
-          <button type="button" className={styles.publishBtn} onClick={saveDraft}>Publish</button>
+          <PublishForm content={content} tags={tags} title={title} onChangeTitle={onChangeTitle} setSaveTime={setSaveTime} />
         </div>
         {saveTime && (
         <div className={styles.saveStatus}>
@@ -140,7 +139,7 @@ function Editor() {
           <MDEditor
             value={content}
             onChange={setContent}
-            // onKeyUp={debounce(saveDraft, 3000)}
+            onKeyUp={debounce(saveDraft, 3000)}
             onMouseUp={onChangeCaretPosition}
             height="100%"
             enableScroll
@@ -196,6 +195,145 @@ function Editor() {
         </div>
       </div>
     </div>
+  );
+}
+
+function PublishForm({
+  content, setSaveTime, title, tags, onChangeTitle,
+}) {
+  const { slug } = useParams();
+  const { token } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [openPublish, setOpenPublish] = useState(false);
+  const [short, setShort] = useState(content.slice(0, 200));
+  const [thumbnail, setThumb] = useState(THUMBNAIL_DEFAULT);
+
+  const onChangeShortContent = (e) => {
+    setShort(e.target.value);
+  };
+
+  const handleOnClose = () => {
+    setOpenPublish(false);
+  };
+
+  const onPublish = async () => {
+    if (!short && !title && !content) {
+      alert('Please fill out the title');
+    }
+
+    setSaveTime(new Date());
+
+    const form = new FormData();
+    const file = new File([content], `${slug}.md`, {
+      type: 'text/markdown',
+    });
+
+    form.append('story', file);
+    form.append('data', JSON.stringify({
+      contentsShort: short,
+      title,
+      tag: tags,
+      isPremium: false,
+      id: slug,
+      thumbnail,
+    }));
+
+    const postRes = await fetch(fullPathAPI('/story/'), {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: form,
+    });
+
+    const status = await postRes.json();
+
+    if (status.message === 'successful') {
+      handleOnClose();
+      navigate(`/story/${status.data.id}`);
+    }
+  };
+
+  const onClickOpenPublish = () => {
+    setOpenPublish(true);
+  };
+
+  return (
+    <>
+      <button type="button" className={styles.publishBtn} onClick={onClickOpenPublish}>Publish</button>
+      <Modal handleClose={handleOnClose} isOpen={openPublish} contentClassName={styles.form}>
+        <div className={styles.newCollectionForm}>
+          <div className={styles.body}>
+            <div className={styles.dump}>
+              <div className={styles.content}>
+                <div style={{ width: '100%' }}>
+                  <div className={styles.header}>
+                    <h2>Publish information</h2>
+                  </div>
+                  <div className={styles.form}>
+                    <div className={styles.title}>
+                      <span style={{
+                        color: 'rgba(41, 41, 41, 1)',
+                        lineHeight: '20px',
+                        fontSize: 14,
+                      }}
+                      >
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          width: '100%',
+                        }}
+                        >
+                          <div style={{ marginBottom: 10, color: 'rgba(117,117,117, 1)' }}>Title</div>
+                          <div className={styles.input}>
+                            <input placeholder="Give me a name" type="text" value={title} onChange={onChangeTitle} />
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                    <div className={styles.title}>
+                      <span style={{
+                        color: 'rgba(41, 41, 41, 1)',
+                        lineHeight: '20px',
+                        fontSize: 14,
+                      }}
+                      >
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          width: '100%',
+                        }}
+                        >
+                          <div style={{ marginBottom: 10, color: 'rgba(117,117,117, 1)' }}>Content short</div>
+                          <div className={styles.input}>
+                            <textarea style={{ width: '100%' }} onChange={onChangeShortContent} value={short}>{short}</textarea>
+                          </div>
+                          <div className={styles.count}>
+                            <p className={styles.validation}>Appears on your preview story, as your byline, and in your responses.</p>
+                            <p className={styles.num}>
+                              <span>0</span>
+                              /200
+                            </p>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                    <Thumbnail content={content} thumbnail={thumbnail} setThumb={setThumb} />
+                  </div>
+                </div>
+                <div className={styles.action}>
+                  <button type="button" className={styles.cancelBtn} onClick={handleOnClose}>Cancel</button>
+                  <button type="button" className={styles.submitBtn} onClick={onPublish}>Publish</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <i className="icon icon-close" style={{ cursor: 'pointer' }} onClick={handleOnClose} aria-hidden />
+
+        </div>
+      </Modal>
+    </>
   );
 }
 

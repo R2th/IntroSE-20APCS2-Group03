@@ -66,7 +66,7 @@ export const ROUTES = [
     ],
   },
   {
-    path: ':userId',
+    path: '@' + ':userId',
     element: <Profile />,
     children: [
       {
