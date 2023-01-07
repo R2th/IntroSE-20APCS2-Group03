@@ -1,5 +1,6 @@
 const fs = require('fs');
 const {sequelize} = require('../db/database');
+const {story} = require('../db/index');
 const db = require('../db/index');
 
 const Collection = db.collection;
@@ -101,7 +102,7 @@ const addStoryToCollection = async (req, res) => {
     collection.addStory(storyId);
     res.status(200).send({
       message: 'successful',
-      collection: collection,
+      data: collection,
     });
   } catch (err) {
     res.status(500).send({
@@ -129,7 +130,39 @@ const removeStoryToCollection = async (req, res) => {
     collection.removeStory(storyId);
     res.status(200).send({
       message: 'successful',
-      collection: collection,
+      data: collection,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getCollectionsContainStory = async (req, res) => {
+  try {
+    const username = req.username;
+    const storyId = req.params.storyId;
+    const collections = await Collection.findAll({
+      where: {
+        username: username,
+      },
+      include: {
+        model: Story,
+        attributes: [],
+        where: {
+          id: storyId,
+        },
+      },
+    });
+    if (!collections) {
+      return res.status(404).send({
+        message: 'Collections not found.',
+      });
+    };
+    res.status(200).send({
+      message: 'successful',
+      data: collections,
     });
   } catch (err) {
     res.status(500).send({
@@ -145,4 +178,5 @@ module.exports = {
   deleteCollection,
   addStoryToCollection,
   removeStoryToCollection,
+  getCollectionsContainStory,
 };
