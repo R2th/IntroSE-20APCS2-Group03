@@ -22,6 +22,7 @@ function Profile() {
 
   const follow = useFetch(`/user/${userId}/num_followers`, 0, (prev, _data) => _data.data);
   const following = useFetch(`/user/${userId}/num_followings`, 0, (prev, _data) => _data.data);
+  const upvote = useFetch(`/user/${userId}/num_upvotes`, 0, (prev, _data) => _data.data);
   const { username } = parseJwt(token);
 
   const { data } = useFetch(`/user/${userId}`, INIT_USER_INFO, (prev, _data) => _data.data);
@@ -79,7 +80,7 @@ function Profile() {
                 </div>
                 <div>
                   <div className={styles.value}>3323</div>
-                  <div className={styles.text}>Upvotes</div>
+                  <div className={styles.text}>{upvote && upvote.data}</div>
                 </div>
               </div>
             </div>
