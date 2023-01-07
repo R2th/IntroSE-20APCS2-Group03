@@ -55,6 +55,8 @@ router.get('/user/:username/followings', userController.getFollowings);
 
 router.get('/user/:username/num_followings', userController.getNumberOfFollowings);
 
+router.get('/user/:username/num_upvotes', userController.getNumberOfUpvotes);
+
 
 // body: "followingUsername": ...
 router.post('/user/follow', verifyToken, userController.followUser);
@@ -62,6 +64,6 @@ router.post('/user/follow', verifyToken, userController.followUser);
 // body: "followingUsername": ...
 router.delete('/user/follow', verifyToken, userController.unfollowUser);
 
-router.get('/user/:followingUsername/followed', userController.hasFollowed);
+router.get('/user/:followingUsername/followed', verifyToken, userController.hasFollowed);
 
 module.exports = router;

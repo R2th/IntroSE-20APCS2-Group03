@@ -10,3 +10,5 @@ export const PAYMENT_PLANS = {
   PAYMENT_PLANS_3: ['15 InMails per month.', 'Following VIP writers.', 'Following schedule premium writers whose you subscribed', 'Unlimited reading premium stories.', 'Recommend premium stories more.', 'Write story with premium labeled stories.', 'Remove all ads for the best experience.', 'Tax: 0%'],
   PAYMENT_PLANS_4: ['20 InMails per month.', 'Following VIP writers.', 'Following schedule premium writers whose you subscribed', 'Unlimited reading premium stories.', 'Recommend premium stories more.', 'Write story with premium labeled stories.', 'Remove all ads for the best experience.', 'Your stories becomes to top trending and highly recommendation within a few hours after uploading', 'Tax: 0%'],
 };
+
+export const THUMBNAIL_DEFAULT = 'https://cdn.sstatic.net/Img/teams/teams-illo-free-sidebar-promo.svg?v=47faa659a05e';

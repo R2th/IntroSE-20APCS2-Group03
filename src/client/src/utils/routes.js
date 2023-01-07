@@ -66,36 +66,39 @@ export const ROUTES = [
     ],
   },
   {
-    path: ':userId',
+    path: '@' + ':userId',
     element: <Profile />,
     children: [
       {
         path: 'stories',
         element: (
-        <ProtectedRoute>
-          <UserStories/>
-        </ProtectedRoute>
+          <ProtectedRoute>
+            <UserStories />
+          </ProtectedRoute>
         ),
-        index:true
+        index: true,
       },
       {
         path: 'saved',
-        element: 
-        (
+        element: (
           <ProtectedRoute>
-            <SaveList/>
+            <SaveList />
           </ProtectedRoute>
-        )
-      },
-      {
-        path: 'settings',
-        element: <Settings />,
+        ),
       },
       {
         path: 'comments',
-        element: <UserComments/>
+        element: <UserComments />,
       },
     ],
+  },
+  {
+    path: 'settings',
+    element: (
+      <ProtectedRoute>
+        <Settings />
+      </ProtectedRoute>
+    ),
   },
   {
     path: 'auth',

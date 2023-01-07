@@ -11,6 +11,7 @@ function Search() {
   const [peopleSearch, setPeopleSearch] = useState([]);
 
   const ref = useRef(null);
+  // eslint-disable-next-line
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -65,12 +66,13 @@ function Search() {
           <div className={styles.searchContainer} key="stories">
             <p className={styles.header}>Stories</p>
             {contentSearch.map((content) => (
-              <div
+              <a
                 className={styles.searchResult}
                 onClick={() => {
                   handleClose();
-                  navigate(`/story/${content.id}`);
+                  // navigate();
                 }}
+                href={`/story/${content.id}`}
                 aria-hidden
               >
                 <img src={thumbnailUrl(content)} alt={content.id} />
@@ -78,7 +80,7 @@ function Search() {
                   <div className={styles.title}>{content.title}</div>
                   <div className={styles.contentShort}>{content.contents_short}</div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
           )}
@@ -86,20 +88,21 @@ function Search() {
           <div className={styles.searchContainer} key="people">
             <p className={styles.header}>People</p>
             {peopleSearch.map((user) => (
-              <div
+              <a
                 className={styles.searchResult}
                 onClick={() => {
                   handleClose();
-                  navigate(`/${user.username}`);
+                  // navigate();
                 }}
                 aria-hidden
+                href={`/@${user.username}`}
               >
                 <img src={fullPathImage({ data: user })} alt={user.username} />
                 <div>
                   <div className={styles.title}>{user.username}</div>
                   <div className={styles.contentShort}>{user.bio}</div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
           )}

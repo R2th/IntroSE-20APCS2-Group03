@@ -3,8 +3,7 @@ import useFetch from 'hooks/useFetch';
 import React, { useContext, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
-import Logo from 'assets/svg/logo.svg';
-
+import { thumbnailUrl } from 'utils/helpers';
 import styles from './styles.module.scss';
 
 function SaveList() {
@@ -63,7 +62,7 @@ function ReviewImgCollection({ stories }) {
             display: 'block',
           }}
           >
-            {story.media_list.length > 0 ? <img src={story.media_list[0]} alt="thumbnail" /> : <img alt="default" src={Logo} style={{ background: 'black' }} />}
+            <img src={thumbnailUrl(story)} alt="thumbnail" style={{ backgroundColor: 'white', borderRight: '1px solid black' }} />
           </div>
         </div>
       ))}

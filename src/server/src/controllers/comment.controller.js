@@ -65,30 +65,31 @@ const getCommentsByStoryId = async (req, res) => {
 const createComment = async (req, res) => {
   const {username} = req;
   const {storyId} = req.body;
+  const {content} = req.body;
   let {parentId} = req.body;
   try {
     if (parentId == undefined) {
       parentId = null;
     }
     const comment = await Comment.create({
-      ...req.body,
+      content: content,
       username: username,
       story_id: storyId,
       parent_id: parentId,
     });
     // Update story's number of comments
-    const curStory = await Story.findOne({
-      where: {id: storyId},
-    });
-    await Story.update(
-        {num_comments: curStory.num_comments + 1},
-        {where: {id: storyId}},
-    );
+    // const curStory = await Story.findOne({
+    //   where: {id: storyId},
+    // });
+    // await Story.update(
+    //     {num_comments: curStory.num_comments + 1},
+    //     {where: {id: storyId}},
+    // );
 
-    res.status(200).send({
+    return res.status(200).send({
       message: 'successful',
       data: {
-        comment,
+        new_id: comment.id,
       },
     });
   } catch (err) {
@@ -122,7 +123,7 @@ const updateComment = async (req, res) =>{
 
 const deleteComment = async (req, res) =>{
   const commentId = req.params.commentId;
-  const {storyId} = req.body;
+  // const {storyId} = req.body;
   try {
     const comment = await Comment.findByPk(commentId);
 
@@ -133,13 +134,13 @@ const deleteComment = async (req, res) =>{
     }
     await comment.destroy();
 
-    const curStory = await Story.findOne({
-      where: {id: storyId},
-    });
-    await Story.update(
-        {num_comments: curStory.num_comments - 1},
-        {where: {id: storyId}},
-    );
+    // const curStory = await Story.findOne({
+    //   where: {id: storyId},
+    // });
+    // await Story.update(
+    //     {num_comments: curStory.num_comments - 1},
+    //     {where: {id: storyId}},
+    // );
 
     res.status(200).send({
       message: 'successful',

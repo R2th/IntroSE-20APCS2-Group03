@@ -1,0 +1,58 @@
+.thumbnail {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  gap: 20px;
+  padding-bottom: 10px;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #e9ecef;
+  }
+
+  .dropzone {
+    cursor: pointer;
+    padding: 0;
+    border: 2px dashed #dbe3e8;
+    border-radius: 15px;
+    transition: background-color 0.2s linear;
+    background-color: white;
+    padding: 0;
+    min-width: 200px;
+    min-height: 200px;
+    button {
+      box-shadow: none !important;
+      position: relative;
+    }
+    .uploadBtn {
+      cursor: pointer;
+      color: #dbe3e8;
+      position: relative;
+      font-size: 36px;
+      right: 0;
+      top: 0;
+    }
+  }
+  .image {
+    cursor: pointer;
+    border-radius: 15px;
+
+    &:hover {
+      border: 5px solid #dbe3e8;
+      padding: 5px;
+    }
+    img {
+      border-radius: 15px;
+      width: 200px;
+      height: 100%;
+    }
+  }
+  .chosen {
+    padding: 5px;
+    border: 5px solid black !important;
+  }
+}

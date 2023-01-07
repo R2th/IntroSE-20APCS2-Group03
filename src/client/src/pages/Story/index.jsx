@@ -14,19 +14,22 @@ import { calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
 import Toast from 'components/Toast/Toast';
 import TOAST_PROPERTIES from 'components/Toast/toastProperties';
 import useFetch from '../../hooks/useFetch';
+
 import styles from './styles.module.scss';
 
 function Story() {
   const { slug } = useParams();
-  const { token } = React.useContext(AuthContext);
   const navigate = useNavigate();
+
   const [author, setAuthor] = useState(null);
   const [toastProps, setToastProps] = useState([]);
   const toastAutoDelete = true;
 
-  const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
-    Authorization: `Bearer ${token}`,
-  });
+  const { token } = React.useContext(AuthContext);
+
+  // const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
+  //   Authorization: `Bearer ${token}`,
+  // });
 
   const contentFull = useFetch(`story/${slug}/contents/full`, { contents: '' }, (prev, data) => data.data, {
     Authorization: `Bearer ${token}`,
@@ -34,7 +37,20 @@ function Story() {
 
   const othersData = useFetch(`story/${slug}/other-data`, {}, (prev, data) => data.data);
 
-  const post = contentFull.data || contentPreview.data;
+  // const checkFull = () => {
+  //   if (contentFull.data.message) {
+  //     return 'no permission';
+  //   }
+  //   if (contentFull.data.contents) {
+  //     return contentFull.data.contents || 'no contents';
+  //   }
+  //   if (contentPreview.data.contents) {
+  //     return contentPreview.data.contents || 'no contents';
+  //   }
+  //   return '';
+  // };
+
+  const post = contentFull.data;
   const others = othersData.data;
 
   React.useEffect(() => {
@@ -105,19 +121,21 @@ function Story() {
               </div>
               <div className={styles.contentContainer}>
                 <div className={styles.header}>
+                  {author && (
                   <div className={styles.authorAvatar}>
-                    <a href="/" className={styles.avatarAuthorProfileLink}>
-                      {fullPathImage(post.user) ? (
-                        <img src={fullPathImage(post.user)} alt="" className={styles.avatarAuthorImage} />
+                    <a href={`/@${author.username}`} className={styles.avatarAuthorProfileLink}>
+                      {fullPathImage(author.avatar) ? (
+                        <img src={fullPathImage(author.avatar)} alt="" className={styles.avatarAuthorImage} />
                       ) : (
                         <div>GAG</div>
                       )}
                     </a>
                   </div>
+                  ) }
                   {author && (
                   <div className={styles.authorInfo}>
                     <div className={styles.authorPersonalInfo}>
-                      <a href="/" className={styles.authorName}>
+                      <a href={`/@${author.username}`} className={styles.authorName}>
                         {`${author.first_name} ${author.last_name}` || author.username}
                       </a>
                       <span className={styles.authorUsername}>
@@ -157,7 +175,7 @@ function Story() {
                     <div className={styles.postTimeInfo}>
                       {/* {others.createdAt !== others.updatedAt ? `Updated at ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`
                         : `Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`} */}
-                      {`Posted on ${getDateMonthYear(post.createdAt)} - ${calculateMinsToRead(post.contents)} read`}
+                      {`Posted on ${getDateMonthYear(others.createdAt)} - ${calculateMinsToRead(post.contents)} read`}
                     </div>
                     <div className={styles.postReputationInfo}>
                       <ViewCount token={token} storyId={slug} />

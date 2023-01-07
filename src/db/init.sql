@@ -487,9 +487,10 @@ COPY public.users_roles ("createdAt", "updatedAt", "roleId", username) FROM stdi
 -- Name: collections_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.collections_id_seq', (SELECT MAX(id) FROM public.collections)+1, false);
 
-SELECT pg_catalog.setval('public.comments_id_seq', (SELECT MAX(id) FROM public.comments)+1, false);
+SELECT pg_catalog.setval('public.collections_id_seq', (SELECT MAX(id) FROM public.collections) + 1, false);
+
+SELECT pg_catalog.setval('public.comments_id_seq', (SELECT MAX(id) FROM public.comments) + 1, false);
 
 --
 -- Name: collections collections_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres

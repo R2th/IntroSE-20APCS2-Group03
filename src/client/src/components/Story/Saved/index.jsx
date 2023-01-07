@@ -38,21 +38,40 @@ function SavedList() {
 
   const handleClose = async () => {
     setIsLoading(true);
-    const collectionId = saveList.filter((collection) => collection.isChecked === true)[0].id;
-
-    const postRes = await fetch(fullPathAPI(`/collection/${collectionId}/${slug}/add`), {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const collections = saveList.filter((collection) => collection.isChecked === true);
+    const getRes = await fetch(fullPathAPI(`/collection/story/${slug}`), {
+      headers: { Authorization: `Bearer ${token}` },
     });
-
-    const { message } = await postRes.json();
-
-    if (message === 'successful') {
-      setIsOpen(false);
-      setIsLoading(false);
+    const res = await getRes.json();
+    if (Array.isArray(res.data) && res.data.length && Array.isArray(collections) && collections.length) {
+      const savedId = res.data[0].id;
+      const collectionId = collections[0].id;
+      if (savedId === collectionId) {
+        setIsOpen(false);
+        setIsLoading(false);
+        return;
+      }
     }
+    if (Array.isArray(res.data) && res.data.length) {
+      const savedId = res.data[0].id;
+      await fetch(fullPathAPI(`/collection/${savedId}/${slug}/remove`), {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+    if (Array.isArray(collections) && collections.length) {
+      const collectionId = collections[0].id;
+      await fetch(fullPathAPI(`/collection/${collectionId}/${slug}/add`), {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+    setIsOpen(false);
+    setIsLoading(false);
 
     // alert(saveList.filter((item) => item.isChecked === true)[0].name);
   };
@@ -71,12 +90,21 @@ function SavedList() {
     const getRes = await fetch(fullPathAPI('/collection'), {
       headers: { Authorization: `Bearer ${token}` },
     });
-
+    const getRes2 = await fetch(fullPathAPI(`/collection/story/${slug}`), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     const { data } = await getRes.json();
-
-    setSaveList(data.map((collection) => ({
-      name: collection.name, isPrivate: true, isChecked: false, id: collection.id,
-    })));
+    const res = await getRes2.json();
+    if (Array.isArray(res.data) && res.data.length) {
+      const saved = res.data[0].name;
+      setSaveList(data.map((collection) => ({
+        name: collection.name, isPrivate: true, isChecked: (saved === collection.name), id: collection.id,
+      })));
+    } else {
+      setSaveList(data.map((collection) => ({
+        name: collection.name, isPrivate: true, isChecked: false, id: collection.id,
+      })));
+    }
   };
 
   useEffect(() => {
@@ -267,11 +295,9 @@ function NewCollection({ fetchSaveList }) {
 
 function Item({ collection, setSaveList }) {
   const handleChooseSaveList = () => {
-    if (collection.isChecked) return;
-
     setSaveList((prev) => prev.map((item) => {
       if (item.name === collection.name && item.isPrivate === collection.isPrivate) {
-        return { ...item, isChecked: true };
+        return { ...item, isChecked: !item.isChecked };
       }
       return { ...item, isChecked: false };
     }));
