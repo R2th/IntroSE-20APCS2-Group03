@@ -1,16 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Card from 'components/Card';
 import Spinner from 'components/Spinner';
 
-import useFetch from 'hooks/useFetch';
-
-import { INIT_DATA_CONTENT } from 'utils/const';
-
+import { fullPathAPI } from 'utils/helpers';
 import styles from './styles.module.scss';
 
 function Trending() {
-  const { data, reloadFetch } = useFetch('/story/newest/10', INIT_DATA_CONTENT);
+  const [data, setData] = useState([]);
+
+  const fetchApi = async () => {
+    const getRes = await fetch(fullPathAPI(`/trending/${data.length + 10}`));
+    const res = await getRes.json();
+
+    setData(res.data);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,11 +30,13 @@ function Trending() {
       );
       const windowBottom = Math.round(windowHeight + window.pageYOffset);
       if (windowBottom >= docHeight) {
-        reloadFetch();
+        fetchApi();
       }
     };
 
     window.addEventListener('scroll', handleScroll);
+
+    fetchApi();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
