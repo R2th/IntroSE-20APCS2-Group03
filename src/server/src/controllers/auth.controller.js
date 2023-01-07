@@ -57,19 +57,19 @@ exports.login = async (req, res) => {
   })
       .then(async (user) => {
         if (!user) {
-          return res.status(401).send({message: 'Login fail'});
+          return res.status(401).send({message: 'Username or password is incorrect.'});
         }
         if (req.body.password == undefined) {
           return res.status(401).send({
             token: null,
-            message: 'Login fail',
+            message: 'Missing password.',
           });
         }
         const isMatched = await bcrypt.compare(req.body.password, user.password);
         if (!isMatched) {
           return res.status(401).send({
             token: null,
-            message: 'Login fail',
+            message: 'Username or password is incorrect',
           });
         }
 
