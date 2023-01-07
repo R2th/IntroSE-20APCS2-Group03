@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import IconBtn from './IconBtn';
 import { useComment } from '../../contexts/CommentContext';
-import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 import './style.css';
 
@@ -11,33 +10,34 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 });
 
 function Comment({ comment }) {
-  const [areChildrenHidden, setAreChildrenHidden] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [likedByMe, setLikedByMe] = useState(() => {
+    const rate = Math.random();
+    if (rate < 0.8) { return false; }
+    return true;
+  });
+  const [likeCount, setLikeCount] = useState(Math.floor(Math.random() * (10 - 0 + 1)) + 0);
   const {
-    story,
-    getReplies,
+    slug,
+    username,
     createLocalComment,
     updateLocalComment,
     deleteLocalComment,
-    toggleLocalCommentLike,
     getIdForNewComment,
   } = useComment();
-
-  const childComments = getReplies(comment.comment_id);
-
-  const likedByMe = comment.likedBy.includes(story.username);
 
   // call api to reply comment
   const onCommentReply = (message) => {
     const newComment = {
-      comment_id: getIdForNewComment(),
-      username: story.username,
-      story_id: story.slug,
-      parent_id: comment.comment_id,
+      id: getIdForNewComment(),
+      username,
+      story_id: slug,
+      parent_id: comment.id,
       content: message,
-      likedBy: [],
+      replies: [],
       createdAt: new Date(),
+      updatedAt: new Date(),
     };
     setIsReplying(false);
     createLocalComment(newComment);
@@ -46,17 +46,23 @@ function Comment({ comment }) {
   // call api to update comment
   const onCommentUpdate = (message) => {
     setIsEditing(false);
-    updateLocalComment(comment.comment_id, message);
+    updateLocalComment(comment.id, message);
   };
 
   // call api to delete comment
   const onCommentDelete = () => {
-    deleteLocalComment(comment.comment_id);
+    deleteLocalComment(comment.id);
   };
 
   // call api to toogle comment like
   const onToggleCommentLike = () => {
-    toggleLocalCommentLike(comment.comment_id, !likedByMe, story.username);
+    // toggleLocalCommentLike(comment.comment_id, !likedByMe, username);
+    setLikedByMe((prevLikedByMe) => !prevLikedByMe);
+    if (likedByMe) {
+      setLikeCount((prevLikeCount) => prevLikeCount - 1);
+    } else {
+      setLikeCount((prevLikeCount) => prevLikeCount + 1);
+    }
   };
 
   return (
@@ -65,7 +71,8 @@ function Comment({ comment }) {
         <div className="header">
           <span className="name">{comment.username}</span>
           <span className="date">
-            {dateFormatter.format(Date.parse(comment.createdAt))}
+            {comment.updatedAt < comment.createdAt ? 'Edited at ' : ''}
+            {dateFormatter.format(Date.parse(comment.updatedAt))}
           </span>
         </div>
         {isEditing ? (
@@ -82,7 +89,7 @@ function Comment({ comment }) {
             Icon={likedByMe ? 'icon-upvote_fill' : 'icon-upvote'}
             ariaLabel={likedByMe ? 'Unlike' : 'Like'}
           >
-            {comment.likedBy.length}
+            {likeCount}
           </IconBtn>
           <IconBtn
             onClick={() => setIsReplying((prev) => !prev)}
@@ -90,7 +97,7 @@ function Comment({ comment }) {
             Icon="icon-comment"
             ariaLabel={isReplying ? 'Cancel Reply' : 'Reply'}
           />
-          {comment.username === story.username && (
+          {comment.username === username && (
             <>
               <IconBtn
                 onClick={() => setIsEditing((prev) => !prev)}
@@ -114,32 +121,6 @@ function Comment({ comment }) {
             onSubmit={onCommentReply}
           />
         </div>
-      )}
-      {childComments?.length > 0 && (
-        <>
-          <div
-            className={`nested-comments-stack ${
-              areChildrenHidden ? 'hide' : ''
-            }`}
-          >
-            <button
-              type="button"
-              className="collapse-line"
-              aria-label="Hide Replies"
-              onClick={() => setAreChildrenHidden(true)}
-            />
-            <div className="nested-comments">
-              <CommentList comments={childComments} />
-            </div>
-          </div>
-          <button
-            type="button"
-            className={`btn mt-1 ${!areChildrenHidden ? 'hide' : ''}`}
-            onClick={() => setAreChildrenHidden(false)}
-          >
-            Show Replies
-          </button>
-        </>
       )}
     </>
   );

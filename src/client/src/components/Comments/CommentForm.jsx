@@ -4,10 +4,6 @@ import './style.css';
 function CommentForm({ onSubmit, initialValue = '' }) {
   const [message, setMessage] = useState(initialValue);
 
-  function messageChangeHandler(event) {
-    setMessage(event.target.value);
-  }
-
   function submitHandler(event) {
     event.preventDefault();
     onSubmit(message);
@@ -19,7 +15,7 @@ function CommentForm({ onSubmit, initialValue = '' }) {
       <div className="comment-form-row">
         <textarea
           value={message}
-          onChange={messageChangeHandler}
+          onChange={(e) => setMessage(e.target.value)}
           className="message-input"
         />
         <button className="btn" type="submit">

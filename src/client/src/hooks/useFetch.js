@@ -67,6 +67,7 @@ const useFetch = (
 
   return {
     data,
+    setData,
     error,
     reloadFetch,
   };

@@ -1,8 +1,56 @@
 import React, {
-  useContext, useMemo, useState,
+  useContext, useMemo,
 } from 'react';
-
 import '../components/Comments/style.css';
+import useFetch from 'hooks/useFetch';
+import { useParams } from 'react-router-dom';
+import { parseJwt } from 'utils/token';
+import { AuthContext } from './Auth/authContext';
+
+function addChildOneRoot(root, child) {
+  if (!root) { return child; }
+
+  let replies;
+
+  if (root.id === child.parent_id) {
+    replies = [child, ...root.replies];
+  } else {
+    replies = root.replies.map((successor) => addChildOneRoot(successor, child));
+  }
+
+  return { ...root, replies };
+}
+
+function addChildManyRoot(root, child) {
+  if (root.length <= 0 || child.parent_id === null) {
+    return [child, ...root];
+  }
+  return root.map((successor) => addChildOneRoot(successor, child));
+}
+
+function deleteChildManyRoot(root, childId) {
+  if (root.length <= 0) { return []; }
+
+  return root.filter((successor) => successor.id !== childId).map((descendant) => ({ ...descendant, replies: deleteChildManyRoot(descendant.replies, childId) }));
+}
+
+function updateChildOneRoot(root, childId, childMessage) {
+  if (!root) {
+    return root;
+  }
+  if (root.id === childId) {
+    return { ...root, content: childMessage };
+  }
+
+  return { ...root, replies: root.replies.map((successor) => updateChildOneRoot(successor, childId, childMessage)) };
+}
+
+function updateChildManyRoot(root, childId, childMessage) {
+  if (root.length <= 0) {
+    return [...root];
+  }
+  return root.map((successor) => updateChildOneRoot(successor, childId, childMessage));
+}
 
 const Context = React.createContext();
 
@@ -10,151 +58,64 @@ export function useComment() {
   return useContext(Context);
 }
 
-// call api to get slug
-const slug = 123;
-
-// call api to get username
-const username = 111;
-
-// call api to get comment from the given slug
-const commentData = [
-  {
-    comment_id: 1,
-    username: 111,
-    story_id: 123,
-    parent_id: null,
-    content: 'Breaking Bad is the GOAT of TV shows',
-    likedBy: [333, 444],
-    createdAt: new Date('03 Jan 2022 05:30:00 GMT+7'),
-  },
-  {
-    comment_id: 2,
-    username: 222,
-    story_id: 123,
-    parent_id: null,
-    content: 'Number 1 is definitely Wednesday',
-    likedBy: [],
-    createdAt: new Date('02 Jan 2022 07:30:15 GMT+7'),
-  },
-  {
-    comment_id: 3,
-    username: 333,
-    story_id: 123,
-    parent_id: 1,
-    content: 'Yeah bro, i am down with you',
-    likedBy: [111],
-    createdAt: new Date('04 Jan 2022 08:15:30 GMT+7'),
-  },
-  {
-    comment_id: 4,
-    username: 444,
-    story_id: 123,
-    parent_id: 1,
-    content: 'That is right, if Breaking Bad was top 2, no TV show would be top 1',
-    likedBy: [111],
-    createdAt: new Date('05 Jan 2022 17:00:45 GMT+7'),
-  },
-  {
-    comment_id: 5,
-    username: 555,
-    story_id: 123,
-    parent_id: 2,
-    content: 'Are you crazy, you motherfucker. That movie is shitty as fuck',
-    likedBy: [],
-    createdAt: new Date('03 Jan 2022 23:59:59 GMT+7'),
-  },
-  {
-    comment_id: 6,
-    username: 111,
-    story_id: 123,
-    parent_id: 3,
-    content: 'Thank you',
-    likedBy: [333],
-    createdAt: new Date('06 Jan 2022 11:30:18 GMT+7'),
-  },
-];
-
 export function CommentProvider({ children }) {
-  const [comments, setComments] = useState(commentData);
+  const { slug } = useParams();
 
-  const commentsByParentId = useMemo(() => {
-    const group = {};
-    comments.forEach((comment) => {
-      if (comment.parent_id === null) {
-        group[-1] ||= [];
-        group[-1].push(comment);
-      } else {
-        group[comment.parent_id] ||= [];
-        group[comment.parent_id].push(comment);
-      }
-    });
-    return group;
-  }, [comments]);
+  const { data, setData } = useFetch(`comments/${slug}`, [], (prev, _data) => _data.data.comment_trees);
 
-  // useEffect(() => {
-  //   if (commentData != null && commentData.length > 0) {
-  //     setComments(commentData);
-  //   }
-  // }, [commentData]);
+  const { token } = useContext(AuthContext);
+  const { username } = parseJwt(token);
 
-  function getReplies(parentId) {
-    return commentsByParentId[parentId];
-  }
+  const comments = data;
+
+  const setComments = setData;
 
   function createLocalComment(newComment) {
-    setComments((prevComments) => ([newComment, ...prevComments]));
+    setComments((prevComments) => addChildManyRoot(prevComments, newComment));
   }
 
   function updateLocalComment(commentId, message) {
-    setComments((prevComments) => prevComments.map((comment) => {
-      if (comment.comment_id === commentId) {
-        return { ...comment, content: message };
-      }
-      return comment;
-    }));
+    setComments((prevComments) => updateChildManyRoot(prevComments, commentId, message));
   }
 
   function deleteLocalComment(commentId) {
-    setComments((prevComments) => prevComments.filter((comment) => comment.comment_id !== commentId));
+    setComments((prevComments) => deleteChildManyRoot(prevComments, commentId));
   }
 
   function getIdForNewComment() {
-    const currentId = commentData.map((comment) => comment.comment_id);
-    const newId = Math.max(...currentId) + 1;
-    return newId;
+    const min = 100000;
+    const max = 999999999;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  function toggleLocalCommentLike(commentId, addLike, currentUserId) {
-    setComments((prevComments) => prevComments.map((comment) => {
-      if (commentId === comment.comment_id) {
-        if (addLike) {
-          return {
-            ...comment,
-            likedBy: [...comment.likedBy, currentUserId],
-          };
-        }
-        return {
-          ...comment,
-          likedBy: comment.likedBy.filter((userId) => userId !== currentUserId),
-        };
-      }
-      return comment;
-    }));
-  }
+  // function toggleLocalCommentLike(commentId, addLike, currentUserId) {
+  //   setComments((prevComments) => prevComments.map((comment) => {
+  //     if (commentId === comment.comment_id) {
+  //       if (addLike) {
+  //         return {
+  //           ...comment,
+  //           likedBy: [...comment.likedBy, currentUserId],
+  //         };
+  //       }
+  //       return {
+  //         ...comment,
+  //         likedBy: comment.likedBy.filter((userId) => userId !== currentUserId),
+  //       };
+  //     }
+  //     return comment;
+  //   }));
+  // }
 
-  const value = useMemo(() => {
-    console.log('okie');
-    return {
-      story: { slug, username },
-      rootComments: commentsByParentId[-1],
-      getReplies,
-      createLocalComment,
-      updateLocalComment,
-      deleteLocalComment,
-      toggleLocalCommentLike,
-      getIdForNewComment,
-    };
-  }, [comments]);
+  const value = useMemo(() => ({
+    slug,
+    username,
+    comments,
+    createLocalComment,
+    updateLocalComment,
+    deleteLocalComment,
+    // toggleLocalCommentLike,
+    getIdForNewComment,
+  }), [comments]);
 
   return (
     <Context.Provider value={value}>
