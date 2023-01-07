@@ -4,22 +4,25 @@ import Spinner from 'components/Spinner';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fullPathAPI, fullPathImage, thumbnailUrl } from 'utils/helpers';
 
+import CommentSystem from 'components/Comments/CommentSystem';
+import SavedList from 'components/Story/Saved';
 import Vote from 'components/Story/Vote';
 import { AuthContext } from 'contexts/Auth/authContext';
+import { CommentProvider } from 'contexts/CommentContext';
 import { useState } from 'react';
 import { calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
-import SavedList from 'components/Story/Saved';
+import Toast from 'components/Toast/Toast';
+import TOAST_PROPERTIES from 'components/Toast/toastProperties';
 import useFetch from '../../hooks/useFetch';
-
 import styles from './styles.module.scss';
 
 function Story() {
   const { slug } = useParams();
-  const navigate = useNavigate();
-
-  const [author, setAuthor] = useState(null);
-
   const { token } = React.useContext(AuthContext);
+  const navigate = useNavigate();
+  const [author, setAuthor] = useState(null);
+  const [toastProps, setToastProps] = useState([]);
+  const toastAutoDelete = true;
 
   const contentPreview = useFetch(`story/${slug}/contents/0/200`, { contents: '' }, (prev, data) => data.data, {
     Authorization: `Bearer ${token}`,
@@ -59,6 +62,19 @@ function Story() {
     html.style.setProperty('background-size', '120% 2000px, 100% auto');
   }, [others]);
 
+  const showToast = (type) => {
+    const toastProperties = TOAST_PROPERTIES.find((toast) => toast.title === type);
+    setToastProps([...toastProps, toastProperties]);
+  };
+
+  const copyTextToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Success');
+    }, () => {
+      showToast('Error');
+    });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.articlesAndSidebar}>
@@ -78,7 +94,11 @@ function Story() {
                 <div className={styles.smallerLeftSidePanel}>
                   <Vote token={token} storyId={slug} />
                   <SavedList />
-                  <button type="button" className={styles.shareButton}>
+                  <button
+                    type="button"
+                    className={styles.shareButton}
+                    onClick={() => { copyTextToClipboard(window.location.href); }}
+                  >
                     <i className="icon icon-share_fill" />
                   </button>
                 </div>
@@ -152,17 +172,29 @@ function Story() {
                     </div>
                   </div>
                 </div>
-                <h1>{post.title}</h1>
+                <div className={styles.articleTitle}>
+                  <h1>{others.title}</h1>
+                </div>
                 <zero-md>
                   <script type="text/markdown">{post.contents}</script>
                 </zero-md>
+                <CommentProvider>
+                  <CommentSystem />
+                </CommentProvider>
               </div>
             </>
           ) : (
             <Spinner className={styles.spinnerFull} />
           )}
+
         </div>
       </div>
+      <Toast
+        toastList={toastProps}
+        position="bottom-left"
+        autoDelete={toastAutoDelete}
+        autoDeleteTime={3000}
+      />
       {/* <Sidebar /> */}
     </div>
   );
