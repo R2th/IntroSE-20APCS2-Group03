@@ -44,6 +44,12 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  if (req.body.username == undefined) {
+    return res.status(401).send({
+      message: 'Login fail',
+      token: null,
+    });
+  }
   User.findOne({
     where: {
       username: req.body.username,
@@ -51,14 +57,19 @@ exports.login = async (req, res) => {
   })
       .then(async (user) => {
         if (!user) {
-          return res.status(404).send({message: 'User not found.'});
+          return res.status(401).send({message: 'Username or password is incorrect.'});
         }
-
+        if (req.body.password == undefined) {
+          return res.status(401).send({
+            token: null,
+            message: 'Missing password.',
+          });
+        }
         const isMatched = await bcrypt.compare(req.body.password, user.password);
         if (!isMatched) {
           return res.status(401).send({
             token: null,
-            message: 'Wrong password!',
+            message: 'Username or password is incorrect',
           });
         }
 
@@ -74,13 +85,16 @@ exports.login = async (req, res) => {
         });
 
         res.status(200).send({
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          roles: userRoles,
-          token,
+          message: 'successful',
+          data: {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            roles: userRoles,
+            token,
+          },
         });
       })
       .catch((err) => {
