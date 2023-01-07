@@ -9,6 +9,7 @@ import useFetch from 'hooks/useFetch';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { parseJwt } from 'utils/token';
 import EditProfile from 'components/Profile/EditProfile';
+import { fullPathAPI } from 'utils/helpers';
 import styles from './styles.module.scss';
 
 const INIT_USER_INFO = {
@@ -19,6 +20,8 @@ function Profile() {
   const { userId } = useParams();
   const { token } = useContext(AuthContext);
 
+  const follow = useFetch(`/user/${userId}/num_followers`, 0, (prev, _data) => _data.data);
+  const following = useFetch(`/user/${userId}/num_followings`, 0, (prev, _data) => _data.data);
   const { username } = parseJwt(token);
 
   const { data } = useFetch(`/user/${userId}`, INIT_USER_INFO, (prev, _data) => _data.data);
@@ -41,15 +44,11 @@ function Profile() {
                   </a>
                 </div>
               </div>
-              {
-                data.username
-                && (
+              {data.username && (
                 <>
                   <div className={styles.items}>
                     <h1 className={styles.name}>
-                      <a href={`@/${data.username}`}>
-                        {`${data.first_name} ${data.last_name}` || data.username}
-                      </a>
+                      <a href={`@/${data.username}`}>{`${data.first_name} ${data.last_name}` || data.username}</a>
                     </h1>
                     <i className="icon icon-chat" />
                     <div>
@@ -67,23 +66,15 @@ function Profile() {
                     </p>
                   </div>
                 </>
-                )
-}
-              {username !== userId ? (
-                <button className={styles.subscribeBtn} type="button">
-                  <div className={styles.dump}>
-                    <span>Follow</span>
-                  </div>
-                </button>
-              )
-                : <EditProfile />}
+              )}
+              {username !== userId ? <Following follow={follow} /> : <EditProfile />}
               <div className={styles.stats}>
                 <div>
-                  <div className={styles.value}>112323</div>
+                  <div className={styles.value}>{follow && follow.data}</div>
                   <div className={styles.text}>Followers</div>
                 </div>
                 <div>
-                  <div className={styles.value}>123</div>
+                  <div className={styles.value}>{following && following.data}</div>
                   <div className={styles.text}>Following</div>
                 </div>
                 <div>
@@ -102,27 +93,19 @@ function Profile() {
                 <ul>
                   <li className={styles.item}>
                     <i className="icon icon-home" />
-                    <div className={styles.content}>
-                      Lives in Ho Chi Minh City
-                    </div>
+                    <div className={styles.content}>Lives in Ho Chi Minh City</div>
                   </li>
                   <li className={styles.item}>
                     <i className="icon icon-user_note" />
-                    <div className={styles.content}>
-                      Works at BytesGo Inc
-                    </div>
+                    <div className={styles.content}>Works at BytesGo Inc</div>
                   </li>
                   <li className={styles.item}>
                     <i className="icon icon-topic_reading" />
-                    <div className={styles.content}>
-                      Dump student in University of Science, HCMC
-                    </div>
+                    <div className={styles.content}>Dump student in University of Science, HCMC</div>
                   </li>
                   <li className={styles.item}>
                     <i className="icon icon-location" />
-                    <div className={styles.content}>
-                      From Bien Hoa, Dong Nai
-                    </div>
+                    <div className={styles.content}>From Bien Hoa, Dong Nai</div>
                   </li>
                 </ul>
               </div>
@@ -174,6 +157,72 @@ function Profile() {
         <div className={classNames(styles.right, styles.profileBg)} />
       </div>
     </div>
+  );
+}
+
+function Following({ follow }) {
+  const { token } = useContext(AuthContext);
+  const { userId } = useParams();
+  const { data, setData } = useFetch(`/user/${userId}/followed`, false, (prev, _data) => _data.data, {
+    Authorization: `Bearer ${token}`,
+  });
+
+  const onClickFollowing = async () => {
+    const postRes = await fetch(fullPathAPI('/user/follow'), {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        followingUsername: userId,
+      }),
+    });
+
+    const status = await postRes.json();
+
+    if (status.message === 'successful') {
+      follow.setData((prev) => prev + 1);
+      setData(true);
+    }
+  };
+
+  const onClickUnFollowing = async () => {
+    const postRes = await fetch(fullPathAPI('/user/follow'), {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        followingUsername: userId,
+      }),
+    });
+
+    const status = await postRes.json();
+
+    if (status.message === 'successful') {
+      follow.setData((prev) => prev - 1);
+      setData(false);
+    }
+  };
+
+  if (data) {
+    return (
+
+      <button className={styles.subscribeBtn} type="button" onClick={onClickUnFollowing}>
+        <div className={styles.dump}>
+          <span>Unfollow</span>
+        </div>
+      </button>
+    );
+  }
+  return (
+    <button className={styles.subscribeBtn} type="button" onClick={onClickFollowing}>
+      <div className={styles.dump}>
+        <span>Follow</span>
+      </div>
+    </button>
   );
 }
 

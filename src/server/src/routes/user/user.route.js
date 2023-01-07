@@ -64,7 +64,6 @@ router.post('/user/follow', verifyToken, userController.followUser);
 // body: "followingUsername": ...
 router.delete('/user/follow', verifyToken, userController.unfollowUser);
 
-// check if current user is following "followingUsername".
-router.get('/user/:followingUsername/followed', userController.hasFollowed);
+router.get('/user/:followingUsername/followed', verifyToken, userController.hasFollowed);
 
 module.exports = router;
