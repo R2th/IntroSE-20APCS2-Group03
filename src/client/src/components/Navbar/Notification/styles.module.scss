@@ -44,7 +44,7 @@
     }
 
     .item {
-      padding: 8px 24px;
+      padding: 8px 0px;
       //color: rgba(117, 117, 117, 1);
       color: #1b1b1b;
       line-height: 20px;
@@ -57,6 +57,7 @@
       }
 
       .name {
+        padding: 0 24px;
         p {
           word-break: break-all;
           -webkit-box-orient: vertical;
@@ -75,6 +76,8 @@
         overflow-y: scroll;
         overflow-x: hidden;
 
+        margin-block-end: 0;
+
         &::-webkit-scrollbar {
           width: 4px;
         }
@@ -88,6 +91,7 @@
           max-height: 100px;
           align-items: center;
           width: 100%;
+          padding-left: 24px;
 
           &:hover {
             cursor: pointer;
@@ -105,6 +109,8 @@
               display: -webkit-box;
               -webkit-line-clamp: 2;
               -webkit-box-orient: vertical;
+              margin-block-start: 0;
+              margin-block-end: 0.5rem;
               overflow: hidden;
             }
 
@@ -112,6 +118,7 @@
               margin-bottom: 20px;
               font-size: 16px;
               display: flex;
+              margin: 0;
               align-items: flex-end;
             }
           }
@@ -119,12 +126,13 @@
           .ava_type {
             top: 20px;
             font-size: 25px;
-
+            padding-left: 0;
             .types {
               position: relative;
               width: auto;
               left: 25px;
               bottom: 35px;
+              padding-bottom: 0;
               //transform: translate(50%, 50%);
             }
           }

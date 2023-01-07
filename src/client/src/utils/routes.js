@@ -10,7 +10,7 @@ import Trending from 'pages/Trending';
 import ForgotPassword from 'components/ForgotPassword';
 import SendMessage from 'components/FP_SendMessage';
 import SetNewPassword from 'components/SetNewPassword';
-// import ProtectedRoute from 'components/ProtectedRoute';
+
 import Editor from 'components/Editor';
 import Payment from 'components/Payment';
 import UserStories from 'components/Profile/Stories';
