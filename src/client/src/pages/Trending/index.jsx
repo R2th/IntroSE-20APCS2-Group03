@@ -8,35 +8,38 @@ import styles from './styles.module.scss';
 
 function Trending() {
   const [data, setData] = useState([]);
+  const [count, setCount] = useState(0);
 
   const fetchApi = async () => {
-    const getRes = await fetch(fullPathAPI(`/trending/${data.length + 10}`));
+    const getRes = await fetch(fullPathAPI(`story/trending/${count + 10}`));
     const res = await getRes.json();
 
     setData(res.data);
   };
 
+  const handleScroll = async () => {
+    const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const { body } = document;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight,
+    );
+    const windowBottom = Math.round(windowHeight + window.pageYOffset);
+    if (windowBottom >= docHeight) {
+      setCount((prev) => prev + 10);
+    }
+  };
+
   useEffect(() => {
-    const handleScroll = () => {
-      const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
-      const { body } = document;
-      const html = document.documentElement;
-      const docHeight = Math.max(
-        body.scrollHeight,
-        body.offsetHeight,
-        html.clientHeight,
-        html.scrollHeight,
-        html.offsetHeight,
-      );
-      const windowBottom = Math.round(windowHeight + window.pageYOffset);
-      if (windowBottom >= docHeight) {
-        fetchApi();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
     fetchApi();
+  }, [count]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
