@@ -35,6 +35,7 @@ const getCollections = async (req, res) => {
 const createCollection = async (req, res) => {
   try {
     const name = req.body.name;
+    console.log(req.body);
     const username = req.username;
     const collection = await Collection.create({
       name,
@@ -85,8 +86,7 @@ const addStoryToCollection = async (req, res) => {
     const collectionId = req.params.collectionId;
     const username = req.username;
     const storyId = req.params.storyId;
-    console.log(collectionId);
-    console.log(storyId);
+
     const collection = await Collection.findOne({
       where: {
         id: collectionId,

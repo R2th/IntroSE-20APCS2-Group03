@@ -35,6 +35,9 @@ function Story() {
   const others = othersData.data;
 
   React.useEffect(() => {
+    if (!others.author_username) {
+      return;
+    }
     // eslint-disable-next-line
     const { author_username } = others;
 

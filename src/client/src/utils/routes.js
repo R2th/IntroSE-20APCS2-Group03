@@ -14,9 +14,10 @@ import SetNewPassword from 'components/SetNewPassword';
 import Editor from 'components/Editor';
 import Payment from 'components/Payment';
 import UserStories from 'components/Profile/Stories';
-import SaveList from 'components/Profile/Series';
 import UserComments from 'components/Profile/Comments';
 import Settings from 'components/Profile/Settings';
+import ProtectedRoute from 'components/ProtectedRoute';
+import SaveList from 'components/Profile/SaveList';
 
 export const AUTH_ROUTES = [
   {
@@ -70,12 +71,21 @@ export const ROUTES = [
     children: [
       {
         path: 'stories',
-        element: <UserStories/>,
+        element: (
+        <ProtectedRoute>
+          <UserStories/>
+        </ProtectedRoute>
+        ),
         index:true
       },
       {
         path: 'saved',
-        element: <SaveList />,
+        element: 
+        (
+          <ProtectedRoute>
+            <SaveList/>
+          </ProtectedRoute>
+        )
       },
       {
         path: 'settings',
