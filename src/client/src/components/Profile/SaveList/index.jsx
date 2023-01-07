@@ -3,7 +3,7 @@ import useFetch from 'hooks/useFetch';
 import React, { useContext, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
-import Logo from 'assets/svg/logo.svg';
+import Logo from 'assets/svg/cowork.svg';
 
 import styles from './styles.module.scss';
 
@@ -63,7 +63,7 @@ function ReviewImgCollection({ stories }) {
             display: 'block',
           }}
           >
-            {story.media_list.length > 0 ? <img src={story.media_list[0]} alt="thumbnail" /> : <img alt="default" src={Logo} style={{ background: 'black' }} />}
+            {story.media_list.length > 0 ? <img src={story.media_list[0]} alt="thumbnail" /> : <img alt="default" src={Logo} style={{ backgroundColor: 'transparent' }} />}
           </div>
         </div>
       ))}
