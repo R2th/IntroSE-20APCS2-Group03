@@ -12,6 +12,6 @@ router.patch('/collection/:collectionId/:storyId/add/', verifyToken, collectionC
 router.patch('/collection/:collectionId/:storyId/remove/',
     verifyToken,
     collectionController.removeStoryToCollection); // ???
-
+router.get('/collection/story/:storyId/', verifyToken, collectionController.getCollectionsContainStory);
 
 module.exports = router;
