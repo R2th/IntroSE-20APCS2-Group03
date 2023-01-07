@@ -49,7 +49,7 @@ function Profile() {
                 <>
                   <div className={styles.items}>
                     <h1 className={styles.name}>
-                      <a href={`@/${data.username}`}>{`${data.first_name} ${data.last_name}` || data.username}</a>
+                      <a href={`/@${data.username}`}>{`${data.first_name} ${data.last_name}` || data.username}</a>
                     </h1>
                     <i className="icon icon-chat" />
                     <div>

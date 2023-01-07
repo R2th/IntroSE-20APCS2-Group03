@@ -95,7 +95,7 @@ function Story() {
     <div className={styles.container}>
       <div className={styles.articlesAndSidebar}>
         <div className={styles.postCenter}>
-          {othersData && post.contents ? (
+          {othersData && post && post.contents ? (
             <>
               <div className={styles.leftSidePanel}>
                 <div
