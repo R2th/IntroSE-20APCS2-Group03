@@ -123,7 +123,7 @@ function Story() {
                 <div className={styles.header}>
                   {author && (
                   <div className={styles.authorAvatar}>
-                    <a href={`/${author.username}`} className={styles.avatarAuthorProfileLink}>
+                    <a href={`/@${author.username}`} className={styles.avatarAuthorProfileLink}>
                       {fullPathImage(author.avatar) ? (
                         <img src={fullPathImage(author.avatar)} alt="" className={styles.avatarAuthorImage} />
                       ) : (
@@ -135,7 +135,7 @@ function Story() {
                   {author && (
                   <div className={styles.authorInfo}>
                     <div className={styles.authorPersonalInfo}>
-                      <a href={`/${author.username}`} className={styles.authorName}>
+                      <a href={`/@${author.username}`} className={styles.authorName}>
                         {`${author.first_name} ${author.last_name}` || author.username}
                       </a>
                       <span className={styles.authorUsername}>

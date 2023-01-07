@@ -95,7 +95,7 @@ function Search() {
                   // navigate();
                 }}
                 aria-hidden
-                href={`/${user.username}`}
+                href={`/@${user.username}`}
               >
                 <img src={fullPathImage({ data: user })} alt={user.username} />
                 <div>
