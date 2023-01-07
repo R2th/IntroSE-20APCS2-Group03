@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: true,
         },
         author_username: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           allowNull: false,
         },
         title: {

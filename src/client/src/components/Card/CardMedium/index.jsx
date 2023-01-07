@@ -28,13 +28,14 @@ function MediumCard({ content }) {
     >
       <div className={classNames('thumbnail', 'medium', isHover ? 'hover' : '')}>
         <img alt="thumbnail" src={thumbnailUrl(content)} />
+        <div className="description">
+          <h3 className={classNames('title', isHover ? 'hover' : '')}>{content.title}</h3>
+          <p className="contents_short">{content.contents_short}</p>
+        </div>
       </div>
       {content && (
         <div className={classNames('card-medium', isHover ? 'hover' : '')}>
-          <div className="description">
-            <h3 className={classNames('title', isHover ? 'hover' : '')}>{content.title}</h3>
-            <p className="contents_short">{content.contents_short}</p>
-          </div>
+
           <div className="footer">
             <img alt="avatar" className="avatar" src={fullPathImage(content.user)} />
             <div className="title">

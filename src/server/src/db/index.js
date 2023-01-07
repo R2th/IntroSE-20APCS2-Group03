@@ -61,6 +61,20 @@ db.comment.belongsTo(db.user, {
   onDelete: 'cascade',
 });
 
+db.user.belongsToMany(db.user, {
+  as: 'Follower',
+  through: 'users_users',
+  foreignKey: 'following_username',
+  otherKey: 'follower_username',
+});
+
+db.user.belongsToMany(db.user, {
+  as: 'Following',
+  through: 'users_users',
+  foreignKey: 'follower_username',
+  otherKey: 'following_username',
+});
+
 db.comment.belongsTo(db.story, {
   targetKey: 'id',
   foreignKey: 'story_id',

@@ -23,9 +23,12 @@ export async function SignupUser(credentials) {
       username: credentials.username,
       email: credentials.email,
       password: credentials.password,
-      day: credentials.day,
-      month: credentials.month,
-      year: credentials.year,
+      first_name: credentials.first_name,
+      last_name: credentials.last_name,
+      bio: credentials.bio,
+      // day: credentials.day,
+      // month: credentials.month,
+      // year: credentials.year,
     }),
   }).then((data) => data.json());
 }

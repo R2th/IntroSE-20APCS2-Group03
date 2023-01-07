@@ -7,46 +7,43 @@ const Story = db.story;
 const isPremium = async (req, res, next) => {
   try {
     const header = req.header('Authorization');
-    if (!header) {
-    // WHAT THE FUCK YOU DOING IN HERE ???
-    // use res.redirect() instead
-    // res.status(403).send({
-    //   message: 'No token provided!',
-    // });
-    }
-    const token = header.replace('Bearer ', '');
 
-    jwt.verify(token, 'bytesgotoken', async (err, decoded) => {
-      if (err) {
-      // JUST LIKE IN ABOVE PROBLEM
-      //   res.status(401).send({
-      //     message: 'Unauthorized!',
-      //   });
-      }
-      let isPremium = false;
-      if (decoded) {
-        const user = await User.findByPk(decoded.username, {
-          attributes: ['isPremium'],
-        });
-        if (!user) {
-          throw new Error();
+    let isPremium = false;
+
+    if (header) {
+      const token = header.replace('Bearer ', '');
+
+      jwt.verify(token, 'bytesgotoken', async (err, decoded) => {
+        if (err) {
+        // JUST LIKE IN ABOVE PROBLEM
+        //   res.status(401).send({
+        //     message: 'Unauthorized!',
+        //   });
         }
-        req.username = user.username;
-        isPremium = user.isPremium;
-      }
-      const story = await Story.findByPk(req.params.storyId, {
-        attributes: ['isPremium'],
+        if (decoded) {
+          const user = await User.findByPk(decoded.username, {
+            attributes: ['isPremium'],
+          });
+          if (!user) {
+            throw new Error();
+          }
+          req.username = user.username;
+          isPremium = user.isPremium;
+        }
       });
-      if (!story) {
-        throw new Error();
-      }
-      if (story.isPremium && !isPremium) {
-        return res.send({
-          message: 'user does not have access to premium content',
-        });
-      }
-      next();
+    }
+    const story = await Story.findByPk(req.params.storyId, {
+      attributes: ['isPremium'],
     });
+    if (!story) {
+      throw new Error();
+    }
+    if (story.isPremium && !isPremium) {
+      return res.send({
+        message: 'user does not have access to premium content',
+      });
+    }
+    next(); ;
   } catch (err) {
     res.status(500).send({
       message: err.message,

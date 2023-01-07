@@ -20,7 +20,13 @@ function Profile() {
   const { token } = useContext(AuthContext);
 
   const { username } = parseJwt(token);
-  const { data } = useFetch(`/user/${username}`, INIT_USER_INFO, (prev, _data) => _data.data);
+
+  const { data } = useFetch(`/user/${userId}`, INIT_USER_INFO, (prev, _data) => _data.data);
+
+  useEffect(() => {
+    const html = document.querySelector('body');
+    html.style.setProperty('background-color', '#f5f7fa');
+  }, []);
 
   const renderSidebar = () => (
     <div className={styles.profileInfo}>
@@ -35,27 +41,34 @@ function Profile() {
                   </a>
                 </div>
               </div>
-              <div className={styles.items}>
-                <h1 className={styles.name}>
-                  <a href={`/${username}`}>
-                    {`${data.first_name} ${data.last_name}` || data.username}
-                  </a>
-                </h1>
-                <i className="icon icon-chat" />
-                <div>
-                  <div className={styles.more}>
-                    <img alt="More" src={MoreIcon} />
+              {
+                data.username
+                && (
+                <>
+                  <div className={styles.items}>
+                    <h1 className={styles.name}>
+                      <a href={`/${data.username}`}>
+                        {`${data.first_name} ${data.last_name}` || data.username}
+                      </a>
+                    </h1>
+                    <i className="icon icon-chat" />
+                    <div>
+                      <div className={styles.more}>
+                        <img alt="More" src={MoreIcon} />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className={styles.tns}>
-                <p>
-                  <a href={`/${username}`}>
-                    @
-                    {username}
-                  </a>
-                </p>
-              </div>
+                  <div className={styles.tns}>
+                    <p>
+                      <a href={`/${data.username}`}>
+                        @
+                        {data.username}
+                      </a>
+                    </p>
+                  </div>
+                </>
+                )
+}
               {username !== userId ? (
                 <button className={styles.subscribeBtn} type="button">
                   <div className={styles.dump}>
@@ -155,7 +168,7 @@ function Profile() {
         <div className={styles.container}>
           <div className={styles.profile}>
             {renderSidebar()}
-            <ProfileMain />
+            <ProfileMain isAuthor={username === userId} />
           </div>
         </div>
         <div className={classNames(styles.right, styles.profileBg)} />
@@ -164,7 +177,7 @@ function Profile() {
   );
 }
 
-function ProfileMain() {
+function ProfileMain({ isAuthor }) {
   const [tab, setTab] = useState('stories');
   const [value, setValue] = useState(null);
   const navigate = useNavigate();
@@ -178,7 +191,7 @@ function ProfileMain() {
       <div className={styles.profileTabs}>
         <TabHeader name="Stories" icon="feed_posts" setTab={setTab} value="stories" tab={tab} count={value} />
         {/* <TabHeader name="Series" icon="tag" setTab={setTab} value="series" tab={tab} count={value} /> */}
-        <TabHeader name="Saved" icon="save_table" setTab={setTab} value="saved" tab={tab} count={value} />
+        {isAuthor && <TabHeader name="Saved" icon="save_table" setTab={setTab} value="saved" tab={tab} count={value} />}
         <TabHeader name="Comments" icon="comment" setTab={setTab} value="comments" tab={tab} count={value} />
       </div>
       <Outlet context={[setValue]} />

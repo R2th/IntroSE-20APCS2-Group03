@@ -11,12 +11,13 @@ import useFetch from 'hooks/useFetch';
 import './style.scss';
 
 function Home() {
-  const fetchContent = useFetch('/story/all/10', INIT_DATA_CONTENT);
-  const fetchTrending = useFetch('/story/newest/10', INIT_DATA_CONTENT);
+  const fetchContent = useFetch('/story/all/10', INIT_DATA_CONTENT, (prev, _data) => _data.data);
+  const fetchTrending = useFetch('/story/newest/10', INIT_DATA_CONTENT, (prev, _data) => _data.data);
 
   const { setPrefix } = useContext(StylesContext);
 
   const contents = fetchContent.data;
+
   const trending = fetchTrending.data;
 
   useEffect(() => {

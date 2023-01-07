@@ -47,4 +47,21 @@ router.get(
     userController.adminPanel,
 );
 
+router.get('/user/:username/followers', userController.getFollowers);
+
+router.get('/user/:username/num_followers', userController.getNumberOfFollowers);
+
+router.get('/user/:username/followings', userController.getFollowings);
+
+router.get('/user/:username/num_followings', userController.getNumberOfFollowings);
+
+
+// body: "followingUsername": ...
+router.post('/user/follow', verifyToken, userController.followUser);
+
+// body: "followingUsername": ...
+router.delete('/user/follow', verifyToken, userController.unfollowUser);
+
+router.get('/user/:followingUsername/followed', userController.hasFollowed);
+
 module.exports = router;

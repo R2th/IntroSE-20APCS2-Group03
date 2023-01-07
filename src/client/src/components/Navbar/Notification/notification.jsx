@@ -175,7 +175,7 @@ function NotificationPopUp() {
                 </div>
               ))}
             </ul>
-            <hr />
+            <hr style={{ margin: 0 }} />
             <div className={styles.viewall}>
               <button onClick={onMarkAllRead} type="button">Mark all read</button>
             </div>
