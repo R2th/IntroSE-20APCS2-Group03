@@ -7,59 +7,59 @@ function NotificationPopUp() {
   const [notification, setNotification] = React.useState([
     {
       img: 'fa fa-check', // avatar user
-      notice: 'Nguyen Xuan Quang likes your story', // content
+      notice: 'Nguyen Xuan Quang upvotes your story', // content
       time: '6 Jan 2023 at 21:21', // date
       state: 'bold', // bold: unread, normal: read
       type: 'fa fa-thumbs-up', // like, share, comment, upvote/downvote,...
     },
     {
       img: 'fa fa-check',
-      notice: 'Hello, This is BytesGo project CS300 hahahaa lmao lmao lmao dark dark bruh bruh',
+      notice: 'Nguyen Xuan Quang downvotes your story',
       time: '3 mins ago',
       state: 'bold',
       type: 'fa fa-thumbs-down',
     },
     {
       img: 'fa fa-check',
-      notice: 'Hello World. for i in ccjz print(i) print("Happy New Year"). Hahan"t an tet vui day',
+      notice: 'Yay! You have become the premium member. Now, you can view all stories with premium label',
       time: '6 Jan 2023 at 21:22',
       state: 'normal',
-      type: 'fa fa-thumbs-down',
+      type: 'fa fa-thumbs-up',
     },
     {
       img: 'fa fa-check',
       notice: 'Mach Vinh Phat starts following you',
       time: '6 Jan 2023 at 21:31',
       state: 'bold',
-      type: 'fa fa-thumbs-down',
+      type: 'fa fa-thumbs-up',
     },
     {
       img: 'fa fa-check',
-      notice: 'Nguyen Quang Tan becomes your premium members',
+      notice: 'Nguyen Quang Tan and Le Minh Hoang upvote your story',
       time: '6 Jan 2023 at 11:01',
       state: 'normal',
-      type: 'fa fa-thumbs-down',
+      type: 'fa fa-thumbs-up',
     },
     {
       img: 'fa fa-check',
       notice: 'Truong Duc Thang has shared your stories to everyone!',
       time: '5 Jan 2021 at 22:21',
       state: 'bold',
-      type: 'fa fa-thumbs-down',
+      type: 'fa fa-thumbs-up',
     },
     {
       img: 'fa fa-check',
       notice: 'Some one reported you that you are cheating on BytesGo. If we find any problems, your account will be banned.',
       time: '1 Jan 2023 at 21:21',
       state: 'bold',
-      type: 'fa fa-thumbs-down',
+      type: 'fa fa-flag',
     },
     {
       img: 'fa fa-check',
-      notice: 'LmaoLmao',
+      notice: 'Welcome to BytesGo, this is the app you can connect to everyone. If you want to premium members, please pay',
       time: '6 Feb 2022 at 21:21',
       state: 'normal',
-      type: 'fa fa-thumbs-down',
+      type: 'fa fa-flag',
     },
     {
       img: 'fa fa-check',
