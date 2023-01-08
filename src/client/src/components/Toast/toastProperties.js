@@ -6,8 +6,8 @@ import warningIcon from '../../assets/svg/warning.svg';
 const TOAST_PROPERTIES = [
   {
     id: Math.floor((Math.random() * 101) + 1),
-    title: 'Success',
-    description: 'This is a success toast component',
+    title: 'Link copied',
+    description: '',
     backgroundColor: '#5cb85c',
     icon: checkIcon,
   },

@@ -13,9 +13,11 @@ import { useState } from 'react';
 import { calculateMinsToRead, getDateMonthYear } from 'utils/calculate';
 import Toast from 'components/Toast/Toast';
 import TOAST_PROPERTIES from 'components/Toast/toastProperties';
+import { INIT_DATA_CONTENT } from 'utils/const';
 import useFetch from '../../hooks/useFetch';
 
 import styles from './styles.module.scss';
+import Card from '../../components/Card';
 
 function Story() {
   const { slug } = useParams();
@@ -36,6 +38,9 @@ function Story() {
   });
 
   const othersData = useFetch(`story/${slug}/other-data`, {}, (prev, data) => data.data);
+
+  const fetchNewest = useFetch('/story/newest/10', INIT_DATA_CONTENT, (prev, _data) => _data.data);
+  const newest = fetchNewest.data;
 
   // const checkFull = () => {
   //   if (contentFull.data.message) {
@@ -85,7 +90,7 @@ function Story() {
 
   const copyTextToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => {
-      showToast('Success');
+      showToast('Link copied');
     }, () => {
       showToast('Error');
     });
@@ -196,6 +201,16 @@ function Story() {
                 <zero-md>
                   <script type="text/markdown">{post.contents}</script>
                 </zero-md>
+                <div className={styles.section}>
+                  <div className={styles.section_title}>
+                    <h1>You may also like</h1>
+                  </div>
+                  <div className={styles.section_content}>
+                    {newest.map((content) => (
+                      <Card key={content.id} content={content} type="medium" />
+                    ))}
+                  </div>
+                </div>
                 <CommentProvider>
                   <CommentSystem />
                 </CommentProvider>
@@ -213,7 +228,6 @@ function Story() {
         autoDelete={toastAutoDelete}
         autoDeleteTime={3000}
       />
-      {/* <Sidebar /> */}
     </div>
   );
 }

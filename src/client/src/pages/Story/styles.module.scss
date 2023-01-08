@@ -208,6 +208,24 @@
           font-size: 18px !important;
           line-height: 1.75 !important;
         }
+        .section {
+          margin-bottom: 50px;
+          margin-left: 20px;
+          .section_title {
+          }
+          .section_content {
+            display: flex;
+            flex-direction: row;
+            overflow-x: scroll;
+            max-width: 1000px;
+            &::-webkit-scrollbar {
+              height: 4px;
+            }
+            &::-webkit-scrollbar-thumb {
+              background-color: #e9ecef;
+            }
+          }
+        }
       }
     }
   }
