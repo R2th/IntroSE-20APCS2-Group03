@@ -1,4 +1,3 @@
-import Footer from 'components/Footer/Footer';
 import React from 'react';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 
@@ -16,7 +15,6 @@ const ROOT = [
         <StylesProvider>
           <Navbar />
           <Outlet />
-          <Footer />
         </StylesProvider>
       </AuthProvider>
     ),
