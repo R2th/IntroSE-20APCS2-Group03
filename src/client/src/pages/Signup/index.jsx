@@ -1,8 +1,7 @@
 import Astronaut from 'assets/svg/astronaut.svg';
 import { AuthContext } from 'contexts/Auth/authContext';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { fullPathAPI } from 'utils/helpers';
+import { useState } from 'react';
 import { SignupUser } from '../../hooks/useAuth';
 import styles from './styles.module.scss';
 
@@ -128,32 +127,33 @@ function Signup() {
 
   const switchNextForm = async () => {
     setFormErrors(validate());
-    const postRes = await fetch(fullPathAPI('/check-signup'), {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-      }),
+    setNextForm(true);
+    // const postRes = await fetch(fullPathAPI('/check-signup'), {
+    //   headers: { 'Content-Type': 'application/json' },
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     username,
+    //     email,
+    //     password: password.content,
+    //   }),
 
-    });
+    // });
 
-    const status = await postRes.json();
+    // const status = await postRes.json();
 
-    if (status.code === 400) {
-      setFormErrors((prev) => ({
-        ...prev,
-        check: status.message,
-      }));
-    }
+    // if (status.code === 400) {
+    //   setFormErrors((prev) => ({
+    //     ...prev,
+    //     check: status.message,
+    //   }));
+    // }
   };
 
-  useEffect(() => {
-    if (!formErrors.username && !formErrors.password && !formErrors.confirmPassword && !formErrors.check) {
-      setNextForm(true);
-    }
-  }, [formErrors]);
+  // useEffect(() => {
+  //   if (!formErrors.username && !formErrors.password && !formErrors.confirmPassword && !formErrors.check) {
+  //     setNextForm(true);
+  //   }
+  // }, [formErrors]);
 
   return (
     <div className={styles.container}>
