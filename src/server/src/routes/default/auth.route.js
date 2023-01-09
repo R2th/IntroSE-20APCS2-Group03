@@ -13,6 +13,8 @@ router.post(
 
 router.post('/auth/login', authController.login);
 
+router.post('/check-signup', verifySignUp.checkDuplicateUsernameOrEmail)
+
 // router.post('/auth/logout', (req, res) =>{})
 
 module.exports = router;

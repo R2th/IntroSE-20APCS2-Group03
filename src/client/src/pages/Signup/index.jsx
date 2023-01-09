@@ -1,7 +1,8 @@
 import Astronaut from 'assets/svg/astronaut.svg';
 import { AuthContext } from 'contexts/Auth/authContext';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { fullPathAPI } from 'utils/helpers';
 import { SignupUser } from '../../hooks/useAuth';
 import styles from './styles.module.scss';
 
@@ -127,8 +128,32 @@ function Signup() {
 
   const switchNextForm = async () => {
     setFormErrors(validate());
-    setNextForm(true);
+    const postRes = await fetch(fullPathAPI('/check-signup'), {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+      }),
+
+    });
+
+    const status = await postRes.json();
+
+    if (status.code === 400) {
+      setFormErrors((prev) => ({
+        ...prev,
+        check: status.message,
+      }));
+    }
   };
+
+  useEffect(() => {
+    if (!formErrors.username && !formErrors.password && !formErrors.confirmPassword && !formErrors.check) {
+      setNextForm(true);
+    }
+  }, [formErrors]);
 
   return (
     <div className={styles.container}>
@@ -203,6 +228,9 @@ function Signup() {
                     </div>
                     {formErrors.confirmPassword && (
                     <span className={styles.validationText}>{formErrors.confirmPassword}</span>
+                    )}
+                    {formErrors.check && (
+                    <span className={styles.validationText}>{formErrors.check}</span>
                     )}
                   </div>
                   {/* <div>
